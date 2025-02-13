@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventService implements IService<Event> {
-    // Connexion à la base de données
     private Connection connection;
 
     public EventService() {
@@ -31,7 +30,7 @@ public class EventService implements IService<Event> {
             preparedStatement.setString(8, event.getDescription());
             preparedStatement.setString(9, event.getImageUrl());
 
-            // Si reward est vide ou null, insérer NULL dans la base
+
             if (event.getReward() == null || event.getReward().trim().isEmpty()) {
                 preparedStatement.setNull(10, Types.VARCHAR);
             } else {
@@ -39,7 +38,7 @@ public class EventService implements IService<Event> {
             }
 
             preparedStatement.executeUpdate();
-            System.out.println("✅ Événement ajouté avec succès !");
+            System.out.println(" Événement ajouté avec succès !");
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'ajout de l'événement : " + e.getMessage());
             throw e;
@@ -61,7 +60,7 @@ public class EventService implements IService<Event> {
             preparedStatement.setString(8, event.getDescription());
             preparedStatement.setString(9, event.getImageUrl());
 
-            // Gestion du NULL pour reward
+
             if (event.getReward() == null || event.getReward().trim().isEmpty()) {
                 preparedStatement.setNull(10, Types.VARCHAR);
             } else {
@@ -70,7 +69,7 @@ public class EventService implements IService<Event> {
 
             preparedStatement.setInt(11, event.getId());
             preparedStatement.executeUpdate();
-            System.out.println("✅ Événement modifié avec succès !");
+            System.out.println(" Événement modifié avec succès !");
         } catch (SQLException e) {
             System.err.println("Erreur lors de la modification de l'événement : " + e.getMessage());
             throw e;
@@ -84,7 +83,7 @@ public class EventService implements IService<Event> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-            System.out.println("✅ Événement supprimé avec succès !");
+            System.out.println(" Événement supprimé avec succès !");
         } catch (SQLException e) {
             System.err.println("Erreur lors de la suppression de l'événement : " + e.getMessage());
             throw e;

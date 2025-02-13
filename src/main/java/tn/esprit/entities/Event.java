@@ -18,10 +18,10 @@ public class Event {
     private String reward;
     private Set<Equipe> equipes = new HashSet<>();
 
-    // Constructeur sans argument
+
     public Event() {}
 
-    // ✅ Constructeur
+
     public Event(int id, String nom, String lieu, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
                  String type, int capacite, String description, String imageUrl, String reward) {
         this.id = id;
@@ -37,7 +37,7 @@ public class Event {
         this.reward = reward;
     }
 
-    // ✅ Constructeur sans ID (pour la création d'événements)
+
     public Event(String nom, String lieu, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
                  String type, int capacite, String description, String imageUrl, String reward) {
         this.nom = nom;
@@ -52,7 +52,7 @@ public class Event {
         this.reward = reward;
     }
 
-    // ✅ Getters et Setters
+
     public int getId() {
         return id;
     }
@@ -137,7 +137,7 @@ public class Event {
         this.equipes = equipes;
     }
 
-    // ✅ toString() pour affichage dans la console
+
     @Override
     public String toString() {
         return "Event{" +
