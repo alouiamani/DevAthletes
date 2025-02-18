@@ -1,0 +1,41 @@
+.root {
+    -fx-background-color: #F4F4F4; /* Couleur de fond */
+}
+
+.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.text-field {
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 5px;
+    -fx-border-color: #ccc;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+.root {
+    -fx-background-color: #F4F4F4; /* Couleur de fond */
+}
+
+
+
+
+

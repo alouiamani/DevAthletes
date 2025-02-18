@@ -1,0 +1,43 @@
+.root {
+    -fx-background-color: #b6b6b6;
+}
+
+.card {
+    -fx-background-color: #ffffff
+
+;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+.button {
+    -fx-background-color: #F1600D
+
+;
+    padding: 10px 20px;
+    border-radius: 25px; /* Rend les boutons arrondis */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+}
+.image-view-retour {
+    -fx-background-color: #0056b3; /* Fond orange */
+    -fx-padding: 10px; /* Espace autour de l'image */
+    -fx-background-radius: 50%; /* Bord arrondi (si l'image est carrée, ça devient un cercle) */
+    -fx-border-radius: 50%;
+    -fx-border-color: orange; /* Bordure orange */
+    -fx-border-width: 2px;
+
+}
+
+button:hover {
+    background-color: #0056b3; /* Bleu plus foncé au survol */
+}
+.image-view-retour:hover {
+    -fx-background-color: darkorange;
+    -fx-border-color: darkorange;
+}
