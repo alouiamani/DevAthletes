@@ -25,17 +25,32 @@
 }
 
 .card {
-    -fx-background-color: white;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
+    -fx-background-color: #ccc9c9;
     -fx-padding: 20px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
-}
-.root {
-    -fx-background-color: #F4F4F4; /* Couleur de fond */
+    -fx-border-radius: 20px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+    -fx-transition: transform 0.3s ease-in-out;
 }
 
+.card:hover {
+    -fx-background-color: #d1cece;
+    -fx-transform: scale(1.05);
+}
 
+.card .abonnement-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.card .abonnement-details {
+    -fx-font-size: 14px;
+}
+
+.card .abonnement-actions {
+    -fx-spacing: 10px;
+    -fx-alignment: CENTER;
+}
 
 
 

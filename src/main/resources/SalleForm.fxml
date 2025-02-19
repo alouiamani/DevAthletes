@@ -15,11 +15,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.SalleFormAdminController">
+<SplitPane dividerPositions="0.34124331550802134" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.SalleFormAdminController">
   <items>
       <AnchorPane prefHeight="398.0" prefWidth="211.0">
          <children>
-            <ImageView fitHeight="398.0" fitWidth="236.0" layoutY="2.0" pickOnBounds="true" smooth="false">
+            <ImageView fitHeight="398.0" fitWidth="202.0" layoutY="2.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@../../../../../Downloads/Capture.PNG" />
+               </image>
             </ImageView>
          </children>
       </AnchorPane>

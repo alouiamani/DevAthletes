@@ -37,6 +37,11 @@ private String url_photo;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
     }
+
+    public Salle() {
+
+    }
+
     public int getId_Salle() {
         return id_Salle;
     }

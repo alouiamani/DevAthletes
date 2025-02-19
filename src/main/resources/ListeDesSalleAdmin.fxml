@@ -17,8 +17,8 @@
          <children>
             <HBox layoutY="-1.0" prefHeight="71.0" prefWidth="600.0" stylesheets="@application.css">
                <children>
-                  <TextField fx:id="searchField" prefHeight="30.0" prefWidth="277.0" promptText="Search" stylesheets="@application.css" />
-                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" stylesheets="@application.css" text="➕ Ajouter" textFill="#fcf8f8">
+                  <TextField fx:id="searchField" prefHeight="36.0" prefWidth="278.0" promptText="Search" stylesheets="@application.css" />
+                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="36.0" prefWidth="141.0" stylesheets="@application.css" text="➕ Ajouter Salle" textFill="#fcf8f8">
                      <rotationAxis>
                         <Point3D x="50.0" y="50.0" z="50.0" />
                      </rotationAxis>

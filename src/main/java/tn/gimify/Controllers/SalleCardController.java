@@ -49,20 +49,18 @@ public class SalleCardController {
     }
 
     private void ouvrirModificationSalle() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
-        Parent root = null;
         try {
-            root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
+        Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Abonnement");
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        SalleFormAdminController controller = loader.getController();
-        controller.chargerSalle(salle);
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Modifier Salle");
-        stage.show();
     }
 
     private void supprimerSalle() {
