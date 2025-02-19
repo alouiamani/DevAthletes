@@ -25,7 +25,7 @@
     -fx-border-radius: 5px;
 }
 .image-view-retour {
-    -fx-background-color: #0056b3; /* Fond orange */
+    -fx-background-color: #0056b; /* Fond orange */
     -fx-padding: 10px; /* Espace autour de l'image */
     -fx-background-radius: 50%; /* Bord arrondi (si l'image est carrée, ça devient un cercle) */
     -fx-border-radius: 50%;

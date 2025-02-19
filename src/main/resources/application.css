@@ -35,7 +35,8 @@
 
 .card:hover {
     -fx-background-color: #d1cece;
-    -fx-transform: scale(1.05);
+    -fx-transform: scale(1.2); /* Exemple correct d'utilisation de scale */
+
 }
 
 .card .abonnement-title {
@@ -50,6 +51,30 @@
 .card .abonnement-actions {
     -fx-spacing: 10px;
     -fx-alignment: CENTER;
+
+
+}
+/* Appliquer un style arrondi à l'image */
+.image-round {
+    -fx-shape: "M 0,10 Q 10,0 20,10 Q 30,20 20,30 Q 10,40 0,30 Q -10,20 0,10 Z";
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-width: 2;
+    -fx-border-color: #ddd; /* Couleur de la bordure */
+    -fx-padding: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2); /* Ombre portée */
+    -fx-width: 100px;  /* Ajustez la taille de l'image */
+    -fx-height: 100px;
+    -fx-alignment: center;
+    -fx-background-color: #fff; /* Couleur de fond pour l'image */
+}
+
+/* Appliquer l'image avec une bordure arrondie */
+.image-view {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-width: 3;
+    -fx-border-color: #2196F3; /* Bordure bleue */
 }
 
 

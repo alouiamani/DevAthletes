@@ -20,21 +20,18 @@ public class SalleCardController {
     @FXML private Label numTelLabel;
     @FXML private Label emailLabel;
     @FXML private Label detailsLabel;
-    @FXML
-    private Button modifierBtn;
-    @FXML
-    private Button supprimerBtn;
-    @FXML
-    private Button detailsBtn;
+    @FXML private Button modifierBtn;
+    @FXML private Button supprimerBtn;
+    @FXML private Button detailsBtn;
     @FXML private ImageView salleImageView;
 
     private Salle salle;
     private SalleService salleService = new SalleService();
     private ListeDesSalleController parentController;
 
-    public void setSalleData(Salle salle, ListeDesSalleController parentController) {
+    public void setSalleData(Salle salle, ListeDesSallesUser parentController) {
         this.salle = salle;
-        this.parentController = parentController;
+
 
 
         // Mettre à jour les labels
@@ -44,11 +41,12 @@ public class SalleCardController {
         numTelLabel.setText(salle.getNum_tel() );
         emailLabel.setText(salle.getEmail() );
 
-        modifierBtn.setOnAction(e -> ouvrirModificationSalle());
+        modifierBtn.setOnAction(e -> modifierSalle());
         supprimerBtn.setOnAction(e -> supprimerSalle());
     }
 
-    private void ouvrirModificationSalle() {
+    @FXML
+    private void modifierSalle() {
         try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
         Parent root = loader.load();
@@ -63,11 +61,27 @@ public class SalleCardController {
 
     }
 
+    @FXML
     private void supprimerSalle() {
         try {
             salleService.supprimer(salle.getId_Salle());
             parentController.refreshList();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void DetailsSalle() {
+        // Show the details of the salle
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleDetails.fxml"));
+            Parent root = loader.load();
+            // Pass data to the controller if needed
+            Stage stage = new Stage();
+            stage.setTitle("Details de la Salle");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

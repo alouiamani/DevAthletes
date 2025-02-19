@@ -97,4 +97,30 @@ public class AbonnementService implements Iservices<Abonnement> {
 
         return abonnements;
     }
+    public List<Abonnement> getAbonnementsParSalle(int id_Salle) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+        String req = "SELECT * FROM abonnement WHERE id_Salle = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setInt(1, id_Salle);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Abonnement abonnement = new Abonnement();
+                abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
+                abonnement.setDate_Début(rs.getDate("date_Début"));
+                abonnement.setDate_Fin(rs.getDate("date_Fin"));
+                abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
+                abonnement.setTarif(rs.getDouble("tarif"));
+
+                abonnements.add(abonnement);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la récupération des abonnements par salle : " + e.getMessage());
+            throw e;
+        }
+
+        return abonnements;
+    }
+
 }

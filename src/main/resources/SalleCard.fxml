@@ -60,9 +60,9 @@
       </HBox>
       <HBox layoutX="136.0" layoutY="322.0" prefHeight="36.0" prefWidth="346.0">
          <children>
-            <Button fx:id="modifierBtn" prefHeight="36.0" prefWidth="118.0" text="Modifier" />
-            <Button fx:id="supprimerBtn" mnemonicParsing="false" text="🗑 Supprimer" />
-            <Button fx:id="detailsBtn" mnemonicParsing="false" text="📄 Détails" />
+            <Button fx:id="modifierBtn" prefHeight="36.0" prefWidth="118.0" onAction="#modifierSalle" text="Modifier" />
+            <Button fx:id="supprimerBtn" mnemonicParsing="false" onAction="#supprimerSalle" text=" 🗑 Supprimer" />
+            <Button fx:id="detailsBtn" mnemonicParsing="false" onAction="#DetailsSalle" text="📄 Détails" />
          </children>
       </HBox>
    </children>

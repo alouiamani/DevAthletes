@@ -24,6 +24,7 @@ public class ListeDesSalleController {
     @FXML private Button ajoutBtn;
 
     private SalleService salleService = new SalleService();
+    private List<Salle> allSalles; // Liste pour stocker toutes les salles
     private PauseTransition pause = new PauseTransition(Duration.millis(300));
 
     @FXML
@@ -48,7 +49,7 @@ public class ListeDesSalleController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCard.fxml"));
                 Parent salleCard = loader.load();
-                SalleCardController controller = loader.getController();
+                SalleCardUserController controller = loader.getController();
                 controller.setSalleData(salle, this);
                 sallesContainer.getChildren().add(salleCard);
             } catch (IOException e) {
