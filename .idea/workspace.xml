@@ -30,6 +30,9 @@
     &quot;accountId&quot;: &quot;beea3125-0a9b-46ec-bbcf-1f1e135d838a&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -70,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740076577002</updated>
       <workItem from="1740076578235" duration="69000" />
-      <workItem from="1740076832185" duration="1384000" />
+      <workItem from="1740076832185" duration="1825000" />
     </task>
     <servers />
   </component>
