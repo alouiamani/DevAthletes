@@ -16,19 +16,19 @@ public class Reclamation {
         this.statut = statut;
 
     }
-    public Reclamation( int id_user, String sujet, String description, String statut, User user) {
-
+    public Reclamation(int id_user, String sujet, String description, String statut, User user) {
         this.id_user = id_user;
         this.sujet = sujet;
         this.description = description;
         this.statut = statut;
         this.user = user;
     }
+
     public Reclamation(int id_user, String sujet, String description) {
         this.id_user = id_user;
         this.sujet = sujet;
         this.description = description;
-        this.statut = "En attente"; // Par défaut
+
     }
 
 
@@ -88,8 +88,10 @@ public class Reclamation {
                 ", id_user=" + id_user +
                 ", sujet='" + sujet + '\'' +
                 ", description='" + description + '\'' +
-                ", statut='" + statut + '\'' +
-                ", user=" + user +
+                ", statut='" + (statut != null ? statut : "Non défini") + '\'' +
+                ", user=" + (user != null ? user.getNom() : "Aucun") +
                 '}';
     }
+
+
 }

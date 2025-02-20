@@ -19,6 +19,7 @@ public class ServiceReponse implements IService <Reponse> {
         statement.executeUpdate(req);
         System.out.println(" Réponse ajoutée !");
 
+
     }
 
     @Override
@@ -30,11 +31,11 @@ public class ServiceReponse implements IService <Reponse> {
         preparedStatement.executeUpdate();
         System.out.println("Réponse modifiée !");
 
+
     }
 
     @Override
     public void supprimer(int id_Reponse) throws SQLException {
-
         String req = "DELETE FROM reponse WHERE id_Reponse=" + id_Reponse;
         Statement statement = connection.createStatement();
         statement.executeUpdate(req);
@@ -55,7 +56,6 @@ public class ServiceReponse implements IService <Reponse> {
         while ( rs.next()) {
             Reclamation reclamation = new Reclamation(
                     rs.getInt("id_reclamation"),
-                    // idUser (non récupéré ici)
                     rs.getString("sujet"),
                     rs.getString("description"));
 
@@ -69,5 +69,5 @@ public class ServiceReponse implements IService <Reponse> {
         }
         return reponses;
     }
-    }
+}
 
