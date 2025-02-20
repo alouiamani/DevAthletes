@@ -11,19 +11,18 @@ public class Event {
     private LocalDate date;
     private LocalTime heureDebut;
     private LocalTime heureFin;
-    private String type;
-    private int capacite;
+    private EventType type;
     private String description;
     private String imageUrl;
     private String reward;
     private Set<Equipe> equipes = new HashSet<>();
 
-
+    // Constructeur sans argument
     public Event() {}
 
-
+    // ✅ Constructeur
     public Event(int id, String nom, String lieu, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
-                 String type, int capacite, String description, String imageUrl, String reward) {
+                 EventType type, String description, String imageUrl, String reward) {
         this.id = id;
         this.nom = nom;
         this.lieu = lieu;
@@ -31,31 +30,29 @@ public class Event {
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.type = type;
-        this.capacite = capacite;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.reward = reward;
+        this.reward = reward != null && !reward.trim().isEmpty() ? reward : "Default Reward";
     }
 
-
+    // ✅ Constructeur sans ID (pour la création d'événements)
     public Event(String nom, String lieu, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
-                 String type, int capacite, String description, String imageUrl, String reward) {
+                 EventType type, String description, String imageUrl, String reward) {
         this.nom = nom;
         this.lieu = lieu;
         this.date = date;
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.type = type;
-        this.capacite = capacite;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.reward = reward;
+        this.reward = reward != null && !reward.trim().isEmpty() ? reward : "Default Reward";
     }
-
-
+    // ✅ Getters et Setters
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -63,6 +60,7 @@ public class Event {
     public String getNom() {
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -70,6 +68,7 @@ public class Event {
     public String getLieu() {
         return lieu;
     }
+
     public void setLieu(String lieu) {
         this.lieu = lieu;
     }
@@ -77,6 +76,7 @@ public class Event {
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -84,6 +84,7 @@ public class Event {
     public LocalTime getHeureDebut() {
         return heureDebut;
     }
+
     public void setHeureDebut(LocalTime heureDebut) {
         this.heureDebut = heureDebut;
     }
@@ -91,27 +92,23 @@ public class Event {
     public LocalTime getHeureFin() {
         return heureFin;
     }
+
     public void setHeureFin(LocalTime heureFin) {
         this.heureFin = heureFin;
     }
 
-    public String getType() {
+    public EventType getType() {
         return type;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
 
-    public int getCapacite() {
-        return capacite;
-    }
-    public void setCapacite(int capacite) {
-        this.capacite = capacite;
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -119,6 +116,7 @@ public class Event {
     public String getImageUrl() {
         return imageUrl;
     }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
@@ -126,17 +124,18 @@ public class Event {
     public String getReward() {
         return reward;
     }
+
     public void setReward(String reward) {
-        this.reward = reward;
+        this.reward = reward != null && !reward.trim().isEmpty() ? reward : "Default Reward";
     }
 
     public Set<Equipe> getEquipes() {
         return equipes;
     }
+
     public void setEquipes(Set<Equipe> equipes) {
         this.equipes = equipes;
     }
-
 
     @Override
     public String toString() {
@@ -147,11 +146,10 @@ public class Event {
                 ", date=" + date +
                 ", heureDebut=" + heureDebut +
                 ", heureFin=" + heureFin +
-                ", type='" + type + '\'' +
-                ", capacite=" + capacite +
+                ", type=" + type +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", reward=" + reward +
+                ", reward='" + reward + '\'' +
                 '}';
     }
 }

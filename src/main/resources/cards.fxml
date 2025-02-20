@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane fx:id="panetf" prefHeight="180.0" prefWidth="614.0" style="-fx-background-color: #f9f9f9; -fx-border-color: #ddd;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.CardsController">
+    <children>
+        <ImageView fx:id="imagetf" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="40.0" />
+        <Label fx:id="lieutf" layoutX="130.0" layoutY="50.0" style="-fx-font-size: 14.0px;" text="Lieu" />
+        <Label fx:id="typetf" layoutX="130.0" layoutY="80.0" style="-fx-font-size: 14.0px;" text="Type" />
+        <Label fx:id="rewardtf" layoutX="229.0" layoutY="110.0" style="-fx-font-size: 14.0px;" text="Reward" />
+        <Label fx:id="heuredebuttf" layoutX="212.0" layoutY="60.0" style="-fx-font-size: 14.0px;" text="Heure_Debut" />
+
+              <Button fx:id="modifierBtn" layoutX="515.0" layoutY="38.0" onAction="#modifierevent" prefHeight="25.0" prefWidth="71.0" text="Modifier" />
+        <Label fx:id="nomtf" layoutX="125.0" layoutY="26.0" style="-fx-font-size: 16.0px;" text="Nom " />
+        <Button fx:id="supprimerBtn" layoutX="514.0" layoutY="78.0" onAction="#supprimerevent" text="Supprimer" />
+        <Button fx:id="detailsBtn" layoutX="515.0" layoutY="118.0" onAction="#detailsevent" prefHeight="25.0" prefWidth="71.0" text="Détails" />
+      <Label fx:id="heurefintf" layoutX="361.0" layoutY="60.0" style="-fx-font-size: 14.0px;" text="Heure_Fin" />
+      <Label fx:id="descriptiontf" layoutX="356.0" layoutY="110.0" style="-fx-font-size: 14.0px;" text="Description" />
+      <Label fx:id="datetf" layoutX="130.0" layoutY="110.0" style="-fx-font-size: 14.0px;" text="Date" />
+    </children>
+</Pane>

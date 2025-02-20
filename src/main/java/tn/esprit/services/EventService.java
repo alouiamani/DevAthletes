@@ -1,6 +1,7 @@
 package tn.esprit.services;
 
 import tn.esprit.entities.Event;
+import tn.esprit.entities.EventType;
 import tn.esprit.utils.MyDataBase;
 
 import java.sql.*;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventService implements IService<Event> {
-    private Connection connection;
+    private final Connection connection;
 
     public EventService() {
         connection = MyDataBase.getInstance().getConnection();
@@ -16,77 +17,67 @@ public class EventService implements IService<Event> {
 
     @Override
     public void ajouter(Event event) throws SQLException {
-        String req = "INSERT INTO events (nom, lieu, date, heure_debut, heure_fin, type, capacite, description, image_url, reward) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        String req = "INSERT INTO events (nom, lieu, date, heure_debut, heure_fin, type, description, image_url, reward) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setString(1, event.getNom());
             preparedStatement.setString(2, event.getLieu());
             preparedStatement.setDate(3, Date.valueOf(event.getDate()));
             preparedStatement.setTime(4, Time.valueOf(event.getHeureDebut()));
             preparedStatement.setTime(5, Time.valueOf(event.getHeureFin()));
-            preparedStatement.setString(6, event.getType());
-            preparedStatement.setInt(7, event.getCapacite());
-            preparedStatement.setString(8, event.getDescription());
-            preparedStatement.setString(9, event.getImageUrl());
-
+            preparedStatement.setString(6, event.getType().toString());  // Convert enum to String
+            preparedStatement.setString(7, event.getDescription());
+            preparedStatement.setString(8, event.getImageUrl());
 
             if (event.getReward() == null || event.getReward().trim().isEmpty()) {
-                preparedStatement.setNull(10, Types.VARCHAR);
+                preparedStatement.setNull(9, Types.VARCHAR);  // Si reward est null ou vide
             } else {
-                preparedStatement.setString(10, event.getReward());
+                preparedStatement.setString(9, event.getReward());
             }
 
             preparedStatement.executeUpdate();
-            System.out.println(" Événement ajouté avec succès !");
         } catch (SQLException e) {
-            System.err.println("Erreur lors de l'ajout de l'événement : " + e.getMessage());
-            throw e;
+            System.err.println("Error while adding event: " + e.getMessage());
+            throw e;  // Rethrow to propagate exception
         }
     }
 
     @Override
     public void modifier(Event event) throws SQLException {
-        String req = "UPDATE events SET nom=?, lieu=?, date=?, heure_debut=?, heure_fin=?, type=?, capacite=?, description=?, image_url=?, reward=? WHERE id=?";
-
+        String req = "UPDATE events SET nom=?, lieu=?, date=?, heure_debut=?, heure_fin=?, type=?, description=?, image_url=?, reward=? WHERE id=?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setString(1, event.getNom());
             preparedStatement.setString(2, event.getLieu());
             preparedStatement.setDate(3, Date.valueOf(event.getDate()));
             preparedStatement.setTime(4, Time.valueOf(event.getHeureDebut()));
             preparedStatement.setTime(5, Time.valueOf(event.getHeureFin()));
-            preparedStatement.setString(6, event.getType());
-            preparedStatement.setInt(7, event.getCapacite());
-            preparedStatement.setString(8, event.getDescription());
-            preparedStatement.setString(9, event.getImageUrl());
-
+            preparedStatement.setString(6, event.getType().toString());  // Convert enum to String
+            preparedStatement.setString(7, event.getDescription());
+            preparedStatement.setString(8, event.getImageUrl());
 
             if (event.getReward() == null || event.getReward().trim().isEmpty()) {
-                preparedStatement.setNull(10, Types.VARCHAR);
+                preparedStatement.setNull(9, Types.VARCHAR);  // Si reward est null ou vide
             } else {
-                preparedStatement.setString(10, event.getReward());
+                preparedStatement.setString(9, event.getReward());
             }
 
-            preparedStatement.setInt(11, event.getId());
+            preparedStatement.setInt(10, event.getId());
             preparedStatement.executeUpdate();
-            System.out.println(" Événement modifié avec succès !");
         } catch (SQLException e) {
-            System.err.println("Erreur lors de la modification de l'événement : " + e.getMessage());
-            throw e;
+            System.err.println("Error while updating event: " + e.getMessage());
+            throw e;  // Rethrow to propagate exception
         }
     }
 
     @Override
     public void supprimer(int id) throws SQLException {
         String req = "DELETE FROM events WHERE id=?";
-
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, id);  // Utilisation de l'ID pour la suppression
             preparedStatement.executeUpdate();
-            System.out.println(" Événement supprimé avec succès !");
         } catch (SQLException e) {
-            System.err.println("Erreur lors de la suppression de l'événement : " + e.getMessage());
-            throw e;
+            System.err.println("Error while deleting event with id " + id + ": " + e.getMessage());
+            throw e;  // Rethrow to propagate exception
         }
     }
 
@@ -94,8 +85,9 @@ public class EventService implements IService<Event> {
     public List<Event> afficher() throws SQLException {
         List<Event> events = new ArrayList<>();
         String req = "SELECT * FROM events";
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(req)) {
 
-        try (Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(req)) {
             while (rs.next()) {
                 Event event = new Event();
                 event.setId(rs.getInt("id"));
@@ -104,51 +96,53 @@ public class EventService implements IService<Event> {
                 event.setDate(rs.getDate("date").toLocalDate());
                 event.setHeureDebut(rs.getTime("heure_debut").toLocalTime());
                 event.setHeureFin(rs.getTime("heure_fin").toLocalTime());
-                event.setType(rs.getString("type"));
-                event.setCapacite(rs.getInt("capacite"));
+
+                // Convert String back to enum, with handling in case of invalid values
+                try {
+                    String typeStr = rs.getString("type");
+                    if (typeStr != null && !typeStr.trim().isEmpty()) {
+                        event.setType(EventType.valueOf(typeStr));  // Convert String to enum safely
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid event type in database: " + rs.getString("type"));
+                    event.setType(null);  // Or you can choose to set a default value
+                }
+
                 event.setDescription(rs.getString("description"));
                 event.setImageUrl(rs.getString("image_url"));
                 event.setReward(rs.getString("reward"));
-
                 events.add(event);
             }
         } catch (SQLException e) {
-            System.err.println("Erreur lors de l'affichage des événements : " + e.getMessage());
-            throw e;
+            System.err.println("Error while fetching events: " + e.getMessage());
+            throw e;  // Rethrow to propagate exception
         }
-
         return events;
     }
 
-    // Méthode pour chercher un événement par son id
-    public Event chercherParId(int id) throws SQLException {
-        String req = "SELECT * FROM events WHERE id=?";
-        Event event = null;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
-            preparedStatement.setInt(1, id);
+    public List<Event> getAllEvents() throws SQLException {
+        List<Event> events = new ArrayList<>();
+        String query = "SELECT * FROM events"; // Assurez-vous que cette requête correspond à votre schéma de base de données.
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
 
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                if (rs.next()) {
-                    event = new Event();
-                    event.setId(rs.getInt("id"));
-                    event.setNom(rs.getString("nom"));
-                    event.setLieu(rs.getString("lieu"));
-                    event.setDate(rs.getDate("date").toLocalDate());
-                    event.setHeureDebut(rs.getTime("heure_debut").toLocalTime());
-                    event.setHeureFin(rs.getTime("heure_fin").toLocalTime());
-                    event.setType(rs.getString("type"));
-                    event.setCapacite(rs.getInt("capacite"));
-                    event.setDescription(rs.getString("description"));
-                    event.setImageUrl(rs.getString("image_url"));
-                    event.setReward(rs.getString("reward"));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la recherche de l'événement : " + e.getMessage());
-            throw e;
+        while (resultSet.next()) {
+            Event event = new Event(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nom"),
+                    resultSet.getString("lieu"),
+                    resultSet.getDate("date").toLocalDate(),
+                    resultSet.getTime("heure_debut").toLocalTime(),
+                    resultSet.getTime("heure_fin").toLocalTime(),
+                    EventType.valueOf(resultSet.getString("type")),
+                    resultSet.getString("description"),
+                    resultSet.getString("image_url"),
+                    resultSet.getString("reward")
+            );
+            events.add(event);
         }
-
-        return event;
+        return events;
     }
+
 }

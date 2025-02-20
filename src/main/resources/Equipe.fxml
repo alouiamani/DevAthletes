@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@design.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.EquipeController">
+   <children>
+      <Label layoutX="254.0" layoutY="47.0" prefHeight="34.0" prefWidth="96.0" text="Equipe">
+         <font>
+            <Font name="Times New Roman Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameField" layoutX="219.0" layoutY="200.0" />
+      <Label fx:id="nameErrorLabel" style="-fx-text-fill: red;" text="Le nom est obligatoire !" visible="false" />
+      <Button fx:id="saveButton" layoutX="194.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleSaveButton" styleClass="enregistrer-btn" stylesheets="@design.css" text="Enregistrer" />
+      <Button fx:id="cancelButton" layoutX="328.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCancelButton" styleClass="annuler-btn" stylesheets="@design.css" text="Annuler" />
+      <Label layoutX="237.0" layoutY="172.0" text="Nom">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

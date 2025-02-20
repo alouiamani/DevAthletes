@@ -1,0 +1,244 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 134217728 bytes. Error detail: G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3825), pid=18892, tid=17140
+#
+# JRE version:  (17.0.12+1) (build )
+# Java VM: OpenJDK 64-Bit Server VM (17.0.12+1-b1087.25, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --module-path=C:\Users\user\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2.jar --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics tn.esprit.tests.MainFX
+
+Host: Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz, 8 cores, 7G,  Windows 11 , 64 bit Build 22621 (10.0.22621.4830)
+Time: Tue Feb 18 11:00:05 2025 Afr. centrale Ouest elapsed time: 0.020658 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002139f15b090):  JavaThread "Unknown thread" [_thread_in_vm, id=17140, stack(0x000000619d500000,0x000000619d600000)]
+
+Stack: [0x000000619d500000,0x000000619d600000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x688dd9]  os::platform_print_native_stack+0xd9  (os_windows_x86.cpp:235)
+V  [jvm.dll+0x842eaa]  VMError::report+0xc6a  (vmError.cpp:855)
+V  [jvm.dll+0x844aee]  VMError::report_and_die+0x78e  (vmError.cpp:1749)
+V  [jvm.dll+0x845153]  VMError::report_and_die+0x43  (vmError.cpp:1535)
+V  [jvm.dll+0x24ba3f]  report_vm_out_of_memory+0x8f  (debug.cpp:321)
+V  [jvm.dll+0x685ba9]  os::pd_commit_memory_or_exit+0xc9  (os_windows.cpp:3833)
+V  [jvm.dll+0x67a45a]  os::commit_memory_or_exit+0x2a  (os.cpp:1732)
+V  [jvm.dll+0x30c60b]  G1PageBasedVirtualSpace::commit+0x19b  (g1PageBasedVirtualSpace.cpp:204)
+V  [jvm.dll+0x313ab6]  G1RegionsLargerThanCommitSizeMapper::commit_regions+0x96  (g1RegionToSpaceMapper.cpp:100)
+V  [jvm.dll+0x363c6e]  HeapRegionManager::expand_any+0xee  (heapRegionManager.cpp:363)
+V  [jvm.dll+0x363e9f]  HeapRegionManager::expand_by+0x7f  (heapRegionManager.cpp:380)
+V  [jvm.dll+0x2e2658]  G1CollectedHeap::expand+0xb8  (g1CollectedHeap.cpp:1292)
+V  [jvm.dll+0x2e3594]  G1CollectedHeap::initialize+0x664  (g1CollectedHeap.cpp:1713)
+V  [jvm.dll+0x813b31]  universe_init+0xb1  (universe.cpp:736)
+V  [jvm.dll+0x3719c1]  init_globals+0x31  (init.cpp:124)
+V  [jvm.dll+0x7f2626]  Threads::create_vm+0x5d6  (thread.cpp:2909)
+V  [jvm.dll+0x3f563f]  JNI_CreateJavaVM_inner+0x8f  (jni.cpp:3640)
+V  [jvm.dll+0x3f7191]  JNI_CreateJavaVM+0x11  (jni.cpp:3732)
+C  [jli.dll+0x528f]  JavaMain+0x113  (java.c:413)
+C  [ucrtbase.dll+0x29333]
+C  [KERNEL32.DLL+0x1259d]
+C  [ntdll.dll+0x5af38]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ff9d09d0f58, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000002139f1b7360 GCTaskThread "GC Thread#0" [stack: 0x000000619d600000,0x000000619d700000] [id=24492]
+  0x000002139f1c8e10 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000619d700000,0x000000619d800000] [id=12856]
+  0x000002139f1c9ee0 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000619d800000,0x000000619d900000] [id=11460]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff9d01831c7]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000002139f1553d0] Heap_lock - owner thread: 0x000002139f15b090
+
+Heap address: 0x0000000081e00000, size: 2018 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000081e00000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 0K, committed 0K, reserved 0K
+  class space    used 0K, committed 0K, reserved 0K
+
+Heap Regions: E=young(eden), S=young(survivor), O=old, HS=humongous(starts), HC=humongous(continues), CS=collection set, F=free, OA=open archive, CA=closed archive, TAMS=top-at-mark-start (previous, next)
+
+Card table byte_map: [0x00000213b2060000,0x00000213b2460000] _byte_map_base: 0x00000213b1c51000
+
+Marking Bits (Prev, Next): (CMBitMap*) 0x000002139f1b88a0, (CMBitMap*) 0x000002139f1b88e0
+ Prev Bits: [0x00000213b2860000, 0x00000213b47e8000)
+ Next Bits: [0x00000213b47f0000, 0x00000213b6778000)
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.009 Loaded shared library C:\Users\user\.jdks\jbr-17.0.12\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff794490000 - 0x00007ff79449a000 	C:\Users\user\.jdks\jbr-17.0.12\bin\java.exe
+0x00007ffa30050000 - 0x00007ffa30267000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffa2f2d0000 - 0x00007ffa2f394000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffa2d970000 - 0x00007ffa2dd40000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffa2d850000 - 0x00007ffa2d961000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffa28bf0000 - 0x00007ffa28c0b000 	C:\Users\user\.jdks\jbr-17.0.12\bin\VCRUNTIME140.dll
+0x00007ffa28ba0000 - 0x00007ffa28bb7000 	C:\Users\user\.jdks\jbr-17.0.12\bin\jli.dll
+0x00007ffa2fc50000 - 0x00007ffa2fdfe000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffa126d0000 - 0x00007ffa12962000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.4830_none_270fe7d773858e80\COMCTL32.dll
+0x00007ffa2d330000 - 0x00007ffa2d356000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffa2f4c0000 - 0x00007ffa2f567000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffa2e0d0000 - 0x00007ffa2e0f9000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffa2d6b0000 - 0x00007ffa2d7cb000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffa2d360000 - 0x00007ffa2d3fa000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffa2ff00000 - 0x00007ffa2ff31000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffa2a0d0000 - 0x00007ffa2a0dc000 	C:\Users\user\.jdks\jbr-17.0.12\bin\vcruntime140_1.dll
+0x00007ffa186b0000 - 0x00007ffa1873d000 	C:\Users\user\.jdks\jbr-17.0.12\bin\msvcp140.dll
+0x00007ff9cfe90000 - 0x00007ff9d0b15000 	C:\Users\user\.jdks\jbr-17.0.12\bin\server\jvm.dll
+0x00007ffa2ff40000 - 0x00007ffa2fff1000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffa2f9b0000 - 0x00007ffa2fa57000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffa2d300000 - 0x00007ffa2d328000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007ffa2f750000 - 0x00007ffa2f864000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffa0e940000 - 0x00007ffa0e949000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffa2d1d0000 - 0x00007ffa2d21d000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ffa2fbd0000 - 0x00007ffa2fc41000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffa27d50000 - 0x00007ffa27d84000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffa27090000 - 0x00007ffa2709a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffa2d1b0000 - 0x00007ffa2d1c3000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ffa2c340000 - 0x00007ffa2c358000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffa28be0000 - 0x00007ffa28bea000 	C:\Users\user\.jdks\jbr-17.0.12\bin\jimage.dll
+0x00007ffa2abc0000 - 0x00007ffa2adf2000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffa2dd40000 - 0x00007ffa2e0d0000 	C:\WINDOWS\System32\combase.dll
+0x00007ffa2e340000 - 0x00007ffa2e417000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffa14e80000 - 0x00007ffa14eb2000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffa2d400000 - 0x00007ffa2d47b000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffa28b00000 - 0x00007ffa28b25000 	C:\Users\user\.jdks\jbr-17.0.12\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\user\.jdks\jbr-17.0.12\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.4830_none_270fe7d773858e80;C:\Users\user\.jdks\jbr-17.0.12\bin\server
+
+VM Arguments:
+jvm_args: --module-path=C:\Users\user\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2-win.jar;C:\Users\user\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2.jar --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics 
+java_command: tn.esprit.tests.MainFX
+java_class_path (initial): C:\Users\user\IdeaProjects\Gymify_Project\target\classes;C:\Users\user\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\user\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\user\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\user\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 134217728                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 2116026368                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 2116026368                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Gpg4win\..\GnuPG\bin;C:\Users\user\.jdks\jbr-17.0.12\bin;C:\Program Files (x86)\GnuPG\bin;C:\Program Files\PuTTY\;C:\xampp\php;C:\xampp2024\php;C:\ProgramData\ComposerSetup\bin;C:\Users\user\scoop\shims;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\user\AppData\Roaming\Composer\vendor\bin;C:\Users\user\AppData\Local\ComposerSetup\bin;C:\Users\user\AppData\Local\GitHubDesktop\bin
+USERNAME=user
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
+TMP=C:\Users\user\AppData\Local\Temp
+TEMP=C:\Users\user\AppData\Local\Temp
+
+
+
+Periodic native trim disabled
+
+JNI global refs:
+JNI global refs: 0, weak refs: 0
+
+JNI global refs memory usage: 0, weak refs: 0
+
+OOME stack traces (most recent first):
+Classloader memory used:
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.4830)
+OS uptime: 2 days 14:31 hours
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 10 microcode 0xec, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, rtm, adx, fma, vzeroupper, clflush, clflushopt
+Processor Information for all 8 processors :
+  Max Mhz: 1896, Current Mhz: 1696, Mhz Limit: 1687
+
+Memory: 4k page, system-wide physical 8070M (236M free)
+TotalPageFile size 22879M (AvailPageFile size 18M)
+current process WorkingSet (physical memory assigned to process): 44M, peak: 44M
+current process commit charge ("private bytes"): 93M, peak: 188M
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.12+1-b1087.25) for windows-amd64 JRE (17.0.12+1-b1087.25), built on 2024-08-30 by "builduser" with MS VC++ 16.10 / 16.11 (VS2019)
+
+END.

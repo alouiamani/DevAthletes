@@ -3,10 +3,19 @@ package tn.esprit.entities;
 public class EquipeEvent {
     private int idEquipe;
     private int idEvent;
+    private Event event;  // Champ pour l'événement associé
 
+    // Constructeur avec les deux IDs
     public EquipeEvent(int idEquipe, int idEvent) {
         this.idEquipe = idEquipe;
         this.idEvent = idEvent;
+    }
+
+    // Constructeur avec l'événement complet
+    public EquipeEvent(int idEquipe, int idEvent, Event event) {
+        this.idEquipe = idEquipe;
+        this.idEvent = idEvent;
+        this.event = event;
     }
 
     public int getIdEquipe() {
@@ -25,8 +34,21 @@ public class EquipeEvent {
         this.idEvent = idEvent;
     }
 
+    // Getter et setter pour l'événement
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
     @Override
     public String toString() {
-        return "EquipeEvent{" + "idEquipe=" + idEquipe + ", idEvent=" + idEvent + '}';
+        return "EquipeEvent{" +
+                "idEquipe=" + idEquipe +
+                ", idEvent=" + idEvent +
+                ", event=" + event +  // Affichage des détails de l'événement
+                '}';
     }
 }

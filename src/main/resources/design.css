@@ -1,0 +1,28 @@
+.bg-form {
+    -fx-background-color: linear-gradient(to bottom right,   #40a8c4,#222831);
+    background-color: #1E3A8A;
+}
+
+
+.enregistrer-btn{
+    -fx-background-color: linear-gradient(to bottom right, #1E3A8A,#00A1A7);
+    -fx-text-fill: #fff;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+
+}
+
+.annuler-btn{
+    -fx-background-color: linear-gradient(to bottom right, #1E3A8A,#00A1A7);
+    -fx-text-fill: #fff;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+
+}
+
+
+
+
+
