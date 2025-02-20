@@ -20,11 +20,13 @@ public class CommentService implements IService<Comment> {
 
     @Override
     public void ajouter(Comment comment) throws SQLException {
-        String query = "INSERT INTO Comment (postId, userId, content) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Comment (postId, userId, content, createdAt) VALUES (?, ?, ?, ?)";
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, comment.getPostId());
             stmt.setInt(2, comment.getUserId());
             stmt.setString(3, comment.getContent());
+            stmt.setTimestamp(4, comment.getCreatedAt());
             stmt.executeUpdate();
         }
     }
@@ -59,5 +61,19 @@ public class CommentService implements IService<Comment> {
             }
         }
         return comments;
+    }
+
+    // Méthode pour compter le nombre de commentaires d'un post
+    public int countComments(int postId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Comment WHERE postId = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, postId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Retourner le nombre de commentaires
+                }
+            }
+        }
+        return 0; // Si aucun commentaire, retourner 0
     }
 }
