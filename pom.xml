@@ -19,11 +19,47 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+
         <dependency>
             <groupId>io.vacco.jwt</groupId>
             <artifactId>jwt</artifactId>
             <version>0.8.0</version>
         </dependency>
-    </dependencies>
+< main
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21.0.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+> gestion_Salle_Evennement
+    </dependencies>
+    <build>
+
+        <plugins>
+
+            <plugin>
+
+                <groupId>org.openjfx</groupId>
+
+                <artifactId>javafx-maven-plugin</artifactId>
+
+                <version>0.0.8</version>
+
+                <configuration>
+
+                    <mainClass>tn.gimify.tests.MainFx</mainClass>
+
+                </configuration>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
 </project>
