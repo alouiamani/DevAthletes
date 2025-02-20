@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>PROJECT.PI.DEV.GIMIFY</artifactId>
+    <artifactId>WorkshopJDBC</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -13,6 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -21,45 +22,28 @@
         </dependency>
 
         <dependency>
-            <groupId>io.vacco.jwt</groupId>
-            <artifactId>jwt</artifactId>
-            <version>0.8.0</version>
-        </dependency>
-< main
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>21.0.2</version>
         </dependency>
-> gestion_Salle_Evennement
     </dependencies>
+
     <build>
-
         <plugins>
-
             <plugin>
-
                 <groupId>org.openjfx</groupId>
-
                 <artifactId>javafx-maven-plugin</artifactId>
-
                 <version>0.0.8</version>
-
                 <configuration>
-
-                    <mainClass>tn.gimify.tests.MainFx</mainClass>
-
+                    <mainClass>tests.MainFx</mainClass>
                 </configuration>
-
             </plugin>
-
         </plugins>
-
     </build>
+
 </project>
