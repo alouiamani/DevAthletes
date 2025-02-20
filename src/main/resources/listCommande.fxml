@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.listCommande">
+    
+    <!-- Include Sidebar -->
+    <fx:include source="sidebar.fxml" />
+    
+    <!-- Main Content -->
+    <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;">
+        <children>
+            <Label layoutX="20.0" layoutY="20.0" prefHeight="35.0" prefWidth="257.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des commandes" />
+            
+            <ListView fx:id="listCommandes" layoutX="20.0" layoutY="60.0" prefHeight="400.0" prefWidth="550.0" style="-fx-background-radius: 5;">
+                <placeholder>
+                    <Label text="No orders available" />
+                </placeholder>
+            </ListView>
+            
+            <Label fx:id="labelTotal" layoutX="20.0" layoutY="470.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Totale Commande 0 €" />
+            
+            <VBox layoutX="590.0" layoutY="60.0" spacing="10">
+                <Button fx:id="btnSupprimerCommande" onAction="#supprimerCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Supprimer Commande" textFill="white" />
+                        
+                <Button onAction="#modifierStatutCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Modifier" textFill="white" />
+                        
+                <Button onAction="#retourPagePrecedente" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white" />
+            </VBox>
+        </children>
+    </AnchorPane>
+</HBox>

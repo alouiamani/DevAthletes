@@ -37,6 +37,7 @@ class CommandeProduit {
         this.quantite = quantite;
     }
 
+
     @Override
     public String toString() {
         return "CommandeProduit{" +

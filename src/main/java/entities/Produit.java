@@ -1,4 +1,5 @@
 package entities;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ public class Produit {
 
     private List<Commande> commandes = new ArrayList<>();
 
-    public Produit() {}
+    public Produit() {
+    }
 
     public Produit(int id_p, String nom_p, float prix_p, int stock_p, String categorie_p) {
         this.id_p = id_p;

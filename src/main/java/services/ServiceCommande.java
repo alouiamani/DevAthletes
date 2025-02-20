@@ -36,7 +36,7 @@ public class ServiceCommande implements IService<Commande> {
     public List<Commande> afficher() throws SQLException {
         List<Commande> commandes = new ArrayList<>();
         String req = "SELECT * FROM commande";
-
+// statment plus rapide
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(req)) {
 
@@ -103,6 +103,21 @@ public class ServiceCommande implements IService<Commande> {
             System.out.println("Total de la commande mis à jour avec succès !");
         }
     }
+// preperestatment protuction contre sql ingection
+    public void modifierStatut(int commandeId, String nouveauStatut) throws SQLException {
+        String req = "UPDATE commande SET statut_c = ? WHERE id_c = ?";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setString(1, nouveauStatut);
+            preparedStatement.setInt(2, commandeId);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Statut de la commande mis à jour avec succès !");
+            } else {
+                System.out.println("Aucune commande trouvée avec cet ID.");
+            }
+        }
+    }
 
 }

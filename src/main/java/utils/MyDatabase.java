@@ -11,7 +11,7 @@ public class MyDatabase {
     final String USERNAME="root";
     final String PASSWORD="";
     Connection connection;
-
+//singleton
     static MyDatabase instance;
 
     private MyDatabase(){
@@ -22,7 +22,7 @@ public class MyDatabase {
             System.out.println(e.getMessage());
         }
     }
-
+// singleton
     public static   MyDatabase getInstance(){
         if (instance==null){
             instance= new MyDatabase();

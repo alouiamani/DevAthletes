@@ -14,14 +14,14 @@ public class Main {
         ServiceCommande serviceCommande = new ServiceCommande();
 
         // Création d'un produit
-        Produit p1 = new Produit("vitamine", 300, 40, "complement");
+        Produit p1 = new Produit("CREAA", 150, 30, "complement");
 
         // Variables pour stocker les IDs
-        int produitId = 1;
+        int produitId = -1;
         int commandeId = -1;
 
         try {
-         /*   // Ajouter un produit
+           // Ajouter un produit
             serviceProduit.ajouter(p1);
             System.out.println("Produit ajouté avec succès !");
 
@@ -32,14 +32,14 @@ public class Main {
                     break;
                 }
             }
-            // modifier poduit
+          /*  // modifier poduit
             Produit updatedProduit = new Produit(produitId, "Creatine Pro", 120, 90, "complement amélioré");
             serviceProduit.modifier(updatedProduit);*/
 
-            serviceProduit.supprimer(produitId);
-            System.out.println("Produit supprimé avec succès !");
+         /*   serviceProduit.supprimer(produitId);
+            System.out.println("Produit supprimé avec succès !");*/
 
-          /*  if (produitId != -1) {
+            if (produitId != -1) {
                 System.out.println("ID du produit ajouté : " + produitId);
 
                 // Créer une nouvelle commande
@@ -58,7 +58,7 @@ public class Main {
                 double total = serviceProduit.getPrix(produitId) * quantite;
                 serviceCommande.mettreAJourTotal(commandeId, total);
                 System.out.println("Total de la commande mis à jour avec succès !");
-            }*/
+            }
 
             // Afficher toutes les commandes
             System.out.println("\n=== Liste des commandes ===");
