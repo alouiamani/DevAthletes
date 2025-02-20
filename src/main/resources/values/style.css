@@ -1,0 +1,62 @@
+.left-side-background{
+    -fx-background-color: linear-gradient(to left, #1b2e44,#354055);
+    -fx-background-radius: 7px;
+}
+.sidebar {
+    -fx-background-color: #aacedc;
+    -fx-pref-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-padding: 16px 0;
+
+}
+.ForgetBtn{
+    -fx-text-fill: #a3a3a3;
+}
+
+.ForgetBtn:hover{
+    -fx-text-fill: #40a8c4;
+    -fx-underline: true;
+}
+.LoginBtn{
+    -fx-background-color: #bad7e6;
+    -fx-text-fill: #00212e;
+    -fx-background-radius: 5px;
+}
+.LoginBtn:hover{
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #40a8c4;
+-fx-border-color:#40a8c4 ;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 5px;
+}
+.nav-form{
+    -fx-background-color: linear-gradient(to bottom right, #40a8c4,#1b2e44 );
+}
+.nav-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 10px;
+    -fx-font-family:"Arial";
+    -fx-alignment: CENTER-LEFT;
+}
+.white-bg{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px;
+}
+.white-round-carts{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+}
+.white-round-strip{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+}
+.round-btn{
+        -fx-background-color: #f5f8ff;
+        -fx-background-radius: 100%;
+
+}

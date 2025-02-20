@@ -1,31 +1,36 @@
 package Gimify.Pi.entities;
 
-public class Entraineur extends  User{
-    private String Specialite;
+import java.util.Date;
+
+public class Entraineur extends User {
+    private String specialite;
 
 
-    public Entraineur(int id_User,String nom, String prenom, String password, String role, String email, String Specialite) {
-        super(nom, prenom, password, "Entraineur", email);
-        this.Specialite = Specialite;
+
+    // Constructeur avec ID (pour les mises à jour)
+    public Entraineur(int id_User, String nom, String prenom, String email, String password,
+                      Date dateNaissance, String imageURL, String specialite) {
+        super(id_User, nom, prenom, email, password, "Entraineur", dateNaissance, imageURL);
+        this.specialite = specialite;
     }
 
-    public Entraineur( String nom, String prenom, String email, String password, String role, String Specialite) {
-        super (nom, prenom, password, "Entraineur", email);
-        this.Specialite = Specialite;
+    // Constructeur sans ID (pour la création d'un nouvel entraîneur)
+    public Entraineur(String nom, String prenom, String email, String password,
+                      Date dateNaissance, String imageURL, String specialite) {
+        super(nom, prenom, email, password, "Entraineur", dateNaissance, imageURL);
+        this.specialite = specialite;
     }
-
-    public Entraineur(int id_User, String nom, String prenom, String email, String password, String Specialite) {
-        super (nom, prenom, password, "Entraineur", email);
-        this.Specialite = Specialite;
-    }
-
 
     public String getSpecialite() {
-        return Specialite;
+        return specialite;
     }
 
     public void setSpecialite(String specialite) {
-        Specialite = specialite;
+        this.specialite = specialite;
     }
 
+    @Override
+    public String toString() {
+        return "Entraineur{" + super.toString() + ", specialite='" + specialite + "'}";
+    }
 }

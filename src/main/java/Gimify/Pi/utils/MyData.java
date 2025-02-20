@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 public class MyData {
-    final String URL = "jdbc:mysql://localhost:3306/gimify.pi";
+    final String URL = "jdbc:mysql://localhost:3306/project_dev";
     final String USER = "root";
     final String PASSWORD = "";
     Connection connection;
@@ -15,8 +15,10 @@ public class MyData {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Connected to database");
+
         } catch (SQLException e){
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
