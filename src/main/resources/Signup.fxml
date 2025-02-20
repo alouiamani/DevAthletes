@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="606.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gimify.Pi.Controllers.SignupControllers">
+   <children>
+      <AnchorPane layoutX="-7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" stylesheets="@values/style.css">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="-14.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/logo.png" />
+               </image>
+            </ImageView>
+            <Text fill="#246b91" fontSmoothingType="LCD" layoutX="21.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+               <font>
+                  <Font name="Ebrima Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fill="#3aa4a2" fontSmoothingType="LCD" layoutX="14.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" GYMIFY" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+               <font>
+                  <Font name="Impact" size="25.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
+      <AnchorPane layoutX="254.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" styleClass="left-side-background" stylesheets="@values/style.css" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="-6.0">
+         <children>
+            <TextField fx:id="UserNameTextField" layoutX="85.0" layoutY="104.0" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #ffff;" stylesheets="@values/style.css" />
+            <TextField fx:id="EmailField" layoutX="82.0" layoutY="223.0" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #ffff;" />
+            <Button fx:id="RegisterButton" layoutX="116.0" layoutY="361.0" mnemonicParsing="false" onAction="#ButtonRegisterOnAction" prefHeight="30.0" prefWidth="162.0" styleClass="LoginBtn" stylesheets="@values/style.css" text="Register">
+               <font>
+                  <Font name="Ebrima Bold" size="13.0" />
+               </font>
+            </Button>
+            <Text fontSmoothingType="LCD" layoutX="109.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="23.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima" size="13.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="16.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima" size="13.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="23.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima" size="13.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="23.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima" size="13.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="96.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill The Form For Registration" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.4795321524143219" green="0.7033138275146484" blue="0.8631578683853149" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima Bold" size="11.0" />
+               </font>
+            </Text>
+            <PasswordField fx:id="PasswdField" layoutX="82.0" layoutY="276.0" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #fff;" />
+            <PasswordField fx:id="ConfPasswdField" layoutX="82.0" layoutY="322.0" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #ffff;" />
+            <TextField fx:id="LastNameTextField" layoutX="82.0" layoutY="166.0" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #ffff;" stylesheets="@values/style.css" />
+            <Text fontSmoothingType="LCD" layoutX="15.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" textAlignment="CENTER">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.800000011920929" green="0.800000011920929" blue="0.800000011920929" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font name="Ebrima" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
