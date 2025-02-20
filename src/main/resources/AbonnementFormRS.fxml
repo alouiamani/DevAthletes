@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -13,8 +14,10 @@
 <SplitPane dividerPositions="0.31484350790207616" prefHeight="402.0" prefWidth="647.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.AbonnementFormRSController">
    <items>
       <ImageView fitHeight="399.0" fitWidth="200.0" pickOnBounds="true" smooth="false">
-        
-      </ImageView>
+         <image>
+            <Image url="@../java/tn/gimify/assets/Capture.PNG" />
+         </image></ImageView>
+
       <AnchorPane prefHeight="400.0" prefWidth="451.0">
          <children>
             <VBox fx:id="abonnementCard" layoutX="28.0" layoutY="8.0" prefHeight="362.0" prefWidth="384.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-padding: 10;" styleClass="card">

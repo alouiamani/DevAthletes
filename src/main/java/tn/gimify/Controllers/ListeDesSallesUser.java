@@ -24,7 +24,7 @@ public class ListeDesSallesUser {
 
     private SalleService salleService = new SalleService();
     private List<Salle> allSalles; // Liste pour stocker toutes les salles
-    private PauseTransition pause = new PauseTransition(Duration.millis(300));
+    private PauseTransition pause = new PauseTransition(Duration.millis(200));
     // Cette méthode sera appelée pour afficher toutes les salles disponibles
     public void initialize() {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -56,7 +56,5 @@ public class ListeDesSallesUser {
     public void refreshList() {
         handleSearch();
     }
-
-    // Gérer la recherche
 
 }

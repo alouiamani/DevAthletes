@@ -8,12 +8,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="400.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.ListeDesSalleController">
    <top>
-      <AnchorPane prefHeight="71.0" prefWidth="600.0" style="-fx-background-color: #b6b6b6;;" stylesheets="@application.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="71.0" prefWidth="600.0" stylesheets="@application.css" BorderPane.alignment="CENTER">
          <children>
             <HBox layoutY="-1.0" prefHeight="71.0" prefWidth="600.0" stylesheets="@application.css">
                <children>
@@ -36,17 +37,21 @@
             </HBox>
          </children>
       
-      </AnchorPane>
+            </AnchorPane>
    </top>
    <center>
-      <ScrollPane prefHeight="291.0" prefWidth="576.0" stylesheets="@application.css" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="329.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <content>
-             <VBox fx:id="sallesContainer" xmlns:fx="http://javafx.com/fxml" />
+            <FlowPane prefHeight="293.0" prefWidth="587.0">
+               <children>
+                   <VBox fx:id="sallesContainer" prefHeight="291.0" prefWidth="586.0" />
+               </children>
+            </FlowPane>
          </content>
       </ScrollPane>
    </center>
    <bottom>
-      <AnchorPane prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: #b6b6b6;;" stylesheets="@application.css" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="27.0" prefWidth="600.0" stylesheets="@application.css" BorderPane.alignment="CENTER" />
    </bottom>
    <stylesheets>
       <URL value="@application.css" />

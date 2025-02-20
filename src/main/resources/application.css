@@ -25,7 +25,7 @@
 }
 
 .card {
-    -fx-background-color: #ccc9c9;
+    -fx-background-color: #e6e1e1;
     -fx-padding: 20px;
     -fx-border-radius: 20px;
     -fx-text-fill: white;
@@ -34,7 +34,7 @@
 }
 
 .card:hover {
-    -fx-background-color: #d1cece;
+    -fx-background-color: #FFFFFF;
     -fx-transform: scale(1.2); /* Exemple correct d'utilisation de scale */
 
 }

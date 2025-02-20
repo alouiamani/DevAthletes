@@ -37,7 +37,7 @@ public class ListeAbonnementRSController {
     }
 
     private void loadAbonnements() throws SQLException {
-        abonnementContainer.getChildren().clear(); // Nettoyer l'affichage avant de recharger
+        abonnementContainer.getChildren().clear(); // Nettoyer l'affichage avant de recharger (supprission)
 
         List<Abonnement> abonnements = abonnementService.afficher();
 
@@ -53,17 +53,17 @@ public class ListeAbonnementRSController {
 
         Label title = new Label("Abonnement: " + abonnement.getType_Abonnement());
         title.setFont(new Font("Arial", 18));
-        title.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+        title.setStyle("-fx-text-fill: #184311; -fx-font-weight: bold;");
 
         Label dateDebut = new Label("Début: " + abonnement.getDate_Début());
         Label dateFin = new Label("Fin: " + abonnement.getDate_Fin());
-        Label tarif = new Label("Tarif: " + abonnement.getTarif() + " €");
+        Label tarif = new Label("Tarif: " + abonnement.getTarif() + " DT");
 
         Button editButton = new Button("Modifier");
         editButton.setOnAction(e -> handleEditAbonnement(abonnement));
 
         Button deleteButton = new Button("Supprimer");
-        deleteButton.setStyle("-fx-background-color: #f1600d; -fx-text-fill: white;");
+        deleteButton.setStyle("-fx-background-color: #b80d1b; -fx-text-fill: white;");
         deleteButton.setOnAction(e -> handleDeleteAbonnement(abonnement.getId_Abonnement()));
 
         HBox buttonBox = new HBox(10, editButton, deleteButton);
@@ -72,7 +72,7 @@ public class ListeAbonnementRSController {
         card.getChildren().addAll(title, dateDebut, dateFin, tarif, buttonBox);
         return card;
     }
-@FXML
+    @FXML
     private void handleEditAbonnement(Abonnement abonnement) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementFormRS.fxml"));
@@ -90,16 +90,16 @@ public class ListeAbonnementRSController {
     }
     @FXML
     private void handleAddAbonnement() {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementFormRS.fxml"));
-                Parent root = loader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Ajouter une abonnement");
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }}
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementFormRS.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter une abonnement");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
 
     private void handleDeleteAbonnement(int id) {
         try {

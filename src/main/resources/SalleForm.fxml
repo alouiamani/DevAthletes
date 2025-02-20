@@ -20,9 +20,7 @@
       <AnchorPane prefHeight="398.0" prefWidth="211.0">
          <children>
             <ImageView fitHeight="398.0" fitWidth="202.0" layoutY="2.0" pickOnBounds="true" smooth="false">
-               <image>
-                  <Image url="@../../../../../Downloads/Capture.PNG" />
-               </image>
+
             </ImageView>
          </children>
       </AnchorPane>

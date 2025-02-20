@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.SalleCardController">
+<AnchorPane prefHeight="361.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.gimify.Controllers.SalleCardController">
    <children>
-      <HBox layoutX="52.0" layoutY="71.0" prefHeight="243.0" prefWidth="519.0" style="-fx-background-color: #ffffff;" styleClass="card">
+      <HBox layoutX="49.0" layoutY="35.0" prefHeight="243.0" prefWidth="519.0" style="-fx-background-color: #ffffff;" styleClass="card">
          <children>
             <ImageView fx:id="salleImageView" fitHeight="88.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -20,7 +20,7 @@
                </HBox.margin></ImageView>
             <VBox prefHeight="202.0" prefWidth="338.0" styleClass="card" stylesheets="@application.css">
                <children>
-                  <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
+                  <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -38,7 +38,7 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="numTelLabel" text="Numéro de téléphone">
+                  <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a">
                      <padding>
                         <Insets bottom="2.0" />
                      </padding>
@@ -58,11 +58,10 @@
             </VBox>
          </children>
       </HBox>
-      <HBox layoutX="136.0" layoutY="322.0" prefHeight="36.0" prefWidth="346.0">
+      <HBox layoutX="182.0" layoutY="290.0" prefHeight="36.0" prefWidth="286.0">
          <children>
-            <Button fx:id="modifierBtn" prefHeight="36.0" prefWidth="118.0" onAction="#modifierSalle" text="Modifier" />
+            <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="36.0" prefWidth="118.0" style="-fx-background-color: #e7540b;" text="Modifier" textFill="#fcfaf9" />
             <Button fx:id="supprimerBtn" mnemonicParsing="false" onAction="#supprimerSalle" text=" 🗑 Supprimer" />
-            <Button fx:id="detailsBtn" mnemonicParsing="false" onAction="#DetailsSalle" text="📄 Détails" />
          </children>
       </HBox>
    </children>

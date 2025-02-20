@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import tn.gimify.entities.Salle;
@@ -22,14 +23,13 @@ public class SalleCardController {
     @FXML private Label detailsLabel;
     @FXML private Button modifierBtn;
     @FXML private Button supprimerBtn;
-    @FXML private Button detailsBtn;
     @FXML private ImageView salleImageView;
 
     private Salle salle;
     private SalleService salleService = new SalleService();
     private ListeDesSalleController parentController;
 
-    public void setSalleData(Salle salle, ListeDesSallesUser parentController) {
+    public void setSalleData(Salle salle, ListeDesSalleController parentController) {
         this.salle = salle;
 
 
@@ -40,6 +40,11 @@ public class SalleCardController {
         detailsLabel.setText(salle.getDetails() );
         numTelLabel.setText(salle.getNum_tel() );
         emailLabel.setText(salle.getEmail() );
+        if (salle.getUrl_photo() != null && !salle.getUrl_photo().isEmpty()) {
+            salleImageView.setImage(new Image(salle.getUrl_photo(), true));
+        } else {
+            salleImageView.setImage(new Image("/images/default-image.png", true)); // Image par défaut
+        }
 
         modifierBtn.setOnAction(e -> modifierSalle());
         supprimerBtn.setOnAction(e -> supprimerSalle());
@@ -50,9 +55,10 @@ public class SalleCardController {
         try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
         Parent root = loader.load();
-
+            SalleFormAdminController controller = loader.getController();
+            controller.chargerSalle(salle);
             Stage stage = new Stage();
-            stage.setTitle("Ajouter un Abonnement");
+            stage.setTitle("Modifier un Sallle");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -70,19 +76,6 @@ public class SalleCardController {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void DetailsSalle() {
-        // Show the details of the salle
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleDetails.fxml"));
-            Parent root = loader.load();
-            // Pass data to the controller if needed
-            Stage stage = new Stage();
-            stage.setTitle("Details de la Salle");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }

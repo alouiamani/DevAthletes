@@ -49,7 +49,7 @@ public class ListeDesSalleController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCard.fxml"));
                 Parent salleCard = loader.load();
-                SalleCardUserController controller = loader.getController();
+                SalleCardController controller = loader.getController();
                 controller.setSalleData(salle, this);
                 sallesContainer.getChildren().add(salleCard);
             } catch (IOException e) {

@@ -15,7 +15,7 @@
         <URL value="@application.css" />
     </stylesheets>
    <children>
-      <HBox layoutX="25.0" layoutY="127.0" prefHeight="190.0" prefWidth="543.0" styleClass="card">
+      <HBox layoutX="31.0" layoutY="40.0" prefHeight="190.0" prefWidth="543.0" styleClass="card">
          <children>
             <ImageView fx:id="salleImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="image-round">
                <HBox.margin>
