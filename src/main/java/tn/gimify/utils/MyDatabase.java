@@ -29,7 +29,7 @@ public class MyDatabase {
         return instance;
     }
 
-    public Connection getConnection() {
+    public  Connection getConnection() {
         return connection;
     }
 }

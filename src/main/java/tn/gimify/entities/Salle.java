@@ -1,7 +1,5 @@
 package tn.gimify.entities;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,31 +10,38 @@ public class Salle {
     private String details;
     private String num_tel;
     private String email;
-
+private String url_photo;
     private List<Abonnement> abonnements;
 
-    public Salle() {}
+    public Salle(int idSalle, String nom, String adresse, String numTel, String email,String url_photo) {}
 
-    public Salle(int id_Salle , String nom, String adresse, String details, String num_tel, String email) {
+    public Salle(int id_Salle , String nom, String adresse, String details, String num_tel, String email,String url_photo) {
         this.id_Salle = id_Salle;
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
         this.num_tel = num_tel;
         this.email = email;
+        this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
 
 
     }
 
-    public Salle(String nom, String adresse, String details, String num_tel, String email) {
+    public Salle(String nom, String adresse, String details, String num_tel, String email,String url_photo) {
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
         this.num_tel = num_tel;
         this.email = email;
+        this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
     }
+
+    public Salle() {
+
+    }
+
     public int getId_Salle() {
         return id_Salle;
     }
@@ -72,6 +77,12 @@ public class Salle {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getUrl_photo() {
+        return url_photo;
+    }
+    public void setUrl_photo(String url_photo) {
+        this.url_photo = url_photo;
     }
     public List<Abonnement> getAbonnements() { return abonnements; }
     public void addAbonnement(Abonnement abonnement) { abonnements.add(abonnement); abonnement.setSalle(this); }
