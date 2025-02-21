@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MyDataBase {
-    final String URL = "jdbc:mysql://localhost:3306/gymify_db";
+    final String URL = "jdbc:mysql://localhost:3306/gymify_base";
     final String USER = "root";
     final String PASSWORD = "";
     Connection connection ;

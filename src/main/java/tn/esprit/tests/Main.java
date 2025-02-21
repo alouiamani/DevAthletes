@@ -20,16 +20,16 @@ public class Main {
         EquipeEventService equipeEventService = new EquipeEventService();
 
         // Création d'événements avec l'attribut reward non null et type enum EventType
-        Event e1 = new Event(119, "Tournoi de Basketsirine", "Gymnase Central", LocalDate.of(2025, 3, 20),
+        Event e1 = new Event(1, "Tournoi de Basketsirine", "Gymnase Central", LocalDate.of(2025, 3, 20),
                LocalTime.of(14, 0), LocalTime.of(16, 0), EventType.COMPETITION,
                  "Un grand tournoi avec plusieurs équipes", "téléchargement.jpg", "Trophée de la victoire");
 
-        Event e2 = new Event(80, "Yoga & Méditation sirine", "Parc Municipal", LocalDate.of(2025, 4, 10),
+        Event e2 = new Event(2, "Yoga & Méditation sirine", "Parc Municipal", LocalDate.of(2025, 4, 10),
                 LocalTime.of(9, 0), LocalTime.of(10, 50), EventType.ENTRAINEMENT,
                "Séance de yoga en plein air avec un coach expert", "yoga_event.jpg", "Certificat de participation");
 
-        Equipe eq1 = new Equipe(27, "Équipe Alpha");
-        Equipe eq2 = new Equipe(4, "Équipe Beta");
+        Equipe eq1 = new Equipe(1, "Équipe Alpha");
+        Equipe eq2 = new Equipe(2, "Équipe Beta");
 
         try {
              //Ajouter les événements
@@ -45,7 +45,7 @@ public class Main {
             }
 
             // Modifier l'événement Basket
-            eventService.modifier(e1);
+            //eventService.modifier(e1);
             System.out.println("\nListe des événements après modification de l'événement Basket :");
             events = eventService.afficher();
             for (Event e : events) {
@@ -66,7 +66,7 @@ public class Main {
 
             // Modifier l'équipe Alpha
             eq1.setNom("Équipe Alpha Modifiée");
-            equipeService.modifier(eq1);
+            //equipeService.modifier(eq1);
             System.out.println("\nListe des équipes après modification de l'équipe Alpha :");
             equipes = equipeService.afficher();
             for (Equipe eq : equipes) {
@@ -85,8 +85,8 @@ public class Main {
             }
 
             // Modifier l'association Équipe-Événement
-            equipeEventService.supprimer(eq1, e1);  // Supprimer l'association existante
-            equipeEventService.ajouter(eq2, e2);   // Ajouter une nouvelle association
+           // equipeEventService.supprimer(eq1, e1);  // Supprimer l'association existante
+            //equipeEventService.ajouter(eq2, e2);   // Ajouter une nouvelle association
             System.out.println("\nListe des associations après modification :");
             equipeEvents = equipeEventService.afficher();
             for (EquipeEvent equipeEvent : equipeEvents) {
@@ -95,7 +95,7 @@ public class Main {
 
             // Suppression de l'événement Basket
             System.out.println("\nSuppression de l'événement Basket...");
-            eventService.supprimer(e1.getId());  // Passer l'ID de l'événement pour la suppression
+            //eventService.supprimer(e1.getId());  // Passer l'ID de l'événement pour la suppression
 
             // Afficher les événements après suppression
             System.out.println("\nListe des événements après suppression :");
@@ -106,7 +106,7 @@ public class Main {
 
             // Suppression de l'équipe Alpha
             System.out.println("\nSuppression de l'équipe Alpha...");
-            equipeService.supprimer(eq1.getId());  // Passer l'ID de l'équipe pour la suppression
+            //equipeService.supprimer(eq1.getId());  // Passer l'ID de l'équipe pour la suppression
 
             // Afficher les équipes après suppression
             System.out.println("\nListe des équipes après suppression :");
