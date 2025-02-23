@@ -9,6 +9,7 @@ public class Produit {
     private float prix_p;
     private int stock_p;
     private String categorie_p;
+    private String image_path;
 
     private List<Commande> commandes = new ArrayList<>();
 
@@ -28,6 +29,23 @@ public class Produit {
         this.prix_p = prix_p;
         this.stock_p = stock_p;
         this.categorie_p = categorie_p;
+    }
+
+    public Produit(String nom_p, float prix_p, int stock_p, String categorie_p, String image_path) {
+        this.nom_p = nom_p;
+        this.prix_p = prix_p;
+        this.stock_p = stock_p;
+        this.categorie_p = categorie_p;
+        this.image_path = image_path;
+    }
+
+    public Produit(int id_p, String nom_p, float prix_p, int stock_p, String categorie_p, String image_path) {
+        this.id_p = id_p;
+        this.nom_p = nom_p;
+        this.prix_p = prix_p;
+        this.stock_p = stock_p;
+        this.categorie_p = categorie_p;
+        this.image_path = image_path;
     }
 
     public int getId_p() {
@@ -70,6 +88,14 @@ public class Produit {
         this.categorie_p = categorie_p;
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
     public void ajouterCommande(Commande commande) {
         this.commandes.add(commande);
     }
@@ -86,6 +112,7 @@ public class Produit {
                 ", prix_p=" + prix_p +
                 ", stock_p=" + stock_p +
                 ", categorie_p='" + categorie_p + '\'' +
+                ", image_path='" + image_path + '\'' +
                 '}';
     }
 }

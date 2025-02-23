@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.listProduitFront">
     
@@ -13,21 +14,28 @@
     <fx:include source="sidebar.fxml" />
     
     <!-- Main Content -->
-    <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;">
+    <AnchorPane prefHeight="669.0" prefWidth="898.0" style="-fx-background-color: white;">
         <children>
-            <Label layoutX="20.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des produit" />
+            <Label layoutX="20.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des produits" />
             
-            <ListView fx:id="listProduits" layoutX="20.0" layoutY="60.0" prefHeight="400.0" prefWidth="550.0" style="-fx-background-radius: 5;">
+            <ListView fx:id="listProduits" layoutX="20.0" layoutY="60.0" prefHeight="609.0" prefWidth="634.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
                 <placeholder>
-                    <Label text="No products available" />
+                    <Label text="Aucun produit disponible" />
                 </placeholder>
             </ListView>
             
-            <VBox layoutX="590.0" layoutY="60.0" spacing="10">
-                        
-                <Button fx:id="addOrderBtn" onAction="#ajouterCommandeDepuisProduit" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Ajouter Commande" textFill="white" />
-                        
-                <Button fx:id="ordersListBtn" onAction="#afficherListeCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Liste Commande" textFill="white" />
+            <VBox layoutX="713.0" layoutY="213.0" prefWidth="150.0" spacing="10">
+                <Button fx:id="addOrderBtn" onAction="#ajouterCommandeDepuisProduit" prefHeight="61.0" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Commander" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                
+                   <Button fx:id="ordersListBtn" onAction="#afficherListeCommande" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Vos Commandes" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
             </VBox>
         </children>
     </AnchorPane>

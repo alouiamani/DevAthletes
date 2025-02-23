@@ -16,23 +16,24 @@ public class ServiceProduit implements IService<Produit> {
 
     @Override
     public int ajouter(Produit produit) throws SQLException {
-        String query = "INSERT INTO produit (nom_p, prix_p, stock_p, categorie_p) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement pstmt = MyDatabase.getInstance().getConnection().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, produit.getNom_p());
-            pstmt.setDouble(2, produit.getPrix_p());
-            pstmt.setInt(3, produit.getStock_p());
-            pstmt.setString(4, produit.getCategorie_p());
-            pstmt.executeUpdate();
+        String req = "INSERT INTO produit (nom_p, prix_p, stock_p, categorie_p, image_path) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, produit.getNom_p());
+            ps.setFloat(2, produit.getPrix_p());
+            ps.setInt(3, produit.getStock_p());
+            ps.setString(4, produit.getCategorie_p());
+            ps.setString(5, produit.getImage_path());
+            ps.executeUpdate();
 
-            ResultSet rs = pstmt.getGeneratedKeys();
+            // Get the generated ID
+            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                return rs.getInt(1); // Retourne l'ID généré
+                return rs.getInt(1);
             } else {
-                throw new SQLException("Erreur lors de la génération de l'ID du produit.");
+                throw new SQLException("Creating product failed, no ID obtained.");
             }
         }
     }
-
 
     @Override
     public void supprimer(int id) throws SQLException {
@@ -50,22 +51,17 @@ public class ServiceProduit implements IService<Produit> {
         }
     }
 
+    @Override
     public void modifier(Produit produit) throws SQLException {
-        String req = "UPDATE produit SET nom_p = ?, prix_p = ?, stock_p = ?, categorie_p = ? WHERE id_p = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
-            preparedStatement.setString(1, produit.getNom_p());
-            preparedStatement.setFloat(2, produit.getPrix_p());
-            preparedStatement.setInt(3, produit.getStock_p());
-            preparedStatement.setString(4, produit.getCategorie_p());
-            preparedStatement.setInt(5, produit.getId_p());
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Produit modifié avec succès !");
-            } else {
-                System.out.println("Aucun produit trouvé avec cet ID.");
-            }
+        String req = "UPDATE produit SET nom_p=?, prix_p=?, stock_p=?, categorie_p=?, image_path=? WHERE id_p=?";
+        try (PreparedStatement ps = connection.prepareStatement(req)) {
+            ps.setString(1, produit.getNom_p());
+            ps.setFloat(2, produit.getPrix_p());
+            ps.setInt(3, produit.getStock_p());
+            ps.setString(4, produit.getCategorie_p());
+            ps.setString(5, produit.getImage_path());
+            ps.setInt(6, produit.getId_p());
+            ps.executeUpdate();
         }
     }
 
@@ -73,23 +69,23 @@ public class ServiceProduit implements IService<Produit> {
     public List<Produit> afficher() throws SQLException {
         List<Produit> produits = new ArrayList<>();
         String req = "SELECT * FROM produit";
-
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(req)) {
-
-            while (resultSet.next()) {
-                Produit produit = new Produit(
-                        resultSet.getInt("id_p"),
-                        resultSet.getString("nom_p"),
-                        resultSet.getFloat("prix_p"),
-                        resultSet.getInt("stock_p"),
-                        resultSet.getString("categorie_p")
+             ResultSet rs = statement.executeQuery(req)) {
+            while (rs.next()) {
+                Produit p = new Produit(
+                    rs.getInt("id_p"),
+                    rs.getString("nom_p"),
+                    rs.getFloat("prix_p"),
+                    rs.getInt("stock_p"),
+                    rs.getString("categorie_p"),
+                    rs.getString("image_path")
                 );
-                produits.add(produit);
+                produits.add(p);
             }
         }
         return produits;
     }
+
     public double getPrix(int produitId) throws SQLException {
         String query = "SELECT prix_p FROM produit WHERE id_p = ?";
         try (PreparedStatement pstmt = MyDatabase.getInstance().getConnection().prepareStatement(query)) {
@@ -102,5 +98,4 @@ public class ServiceProduit implements IService<Produit> {
             }
         }
     }
-
 }

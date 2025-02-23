@@ -13,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.File;
 
 import services.ServiceProduit;
 import services.ServiceCommande;
@@ -32,29 +35,18 @@ public class listProduit implements Initializable {
     @FXML
     private Button MAFButton;
 
+    @FXML
+    private ImageView productImageView;
+
     private final ServiceProduit serviceProduit = new ServiceProduit();
     private final ServiceCommande serviceCommande = new ServiceCommande();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Customize the ListView cell factory to control how products are displayed
-        listProduits.setCellFactory(param -> new ListCell<Produit>() {
-            @Override
-            protected void updateItem(Produit produit, boolean empty) {
-                super.updateItem(produit, empty);
-                if (empty || produit == null) {
-                    setText(null);
-                } else {
-                    // Customize the display format here
-                    setText(String.format("Nom: %s | Prix: %.2f€ | Stock: %d | Catégorie: %s",
-                            produit.getNom_p(),
-                            produit.getPrix_p(),
-                            produit.getStock_p(),
-                            produit.getCategorie_p()));
-                }
-            }
-        });
+        // Set custom cell factory
+        listProduits.setCellFactory(param -> new ProductListCell());
         
+        // Load products
         loadProduits();
     }
 

@@ -46,24 +46,8 @@ public class listProduitFront implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Customize the ListView cell factory to control how products are displayed
-        listProduits.setCellFactory(param -> new ListCell<Produit>() {
-            @Override
-            protected void updateItem(Produit produit, boolean empty) {
-                super.updateItem(produit, empty);
-                if (empty || produit == null) {
-                    setText(null);
-                } else {
-                    // Customize the display format here
-                    setText(String.format("Nom: %s | Prix: %.2f€ | Stock: %d | Catégorie: %s",
-                            produit.getNom_p(),
-                            produit.getPrix_p(),
-                            produit.getStock_p(),
-                            produit.getCategorie_p()));
-                }
-            }
-        });
-        
+        // Set custom cell factory to use ProductListCell
+        listProduits.setCellFactory(param -> new ProductListCell());
         loadProduits();
     }
 
@@ -74,6 +58,7 @@ public class listProduitFront implements Initializable {
             listProduits.setItems(observableList);
         } catch (SQLException e) {
             e.printStackTrace();
+            afficherErreur("Erreur", "Impossible de charger les produits.", e.getMessage());
         }
     }
 

@@ -14,17 +14,18 @@ public class ServiceCommande implements IService<Commande> {
     }
 
 
+    @Override
     public int ajouter(Commande commande) throws SQLException {
-        String query = "INSERT INTO commande (total_c, statut_c) VALUES (?, ?)";
-        try (PreparedStatement pstmt = MyDatabase.getInstance().getConnection().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        String query = "INSERT INTO commande (total_c, statut_c, dateC) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setDouble(1, commande.getTotal_c());
             pstmt.setString(2, commande.getStatut_c());
+            pstmt.setDate(3, commande.getDateC());
             pstmt.executeUpdate();
 
-            // Récupérer l'ID généré
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                return rs.getInt(1); // Retourner l'ID de la commande insérée
+                return rs.getInt(1);
             } else {
                 throw new SQLException("Erreur lors de la génération de l'ID de la commande.");
             }
@@ -36,7 +37,6 @@ public class ServiceCommande implements IService<Commande> {
     public List<Commande> afficher() throws SQLException {
         List<Commande> commandes = new ArrayList<>();
         String req = "SELECT * FROM commande";
-// statment plus rapide
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(req)) {
 
@@ -44,7 +44,8 @@ public class ServiceCommande implements IService<Commande> {
                 Commande commande = new Commande(
                         resultSet.getInt("id_c"),
                         resultSet.getFloat("total_c"),
-                        resultSet.getString("statut_c")
+                        resultSet.getString("statut_c"),
+                        resultSet.getDate("dateC")
                 );
                 commandes.add(commande);
             }
@@ -68,20 +69,16 @@ public class ServiceCommande implements IService<Commande> {
         }
     }
 
+    @Override
     public void modifier(Commande commande) throws SQLException {
-        String req = "UPDATE commande SET total_c = ?, statut_c = ? WHERE id_c = ?";
-
+        String req = "UPDATE commande SET total_c = ?, statut_c = ?, dateC = ? WHERE id_c = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setFloat(1, commande.getTotal_c());
             preparedStatement.setString(2, commande.getStatut_c());
-            preparedStatement.setInt(3, commande.getId_c());
+            preparedStatement.setDate(3, commande.getDateC());
+            preparedStatement.setInt(4, commande.getId_c());
 
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Commande mise à jour avec succès !");
-            } else {
-                System.out.println("Aucune commande trouvée avec cet ID.");
-            }
+            preparedStatement.executeUpdate();
         }
     }
     public void ajouterCommandeProduit(int commandeId, int produitId, int quantite) throws SQLException {

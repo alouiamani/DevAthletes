@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -36,23 +37,23 @@
                 
                 <HBox alignment="CENTER_LEFT" spacing="20">
                     <Label style="-fx-font-size: 14px;" text="Category        :" />
-                    <TextField fx:id="catP" prefWidth="300.0" />
+                    <ComboBox fx:id="catP" prefWidth="300.0" />
                 </HBox>
             </VBox>
              
-                <HBox alignment="CENTER_LEFT" layoutX="37.0" layoutY="300.0" spacing="20">
-                 <Button fx:id="modifierBtn" onAction="#modifierProduit" style="-fx-background-color: #1e2a3a;" text="Modifier Produit" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
+            <HBox alignment="CENTER_LEFT" layoutX="37.0" layoutY="300.0" spacing="20">
+                <Button fx:id="modifierBtn" onAction="#modifierProduit" style="-fx-background-color: #1e2a3a;" text="Modifier Produit" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
                  
-                          <Button onAction="#afficherListeProduits" style="-fx-background-color: #1e2a3a;" text="Retour " textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-             </HBox>
+                <Button onAction="#afficherListeProduits" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </HBox>
         </children>
     </AnchorPane>
 </HBox>

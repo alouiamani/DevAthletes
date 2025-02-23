@@ -39,9 +39,10 @@ public class listCommandeFront {
                 if (empty || commande == null) {
                     setText(null);
                 } else {
-                    setText(String.format("Total: %.2f€ | Statut: %s",
+                    setText(String.format("Total: %.2f€ | Statut: %s | Date: %s",
                             commande.getTotal_c(),
-                            commande.getStatut_c()));
+                            commande.getStatut_c(),
+                            commande.getDateC().toString()));
                 }
             }
         });

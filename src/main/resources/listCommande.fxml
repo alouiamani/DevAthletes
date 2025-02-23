@@ -13,24 +13,24 @@
     <fx:include source="sidebar.fxml" />
     
     <!-- Main Content -->
-    <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;">
+    <AnchorPane prefHeight="756.0" prefWidth="800.0" style="-fx-background-color: white;">
         <children>
             <Label layoutX="20.0" layoutY="20.0" prefHeight="35.0" prefWidth="257.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des commandes" />
             
-            <ListView fx:id="listCommandes" layoutX="20.0" layoutY="60.0" prefHeight="400.0" prefWidth="550.0" style="-fx-background-radius: 5;">
+            <ListView fx:id="listCommandes" layoutX="20.0" layoutY="60.0" prefHeight="637.0" prefWidth="550.0" style="-fx-background-radius: 5;">
                 <placeholder>
                     <Label text="No orders available" />
                 </placeholder>
             </ListView>
             
-            <Label fx:id="labelTotal" layoutX="20.0" layoutY="470.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Totale Commande 0 €" />
+            <Label fx:id="labelTotal" layoutX="14.0" layoutY="700.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Totale Commande 0 €" />
             
-            <VBox layoutX="590.0" layoutY="60.0" spacing="10">
-                <Button fx:id="btnSupprimerCommande" onAction="#supprimerCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Supprimer Commande" textFill="white" />
+            <VBox layoutX="594.0" layoutY="208.0" prefHeight="155.0" prefWidth="150.0" spacing="10">
+                <Button fx:id="btnSupprimerCommande" onAction="#supprimerCommande" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Supprimer Commande" textFill="white" />
                         
-                <Button onAction="#modifierStatutCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Modifier" textFill="white" />
+                <Button onAction="#modifierStatutCommande" prefHeight="49.0" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Modifier" textFill="white" />
                         
-                <Button onAction="#retourPagePrecedente" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white" />
+                <Button onAction="#retourPagePrecedente" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white" />
             </VBox>
         </children>
     </AnchorPane>

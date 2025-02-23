@@ -14,41 +14,46 @@
     <fx:include source="sidebar.fxml" />
     
     <!-- Main Content -->
-    <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;">
+    <AnchorPane prefHeight="729.0" prefWidth="876.0" style="-fx-background-color: white;">
         <children>
             <Label layoutX="20.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des produit" />
             
-            <ListView fx:id="listProduits" layoutX="20.0" layoutY="60.0" prefHeight="400.0" prefWidth="550.0" style="-fx-background-radius: 5;">
+            <ListView fx:id="listProduits" layoutX="20.0" layoutY="60.0" prefHeight="671.0" prefWidth="650.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
                 <placeholder>
                     <Label text="No products available" />
                 </placeholder>
             </ListView>
             
-            <VBox layoutX="590.0" layoutY="60.0" spacing="10">
-                <Button fx:id="MAFButton" onAction="#retourAjouterProduit" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Ajouter Produit" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+            <VBox layoutX="700.0" layoutY="186.0" prefHeight="190.0" prefWidth="160.0" spacing="10">
+                <Button fx:id="MAFButton" onAction="#retourAjouterProduit" prefHeight="30.0" prefWidth="161.0" style="-fx-background-color: #1e2a3a;" text="Ajouter Produit" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
                         
-                <Button onAction="#ajouterCommandeDepuisProduit" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Ajouter Commande" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                <Button onAction="#ajouterCommandeDepuisProduit" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #1e2a3a;" text="Ajouter Au Commande" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
                         
-                <Button onAction="#modifierProduit" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Modifier Produit" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                <Button onAction="#modifierProduit" prefHeight="30.0" prefWidth="167.0" style="-fx-background-color: #1e2a3a;" text="Modifier Produit" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
                         
-                <Button onAction="#supprimerProduit" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Supprimer Produit" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                <Button onAction="#supprimerProduit" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: #1e2a3a;" text="Supprimer Produit" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
                         
-                <Button onAction="#afficherListeCommande" prefWidth="150.0" style="-fx-background-color: #1e2a3a;" text="Liste Commande" textFill="white">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                <Button onAction="#afficherListeCommande" prefHeight="30.0" prefWidth="161.0" style="-fx-background-color: #1e2a3a;" text="Vos Commande" textFill="white">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
             </VBox>
         </children>
     </AnchorPane>

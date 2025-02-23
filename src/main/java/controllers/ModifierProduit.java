@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 import services.ServiceProduit;
 
@@ -17,7 +19,11 @@ import java.sql.SQLException;
 public class ModifierProduit {
 
     @FXML
-    private TextField nomP, prixP, stockP, catP;
+    private TextField nomP, prixP, stockP;
+    
+    @FXML
+    private ComboBox<String> catP;
+    
     @FXML
     private Button modifierBtn;
 
@@ -29,7 +35,7 @@ public class ModifierProduit {
         nomP.setText(produit.getNom_p());
         prixP.setText(String.valueOf(produit.getPrix_p()));
         stockP.setText(String.valueOf(produit.getStock_p()));
-        catP.setText(produit.getCategorie_p());
+        catP.setValue(produit.getCategorie_p());
     }
 
     @FXML
@@ -45,15 +51,38 @@ public class ModifierProduit {
             // Keep the original name, only update other fields
             produit.setPrix_p(prix);
             produit.setStock_p(stock);
-            produit.setCategorie_p(catP.getText().trim());
+            produit.setCategorie_p(catP.getValue());
 
             serviceProduit.modifier(produit);
             showAlert("Succès", "Produit modifié avec succès !");
-            afficherListeProduits(); // Return to product list after successful modification
+            afficherListeProduits();
 
         } catch (SQLException e) {
             showAlert("Erreur", "Problème de base de données : " + e.getMessage());
         }
+    }
+
+    @FXML
+    public void initialize() {
+        // Initialize the ComboBox with categories
+        catP.setItems(FXCollections.observableArrayList(
+            "complement",
+            "clothes",
+            "accessoire"
+        ));
+        
+        // Add other existing listeners
+        prixP.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("^\\d*\\.?\\d*$")) {
+                prixP.setText(oldValue);
+            }
+        });
+
+        stockP.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                stockP.setText(oldValue);
+            }
+        });
     }
 
     private boolean validateInputs() {
@@ -94,41 +123,12 @@ public class ModifierProduit {
         }
 
         // Validate Category
-        String categorie = catP.getText().trim();
-        if (categorie.isEmpty()) {
-            showAlert("Erreur", "La catégorie ne peut pas être vide.");
-            return false;
-        }
-        if (!categorie.matches("^[a-zA-Z\\s]{3,30}$")) {
-            showAlert("Erreur", "La catégorie doit contenir entre 3 et 30 lettres.");
+        if (catP.getValue() == null) {
+            showAlert("Erreur", "Veuillez sélectionner une catégorie.");
             return false;
         }
 
         return true;
-    }
-
-    @FXML
-    public void initialize() {
-        // Disable the name field since it shouldn't be modified
-        nomP.setDisable(true);
-        
-        prixP.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("^\\d*\\.?\\d*$")) {
-                prixP.setText(oldValue);
-            }
-        });
-
-        stockP.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                stockP.setText(oldValue);
-            }
-        });
-
-        catP.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("^[a-zA-Z\\s]*$")) {
-                catP.setText(oldValue);
-            }
-        });
     }
 
     @FXML
@@ -155,6 +155,6 @@ public class ModifierProduit {
         nomP.clear();
         prixP.clear();
         stockP.clear();
-        catP.clear();
+        catP.setValue(null);
     }
 }

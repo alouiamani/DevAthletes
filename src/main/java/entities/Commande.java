@@ -1,24 +1,28 @@
 package entities;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class Commande {
     private int id_c;
     private float total_c;
     private String statut_c;
+    private Date dateC;
     private List<CommandeProduit> commandeProduits = new ArrayList<>();
 
     public Commande() {}
 
-    public Commande(int id_c, float total_c, String statut_c) {
+    public Commande(int id_c, float total_c, String statut_c, Date dateC) {
         this.id_c = id_c;
         this.total_c = total_c;
         this.statut_c = statut_c;
+        this.dateC = dateC;
     }
 
     public Commande(float total_c, String statut_c) {
         this.total_c = total_c;
         this.statut_c = statut_c;
+        this.dateC = new Date(System.currentTimeMillis());
     }
 
     public int getId_c() {
@@ -45,6 +49,14 @@ public class Commande {
         this.statut_c = statu_c;
     }
 
+    public Date getDateC() {
+        return dateC;
+    }
+
+    public void setDateC(Date dateC) {
+        this.dateC = dateC;
+    }
+
     public List<CommandeProduit> getCommandeProduits() {
         return commandeProduits;
     }
@@ -59,6 +71,7 @@ public class Commande {
                 "id_c=" + id_c +
                 ", total_c=" + total_c +
                 ", statu_c='" + statut_c + '\'' +
+                ", dateC=" + dateC +
                 ", commandeProduits=" + commandeProduits +
                 '}';
     }
