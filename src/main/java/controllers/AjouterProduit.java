@@ -87,13 +87,14 @@ public class AjouterProduit {
 
     @FXML
     public void initialize() {
-        // Initialize the ComboBox with categories
+        // Update the categories list to remove 'clothes'
         catP.setItems(FXCollections.observableArrayList(
             "complement",
-            "clothes",
             "accessoire"
         ));
-        catP.setValue("complement"); // Set default value
+        
+        // Set default value
+        catP.setValue("complement");
         
         // Add other existing listeners
         nomP.textProperty().addListener((observable, oldValue, newValue) -> {

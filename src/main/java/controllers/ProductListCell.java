@@ -65,7 +65,7 @@ public class ProductListCell extends ListCell<Produit> {
             setGraphic(null);
         } else {
             nameLabel.setText("Nom: " + produit.getNom_p());
-            priceLabel.setText(String.format("Prix: %.2f€", produit.getPrix_p()));
+            priceLabel.setText(String.format("Prix: %.2fdt", produit.getPrix_p()));
             stockLabel.setText("Stock: " + produit.getStock_p());
             categoryLabel.setText("Catégorie: " + produit.getCategorie_p());
 

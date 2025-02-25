@@ -17,9 +17,11 @@ import services.ServiceProduit;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class listProduitFront implements Initializable {
 
@@ -27,38 +29,57 @@ public class listProduitFront implements Initializable {
     private ListView<Produit> listProduits;
     
     @FXML
-    private Button addProductBtn;
-    
-    @FXML
     private Button addOrderBtn;
-    
-    @FXML
-    private Button editProductBtn;
-    
-    @FXML
-    private Button deleteProductBtn;
     
     @FXML
     private Button ordersListBtn;
 
+    @FXML
+    private ComboBox<String> categoryFilter;
+
     private final ServiceProduit serviceProduit = new ServiceProduit();
     private final ServiceCommande serviceCommande = new ServiceCommande();
+
+    private List<Produit> allProducts = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Set custom cell factory to use ProductListCell
         listProduits.setCellFactory(param -> new ProductListCell());
+        
+        // Set default value
+        categoryFilter.setValue("Tous");
+        
+        // Add listener for category filter
+        categoryFilter.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                filterProducts();
+            }
+        });
+        
+        // Load products
         loadProduits();
     }
 
     private void loadProduits() {
         try {
-            List<Produit> produits = serviceProduit.afficher();
-            ObservableList<Produit> observableList = FXCollections.observableArrayList(produits);
-            listProduits.setItems(observableList);
+            allProducts = serviceProduit.afficher();
+            filterProducts(); // Apply initial filter
         } catch (SQLException e) {
             e.printStackTrace();
             afficherErreur("Erreur", "Impossible de charger les produits.", e.getMessage());
+        }
+    }
+
+    private void filterProducts() {
+        String category = categoryFilter.getValue();
+        if (category == null || category.equals("Tous")) {
+            listProduits.setItems(FXCollections.observableArrayList(allProducts));
+        } else {
+            List<Produit> filteredProducts = allProducts.stream()
+                .filter(p -> p.getCategorie_p().equals(category))
+                .collect(Collectors.toList());
+            listProduits.setItems(FXCollections.observableArrayList(filteredProducts));
         }
     }
 
@@ -67,7 +88,7 @@ public class listProduitFront implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterProduit.fxml"));
             Parent parent = loader.load();
-            Stage stage = (Stage) addProductBtn.getScene().getWindow();
+            Stage stage = (Stage) addOrderBtn.getScene().getWindow();
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();

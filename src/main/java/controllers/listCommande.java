@@ -34,24 +34,9 @@ public class listCommande {
 
     @FXML
     public void initialize() {
-        // Initialize the list of commands and set the cell factory
+        // Set custom cell factory
+        listCommandes.setCellFactory(param -> new CommandeListCell());
         listCommandes.setItems(observableCommandes);
-        listCommandes.setCellFactory(param -> new ListCell<Commande>() {
-            @Override
-            protected void updateItem(Commande commande, boolean empty) {
-                super.updateItem(commande, empty);
-                if (empty || commande == null) {
-                    setText(null);
-                } else {
-                    setText(String.format("Total: %.2f€ | Statut: %s | Date: %s",
-                            commande.getTotal_c(),
-                            commande.getStatut_c(),
-                            commande.getDateC().toString()));
-                }
-            }
-        });
-
-        // Load commands and display the total
         chargerCommandes();
     }
 
@@ -100,7 +85,7 @@ public class listCommande {
         for (Commande commande : observableCommandes) {
             total += commande.getTotal_c();
         }
-        labelTotal.setText("Total des Commandes : " + total + " €");
+        labelTotal.setText("Total des Commandes : " + total + " dt");
     }
 
     /**

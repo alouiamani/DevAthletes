@@ -29,10 +29,9 @@ public class ServiceProduit implements IService<Produit> {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 return rs.getInt(1);
-            } else {
-                throw new SQLException("Creating product failed, no ID obtained.");
             }
         }
+        return -1;
     }
 
     @Override

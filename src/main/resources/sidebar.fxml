@@ -8,17 +8,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="255.0" style="-fx-background-color: #1e2a3a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="729.0" prefWidth="176.0" style="-fx-background-color: #1e2a3a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SidebarController">
     <children>
-        <VBox alignment="CENTER" prefHeight="150.0" prefWidth="200.0" spacing="10">
-            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@images/proxy-image-removebg-preview.png" />
-                </image>
-            </ImageView>
-            <Label text="Utilisateur" textFill="white">
+        <!-- User Info Section -->
+        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="176.0" spacing="5">
+            <Label text="Welcome," textFill="white">
                 <font>
-                    <Font size="24.0" />
+                    <Font size="14.0" />
+                </font>
+            </Label>
+            <Label fx:id="userNameLabel" text="User" textFill="white">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
+            <Label fx:id="userRoleLabel" text="Role" textFill="#a1a1a1">
+                <font>
+                    <Font size="12.0" />
                 </font>
             </Label>
         </VBox>
@@ -61,13 +67,13 @@
                 
         <VBox prefHeight="102.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
         
-        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="257.0" style="-fx-background-color: #ff3333; -fx-text-fill: white; -fx-alignment: CENTER;" text="Déconnexion">
+        <Button mnemonicParsing="false" onAction="#handleLogout" 
+                prefHeight="40.0" prefWidth="176.0"
+                style="-fx-background-color: #ff3333;" 
+                text="Logout" textFill="white">
             <font>
                 <Font size="14.0" />
             </font>
-            <VBox.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" />
-            </VBox.margin>
         </Button>
     </children>
 </VBox>
