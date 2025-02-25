@@ -5,8 +5,9 @@
     -fx-padding: 10px;
 }
 .Appbar {
-    -fx-background-color: #244975;
     -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to bottom right, #40a8c4,#1b2e44 );
+
 
 }
 .edit-button {
@@ -138,4 +139,48 @@
     -fx-background-radius: 100%;
 
 }
+/* Style du ScrollPane */
+.activity-scroll-pane {
+    -fx-background-color: transparent; /* Fond transparent pour un look plus moderne */
+    -fx-padding: 10px;
+    -fx-border-color: #b0bec5;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Personnalisation de la barre de défilement verticale */
+.activity-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Style de la barre de défilement */
+.activity-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #eceff1;
+    -fx-border-radius: 5px;
+}
+
+/* Style du thumb (élément déplaçable de la barre) */
+.activity-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #90a4ae;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Effet au survol */
+.activity-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #78909c;
+}
+
+/* Style des boutons de la barre de défilement */
+.activity-scroll-pane .scroll-bar:vertical .increment-button,
+.activity-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+}
+
+/* Effet de transition */
+.activity-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-transition: all 0.3s ease-in-out;
+}
+
 

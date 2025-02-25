@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.stage.FileChooser;
@@ -311,5 +312,23 @@ public class DashboardAdminController  {
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
     }
+
+    public void ActivityPage(MouseEvent mouseEvent) {
+        try {
+            // Charger la nouvelle page
+            Parent root = FXMLLoader.load(getClass().getResource("/addActivity.fxml"));
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            // Changer la scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
