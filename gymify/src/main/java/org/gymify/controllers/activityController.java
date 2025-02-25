@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -211,6 +212,7 @@ public class activityController {
             System.out.println("Validation failed. Please fill all required fields.");
         }
     }
+    @FXML
     private void displayActivities() {
         ActivityService activityService = new ActivityService();
         List<Activité> activités = activityService.Display();
@@ -221,55 +223,101 @@ public class activityController {
 
         for (Activité activité : activités) {
             VBox vbox = new VBox(10);
-            vbox.setPadding(new Insets(10));
-            vbox.setStyle("-fx-border-color: #9fb1c5; -fx-border-radius: 5px; -fx-background-color: #f9f9f9;");
+            vbox.setPadding(new Insets(15));
+            vbox.setSpacing(10);
+            vbox.setAlignment(Pos.CENTER);
+            vbox.setStyle(
+                    "-fx-border-color: #cfd8dc; " +
+                            "-fx-border-radius: 10px; " +
+                            "-fx-background-color: white; " +
+                            "-fx-background-radius: 10px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);"
+            );
 
+            // Effet au survol
+            vbox.setOnMouseEntered(event -> vbox.setStyle(
+                    "-fx-border-color: #90a4ae; " +
+                            "-fx-border-radius: 10px; " +
+                            "-fx-background-color: #eceff1; " +
+                            "-fx-background-radius: 10px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);"
+            ));
+            vbox.setOnMouseExited(event -> vbox.setStyle(
+                    "-fx-border-color: #cfd8dc; " +
+                            "-fx-border-radius: 10px; " +
+                            "-fx-background-color: white; " +
+                            "-fx-background-radius: 10px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);"
+            ));
+
+            // Image avec contour arrondi
             if (activité.getUrl() != null && !activité.getUrl().isEmpty()) {
                 try {
                     Image image = new Image(activité.getUrl());
                     ImageView imageView = new ImageView(image);
                     imageView.setFitWidth(100);
                     imageView.setPreserveRatio(true);
+                    imageView.setStyle("-fx-border-radius: 10px; -fx-background-radius: 10px;");
                     vbox.getChildren().add(imageView);
                 } catch (Exception e) {
                     System.err.println("Erreur lors du chargement de l'image : " + e.getMessage());
                 }
             }
 
-            vbox.getChildren().addAll(
-                    new Label("Nom: " + activité.getNom()),
-                    new Label("Type: " + activité.getType()),
-                    new Label("Description: " + activité.getDescription())
-            );
+            // Labels stylisés
+            Label nameLabel = new Label("Nom : " + activité.getNom());
+            nameLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #37474f;");
 
+            Label typeLabel = new Label("Type : " + activité.getType());
+            typeLabel.setStyle("-fx-text-fill: #546e7a;");
+
+            Label descriptionLabel = new Label("Description : " + activité.getDescription());
+            descriptionLabel.setWrapText(true);
+            descriptionLabel.setMaxWidth(180);
+            descriptionLabel.setStyle("-fx-text-fill: #546e7a;");
+
+            vbox.getChildren().addAll(nameLabel, typeLabel, descriptionLabel);
+
+            // HBox pour les boutons
             HBox buttonBox = new HBox(10);
+            buttonBox.setAlignment(Pos.CENTER);
 
-            // Ajouter une icône pour le bouton "Supprimer"
+            // Bouton "Supprimer" avec icône
             ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/supprimer.png")));
             deleteIcon.setFitWidth(16);
             deleteIcon.setFitHeight(16);
             Button deleteButton = new Button("", deleteIcon);
-            deleteButton.setStyle("-fx-background-color: #eceff1; -fx-text-fill: white;");
+            deleteButton.setStyle(
+                    "-fx-background-color: #78909c; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px;"
+            );
+            deleteButton.setOnAction(event -> {
+                activityService.Delete(activité);
+                displayActivities();
+            });
 
-            // Ajouter une icône pour le bouton "Modifier"
+            // Bouton "Modifier" avec icône
             ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/editer.png")));
             editIcon.setFitWidth(16);
             editIcon.setFitHeight(16);
             Button editButton = new Button("", editIcon);
-            editButton.setStyle("-fx-background-color: #eceff1; -fx-text-fill: white;");
-            deleteButton.setOnAction(event -> {
-                activityService.Delete(activité);  // Supprimer l'activité
-                displayActivities();  // Rafraîchir l'affichage
-            });
+            editButton.setStyle(
+                    "-fx-background-color: #78909c; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px;"
+            );
             editButton.setOnAction(event -> {
-                openEditActivityPopup(activité); // Ouvrir la popup d'édition avec les informations de l'activité
-                displayActivities(); // Rafraîchir l'affichage après la modification
+                openEditActivityPopup(activité);
+                displayActivities();
             });
-
-
 
             buttonBox.getChildren().addAll(deleteButton, editButton);
             vbox.getChildren().add(buttonBox);
+
+            // Ajouter l'activité à la grille
             activityGrid.add(vbox, col, row);
 
             col++;
@@ -279,6 +327,7 @@ public class activityController {
             }
         }
     }
+
     @FXML
     private void openEditActivityPopup(Activité activité) {
         try {

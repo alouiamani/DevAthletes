@@ -48,7 +48,7 @@
                                  <children>
                                     <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="65.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/user.png" />
+                                          <Image url="@images/user.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="58.0" layoutY="68.0" text="Welcome," textFill="WHITE" />
@@ -64,7 +64,7 @@
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/Home.png" />
+                                          <Image url="@images/Home.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -76,7 +76,7 @@
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/add.png" />
+                                          <Image url="@images/add.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -88,7 +88,7 @@
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/chat.png" />
+                                          <Image url="@images/chat.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -100,7 +100,7 @@
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/logout.png" />
+                                          <Image url="@images/logout.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -124,7 +124,7 @@
                            <children>
                               <ImageView fx:id="profileImage" fitHeight="33.0" fitWidth="61.0" pickOnBounds="true" smooth="false">
                                  <image>
-                                    <Image url="images/client.png" />
+                                    <Image url="@images/client.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="nameLabel" prefHeight="18.0" prefWidth="42.0" text="Name">
@@ -151,7 +151,7 @@
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/gear.png" />
+                                          <Image url="@images/gear.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -160,7 +160,7 @@
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/delete.png" />
+                                          <Image url="@images/delete.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -178,7 +178,7 @@
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="images/Ajoute.png" />
+                                    <Image url="@images/Ajoute.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -209,7 +209,7 @@
                                  <children>
                                     <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/multiple-users-silhouette.png" />
+                                          <Image url="@images/multiple-users-silhouette.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="59.0" layoutY="56.0" text="Users" textFill="#e7e2e2" />
@@ -230,7 +230,7 @@
                                     </Label>
                                     <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="images/chat.png" />
+                                          <Image url="@images/chat.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -256,7 +256,7 @@
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="images/room.png" />
+                                    <Image url="@images/room.png" />
                                  </image>
                               </ImageView>
                               <Label layoutX="59.0" layoutY="56.0" text="Salles" textFill="#e7e2e2" />
@@ -267,14 +267,14 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="146.0" layoutY="118.0" prefHeight="90.0" prefWidth="118.0" styleClass="nav-form" stylesheets="/style.css">
+                        <AnchorPane layoutX="146.0" layoutY="118.0" onMouseClicked="#ActivityPage" prefHeight="90.0" prefWidth="118.0" styleClass="nav-form" stylesheets="/style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="images/task.png" />
+                                    <Image url="@images/task.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="43.0" layoutY="56.0" text="Planning" textFill="#e7e2e2" />
+                              <Label layoutX="43.0" layoutY="56.0" text="Activity" textFill="#e7e2e2" />
                               <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
@@ -286,7 +286,7 @@
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="images/product.png" />
+                                    <Image url="@images/product.png" />
                                  </image>
                               </ImageView>
                               <Label layoutX="43.0" layoutY="56.0" text="Product" textFill="#e7e2e2" />
@@ -299,7 +299,7 @@
                         </AnchorPane>
                         <ImageView fitHeight="51.0" fitWidth="61.0" layoutX="350.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="images/logo.png" />
+                              <Image url="@images/logo.png" />
                            </image>
                         </ImageView>
                         <AnchorPane layoutX="14.0" layoutY="221.0" prefHeight="129.0" prefWidth="348.0">
@@ -327,7 +327,7 @@
                            <children>
                               <ImageView fitHeight="98.0" fitWidth="150.0" layoutX="24.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts">
                                  <image>
-                                    <Image url="images/client.png" />
+                                    <Image url="@images/client.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -364,7 +364,7 @@
                            <children>
                               <ImageView fitHeight="84.0" fitWidth="98.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts">
                                  <image>
-                                    <Image url="images/client.png" />
+                                    <Image url="@images/client.png" />
                                  </image>
                               </ImageView>
                            </children>
