@@ -16,8 +16,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plannings.fxml"));
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/addActivity.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminDash.fxml"));
 
         Parent root = loader.load();
         primaryStage.setTitle("DevAthletes");

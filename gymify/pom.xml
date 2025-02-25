@@ -34,6 +34,17 @@
             <artifactId>javafx-web</artifactId>
             <version>21.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -50,7 +61,7 @@
 
                 <configuration>
 
-                    <mainClass>org.gymify.test.MainApp</mainClass>
+                    <mainClass>org.gymify.tests.MainApp</mainClass>
 
                 </configuration>
 
