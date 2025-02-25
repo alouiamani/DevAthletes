@@ -1,7 +1,7 @@
 package org.gymify.services;
 
 import org.gymify.entities.Planning;
-import org.gymify.utiles.gymifyDataBase;
+import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
