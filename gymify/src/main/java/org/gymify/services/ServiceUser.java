@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ServiceUser implements IGestionUser<User> {
     private final Connection connection;
@@ -151,55 +152,11 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return users;
     }
-    public List<User> afficherPourResponsable() {
-        List<User> userList = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE role IN ('Sportif', 'Entraîneur')";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            int count = 0;
-            while (rs.next()) {
-                String role = rs.getString("role");
-
-                if ("Entraîneur".equalsIgnoreCase(role)) {
-                    Entraineur entraineur = new Entraineur(
-                            rs.getString("nom"),
-                            rs.getString("prenom"),
-                            rs.getString("email"),
-                            rs.getString("password"),
-                            rs.getDate("date_naissance"),
-                            role,
-                            rs.getString("specialite")
-                    );
-                    entraineur.setId_User(rs.getInt("id_user"));
-                    entraineur.setImageURL(rs.getString("imageURL"));
-                    userList.add(entraineur);
-                } else {
-                    User user = new User(
-                            rs.getString("nom"),
-                            rs.getString("prenom"),
-                            rs.getString("email"),
-                            rs.getString("password"),
-                            role,
-                            rs.getDate("date_naissance"),
-                            rs.getString("imageURL")
-                    );
-                    user.setId_User(rs.getInt("id_user"));
-                    userList.add(user);
-                }
-                count++;
-            }
-
-            System.out.println("✅ Nombre d'utilisateurs récupérés pour Responsable : " + count);
-
-        } catch (SQLException e) {
-            System.out.println("❌ Erreur lors de l'affichage des utilisateurs pour Responsable : " + e.getMessage());
-        }
-
-        return userList;
+    public List<User> afficherPourResponsableAvecStream() throws SQLException {
+        return afficher().stream() // Récupère tous les utilisateurs
+                .filter(user -> "sportif".equalsIgnoreCase(user.getRole()) || "entraîneur".equalsIgnoreCase(user.getRole()))
+                .collect(Collectors.toList());
     }
-
 
     public Optional<User> authentifier(String email, String password) {
         String query = "SELECT * FROM user WHERE email = ?";
@@ -283,5 +240,37 @@ public class ServiceUser implements IGestionUser<User> {
             System.err.println("❌ Erreur SQL : " + e.getMessage());
         }
         return false;
+    }
+    public List<User> rechercherParRole(String role) throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE LOWER(role) = LOWER(?)"; // Ignore la casse
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, role);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                User user;
+                if ("Entraîneur".equalsIgnoreCase(rs.getString("role"))) {
+                    user = new Entraineur(
+                            rs.getInt("id_User"), rs.getString("nom"), rs.getString("prenom"),
+                            rs.getString("email"), rs.getString("password"), rs.getDate("dateNaissance"),
+                            rs.getString("role"), rs.getString("specialite")
+                    );
+                } else {
+                    user = new User(
+                            rs.getInt("id_User"), rs.getString("nom"), rs.getString("prenom"),
+                            rs.getString("email"), rs.getString("password"), rs.getString("role")
+                    );
+                    user.setDateNaissance(rs.getDate("dateNaissance"));
+                }
+                user.setImageURL(rs.getString("imageURL"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la recherche par rôle : " + e.getMessage());
+            throw e;
+        }
+        return users;
     }
 }
