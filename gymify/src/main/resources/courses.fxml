@@ -10,93 +10,34 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="C:\Users\Mega-PC\IdeaProjects\Pi\src\main\resources\style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.showController">
     <children>
         <Pane layoutX="-7.0" prefHeight="400.0" prefWidth="600.0">
             <children>
-                <AnchorPane layoutX="-11.0" layoutY="-13.0" prefHeight="50.0" prefWidth="618.0" styleClass="Appbar" stylesheets="@style.css">
+                <AnchorPane layoutX="-11.0" layoutY="-13.0" prefHeight="58.0" prefWidth="618.0" styleClass="Appbar" stylesheets="@style.css">
                     <children>
-                        <Label layoutX="171.0" layoutY="23.0" text="Courses" textFill="#eaeaea">
+                        <Label layoutX="88.0" layoutY="20.0" prefHeight="25.0" prefWidth="105.0" text="Courses" textFill="#eaeaea">
                             <font>
-                                <Font name="System Bold" size="13.0" />
+                                <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
+                  <Button layoutX="28.0" layoutY="20.0" mnemonicParsing="false" opacity="0.36">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                     </children>
                 </AnchorPane>
 
 
 
                 <BorderPane layoutX="6.0" layoutY="36.0" prefHeight="364.0" prefWidth="140.0">
-                    <left>
-                        <VBox alignment="TOP_CENTER" layoutX="7.0" layoutY="37.0" prefHeight="130.0" prefWidth="140.0" styleClass="sidebar-button" stylesheets="@style.css">
-                            <children>
-                                <BorderPane prefHeight="21.0" prefWidth="139.0" />
-                                <ImageView fitHeight="73.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/profile-user.png" />
-                                    </image>
-                                </ImageView>
-                                <BorderPane prefHeight="6.0" prefWidth="139.0" />
-                                <Label alignment="CENTER" contentDisplay="TOP" prefHeight="18.0" prefWidth="137.0" text="Welcome," textAlignment="CENTER" textFill="#eaeaea">
-                                    <font>
-                                        <Font size="11.0" />
-                                    </font>
-                                </Label>
-                                <Label alignment="TOP_CENTER" prefHeight="6.0" prefWidth="138.0" text="Wajd Ben Ameur" textAlignment="CENTER" textFill="#eaeaea">
-                                    <font>
-                                        <Font name="System Bold" size="11.0" />
-                                    </font>
-                                </Label>
-                                <BorderPane prefHeight="6.0" prefWidth="139.0" />
-                                <AnchorPane prefHeight="22.0" prefWidth="203.0">
-                                    <children>
-                                        <Line endX="116.46666717529297" startX="5.800004482269287" startY="-6.10351571594947E-6" stroke="#eaeaea" />
-                                    </children>
-                                </AnchorPane>
-                                <Button alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="119.0" styleClass="icon-button" stylesheets="@style.css" text="Planning" textFill="#eaeaea">
-                                    <font>
-                                        <Font size="10.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="10.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/multiple-users-silhouette.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="118.0" styleClass="icon-button" text="Reclamation">
-                                    <font>
-                                        <Font size="10.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="10.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/pie-chart.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <BorderPane prefHeight="116.0" prefWidth="119.0" />
-                                <Button alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="118.0" styleClass="icon-button" text="Logout">
-                                    <font>
-                                        <Font name="System Bold" size="10.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="10.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/logout.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </VBox>
-                    </left>
                     <center>
                         <StackPane fx:id="contentArea" />
                     </center>

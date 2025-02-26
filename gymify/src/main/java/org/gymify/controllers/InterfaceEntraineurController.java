@@ -123,4 +123,26 @@ public class InterfaceEntraineurController {
             System.out.println("❌ Erreur lors de l'ouverture de l'éditeur de profil.");
         }
     }
+
+    public void showPlanning(ActionEvent event) {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plannings.fxml"));
+        Parent root = loader.load();
+
+        // Récupérer le contrôleur et passer l'ID de l'utilisateur
+        planningController planningController = loader.getController();
+        planningController.setUser(loggedInUser); // Supposons que getId() existe
+
+        // Changer la scène
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Planning");
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.out.println("❌ Erreur lors de l'ouverture de la page de planning.");
+    }
+
+    }
 }
