@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementsSalleUserController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="487.0" prefWidth="747.0" spacing="15">
+         <Label prefHeight="18.0" prefWidth="732.0" text="Bienvenue ! Explorez nos abonnements" textFill="#c41010">
+            <padding>
+               <Insets right="500.0" />
+            </padding>
+         </Label>
+      
+          <ScrollPane fitToWidth="true" prefHeight="399.0" prefWidth="747.0">
+              <VBox fx:id="abonnementContainer" alignment="CENTER" spacing="10" />
+          </ScrollPane>
+      
+          <Button onAction="#fermerFenetre" style="-fx-background-color: #f1600d; -fx-text-fill: white;" text="Fermer" />
+      </VBox>
+   </children>
+</AnchorPane>

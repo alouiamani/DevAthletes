@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<?import java.net.URL?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardSalleController">
+   <children>
+      <HBox alignment="CENTER" layoutX="16.0" layoutY="35.0" prefHeight="100.0" prefWidth="562.0" spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <Pane fx:id="cardMembres" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #2C3E50;">
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="79.0" prefWidth="127.0" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="iconMembres" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/athlete.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblMembres" text="+10 membres" textFill="#f4f3f3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Pane>
+            <Pane fx:id="cardEntraineurs" layoutX="204.0" layoutY="20.0" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #27AE60;">
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="85.0" prefWidth="128.0" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="iconEntraineur" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/coach.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblEntraineur" text="+9 entraineur" textFill="#f4f3f3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+            <Pane fx:id="cardAlertes" layoutX="284.0" layoutY="20.0" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #E74C3C;">
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="85.0" prefWidth="135.0" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="iconAlerte" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/alert.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblReclamations" text="+5 reclamations" textFill="#f4f3f3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+            <Pane fx:id="cardRevenus" layoutX="377.0" layoutY="20.0" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;">
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="79.0" prefWidth="128.0" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="iconMoney" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/mny.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblMoney" text="+1052000 DT" textFill="#f4f3f3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+      <HBox layoutX="40.0" layoutY="244.0" prefHeight="150.0" prefWidth="554.0">
+         <children>
+            <PieChart fx:id="pieChartAbonnements" prefHeight="150.0" prefWidth="262.0" />
+            <PieChart fx:id="pieChartRevenus" prefHeight="150.0" prefWidth="250.0" />
+         </children>
+      </HBox>
+      <Label layoutX="40.0" layoutY="200.0" text="Répartition de déferent type d'abonnement">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="304.0" layoutY="200.0" text="Répartition des revenue selon statue d'abonnement">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+   <stylesheets>
+      <URL value="@application.css" />
+   </stylesheets>
+</AnchorPane>
