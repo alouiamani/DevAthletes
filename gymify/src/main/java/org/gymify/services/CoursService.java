@@ -3,6 +3,7 @@ package org.gymify.services;
 import org.gymify.entities.Activité;
 import org.gymify.entities.Cours;
 import org.gymify.entities.Planning;
+import org.gymify.entities.User;
 import org.gymify.utils.gymifyDataBase;
 
 
@@ -19,7 +20,7 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Add(Cours cours) {
         try {
-            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `dateDebut`, `dateFin`, `heurDebut`, `heurFin`, `activité_id`, `planning_id`) VALUES (?,?,?,?,?,?,?,?)");
+            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `dateDebut`, `dateFin`, `heurDebut`, `heurFin`, `activité_id`, `planning_id`, `entaineur_id`) VALUES (?,?,?,?,?,?,?,?,?)");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
             req.setDate(3, new Date(cours.getDateDebut().getTime()));
@@ -28,6 +29,7 @@ public class CoursService implements IService<Cours> {
             req.setTime(6, Time.valueOf(cours.getHeureFin()));
             req.setInt(7, cours.getActivité().getId());
             req.setInt(8, cours.getPlanning().getId());
+            req.setInt(9,cours.getUser().getId_User());
 
 
 
@@ -44,7 +46,7 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Update(Cours cours) {
         try {
-            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`dateDebut`=?,`dateFin`=?,`heurDebut`=?,`heurFin`=?,`activité_id`=?,`planning_id`=? WHERE id=?");
+            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`dateDebut`=?,`dateFin`=?,`heurDebut`=?,`heurFin`=?,`activité_id`=?,`planning_id`=?,`entaineur_id`=? WHERE id=?");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
             req.setDate(3, new Date(cours.getDateDebut().getTime()));
@@ -55,7 +57,9 @@ public class CoursService implements IService<Cours> {
             req.setInt(7,cours.getActivité().getId());
             req.setInt(8,cours.getPlanning().getId());
             }
-            req.setInt(9,cours.getId());
+            req.setInt(9,cours.getUser().getId_User());
+            req.setInt(10,cours.getId());
+
 
             req.executeUpdate();
             System.out.println("Cours mis à jour avec succès.");
@@ -110,6 +114,12 @@ public class CoursService implements IService<Cours> {
                     Planning planning = new Planning(); // Créez une instance du planning
                     planning.setId(planningId); // Vous pouvez récupérer d'autres informations si nécessaire
                     cour.setPlanning(planning);
+                }
+                int entaineurId = rs.getInt("entaineur_id");
+                if (entaineurId != 0) {
+                    User entaineur = new User();
+                    entaineur.setId_User(entaineurId);
+                    cour.setUser(entaineur);
                 }
 
 

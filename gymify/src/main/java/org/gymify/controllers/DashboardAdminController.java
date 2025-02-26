@@ -22,6 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
+import org.gymify.services.ActivityService;
 import org.gymify.services.ServiceUser;
 import org.gymify.utils.AuthToken;
 
@@ -53,6 +54,8 @@ public class DashboardAdminController  {
     @FXML private ChoiceBox<String> EditRoleId, EditSpecialId;
     @FXML private DatePicker EditBirthId;
     @FXML private Button SaveEdit;
+    @FXML
+    private Label activityCountLabel;
 
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser() {
@@ -107,6 +110,11 @@ public class DashboardAdminController  {
 
         // Charger la liste des utilisateurs
         listUsersInVBox();
+        ActivityService activityService = new ActivityService();
+        int activityCount = activityService.getActivityCount();
+
+        // Mettre à jour le texte du label avec le nombre d'activités
+        activityCountLabel.setText(String.valueOf(activityCount));
     }
 
 
@@ -202,7 +210,7 @@ public class DashboardAdminController  {
 
         // Bouton Modifier (Edit)
         Button editButton = new Button();
-        ImageView editIcon = new ImageView(new Image(getClass().getResource("/Image/gear.png").toExternalForm()));
+        ImageView editIcon = new ImageView(new Image(getClass().getResource("/images/gear.png").toExternalForm()));
         editIcon.setFitWidth(20);
         editIcon.setFitHeight(20);
         editButton.setGraphic(editIcon);
@@ -212,7 +220,7 @@ public class DashboardAdminController  {
 
         // Bouton Supprimer (Delete)
         Button deleteButton = new Button();
-        ImageView deleteIcon = new ImageView(new Image(getClass().getResource("/Image/delete.png").toExternalForm()));
+        ImageView deleteIcon = new ImageView(new Image(getClass().getResource("/images/delete.png").toExternalForm()));
         deleteIcon.setFitWidth(20);
         deleteIcon.setFitHeight(20);
         deleteButton.setGraphic(deleteIcon);
