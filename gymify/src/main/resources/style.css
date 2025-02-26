@@ -28,7 +28,7 @@
 
 }
 .formActivityDesign{
-    -fx-background-color: #9fb1c5;
+    -fx-background-color: #1b2e44;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 5);
     -fx-background-radius: 30; /* Ajoute un rayon de 15px aux coins */
     -fx-border-radius: 40;

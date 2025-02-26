@@ -90,6 +90,24 @@ public class ActivityService implements IService<Activité>{
 
         return activités;
     }
+    public int getActivityCount() {
+        int count = 0;
+        try {
+            // Requête SQL pour compter les activités
+            String query = "SELECT COUNT(*) FROM activité";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                count = rs.getInt(1); // Le premier champ de la requête est le total des activités
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors du comptage des activités : " + e.getMessage());
+        }
+        return count;
+    }
+
+
 
 
 }

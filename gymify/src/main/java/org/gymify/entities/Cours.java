@@ -13,11 +13,12 @@ public class Cours {
     private String description;
     private Activité activité;
     private Planning planning;
+    private User coach;
     public Cours() {}
     public Cours(int id){
         this.id = id;
     }
-    public Cours(String title, Date dateDebut, Date dateFin, LocalTime heureDebut, LocalTime heureFin, String description, Activité activité, Planning planning) {
+    public Cours(String title, Date dateDebut, Date dateFin, LocalTime heureDebut, LocalTime heureFin, String description, Activité activité, Planning planning, User coach) {
         this.title = title;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
@@ -26,6 +27,7 @@ public class Cours {
         this.description = description;
         this.activité=activité;
         this.planning = planning;
+        this.coach = coach;
     }
     public int getId() {
         return id;
@@ -85,9 +87,15 @@ public class Cours {
     public void setHeureFin(LocalTime heureFin) {
         this.heureFin = heureFin;
     }
+    public User getUser() {
+        return coach;
+    }
+    public void setUser(User coach) {
+        this.coach = coach;
+    }
 
     public String toString(){
-        return "Cours: id:" +id+", title:"+title+ ", dateDebut"+dateDebut+", dateFin"+dateFin+", heureDebut:"+heureDebut+", heureFin:"+heureFin+", Description:"+ description+", Ativité_id:"+activité.getId()+", Planning_id:"+planning.getId();
+        return "Cours: id:" +id+", title:"+title+ ", dateDebut"+dateDebut+", dateFin"+dateFin+", heureDebut:"+heureDebut+", heureFin:"+heureFin+", Description:"+ description+", Ativité_id:"+activité.getId()+", Planning_id:"+planning.getId()+", Entraineur_id:"+coach;
     }
 
 }

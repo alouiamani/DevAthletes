@@ -16,12 +16,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="contentArea" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.activityController">
+<StackPane fx:id="contentArea" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.EditActivityController">
     <children>
         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="566.0" styleClass="formActivityDesign" stylesheets="@style.css">
             <children>
                 <BorderPane prefHeight="24.0" prefWidth="468.0" />
-                <Label alignment="CENTER" prefHeight="38.0" prefWidth="154.0" text="Add Activity" textAlignment="CENTER">
+                <Label alignment="CENTER" prefHeight="38.0" prefWidth="154.0" text="Edit Activity" textAlignment="CENTER" textFill="#fcfafa">
                     <font>
                         <Font name="Yu Gothic Bold" size="18.0" />
                     </font>
@@ -34,16 +34,16 @@
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="346.0">
                     <children>
                         <!-- URL Photo -->
-                        <Label layoutX="61.0" layoutY="6.0" prefHeight="18.0" prefWidth="98.0" text="URL Photo:">
+                        <Label layoutX="61.0" layoutY="12.0" prefHeight="18.0" prefWidth="98.0" text="URL Photo:" textFill="WHITE">
                             <font>
                                 <Font name="System Italic" size="10.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="urlPhoto" layoutX="61.0" layoutY="27.0" prefHeight="26.0" prefWidth="245.0" styleClass="textfield" stylesheets="@style.css" />
+                        <TextField fx:id="urlPhoto" layoutX="61.0" layoutY="32.0" prefHeight="26.0" prefWidth="245.0" styleClass="textfield" stylesheets="@style.css" />
                         <Label fx:id="urlPhotoError" layoutX="61.0" layoutY="53.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
 
                         <!-- Title -->
-                        <Label layoutX="61.0" layoutY="65.0" prefHeight="18.0" prefWidth="98.0" text="Title:">
+                        <Label layoutX="61.0" layoutY="65.0" prefHeight="18.0" prefWidth="98.0" text="Title:" textFill="WHITE">
                             <font>
                                 <Font name="System Italic" size="10.0" />
                             </font>
@@ -52,7 +52,7 @@
                         <Label fx:id="titleActivityError" layoutX="61.0" layoutY="113.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
 
                         <!-- Description -->
-                        <Label layoutX="61.0" layoutY="204.0" prefHeight="18.0" prefWidth="98.0" text="Description:">
+                        <Label layoutX="61.0" layoutY="204.0" prefHeight="18.0" prefWidth="98.0" text="Description:" textFill="WHITE">
                             <font>
                                 <Font name="System Italic" size="10.0" />
                             </font>
@@ -63,7 +63,7 @@
                         <!-- Type d'activité -->
                         <VBox alignment="CENTER" layoutX="-106.0" layoutY="120.0" prefHeight="74.0" prefWidth="566.0">
                             <children>
-                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="98.0" text="Type">
+                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="98.0" text="Type" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold Italic" size="15.0" />
                                     </font>
@@ -71,7 +71,7 @@
                                 <BorderPane prefHeight="7.0" prefWidth="566.0" />
                                 <HBox alignment="CENTER" prefHeight="68.0" prefWidth="566.0">
                                     <children>
-                                        <RadioButton fx:id="radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="154.0" styleClass="formActivityDesign" stylesheets="@style.css" text="Personal Training" textOverrun="CLIP">
+                                        <RadioButton fx:id="radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="154.0" styleClass="formActivityDesign" stylesheets="@style.css" text="Personal Training" textFill="WHITE" textOverrun="CLIP">
                                             <HBox.margin>
                                                 <Insets right="20.0" />
                                             </HBox.margin>
@@ -79,12 +79,12 @@
                                                 <Cursor fx:constant="DEFAULT" />
                                             </cursor>
                                         </RadioButton>
-                                        <RadioButton fx:id="radio2" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" styleClass="formActivityDesign" stylesheets="@style.css" text="Group Activity" textAlignment="RIGHT">
+                                        <RadioButton fx:id="radio2" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" styleClass="formActivityDesign" stylesheets="@style.css" text="Group Activity" textAlignment="RIGHT" textFill="WHITE">
                                             <HBox.margin>
                                                 <Insets right="20.0" />
                                             </HBox.margin>
                                         </RadioButton>
-                                        <RadioButton fx:id="radio3" mnemonicParsing="false" prefHeight="30.0" prefWidth="171.0" styleClass="formActivityDesign" text="Fitness Consultation">
+                                        <RadioButton fx:id="radio3" mnemonicParsing="false" prefHeight="30.0" prefWidth="171.0" styleClass="formActivityDesign" text="Fitness Consultation" textFill="WHITE">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -98,17 +98,22 @@
                         </VBox>
 
                         <!-- Boutons -->
-                        <Button layoutX="320.0" layoutY="25.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="30.0" prefWidth="75.0" stylesheets="@style.css" text="upload">
+                        <Button layoutX="313.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadImage" prefHeight="30.0" prefWidth="45.0" styleClass="white-bg" stylesheets="@style.css" text="Load">
                             <font>
-                                <Font size="10.0" />
+                                <Font name="System Bold Italic" size="11.0" />
                             </font>
                         </Button>
-                        <Button layoutX="203.0" layoutY="307.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="30.0" prefWidth="154.0" styleClass="Appbar" stylesheets="@style.css" text="Edit">
+                        <Button layoutX="203.0" layoutY="307.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="30.0" prefWidth="154.0" styleClass="white-bg" stylesheets="@style.css" text="Edit Activity" textFill="#100e0e">
                             <font>
-                                <Font name="System Bold Italic" size="12.0" />
+                                <Font name="System Bold Italic" size="13.0" />
                             </font>
                         </Button>
                         <Label fx:id="typeError" layoutX="158.0" layoutY="186.0" prefHeight="14.0" prefWidth="28.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                  <Button layoutX="145.0" layoutY="-3.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="22.0" prefWidth="54.0" styleClass="white-bg" stylesheets="@style.css" text="Upload">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
+                  </Button>
                     </children>
                 </AnchorPane>
             </children>
