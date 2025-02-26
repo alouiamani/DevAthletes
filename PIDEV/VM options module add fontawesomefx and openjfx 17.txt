@@ -1,0 +1,4 @@
+--module-path 
+"C:\mylibs\openjfx-17\javafx-sdk-17.0.14\lib;C:\mylibs\fontawesomefx-8.9.jar"
+--add-modules 
+javafx.controls,javafx.fxml,javafx.graphics,FontAwesomeFX
