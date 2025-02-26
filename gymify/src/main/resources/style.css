@@ -182,5 +182,53 @@
 .activity-scroll-pane .scroll-bar:vertical .thumb {
     -fx-transition: all 0.3s ease-in-out;
 }
+/* Style global pour le DatePicker */
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3498db;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Style du champ de texte du DatePicker */
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+}
+
+/* Personnalisation du bouton (icône calendrier) */
+.date-picker .arrow-button {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 0 5px 5px 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Personnalisation de l'icône du calendrier */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* Style du popup du calendrier */
+.date-picker-popup {
+    -fx-border-color: #3498db;
+    -fx-background-color: white;
+}
+
+/* Style des jours sélectionnés */
+.date-picker-popup .selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+/* Style des jours lors du survol */
+.date-picker-popup .cell:hover {
+    -fx-background-color: #85c1e9;
+}
+
 
 

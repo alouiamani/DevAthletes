@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.gymify.entities.Cours;
 import org.gymify.entities.Planning;
+import org.gymify.entities.User;
 import org.gymify.services.CoursService;
 
 import java.io.IOException;
@@ -39,10 +40,12 @@ public class showController {
     private ListView<Cours> listView;
     private Planning selectedPlanning;
     private CoursService coursService = new CoursService();
+    private User user;
 
 
-    public void setPlanningData(Planning planning) {
+    public void setPlanningData(Planning planning,User user) {
         if (planning != null) {
+            this.user=user;
             this.selectedPlanning = planning;
             planningTitle.setText(planning.getTitle());
             System.out.println("Le planning n'est pas null");
@@ -61,7 +64,7 @@ public class showController {
             Parent root = loader.load();
             coursController controller = loader.getController();
             if (controller != null) {
-                controller.setPlanningSelect(this.selectedPlanning); // Vérifiez que popupController n'est pas null
+                controller.setPlanningSelect(this.selectedPlanning,user); // Vérifiez que popupController n'est pas null
             } else {
                 System.out.println("Controller is null");
             }
