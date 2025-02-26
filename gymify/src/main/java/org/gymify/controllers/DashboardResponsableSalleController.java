@@ -1,6 +1,7 @@
 package org.gymify.controllers;
 
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -138,43 +139,52 @@ public class DashboardResponsableSalleController {
         }
     }
 
-    public void listUsersInVBox() {
+    @FXML
+    private void listUsersInVBox() {
         VBoxId.getChildren().clear();
+
+        try {
+            List<User> users = serviceUser.afficherPourResponsableAvecStream();
+
+            if (users.isEmpty()) {
+                System.out.println("⚠️ Aucun utilisateur trouvé !");
+            } else {
+                users.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL : " + e.getMessage());
+        }
+    }
+    @FXML private TextField searchRoleField;
+    @FXML void onSearchByRole(ActionEvent event) {
+        String roleRecherche = searchRoleField.getText().trim();
 
         if (VBoxId == null) {
             System.out.println("❌ VBoxId est NULL ! Vérifie ton FXML.");
             return;
         }
 
+        if (roleRecherche.isEmpty()) {
+            listUsersInVBox(); // Recharge tous les utilisateurs si le champ est vide
+            return;
+        }
+
         try {
-            User currentUser = AuthToken.getCurrentUser();
-            if (currentUser == null) {
-                System.out.println("❌ Erreur : Aucun utilisateur connecté !");
-                return;
-            }
+            List<User> filteredUsers = serviceUser.rechercherParRole(roleRecherche);
 
-            List<User> users;
-            if ("Responsable_Salle".equals(currentUser.getRole())) {
-                System.out.println("🔍 Appel de afficherPourResponsable()...");
-                users = serviceUser.afficherPourResponsable();
+            VBoxId.getChildren().clear();
+
+            if (filteredUsers.isEmpty()) {
+                System.out.println("⚠️ Aucun utilisateur trouvé avec le rôle : " + roleRecherche);
             } else {
-                System.out.println("🔍 Appel de afficher()...");
-                users = serviceUser.afficher();
+                filteredUsers.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
             }
-
-            if (users.isEmpty()) {
-                System.out.println("⚠️ Aucun utilisateur trouvé !");
-            }
-
-            for (User user : users) {
-                System.out.println("✔️ Utilisateur récupéré : " + user.getNom() + " (" + user.getRole() + ")");
-                VBoxId.getChildren().add(creerHBoxUtilisateur(user));
-            }
-
         } catch (SQLException e) {
-            System.out.println("❌ Erreur chargement utilisateurs : " + e.getMessage());
+            System.out.println("❌ Erreur SQL lors de la recherche : " + e.getMessage());
         }
     }
+
+
 
     private HBox creerHBoxUtilisateur(User user) {
         HBox hbox = new HBox(15);
