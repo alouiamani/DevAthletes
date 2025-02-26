@@ -59,7 +59,7 @@ public class LoginControllers {
                 case "admin" -> ouvrirInterface("AdminDash.fxml", "🏢 Interface Admin", event);
                 case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
                 case "sportif" -> ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);
-                case "entraineur" -> ouvrirInterface("ProfileMembre.fxml", "👨‍🏫 Interface Entraîneur", event);
+                case "entraineur" -> ouvrirInterface("InterfaceEntraineur.fxml", "👨‍🏫 Interface Entraîneur", event);
                 default -> showAlert(Alert.AlertType.ERROR, "⚠️ Erreur", "Rôle inconnu : " + loggedInUser.getRole());
             }
         } else {

@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="400.0" prefWidth="606.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SignupControllers">
    <children>
       <AnchorPane layoutX="-7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" stylesheets="/style.css">
@@ -191,6 +192,12 @@
                   <Font name="Ebrima" size="13.0" />
                </font>
             </Text>
+            <Label fx:id="errorNom" layoutX="91.0" layoutY="133.0" prefHeight="18.0" prefWidth="213.0" textFill="#e10d0d" />
+            <Label fx:id="errorPrenom" layoutX="90.0" layoutY="199.0" prefHeight="18.0" prefWidth="213.0" textFill="#e10d0d" />
+            <Label fx:id="errorEmail" layoutX="93.0" layoutY="249.0" prefHeight="18.0" prefWidth="213.0" textFill="#e10d0d" />
+            <Label fx:id="errorPassword" layoutX="90.0" layoutY="293.0" prefHeight="18.0" prefWidth="213.0" textFill="#e10d0d" />
+            <Label fx:id="errorConfirmPassword" layoutX="93.0" layoutY="352.0" prefHeight="18.0" prefWidth="213.0" textFill="#e10d0d" />
+
          </children>
       </AnchorPane>
    </children>
