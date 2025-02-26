@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/ggym.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/LoginControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/LoginControllers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/Signup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/Signup.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +88,7 @@
       <workItem from="1740478203553" duration="190000" />
       <workItem from="1740478900693" duration="266000" />
       <workItem from="1740479865466" duration="1315000" />
-      <workItem from="1740558525690" duration="906000" />
+      <workItem from="1740558525690" duration="1982000" />
     </task>
     <servers />
   </component>
