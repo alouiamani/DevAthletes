@@ -1,0 +1,81 @@
+.root {
+    -fx-background-color: #F4F4F4; /* Couleur de fond */
+}
+
+.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.text-field {
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 5px;
+    -fx-border-color: #ccc;
+}
+
+.card {
+    -fx-background-color: #e6e1e1;
+    -fx-padding: 20px;
+    -fx-border-radius: 20px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+    -fx-transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-transform: scale(1.2); /* Exemple correct d'utilisation de scale */
+
+}
+
+.card .abonnement-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.card .abonnement-details {
+    -fx-font-size: 14px;
+}
+
+.card .abonnement-actions {
+    -fx-spacing: 10px;
+    -fx-alignment: CENTER;
+
+
+}
+/* Appliquer un style arrondi à l'image */
+.image-round {
+    -fx-shape: "M 0,10 Q 10,0 20,10 Q 30,20 20,30 Q 10,40 0,30 Q -10,20 0,10 Z";
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-width: 2;
+    -fx-border-color: #ddd; /* Couleur de la bordure */
+    -fx-padding: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2); /* Ombre portée */
+    -fx-width: 100px;  /* Ajustez la taille de l'image */
+    -fx-height: 100px;
+    -fx-alignment: center;
+    -fx-background-color: #fff; /* Couleur de fond pour l'image */
+}
+
+/* Appliquer l'image avec une bordure arrondie */
+.image-view {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-width: 3;
+    -fx-border-color: #2196F3; /* Bordure bleue */
+}
+
+
+
