@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/planning.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/style.css" afterDir="false" />
-    </list>
+    <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

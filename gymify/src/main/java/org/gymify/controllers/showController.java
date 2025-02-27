@@ -3,12 +3,14 @@ package org.gymify.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -114,6 +116,9 @@ public class showController {
         }
     }
     public void initialize() {
+        // Charger le fichier CSS
+        listView.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
         listView.setCellFactory(new Callback<ListView<Cours>, ListCell<Cours>>() {
             @Override
             public ListCell<Cours> call(ListView<Cours> param) {
@@ -127,13 +132,16 @@ public class showController {
                         } else {
                             // Conteneur principal
                             VBox vBox = new VBox();
-                            vBox.setSpacing(5);
+                            vBox.setSpacing(8);
+                            vBox.getStyleClass().add("list-cell");
 
                             // Titre et description
                             Text titleText = new Text(item.getTitle());
-                            titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+                            titleText.getStyleClass().add("course-title");
+
                             Text descriptionText = new Text(item.getDescription());
-                            descriptionText.setStyle("-fx-font-size: 12px; -fx-fill: #666;");
+                            descriptionText.getStyleClass().add("course-description");
+
                             vBox.getChildren().addAll(titleText, descriptionText);
 
                             // Date de début
@@ -141,91 +149,42 @@ public class showController {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                             String startDateString = dateFormat.format(startDate);
                             Text startDateText = new Text("Date: " + startDateString);
+                            startDateText.getStyleClass().add("course-date");
 
-                            // Ajouter un bouton avec une image à côté de la date
-                            ImageView imageView = new ImageView(new Image("/images/editer.png"));
-                            imageView.setFitWidth(16);
-                            imageView.setFitHeight(16);
-                            Button dateButton = new Button();
-                            dateButton.setGraphic(imageView);
-                            dateButton.setOnAction(e-> {
-                                try {
-                                    // Charger le fichier FXML de la popup
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/editCours.fxml"));
-                                    Parent root = loader.load();
+                            // Bouton d'édition
+                            ImageView editIcon = new ImageView(new Image("/images/editer.png"));
+                            editIcon.setFitWidth(20);
+                            editIcon.setFitHeight(20);
+                            Button editButton = new Button();
+                            editButton.setGraphic(editIcon);
+                            editButton.getStyleClass().add("button");
 
-                                    // Obtenir le contrôleur de la popup
-                                    editCoursController controller = loader.getController();
-                                    if (controller != null) {
-                                        // Passer les données du cours au contrôleur de la popup
-                                        controller.setCoursData(item);
-                                    } else {
-                                        System.out.println("Controller is null");
-                                    }
-
-                                    // Créer une nouvelle scène avec la popup
-                                    Scene scene = new Scene(root);
-
-                                    // Créer un nouveau Stage pour la popup
-                                    Stage popupStage = new Stage();
-                                    popupStage.setTitle("Edit Course");
-                                    popupStage.setScene(scene);
-
-                                    // Rendre la fenêtre modale (bloque l'accès à la fenêtre principale jusqu'à fermeture)
-                                    popupStage.initModality(Modality.APPLICATION_MODAL);
-
-                                    // Afficher la popup
-                                    popupStage.showAndWait();
-                                    listView.getItems().setAll(coursService.Display());
-
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
-                            });
-                            // Bouton de suppression avec icône
-                            ImageView imageViewd = new ImageView(new Image("/images/supprimer.png"));
-                            imageViewd.setFitWidth(16);
-                            imageViewd.setFitHeight(16);
-                            Button dButton = new Button();
-                            dButton.setGraphic(imageViewd); // Remplacez par votre image
-
-                            // Gérer l'événement de suppression
-                            dButton.setOnAction(e -> {
-                                // Affichage de l'alerte de confirmation
-                                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                                confirmationAlert.setTitle("Confirmation");
-                                confirmationAlert.setHeaderText("Voulez-vous vraiment supprimer ce cours ?");
-                                confirmationAlert.setContentText(item.getTitle());
-
-                                confirmationAlert.showAndWait().ifPresent(response -> {
-                                    if (response == ButtonType.OK) {
-                                        // Supprimer le cours de la base de données
-                                        coursService.Delete(item);
-
-                                        // Supprimer l'élément de la ListView
-                                        listView.getItems().remove(item);
-
-                                        // Message de succès
-                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                        alert.setTitle("Suppression réussie");
-                                        alert.setHeaderText(null);
-                                        alert.setContentText("Le cours a été supprimé avec succès.");
-                                        alert.showAndWait();
-                                    }
-                                });
-                            });
+                            // Bouton de suppression
+                            ImageView deleteIcon = new ImageView(new Image("/images/supprimer.png"));
+                            deleteIcon.setFitWidth(20);
+                            deleteIcon.setFitHeight(20);
+                            Button deleteButton = new Button();
+                            deleteButton.setGraphic(deleteIcon);
+                            deleteButton.getStyleClass().add("button");
 
                             // Agencer la date et les boutons
-                            HBox dateBox = new HBox(10); // Espacement de 10 entre la date et les boutons
-                            dateBox.getChildren().addAll(startDateText, dateButton, dButton); // Ajouter la date et les boutons dans un HBox
-
+                            HBox dateBox = new HBox(10);
+                            Region spacer1 = new Region();
+                            spacer1.setPrefWidth(50);
+                            Region spacer2 = new Region();
+                            spacer2.setPrefWidth(10);
+                            dateBox.getChildren().addAll(startDateText,spacer1 ,editButton,spacer2 ,deleteButton);
                             vBox.getChildren().add(dateBox);
 
                             // Heures de début et de fin
                             String startHour = item.getHeureDebut().toString();
                             Text startHourText = new Text("Début: " + startHour);
+                            startHourText.getStyleClass().add("course-time");
+
                             String endHourString = item.getHeureFin().toString();
                             Text endHourText = new Text("Fin: " + endHourString);
+                            endHourText.getStyleClass().add("course-time");
+
                             HBox timeBox = new HBox(10);
                             timeBox.getChildren().addAll(startHourText, endHourText);
                             vBox.getChildren().add(timeBox);
@@ -245,10 +204,19 @@ public class showController {
     }
 
 
+    public void goBackPage(ActionEvent event) {
+        try {
+            // Charger la nouvelle page (remplace "previousPage.fxml" par le bon fichier FXML)
+            Parent root = FXMLLoader.load(getClass().getResource("/plannings.fxml"));
 
-
-
-
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 
