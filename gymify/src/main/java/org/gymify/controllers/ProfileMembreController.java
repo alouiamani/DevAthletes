@@ -65,28 +65,23 @@ public class ProfileMembreController {
     /**
      * Mise à jour de l'interface avec les infos de l'utilisateur connecté.
      */
-    private void updateUI() {
-        if (profileImage == null) {
-            System.out.println("⚠ profileImage est NULL, vérifie le fichier FXML !");
-            return;
-        }
 
+    private void updateUI() {
         if (loggedInUser != null) {
             usernameid.setText(loggedInUser.getNom());
             emailid.setText(loggedInUser.getEmail());
 
-            String imageUrl = loggedInUser.getImageURL();
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                try {
-                    profileImage.setImage(new Image(imageUrl, true));
-                } catch (Exception e) {
-                    profileImage.setImage(new Image(getClass().getResource("/images/icons8-user-32.png").toString(), true));
-                }
+            String imageURL = loggedInUser.getImageURL();
+            if (imageURL != null && !imageURL.isEmpty()) {
+
+                profileImage.setImage(new Image(imageURL)); // Charge directement l'image depuis l'URL
+
             } else {
                 profileImage.setImage(new Image(getClass().getResource("/images/icons8-user-32.png").toString(), true));
             }
         }
     }
+
 
 
     /**
@@ -108,8 +103,9 @@ public class ProfileMembreController {
 
             // Passer l'utilisateur à l'interface de modification
             EditUserControllers editController = loader.getController();
-            editController.setUser(loggedInUser);
+            editController.setUser(loggedInUser); // Passe l'utilisateur connecté
 
+            // Ouvrir la scène d'édition
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -120,4 +116,21 @@ public class ProfileMembreController {
             System.out.println("❌ Erreur lors de l'ouverture de l'éditeur de profil.");
         }
     }
+
+    @FXML
+    private void ouvrirReclamation(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReclamationSportif.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Gérer mes Réclamations");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 }
