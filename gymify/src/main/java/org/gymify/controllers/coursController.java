@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import org.gymify.entities.Activité;
 import org.gymify.entities.Cours;
 import org.gymify.entities.Planning;
+import org.gymify.entities.User;
 import org.gymify.services.ActivityService;
 import org.gymify.services.CoursService;
 
@@ -45,6 +46,7 @@ public class coursController {
     private ComboBox<Integer> hourDebut, minuteDebut, secondDebut;
     @FXML
     private ComboBox<Integer> hourFin, minuteFin, secondFin;
+    private User user;
 
     @FXML
     public void initialize() {
@@ -82,8 +84,9 @@ public class coursController {
         }
         return null; // Si une valeur est manquante
     }
-    public void setPlanningSelect(Planning planning) {
+    public void setPlanningSelect(Planning planning,User user) {
         if (planning != null) {
+            this.user=user;
             this.planning = planning;
             System.out.println("Le planning n'est pas null");
             // Affiche le titre du planning
@@ -180,6 +183,7 @@ public class coursController {
         cours.setHeureFin(heureFin);
         cours.setActivité(selectedActivity);
         cours.setPlanning(planning);
+        cours.setUser(user);
         System.out.println("test");
 
         // Enregistrement du cours via le service

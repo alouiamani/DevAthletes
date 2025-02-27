@@ -17,9 +17,9 @@
         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="566.0" styleClass="formActivityDesign" stylesheets="@style.css">
             <children>
                 <BorderPane prefHeight="24.0" prefWidth="468.0" />
-                <Label alignment="CENTER" prefHeight="38.0" prefWidth="154.0" text="Edit Planning" textAlignment="CENTER">
+                <Label alignment="CENTER" prefHeight="38.0" prefWidth="154.0" text="Edit Planning" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="Yu Gothic Bold" size="18.0" />
+                        <Font name="Yu Gothic Bold" size="20.0" />
                     </font>
                 </Label>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="346.0">
@@ -28,29 +28,29 @@
                         <TextField fx:id="titlePlanning" layoutX="50.0" layoutY="189.0" prefHeight="26.0" prefWidth="245.0" styleClass="textfield" stylesheets="@style.css" />
 
                         <!-- Title -->
-                        <Label layoutX="61.0" layoutY="158.0" prefHeight="18.0" prefWidth="98.0" text="Title:">
+                        <Label layoutX="61.0" layoutY="158.0" prefHeight="18.0" prefWidth="98.0" text="Title:" textFill="WHITE">
                             <font>
-                                <Font name="System Italic" size="10.0" />
+                                <Font name="System Italic" size="12.0" />
                             </font>
                         </Label>
                         <Label fx:id="dateError" layoutX="65.0" layoutY="252.0" prefHeight="15.0" prefWidth="264.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
 
                         <!-- Description -->
-                        <Label layoutX="61.0" layoutY="245.0" prefHeight="18.0" prefWidth="98.0" text="Description:">
+                        <Label layoutX="61.0" layoutY="245.0" prefHeight="18.0" prefWidth="98.0" text="Description:" textFill="WHITE">
                             <font>
-                                <Font name="System Italic" size="10.0" />
+                                <Font name="System Italic" size="12.0" />
                             </font>
                         </Label>
                         <TextArea fx:id="description" layoutX="54.0" layoutY="270.0" prefHeight="74.0" prefWidth="264.0" styleClass="textfield" />
                         <Label fx:id="descriptionPlanningError" layoutX="40.0" layoutY="368.0" prefHeight="15.0" prefWidth="239.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
-                        <Button layoutX="202.0" layoutY="374.0" mnemonicParsing="false" onAction="#editPlanning" prefHeight="30.0" prefWidth="154.0" styleClass="Appbar" stylesheets="@style.css" text="Edit">
+                        <Button layoutX="202.0" layoutY="374.0" mnemonicParsing="false" onAction="#editPlanning" prefHeight="30.0" prefWidth="154.0" styleClass="white-bg" stylesheets="@style.css" text="Edit Planning">
                             <font>
                                 <Font name="System Bold Italic" size="12.0" />
                             </font>
                         </Button>
                         <ImageView fitHeight="122.0" fitWidth="120.0" layoutX="113.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/calendar.png" />
+                                <Image url="@images/planning.png" />
                             </image>
                         </ImageView>
                     </children>
