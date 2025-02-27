@@ -273,4 +273,44 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return users;
     }
+    public Optional<User> getUtilisateurById(int idUser) throws SQLException {
+        String query = "SELECT * FROM user WHERE id_User = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("id_User"),
+                        resultSet.getString("nom"),
+                        resultSet.getString("prenom"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
+                );
+
+                user.setDateNaissance(resultSet.getDate("dateNaissance"));
+                user.setImageURL(resultSet.getString("imageURL"));
+
+                if ("Entraîneur".equalsIgnoreCase(user.getRole())) {
+                    Entraineur entraineur = new Entraineur(
+                            user.getNom(), user.getPrenom(), user.getEmail(),
+                            user.getPassword(), user.getDateNaissance(),
+                            user.getRole(), resultSet.getString("specialite")
+                    );
+                    entraineur.setId_User(user.getId_User());
+                    entraineur.setImageURL(user.getImageURL());
+                    return Optional.of(entraineur);
+                }
+
+                return Optional.of(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération de l'utilisateur avec ID: " + idUser);
+            throw new SQLException("Erreur lors de la récupération de l'utilisateur", e);
+        }
+
+        return Optional.empty();
+    }
 }

@@ -67,7 +67,7 @@ public class DashboardAdminController  {
 
 
             try {
-                profileImage.setImage(new Image(getClass().getResource("/Image/user.png").toExternalForm()));
+                profileImage.setImage(new Image(getClass().getResource("/images/user.png").toExternalForm()));
             } catch (Exception e) {
                 System.out.println("Erreur chargement image profil: " + e.getMessage());
             }
@@ -117,11 +117,25 @@ public class DashboardAdminController  {
         activityCountLabel.setText(String.valueOf(activityCount));
     }
 
-
-
+    @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
+    @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
     @FXML private void onListUsersButtonClick(ActionEvent event) { showPane(listUsersPane); }
-    @FXML private void onReclamationsButtonClick(ActionEvent event) { showPane(manageClaimsPane); }
+    @FXML
+    private void onReclamationsButtonClick(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReclamationsAdmin.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Gérer mes Réclamations");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
     @FXML private void onAddUserButtonClick(ActionEvent event) { showPane(addUserPane); }
     @FXML
     private void onDeleteUser(ActionEvent event) {
@@ -302,7 +316,7 @@ public class DashboardAdminController  {
         }
     }
     private void setUserProfileImage(String imageURL) {
-        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/Image/icons8-user-32.png"));
+        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/images/icons8-user-32.png"));
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
