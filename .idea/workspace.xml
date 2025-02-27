@@ -5,7 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/planning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/style.css" afterDir="false" />
+>>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +32,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -31,11 +48,11 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
-    &quot;accountId&quot;: &quot;93bf50ad-1146-45ec-b0fc-62c031d94e68&quot;
+    &quot;accountId&quot;: &quot;beea3125-0a9b-46ec-bbcf-1f1e135d838a&quot;
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -45,6 +62,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
@@ -59,12 +77,31 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.JavaFX",
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ghabi\OneDrive\Documenten\GitHub\DevAthletes\gymify\src\main\resources" />
       <recent name="C:\Users\ghabi\OneDrive\Documenten\GitHub\DevAthletes\gymify\src\main\resources\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\DevAthletes\gymify\DevAthletes\gymify\src\main\resources\images" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.gymify.controllers" />
@@ -73,8 +110,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -89,9 +126,14 @@
       <workItem from="1740478203553" duration="190000" />
       <workItem from="1740478900693" duration="266000" />
       <workItem from="1740479865466" duration="1315000" />
+<<<<<<< HEAD
       <workItem from="1740558525690" duration="2006000" />
       <workItem from="1740561088555" duration="73000" />
       <workItem from="1740563036573" duration="795000" />
+=======
+      <workItem from="1740558525690" duration="906000" />
+      <workItem from="1740560309890" duration="29440000" />
+>>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
     </task>
     <servers />
   </component>

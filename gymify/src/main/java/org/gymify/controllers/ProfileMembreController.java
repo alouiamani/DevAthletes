@@ -80,10 +80,10 @@ public class ProfileMembreController {
                 try {
                     profileImage.setImage(new Image(imageUrl, true));
                 } catch (Exception e) {
-                    profileImage.setImage(new Image(getClass().getResource("/Image/icons8-user-32.png").toString(), true));
+                    profileImage.setImage(new Image(getClass().getResource("/images/icons8-user-32.png").toString(), true));
                 }
             } else {
-                profileImage.setImage(new Image(getClass().getResource("/Image/icons8-user-32.png").toString(), true));
+                profileImage.setImage(new Image(getClass().getResource("/images/icons8-user-32.png").toString(), true));
             }
         }
     }

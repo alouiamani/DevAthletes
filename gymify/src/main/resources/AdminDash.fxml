@@ -267,7 +267,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="146.0" layoutY="118.0" onMouseClicked="#ActivityPage" prefHeight="90.0" prefWidth="118.0" styleClass="nav-form" stylesheets="/style.css">
+                        <AnchorPane layoutX="146.0" layoutY="118.0" onMouseClicked="#ActivityPage" prefHeight="90.0" prefWidth="118.0" styleClass="nav-form" stylesheets="style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -275,7 +275,7 @@
                                  </image>
                               </ImageView>
                               <Label layoutX="43.0" layoutY="56.0" text="Activity" textFill="#e7e2e2" />
-                              <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
+                              <Label fx:id="activityCountLabel" layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>

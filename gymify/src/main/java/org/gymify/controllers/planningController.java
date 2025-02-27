@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.gymify.entities.Planning;
+import org.gymify.entities.User;
 import org.gymify.services.PlanningService;
 
 import java.io.IOException;
@@ -45,6 +46,7 @@ public class planningController {
     private Label dateError;
     @FXML
     private GridPane planningGrid;
+    private User user;
 
 
     @FXML
@@ -52,6 +54,11 @@ public class planningController {
 
     public planningController() {
         planningService = new PlanningService();  // Assurez-vous que le service est initialisé
+    }
+    public void setUser(User user) {
+        this.user = user;
+        System.out.println("📅 ID utilisateur reçu pour le planning : " + user);
+        // Ici, tu peux utiliser userId pour charger les données du planning depuis la BD.
     }
 
 
@@ -157,61 +164,69 @@ public class planningController {
         int col = 0;
 
         for (Planning planning : plannings) {
-            VBox vbox = new VBox(10);
-            vbox.setPadding(new Insets(10));
-            vbox.setStyle("-fx-border-color: #9fb1c5; -fx-border-radius: 5px; -fx-background-color: #f9f9f9;");
-            vbox.setAlignment(Pos.CENTER);
-            GridPane.setMargin(vbox, new Insets(10));
-            ImageView planningImage = new ImageView(new Image(getClass().getResource("/images/calendar.png").toExternalForm()));
-            planningImage.setFitWidth(30);
-            planningImage.setFitHeight(30);
-            vbox.getChildren().add(planningImage);
+            VBox card = new VBox(10);
+            card.setPadding(new Insets(15));
+            card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #d1d1d1; -fx-border-radius: 10px; " +
+                    "-fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 3);");
+            card.setAlignment(Pos.CENTER);
+            card.setPrefWidth(200);
+            card.setPrefHeight(180);
 
-            vbox.getChildren().addAll(
-                    new Label( planning.getTitle())
+            // Image du planning
+            ImageView planningImage = new ImageView(new Image(getClass().getResource("/images/planning.png").toExternalForm()));
+            planningImage.setFitWidth(40);
+            planningImage.setFitHeight(40);
 
+            // Titre et description
+            Label titleLabel = new Label(planning.getTitle());
+            titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
+            Label descriptionLabel = new Label(planning.getDescription());
+            descriptionLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #636e72;");
+            descriptionLabel.setWrapText(true);
 
-            );
-
+            // Zone des boutons
             HBox buttonBox = new HBox(10);
+            buttonBox.setAlignment(Pos.CENTER);
 
-            // Ajouter une icône pour le bouton "Supprimer"
-
+            // Bouton supprimer avec icône
             ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/supprimer.png")));
-            deleteIcon.setFitWidth(16);
-            deleteIcon.setFitHeight(16);
+            deleteIcon.setFitWidth(18);
+            deleteIcon.setFitHeight(18);
             Button deleteButton = new Button("", deleteIcon);
-            deleteButton.setStyle("-fx-background-color: #eceff1; -fx-text-fill: white;");
-
-            // Ajouter une icône pour le bouton "Modifier"
-            ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/editer.png")));
-            editIcon.setFitWidth(16);
-            editIcon.setFitHeight(16);
-            Button editButton = new Button("", editIcon);
-            editButton.setStyle("-fx-background-color: #eceff1; -fx-text-fill: white;");
+            deleteButton.setStyle("-fx-background-color: #ff6b6b; -fx-background-radius: 5px; -fx-padding: 5px;");
             deleteButton.setOnAction(event -> {
-                planningService.Delete(planning);  // Supprimer l'activité
-                displayPlanning();  // Rafraîchir l'affichage
+                planningService.Delete(planning);
+                displayPlanning();
             });
+
+            // Bouton modifier avec icône
+            ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/editer.png")));
+            editIcon.setFitWidth(18);
+            editIcon.setFitHeight(18);
+            Button editButton = new Button("", editIcon);
+            editButton.setStyle("-fx-background-color: #1e90ff; -fx-background-radius: 5px; -fx-padding: 5px;");
             editButton.setOnAction(event -> {
-                openEditActivityPopup(planning); // Ouvrir la popup d'édition avec les informations de l'activité
-                displayPlanning(); // Rafraîchir l'affichage après la modification
+                openEditActivityPopup(planning);
+                displayPlanning();
             });
 
             buttonBox.getChildren().addAll(deleteButton, editButton);
-            vbox.getChildren().add(buttonBox);
-            vbox.setOnMouseClicked(event -> openCoursesPage(planning));
-            planningGrid.add(vbox, col, row);
 
+            // Ajout des éléments à la carte
+            card.getChildren().addAll(planningImage, titleLabel, descriptionLabel, buttonBox);
+            card.setOnMouseClicked(event -> openCoursesPage(planning));
+
+            // Ajout à la grille
+            planningGrid.add(card, col, row);
             col++;
-            if (col == 3) {
+            if (col == 2) {
                 col = 0;
                 row++;
             }
         }
-
     }
+
     @FXML
     private void openEditActivityPopup(Planning planning) {
         try {
@@ -285,7 +300,7 @@ public class planningController {
 
             // Obtenir le contrôleur de la page des cours
             showController controller = loader.getController();
-            controller.setPlanningData(planning); // Passer les infos du planning sélectionné
+            controller.setPlanningData(planning,user); // Passer les infos du planning sélectionné
 
             // Remplacer la scène actuelle par la nouvelle
             Stage stage = (Stage) planningGrid.getScene().getWindow();
@@ -296,5 +311,19 @@ public class planningController {
         }
 }
 
+
+    public void goBackPage(ActionEvent event) {
+        try {
+            // Charger la nouvelle page (remplace "previousPage.fxml" par le bon fichier FXML)
+            Parent root = FXMLLoader.load(getClass().getResource("/InterfaceEntraineur.fxml"));
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
