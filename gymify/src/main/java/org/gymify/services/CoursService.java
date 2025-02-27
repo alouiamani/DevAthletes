@@ -138,4 +138,53 @@ public class CoursService implements IService<Cours> {
 
 
     }
+    public List<Cours> getCoursByPlanning(Planning planning) {
+        List<Cours> coursList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM `cours` WHERE `planning_id` = ?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, planning.getId()); // Utiliser l'ID du planning pour filtrer les cours
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Cours cours = new Cours();
+                cours.setId(rs.getInt("id"));
+                cours.setTitle(rs.getString("title"));
+                cours.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
+                cours.setHeureFin(rs.getTime("heurFin").toLocalTime());
+                cours.setDescription(rs.getString("description"));
+                cours.setDateDebut(rs.getDate("dateDebut"));
+                cours.setDateFin(rs.getDate("dateFin"));
+
+                // Récupérer l'activité associée
+                int activitéId = rs.getInt("activité_id");
+                if (activitéId != 0) {
+                    Activité activité = new Activité();
+                    activité.setId(activitéId);
+                    cours.setActivité(activité);
+                }
+
+                // Récupérer le planning associé
+                int planningId = rs.getInt("planning_id");
+                if (planningId != 0) {
+                    Planning planningCours = new Planning();
+                    planningCours.setId(planningId);
+                    cours.setPlanning(planningCours);
+                }
+
+                // Récupérer l'entraîneur associé
+                int entraineurId = rs.getInt("entaineur_id");
+                if (entraineurId != 0) {
+                    User entraineur = new User();
+                    entraineur.setId_User(entraineurId);
+                    cours.setUser(entraineur);
+                }
+
+                coursList.add(cours);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des cours par planning : " + e.getMessage());
+        }
+        return coursList;
+    }
 }

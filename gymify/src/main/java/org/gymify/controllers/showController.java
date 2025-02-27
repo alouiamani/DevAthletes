@@ -9,10 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +41,8 @@ public class showController {
     private Planning selectedPlanning;
     private CoursService coursService = new CoursService();
     private User user;
+    @FXML
+    private GridPane calendarGrid;
 
 
     public void setPlanningData(Planning planning,User user) {
@@ -50,10 +50,76 @@ public class showController {
             this.user=user;
             this.selectedPlanning = planning;
             planningTitle.setText(planning.getTitle());
+
             System.out.println("Le planning n'est pas null");
+            afficherCalendrier();
             // Affiche le titre du planning
         } else {
             System.out.println("Le planning est null");
+        }
+    }
+
+    private void afficherCalendrier() {
+        if (selectedPlanning == null) {
+            System.out.println("Erreur : selectedPlanning est null");
+            return;
+        }
+
+        // Récupérer les cours associés au planning
+        List<Cours> coursList = coursService.getCoursByPlanning(selectedPlanning);
+
+        // Conversion des dates de début et de fin en LocalDate
+        Date dateDebut = selectedPlanning.getdateDebut();
+        Date dateFin = selectedPlanning.getdateFin();
+
+        // Convertir java.sql.Date en java.util.Date
+        java.util.Date utilDateDebut = new java.util.Date(dateDebut.getTime());
+        java.util.Date utilDateFin = new java.util.Date(dateFin.getTime());
+
+        // Convertir java.util.Date en LocalDate
+        LocalDate startDate = utilDateDebut.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = utilDateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        calendarGrid.getChildren().clear(); // Nettoyer avant d'ajouter
+
+        // Ajouter les jours de la semaine
+        String[] joursSemaine = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"};
+        for (int i = 0; i < 7; i++) {
+            Label jourLabel = new Label(joursSemaine[i]);
+            jourLabel.setStyle("-fx-font-weight: bold; -fx-alignment: center; -fx-padding: 5px;");
+            calendarGrid.add(jourLabel, i, 0);
+        }
+
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+        int column = 0;
+        int row = 1;
+
+        for (int i = 0; i <= daysBetween; i++) {
+            LocalDate currentDate = startDate.plusDays(i);
+            Label dayLabel = new Label(currentDate.getDayOfMonth() + "/" + currentDate.getMonthValue());
+
+            // Vérifier si la date actuelle correspond à un cours
+            boolean isCoursDate = coursList.stream()
+                    .anyMatch(cours -> {
+                        // Convertir java.sql.Date en java.util.Date
+                        java.util.Date coursUtilDate = new java.util.Date(cours.getDateDebut().getTime());
+                        LocalDate coursDate = coursUtilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        return coursDate.isEqual(currentDate);
+                    });
+
+            // Appliquer un style différent si c'est une date de cours
+            if (isCoursDate) {
+                dayLabel.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-background-color: #ADD8E6;"); // Bleu clair
+            } else {
+                dayLabel.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-background-color: #f4f4f4;"); // Couleur par défaut
+            }
+
+            calendarGrid.add(dayLabel, column, row);
+            column++;
+
+            if (column > 6) {
+                break; // Sortir de la boucle après avoir ajouté les dates sur une seule ligne
+            }
         }
     }
 
@@ -116,6 +182,7 @@ public class showController {
         }
     }
     public void initialize() {
+
         // Charger le fichier CSS
         listView.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
@@ -196,6 +263,7 @@ public class showController {
                 };
             }
         });
+
     }
 
     private void handleDateButtonClick(Cours item) {
