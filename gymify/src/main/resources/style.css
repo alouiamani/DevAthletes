@@ -229,6 +229,63 @@
 .date-picker-popup .cell:hover {
     -fx-background-color: #85c1e9;
 }
+/* styles.css */
 
+/* Style général pour la ListView */
+.list-view {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 10px;
+}
+
+/* Style pour chaque cellule de la ListView */
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 2, 2);
+    -fx-padding: 10px;
+    -fx-margin: 10px;
+}
+
+/* Style pour le titre du cours */
+.course-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-fill: #333333;
+}
+
+/* Style pour la description du cours */
+.course-description {
+    -fx-font-size: 13px;
+    -fx-fill: #555555;
+}
+
+/* Style pour la date du cours */
+.course-date {
+    -fx-font-size: 14px;
+    -fx-fill: #777777;
+}
+
+/* Style pour les boutons */
+
+
+/* Style pour les icônes des boutons */
+.button .image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 1, 1);
+}
+
+/* Style pour les heures de début et de fin */
+.course-time {
+    -fx-font-size: 14px;
+    -fx-fill: #444444;
+}
+/* styles.css */
+
+.button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.2s ease-in-out;
+}
 
 
