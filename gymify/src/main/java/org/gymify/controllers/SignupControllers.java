@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SignupControllers {
 
-   
+
 
         @FXML
         private PasswordField ConfPasswdField;
