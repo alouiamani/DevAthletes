@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Responsable_Salle extends User {
     public Responsable_Salle(int id_User, String nom, String prenom, String email, String password, Date dateNaissance, String imageURL) {
-        super();
+        super(String.valueOf(id_User), nom, prenom, email, password,dateNaissance, imageURL);
     }
 
     public Responsable_Salle(String nom, String prenom, String email, String password,

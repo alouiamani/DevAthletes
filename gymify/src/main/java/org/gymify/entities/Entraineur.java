@@ -10,7 +10,7 @@ public class Entraineur extends User {
     // Constructeur avec ID (pour les mises à jour)
     public Entraineur(int id_User, String nom, String prenom, String email, String password,
                       Date dateNaissance, String imageURL, String specialite) {
-        super();
+        super(String.valueOf(id_User), nom, prenom, email, password, dateNaissance, imageURL);
         this.specialite = specialite;
     }
 
