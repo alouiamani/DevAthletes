@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+
+    <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="" />
+=======
     <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="">
-<<<<<<< HEAD
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 =======
       <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/planning.png" afterDir="false" />
@@ -23,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/style.css" afterDir="false" />
 >>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
     </list>
+>>>>>>> 43bdb9638988ae826e0ad11664e03a429d425e13
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +66,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
+
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
@@ -126,11 +130,11 @@
       <workItem from="1740478203553" duration="190000" />
       <workItem from="1740478900693" duration="266000" />
       <workItem from="1740479865466" duration="1315000" />
-<<<<<<< HEAD
+
       <workItem from="1740558525690" duration="2006000" />
       <workItem from="1740561088555" duration="73000" />
       <workItem from="1740563036573" duration="795000" />
-=======
+
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
 >>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
