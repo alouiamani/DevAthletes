@@ -49,16 +49,55 @@ public class SignupControllers {
     private final ServiceUser serviceUser = new ServiceUser();
 
     @FXML
+    public void initialize() {
+        // ✅ Vérification instantanée de l'email lors du changement de focus
+        EmailField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) { // L'utilisateur a quitté le champ email
+                validerEmail();
+            }
+        });
+        ConfPasswdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) { // L'utilisateur a quitté le champ confirmation mot de passe
+                validerMotDePasse();
+            }
+        });
+    }
+    private void validerMotDePasse() {
+        String password = PasswdField.getText();
+        String confirmPassword = ConfPasswdField.getText();
+
+        if (confirmPassword.isEmpty()) {
+            errorConfirmPassword.setText("❌ La confirmation du mot de passe est requise.");
+        } else if (!password.equals(confirmPassword)) {
+            errorConfirmPassword.setText("❌ Les mots de passe ne correspondent pas.");
+        } else {
+            errorConfirmPassword.setText(""); // Supprimer l'erreur si tout est bon
+        }
+    }
+    /**
+     * 🔹 Validation de l'email en temps réel
+     */
+    private void validerEmail() {
+        String email = EmailField.getText().trim();
+
+        if (email.isEmpty()) {
+            errorEmail.setText("❌ L'email est requis.");
+        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            errorEmail.setText("❌ Email invalide. Exemple : exemple@email.com");
+        } else if (emailExiste(email)) { // Vérifier si l'email est déjà utilisé
+            errorEmail.setText("❌ Cet email est déjà utilisé.");
+        } else {
+            errorEmail.setText(""); // Supprimer l'erreur si tout est bon
+        }
+    }
+
+    @FXML
     void ButtonRegisterOnAction(ActionEvent event) {
         System.out.println("➡ Bouton Inscription cliqué !");
 
-        // ✅ Réinitialiser les messages d'erreur
-        errorNom.setText("");
-        errorPrenom.setText("");
-        errorEmail.setText("");
-        errorPassword.setText("");
-        errorConfirmPassword.setText("");
-
+        // ✅ Vérifier une dernière fois avant d'envoyer
+        validerEmail();
+        validerMotDePasse();
         boolean hasError = false;
 
         // ✅ Récupération des valeurs
@@ -77,17 +116,9 @@ public class SignupControllers {
             errorPrenom.setText("❌ Ce champ est requis.");
             hasError = true;
         }
-        if (email.isEmpty()) {
-            errorEmail.setText("❌ Ce champ est requis.");
-            hasError = true;
-        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            errorEmail.setText("❌ Email invalide. Exemple : exemple@email.com");
-            hasError = true;
-        } else if (emailExiste(email)) { // Vérifier si l'email est déjà utilisé
-            errorEmail.setText("❌ Cet email est déjà utilisé.");
+        if (!errorEmail.getText().isEmpty()) { // Vérification déjà faite en temps réel
             hasError = true;
         }
-
         if (password.isEmpty()) {
             errorPassword.setText("❌ Ce champ est requis.");
             hasError = true;
@@ -105,24 +136,19 @@ public class SignupControllers {
             return;
         }
 
-        // ✅ Création de l'utilisateur avec le rôle "sportif"
+        // ✅ Création de l'utilisateur
         User newUser = new User(nom, prenom, password, email, "sportif");
-        System.out.println("Tentative d'inscription de : " + email);
 
         try {
             boolean success = serviceUser.inscrire(newUser);
             if (success) {
                 System.out.println("✅ Inscription réussie !");
                 showAlert(Alert.AlertType.INFORMATION, "✅ Succès", "Inscription réussie ! Vous pouvez vous connecter.");
-
-                // ✅ Redirection vers la page de connexion
                 ouvrirInterface("Login.fxml", "🔑 Connexion");
             } else {
-                System.out.println("❌ Échec de l'inscription !");
                 showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Cet email est déjà utilisé. Essayez un autre.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Erreur lors de l'inscription : " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Problème avec la base de données.");
             e.printStackTrace();
         }
@@ -132,12 +158,9 @@ public class SignupControllers {
      * 🔹 Vérifie si un email est déjà utilisé dans la base de données.
      */
     private boolean emailExiste(String email) {
-        return serviceUser.emailExiste(email); // Implémente cette méthode dans ServiceUser
+        return serviceUser.emailExiste(email);
     }
 
-    /**
-     * 🔹 Méthode pour ouvrir une interface FXML
-     */
     private void ouvrirInterface(String fxmlPath, String title) {
         try {
             System.out.println("➡ Ouverture de l'interface : " + fxmlPath);
