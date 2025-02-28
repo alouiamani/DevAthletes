@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.ServiceCommande;
 import services.ServiceProduit;
+import utils.AuthToken;
 
 import java.io.IOException;
 import java.net.URL;
@@ -134,6 +135,7 @@ public class listProduitFront implements Initializable {
 
                 // Créer la commande
                 Commande nouvelleCommande = new Commande(produitSelectionne.getPrix_p() * quantite, "En attente");
+                nouvelleCommande.setUser_id(AuthToken.getCurrentUser().getId_User());
                 int commandeId = serviceCommande.ajouter(nouvelleCommande);
                 serviceCommande.ajouterCommandeProduit(commandeId, produitSelectionne.getId_p(), quantite);
 

@@ -9,6 +9,7 @@ public class Commande {
     private String statut_c;
     private Timestamp dateC;
     private List<CommandeProduit> commandeProduits = new ArrayList<>();
+    private int user_id;
 
     public Commande() {}
 
@@ -63,6 +64,14 @@ public class Commande {
 
     public void ajouterCommandeProduit(CommandeProduit commandeProduit) {
         this.commandeProduits.add(commandeProduit);
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override

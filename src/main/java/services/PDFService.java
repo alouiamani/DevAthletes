@@ -3,13 +3,30 @@ package services;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import entities.Commande;
+import entities.User;
+import utils.MyDatabase;
+import utils.AuthToken;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class PDFService {
+    
+    private String getUserName(int userId) {
+        // Get the current logged in user
+        User currentUser = AuthToken.getCurrentUser();
+        if (currentUser != null) {
+            // Return the current user's name in lowercase format
+            return (currentUser.getNom() + " " + currentUser.getPrenom()).toLowerCase();
+        }
+        return "Unknown User";
+    }
     
     public void generateCommandePDF(List<Commande> commandes, String filePath) throws DocumentException, IOException {
         Document document = new Document();
@@ -32,26 +49,32 @@ public class PDFService {
         date.setSpacingAfter(20);
         document.add(date);
         
-        // Create table
+        // Create table with 4 columns instead of 5
         PdfPTable table = new PdfPTable(4);
         table.setWidthPercentage(100);
         table.setSpacingBefore(10f);
         table.setSpacingAfter(10f);
         
-        float[] columnWidths = {1f, 2f, 2f, 2f};
+        // Update column widths (removed ID column)
+        float[] columnWidths = {2f, 2f, 2f, 2f};
         table.setWidths(columnWidths);
         
-        // Add table headers
+        // Add table headers (removed ID)
         Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-        addTableHeader(table, headerFont, "ID", "Total", "Statut", "Date");
+        addTableHeader(table, headerFont, "Client", "Total", "Statut", "Date");
         
         // Add table rows
         Font rowFont = new Font(Font.FontFamily.HELVETICA, 12);
         float totalAmount = 0;
         
+        User currentUser = AuthToken.getCurrentUser();
+        String clientName = currentUser != null ? 
+            (currentUser.getNom() + " " + currentUser.getPrenom()).toLowerCase() : 
+            "Unknown User";
+        
         for (Commande commande : commandes) {
             addTableRow(table, rowFont,
-                String.valueOf(commande.getId_c()),
+                clientName,
                 String.format("%.2f dt", commande.getTotal_c()),
                 commande.getStatut_c(),
                 commande.getDateC().toString()

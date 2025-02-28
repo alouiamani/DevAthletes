@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import entities.Commande;
 import utils.MyDatabase;
+import utils.AuthToken;
+import entities.User;
 
 public class ServiceCommande implements IService<Commande> {
     private final Connection connection;
@@ -15,12 +17,19 @@ public class ServiceCommande implements IService<Commande> {
 
     @Override
     public int ajouter(Commande commande) throws SQLException {
-        String req = "INSERT INTO commande (total_c, statut_c, dateC) VALUES (?, ?, ?)";
+        String req = "INSERT INTO commande (total_c, statut_c, dateC, user_id) VALUES (?, ?, ?, ?)";
         
         try (PreparedStatement pstmt = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setFloat(1, commande.getTotal_c());
             pstmt.setString(2, commande.getStatut_c());
-            pstmt.setTimestamp(3, commande.getDateC());
+            pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            
+            User currentUser = AuthToken.getCurrentUser();
+            if (currentUser != null) {
+                pstmt.setInt(4, currentUser.getId_User());
+            } else {
+                throw new SQLException("No user logged in");
+            }
             
             pstmt.executeUpdate();
             
@@ -35,7 +44,8 @@ public class ServiceCommande implements IService<Commande> {
     @Override
     public List<Commande> afficher() throws SQLException {
         List<Commande> commandes = new ArrayList<>();
-        String req = "SELECT * FROM commande";
+        String req = "SELECT c.*, u.id_User, u.nom, u.prenom FROM commande c " +
+                     "LEFT JOIN user u ON c.user_id = u.id_User";
         
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(req)) {
@@ -47,6 +57,7 @@ public class ServiceCommande implements IService<Commande> {
                     rs.getString("statut_c"),
                     rs.getTimestamp("dateC")
                 );
+                commande.setUser_id(rs.getInt("user_id"));
                 commandes.add(commande);
             }
         }

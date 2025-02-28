@@ -26,7 +26,7 @@
 
             <Label fx:id="labelTotal" layoutX="20.0" layoutY="610.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Totale Commande: 0 €" />
 
-            <VBox layoutX="594.0" layoutY="194.0" prefHeight="101.0" prefWidth="168.0" spacing="10">
+            <VBox layoutX="591.0" layoutY="253.0" prefHeight="154.0" prefWidth="168.0" spacing="10">
                 <Button fx:id="exportPdfBtn" onAction="#exportToPDF" prefHeight="47.0" prefWidth="168.0" style="-fx-background-color: #1e2a3a;" text="Exporter PDF" textFill="white">
                     <font>
                         <Font size="14.0" />
@@ -38,13 +38,13 @@
                   <Font size="14.0" />
                </font></Button>
    
-                <Button onAction="#retourPagePrecedente" prefHeight="47.0" prefWidth="168.0" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white">
+                         <Button onAction="#retourPagePrecedente" prefHeight="44.0" prefWidth="168.0" style="-fx-background-color: #1e2a3a;" text="Retour" textFill="white">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
             </VBox>
-         <Button layoutX="583.0" layoutY="499.0" onAction="#afficherCommande" prefHeight="42.0" prefWidth="191.0" style="-fx-background-color: #1e2a3a;" text="Commande" textFill="white">
+         <Button layoutX="313.0" layoutY="610.0" onAction="#afficherCommande" prefHeight="42.0" prefWidth="191.0" style="-fx-background-color: #1e2a3a;" text="Confirmer Commande" textFill="white">
             <font>
                <Font size="14.0" />
             </font>
