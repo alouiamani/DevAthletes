@@ -1,20 +1,24 @@
 package org.gymify.services;
 
 
+import org.gymify.entities.Entraineur;
 import org.gymify.entities.Reclamation;
 import org.gymify.entities.Reponse;
+import org.gymify.entities.User;
 import org.gymify.services.IGestionUser;
 import org.gymify.utils.gymifyDataBase;
+
+
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ServiceReponse implements IGestionUser<Reponse> {
+public class ServiceReponse implements Iservices <Reponse> {
     Connection connection = gymifyDataBase.getInstance().getConnection();
     public ServiceReponse() {}
-    @Override
+
     public void ajouter(Reponse reponse) throws SQLException {
         String req = "INSERT INTO reponse (id_rec, message) VALUES ('" + reponse.getId_rec() + "', '" + reponse.getMessage() + "')";
         Statement statement = connection.createStatement();
@@ -24,7 +28,7 @@ public class ServiceReponse implements IGestionUser<Reponse> {
 
     }
 
-    @Override
+
     public void modifier(Reponse reponse) throws SQLException {
         String req = "UPDATE reponse SET message=? WHERE id_Reponse=?";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
@@ -36,7 +40,7 @@ public class ServiceReponse implements IGestionUser<Reponse> {
 
     }
 
-    @Override
+
     public void supprimer(int id_Reponse) throws SQLException {
         String req = "DELETE FROM reponse WHERE id_Reponse=" + id_Reponse;
         Statement statement = connection.createStatement();
@@ -45,7 +49,6 @@ public class ServiceReponse implements IGestionUser<Reponse> {
 
     }
 
-    @Override
     public List<Reponse> afficher() throws SQLException {
         List<Reponse> reponses = new ArrayList<>();
         String req = "SELECT r.id_Reponse, r.id_rec, r.message, r.date_reponse, "
@@ -71,5 +74,6 @@ public class ServiceReponse implements IGestionUser<Reponse> {
         }
         return reponses;
     }
-    }
+
+}
 
