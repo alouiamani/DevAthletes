@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,12 +27,12 @@
     &quot;assignee&quot;: &quot;Wajdbenameur1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/alouiamani/DevAthletes.git",
-    "accountId": "93bf50ad-1146-45ec-b0fc-62c031d94e68"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
+    &quot;accountId&quot;: &quot;93bf50ad-1146-45ec-b0fc-62c031d94e68&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -115,6 +113,7 @@
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
       <workItem from="1740699499918" duration="1192000" />
+      <workItem from="1740729646138" duration="508000" />
     </task>
     <servers />
   </component>
