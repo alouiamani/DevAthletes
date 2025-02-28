@@ -4,29 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
-    <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="" />
-=======
-    <list default="true" id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="">
-
+    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/planning.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/coursController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/planningController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/showController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/addPlanning.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/courses.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/editPlanning.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/plannings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/style.css" afterDir="false" />
->>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
     </list>
->>>>>>> 43bdb9638988ae826e0ad11664e03a429d425e13
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,12 +29,12 @@
     &quot;assignee&quot;: &quot;Wajdbenameur1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
-    &quot;accountId&quot;: &quot;beea3125-0a9b-46ec-bbcf-1f1e135d838a&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/alouiamani/DevAthletes.git",
+    "accountId": "93bf50ad-1146-45ec-b0fc-62c031d94e68"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -66,22 +46,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
-=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
@@ -96,9 +60,24 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
->>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
+=======
+  &lt;component name=&quot;PropertiesComponent&quot;&gt;{
+  &amp;quot;keyToString&amp;quot;: {
+    &amp;quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&amp;quot;: &amp;quot;Run&amp;quot;,
+    &amp;quot;RunOnceActivity.ShowReadmeOnStart&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;git-widget-placeholder&amp;quot;: &amp;quot;main&amp;quot;,
+    &amp;quot;kotlin-language-version-configured&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;last_opened_file_path&amp;quot;: &amp;quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&amp;quot;,
+    &amp;quot;node.js.detected.package.eslint&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;node.js.detected.package.tslint&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;node.js.selected.package.eslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
+    &amp;quot;node.js.selected.package.tslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
+    &amp;quot;nodejs_package_manager_path&amp;quot;: &amp;quot;npm&amp;quot;,
+    &amp;quot;settings.editor.selected.configurable&amp;quot;: &amp;quot;preferences.JavaFX&amp;quot;,
+    &amp;quot;vue.rearranger.settings.migration&amp;quot;: &amp;quot;true&amp;quot;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 059b9b11527a8a8b3fb8a7bb2ac6455598730279
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ghabi\OneDrive\Documenten\GitHub\DevAthletes\gymify\src\main\resources" />
@@ -114,15 +93,15 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6a6e03e8-46a0-42b7-8343-fc5807f1f3ae" name="Changes" comment="" />
+      <changelist id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
       <created>1740478202473</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -130,14 +109,12 @@
       <workItem from="1740478203553" duration="190000" />
       <workItem from="1740478900693" duration="266000" />
       <workItem from="1740479865466" duration="1315000" />
-
       <workItem from="1740558525690" duration="2006000" />
       <workItem from="1740561088555" duration="73000" />
       <workItem from="1740563036573" duration="795000" />
-
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
->>>>>>> 059b9b11527a8a8b3fb8a7bb2ac6455598730279
+      <workItem from="1740699499918" duration="1192000" />
     </task>
     <servers />
   </component>

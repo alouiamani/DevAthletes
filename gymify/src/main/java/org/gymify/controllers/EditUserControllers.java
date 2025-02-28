@@ -2,13 +2,19 @@ package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Date;
@@ -32,13 +38,19 @@ public class EditUserControllers {
     private TextField ImageURLFx;
 
     @FXML
+    private ImageView profilePreview;
+
+    @FXML
+    private Button importImageButton;
+
+    @FXML
     private TextField LastnameFx;
 
     @FXML
     private Label SuccessMessageFx;
-
     @FXML
-    private ImageView profilePreview; // Correction du type
+    private Button cancelButton;
+    // Correction du type
 
     private User currentUser;
     private final ServiceUser serviceUser = new ServiceUser() {
@@ -56,14 +68,16 @@ public class EditUserControllers {
             this.currentUser = user;
             FirstnameFx.setText(user.getNom());
             LastnameFx.setText(user.getPrenom());
-            EmailFx.setText(user.getEmail());
 
             if (user.getDateNaissance() != null) {
                 DateBirthFx.setValue(user.getDateNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
 
-            ImageURLFx.setText(user.getImageURL());
-            updateImagePreview();
+            // Charger l'image actuelle de l'utilisateur
+            if (user.getImageURL() != null && !user.getImageURL().isEmpty()) {
+                profilePreview.setImage(new Image(user.getImageURL()));
+                ImageURLFx.setText(user.getImageURL());
+            }
         }
     }
 
@@ -71,17 +85,22 @@ public class EditUserControllers {
      * Met à jour l'aperçu de l'image de profil.
      */
     @FXML
-    void updateImagePreview() {
-        String imageUrl = ImageURLFx.getText();
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            try {
-                profilePreview.setImage(new Image(imageUrl, true));
-            } catch (Exception e) {
-                profilePreview.setImage(null);
-                System.err.println("Erreur de chargement de l'image: " + e.getMessage());
-            }
-        } else {
-            profilePreview.setImage(null);
+    void importerImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sélectionner une image");
+
+        // Filtre pour ne sélectionner que les fichiers image
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+
+        // Ouvrir la boîte de dialogue pour choisir une image
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            String imagePath = selectedFile.toURI().toString(); // Convertir en URL utilisable
+            ImageURLFx.setText(imagePath); // Afficher le chemin dans le TextField
+            profilePreview.setImage(new Image(imagePath)); // Charger et afficher l'image
         }
     }
 
@@ -90,18 +109,17 @@ public class EditUserControllers {
      */
     @FXML
     void saveChanges(ActionEvent event) {
-
-
         try {
             currentUser.setNom(FirstnameFx.getText());
             currentUser.setPrenom(LastnameFx.getText());
-            currentUser.setEmail(EmailFx.getText());
 
             if (DateBirthFx.getValue() != null) {
                 currentUser.setDateNaissance(Date.from(DateBirthFx.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             }
 
-            currentUser.setImageURL(ImageURLFx.getText());
+            if (ImageURLFx.getText() != null && !ImageURLFx.getText().isEmpty()) {
+                currentUser.setImageURL(ImageURLFx.getText()); // Mettre à jour l'URL de l'image
+            }
 
             // Mise à jour dans la base de données
             serviceUser.modifier(currentUser);
@@ -110,14 +128,26 @@ public class EditUserControllers {
             SuccessMessageFx.setText("✅ Profil mis à jour !");
             SuccessMessageFx.setStyle("-fx-text-fill: green;");
 
-            // Ferme la fenêtre après la sauvegarde
-            Stage stage = (Stage) EnregistrerButtFx.getScene().getWindow();
-            stage.close();
+            // Charger la page du profil après modification
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileMembre.fxml"));
+            Parent root = loader.load();
+            ProfileMembreController profileController = loader.getController();
+            profileController.setUser(currentUser); // Mettre à jour l'affichage du profil
 
-        } catch (SQLException e) {
+            // Obtenir la scène actuelle et charger le nouveau contenu
+            Stage stage = (Stage) EnregistrerButtFx.getScene().getWindow();
+            stage.getScene().setRoot(root);
+
+        } catch (SQLException | IOException e) {
             SuccessMessageFx.setText("❌ Erreur lors de la mise à jour.");
             SuccessMessageFx.setStyle("-fx-text-fill: red;");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/ProfileMembre.fxml"));
+        ((Node) event.getSource()).getScene().setRoot(root);
     }
 }

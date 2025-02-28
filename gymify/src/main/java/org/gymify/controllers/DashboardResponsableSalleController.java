@@ -60,7 +60,8 @@ public class DashboardResponsableSalleController {
 
         listUsersInVBox();
     }
-
+    @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
+    @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
     @FXML private void onListUsersButtonClick(ActionEvent event) { showPane(listUsersPane); }
     @FXML private void onAddUserButtonClick(ActionEvent event) { showPane(addUserPane); }
