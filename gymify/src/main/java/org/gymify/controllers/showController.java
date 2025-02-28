@@ -27,6 +27,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class showController {
@@ -44,16 +45,13 @@ public class showController {
     @FXML
     private GridPane calendarGrid;
 
-
-    public void setPlanningData(Planning planning,User user) {
+    public void setPlanningData(Planning planning, User user) {
         if (planning != null) {
-            this.user=user;
+            this.user = user;
             this.selectedPlanning = planning;
             planningTitle.setText(planning.getTitle());
-
             System.out.println("Le planning n'est pas null");
-            afficherCalendrier();
-            // Affiche le titre du planning
+            afficherCalendrier(); // Afficher le calendrier avec les dates
         } else {
             System.out.println("Le planning est null");
         }
@@ -81,27 +79,26 @@ public class showController {
         LocalDate endDate = utilDateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         calendarGrid.getChildren().clear(); // Nettoyer avant d'ajouter
-
-        // Ajouter les jours de la semaine
-        String[] joursSemaine = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"};
-        for (int i = 0; i < 7; i++) {
-            Label jourLabel = new Label(joursSemaine[i]);
-            jourLabel.setStyle("-fx-font-weight: bold; -fx-alignment: center; -fx-padding: 5px;");
-            calendarGrid.add(jourLabel, i, 0);
-        }
+        calendarGrid.getColumnConstraints().clear(); // Supprimer les contraintes de colonnes existantes
 
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-        int column = 0;
-        int row = 1;
+        int column = 0; // Colonne initiale
+        int row = 1; // Ligne unique pour les dates
+
+        // Ajouter des colonnes dynamiquement
+        for (int i = 0; i <= daysBetween; i++) {
+            calendarGrid.getColumnConstraints().add(new ColumnConstraints(80)); // Largeur de chaque colonne
+        }
 
         for (int i = 0; i <= daysBetween; i++) {
             LocalDate currentDate = startDate.plusDays(i);
-            Label dayLabel = new Label(currentDate.getDayOfMonth() + "/" + currentDate.getMonthValue());
+            String dayOfWeek = currentDate.getDayOfWeek().toString().substring(0, 3); // Ex: "Mon", "Tue"
+            Label dayLabel = new Label(dayOfWeek + " " + currentDate.getDayOfMonth() + "/" + currentDate.getMonthValue());
+            dayLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 5px;");
 
             // Vérifier si la date actuelle correspond à un cours
             boolean isCoursDate = coursList.stream()
                     .anyMatch(cours -> {
-                        // Convertir java.sql.Date en java.util.Date
                         java.util.Date coursUtilDate = new java.util.Date(cours.getDateDebut().getTime());
                         LocalDate coursDate = coursUtilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         return coursDate.isEqual(currentDate);
@@ -109,17 +106,60 @@ public class showController {
 
             // Appliquer un style différent si c'est une date de cours
             if (isCoursDate) {
-                dayLabel.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-background-color: #ADD8E6;"); // Bleu clair
+                dayLabel.getStyleClass().add("course-date"); // Ajouter la classe CSS pour les dates de cours
             } else {
-                dayLabel.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-background-color: #f4f4f4;"); // Couleur par défaut
+                dayLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333; -fx-background-color: #f4f4f4; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 5px;");
             }
 
+            // Ajouter un gestionnaire d'événements pour le clic sur la date
+            dayLabel.setOnMouseClicked(event -> {
+                // Réinitialiser le style de tous les labels (sauf ceux avec la classe CSS course-date)
+                calendarGrid.getChildren().forEach(node -> {
+                    if (node instanceof Label) {
+                        Label label = (Label) node;
+                        if (!label.getStyleClass().contains("course-date")) {
+                            label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333; -fx-background-color: #f4f4f4; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 5px;");
+                        }
+                    }
+                });
+
+                // Appliquer un style différent au label cliqué
+                dayLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #fff; -fx-background-color: #073a4d; -fx-border-color: #010917; -fx-border-width: 1px; -fx-padding: 5px;");
+
+                // Filtrer et afficher les cours
+                filterAndDisplayCoursesByDate(currentDate);
+            });
+
+            // Ajouter le label à la grille
             calendarGrid.add(dayLabel, column, row);
-            column++;
 
-            if (column > 6) {
-                break; // Sortir de la boucle après avoir ajouté les dates sur une seule ligne
-            }
+            // Passer à la colonne suivante
+            column++;
+        }
+
+        // Ajuster la largeur de la GridPane
+        calendarGrid.setPrefWidth(daysBetween * 80); // 80 = largeur estimée par colonne
+    }
+
+    private void filterAndDisplayCoursesByDate(LocalDate selectedDate) {
+        if (selectedDate != null) {
+            List<Cours> allCourses = coursService.getCoursByPlanning(selectedPlanning);
+            List<Cours> filteredCourses = allCourses.stream()
+                    .filter(cours -> {
+                        Date dateDebut = cours.getDateDebut(); // Toujours un java.sql.Date
+                        if (dateDebut != null) {
+                            // Convertir java.sql.Date à java.util.Date
+                            Date utilDate = new Date(dateDebut.getTime());
+                            // Convertir java.util.Date à LocalDate
+                            Instant instant = utilDate.toInstant();
+                            LocalDate dateDebutLocalDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                            return dateDebutLocalDate.isEqual(selectedDate);
+                        }
+                        return false;
+                    })
+                    .collect(Collectors.toList());
+
+            listView.getItems().setAll(filteredCourses);
         }
     }
 
@@ -132,11 +172,10 @@ public class showController {
             Parent root = loader.load();
             coursController controller = loader.getController();
             if (controller != null) {
-                controller.setPlanningSelect(this.selectedPlanning,user); // Vérifiez que popupController n'est pas null
+                controller.setPlanningSelect(this.selectedPlanning, user); // Vérifiez que popupController n'est pas null
             } else {
                 System.out.println("Controller is null");
             }
-
 
             // Créer une nouvelle scène avec la popup
             Scene scene = new Scene(root);
@@ -157,32 +196,14 @@ public class showController {
         }
     }
 
-
-
     public void filterCoursesByDate(ActionEvent actionEvent) {
         LocalDate selectedDate = datePicker.getValue();
         if (selectedDate != null) {
-            List<Cours> allCourses = coursService.Display();
-            List<Cours> filteredCourses = allCourses.stream()
-                    .filter(cours -> {
-                        Date dateDebut = cours.getDateDebut(); // Toujours un java.sql.Date
-                        if (dateDebut != null) {
-                            // Convertir java.sql.Date à java.util.Date
-                            Date utilDate = new Date(dateDebut.getTime());
-                            // Convertir java.util.Date à LocalDate
-                            Instant instant = utilDate.toInstant();
-                            LocalDate dateDebutLocalDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-                            return dateDebutLocalDate.isEqual(selectedDate);
-                        }
-                        return false;
-                    })
-                    .collect(Collectors.toList());
-
-            listView.getItems().setAll(filteredCourses);
+            filterAndDisplayCoursesByDate(selectedDate);
         }
     }
-    public void initialize() {
 
+    public void initialize() {
         // Charger le fichier CSS
         listView.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
@@ -225,6 +246,10 @@ public class showController {
                             Button editButton = new Button();
                             editButton.setGraphic(editIcon);
                             editButton.getStyleClass().add("button");
+                            editButton.setOnAction(event -> {
+                                // Afficher la popup d'édition
+                                showEditCoursePopup(item);
+                            });
 
                             // Bouton de suppression
                             ImageView deleteIcon = new ImageView(new Image("/images/supprimer.png"));
@@ -233,6 +258,19 @@ public class showController {
                             Button deleteButton = new Button();
                             deleteButton.setGraphic(deleteIcon);
                             deleteButton.getStyleClass().add("button");
+                            deleteButton.setOnAction(event -> {
+                                // Afficher une popup de confirmation
+                                boolean confirmed = showConfirmationDialog("Confirmer la suppression", "Êtes-vous sûr de vouloir supprimer ce cours ?");
+
+                                if (confirmed) {
+                                    // Supprimer le cours
+                                    coursService.Delete(item);
+                                        refreshCourseList();
+                                    } else {
+                                        showAlert("Erreur", "La suppression du cours a échoué.");
+                                    }
+
+                            });
 
                             // Agencer la date et les boutons
                             HBox dateBox = new HBox(10);
@@ -240,7 +278,7 @@ public class showController {
                             spacer1.setPrefWidth(50);
                             Region spacer2 = new Region();
                             spacer2.setPrefWidth(10);
-                            dateBox.getChildren().addAll(startDateText,spacer1 ,editButton,spacer2 ,deleteButton);
+                            dateBox.getChildren().addAll(startDateText, spacer1, editButton, spacer2, deleteButton);
                             vBox.getChildren().add(dateBox);
 
                             // Heures de début et de fin
@@ -263,12 +301,62 @@ public class showController {
                 };
             }
         });
+    }
+    private void showEditCoursePopup(Cours cours) {
+        try {
+            // Charger le fichier FXML de la popup d'édition
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editCours.fxml"));
+            Parent root = loader.load();
 
+            // Récupérer le contrôleur de la popup
+            editCoursController editController = loader.getController();
+            if (editController != null) {
+                // Passer les données du cours à éditer
+                editController.setCoursData(cours);
+            } else {
+                System.out.println("Erreur : Le contrôleur de la popup d'édition est null.");
+            }
+
+            // Créer une nouvelle scène avec la popup
+            Scene scene = new Scene(root);
+
+            // Créer un nouveau Stage pour la popup
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Éditer le cours");
+            popupStage.setScene(scene);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Afficher la popup
+            popupStage.showAndWait();
+
+            // Rafraîchir la liste des cours après édition
+            refreshCourseList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void handleDateButtonClick(Cours item) {
-        // Logique pour gérer l'action lorsque le bouton est cliqué
-        System.out.println("Date button clicked for course: " + item.getTitle());
+    private boolean showConfirmationDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    // Méthode pour rafraîchir la liste des cours
+    private void refreshCourseList() {
+        List<Cours> updatedCourses = coursService.getCoursByPlanning(selectedPlanning);
+        listView.getItems().setAll(updatedCourses);
+    }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 
@@ -285,8 +373,4 @@ public class showController {
             e.printStackTrace();
         }
     }
-
 }
-
-
-

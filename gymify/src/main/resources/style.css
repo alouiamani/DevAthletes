@@ -264,9 +264,13 @@
 /* Style pour la date du cours */
 .course-date {
     -fx-font-size: 14px;
-    -fx-fill: #777777;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-background-color: #ADD8E6;
+    -fx-border-color: #0056b3;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
 }
-
 /* Style pour les boutons */
 
 
