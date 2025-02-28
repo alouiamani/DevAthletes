@@ -37,6 +37,8 @@ public class editCoursController {
     private ComboBox<String> activityComboBoxedit;
     private Cours currentCours;
 
+
+
     public void initialize() {
         loadActivities();
         setupTimeComboBox(hourDebutedit, 0, 23);
@@ -146,6 +148,7 @@ public class editCoursController {
             currentCours.setHeureDebut(newHeureDebut);
             currentCours.setHeureFin(newHeureFin);
             currentCours.setActivité(selectedActivity);
+
 
             CoursService coursService = new CoursService();
             coursService.Update(currentCours);
