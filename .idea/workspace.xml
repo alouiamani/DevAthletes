@@ -4,8 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
+    <list default="true" id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/cssdialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/Capture.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/Fléche retour.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/alert.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/athlete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/coach.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/mny.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/Capture.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/Fléche retour.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/alert.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/athlete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/coach.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/mny.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/Capture.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/Fléche retour.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/alert.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/athlete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/coach.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/mny.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/AbonnementData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/3d-gym-equipment.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/stripe_payment.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/AbonnementCardUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/AbonnementCardUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeAbonnementRSController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeAbonnementRSController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/PaiementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/PaiementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementCardUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementCardUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementFormRS.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementFormRS.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/PaiementUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/PaiementUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +59,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -29,12 +73,12 @@
     &quot;assignee&quot;: &quot;Wajdbenameur1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/alouiamani/DevAthletes.git",
-    "accountId": "93bf50ad-1146-45ec-b0fc-62c031d94e68"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
+    &quot;accountId&quot;: &quot;28975c7a-5a69-4be7-956c-70e52fd73678&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -48,34 +92,18 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/39/Documents/Payment&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-=======
-  &lt;component name=&quot;PropertiesComponent&quot;&gt;{
-  &amp;quot;keyToString&amp;quot;: {
-    &amp;quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&amp;quot;: &amp;quot;Run&amp;quot;,
-    &amp;quot;RunOnceActivity.ShowReadmeOnStart&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;git-widget-placeholder&amp;quot;: &amp;quot;main&amp;quot;,
-    &amp;quot;kotlin-language-version-configured&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;last_opened_file_path&amp;quot;: &amp;quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&amp;quot;,
-    &amp;quot;node.js.detected.package.eslint&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;node.js.detected.package.tslint&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;node.js.selected.package.eslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
-    &amp;quot;node.js.selected.package.tslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
-    &amp;quot;nodejs_package_manager_path&amp;quot;: &amp;quot;npm&amp;quot;,
-    &amp;quot;settings.editor.selected.configurable&amp;quot;: &amp;quot;preferences.JavaFX&amp;quot;,
-    &amp;quot;vue.rearranger.settings.migration&amp;quot;: &amp;quot;true&amp;quot;
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 059b9b11527a8a8b3fb8a7bb2ac6455598730279
   }
 }</component>
   <component name="RecentsManager">
@@ -101,7 +129,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
+      <changelist id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="" />
       <created>1740478202473</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -115,6 +143,10 @@
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
       <workItem from="1740699499918" duration="1192000" />
+      <workItem from="1740729352896" duration="8004000" />
+      <workItem from="1740748177083" duration="9724000" />
+      <workItem from="1740763246262" duration="6017000" />
+      <workItem from="1740784714602" duration="3991000" />
     </task>
     <servers />
   </component>

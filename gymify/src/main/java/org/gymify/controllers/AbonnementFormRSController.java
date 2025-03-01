@@ -52,7 +52,7 @@ public class AbonnementFormRSController {
 
     private LocalDate dateDebut;
     private Abonnement isModification; // Objet pour modification (évite de créer un nouvel abonnement)
-
+    private Salle salle;
     private final AbonnementService abonnementService = new AbonnementService();
 
     @FXML
@@ -160,31 +160,24 @@ public class AbonnementFormRSController {
                 return;
             }
 
-            // Récupération et validation de l'ID de la salle
-            int idSalle;
-            if (isModification != null && isModification.getSalle()  != null) {
-                // Cas de la modification : récupérer l'ID de la salle depuis isModification
-                idSalle = isModification.getSalle().getId_Salle();
-            } else {
-                // Cas de l'ajout : récupérer l'ID de la salle depuis le champ idSalleTextField
-                String idSalleText = idSalleTextField.getText();
-                if (idSalleText.isEmpty()) {
-                    showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer un ID de salle valide.");
-                    return;
-                }
-                try {
-                    idSalle = Integer.parseInt(idSalleText);
-                } catch (NumberFormatException e) {
-                    showAlert(Alert.AlertType.ERROR, "Erreur", "L'ID de salle doit être un nombre entier.");
-                    return;
-                }
+            if (typeAbonnementChoiceBox.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, "Veuillez sélectionner un type d'abonnement.","Veuillez entrer valide.");
+                return;
             }
 
+            // Récupération et validation de l'ID de la salle
+            if (salle == null) {
+                showAlert(Alert.AlertType.ERROR, "","Aucune salle associée à cet abonnement.");
+                return;
+            }
+
+
+
             // Utilisation de ta méthode pour récupérer les abonnements par salle
-            List<Abonnement> abonnements = abonnementService.getAbonnementsParSalle(idSalle);
+            List<Abonnement> abonnements = abonnementService.getAbonnementsParSalle(salle.getId_Salle());
 
             if (abonnements.isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle trouvée avec l'ID " + idSalle);
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle trouvée avec l'ID " + salle.getId_Salle());
                 return;
             }
 
@@ -194,7 +187,7 @@ public class AbonnementFormRSController {
             if (isModification == null) {
                 // **Ajout d'un nouvel abonnement**
                 Abonnement abonnement = new Abonnement(Date.valueOf(dateDebutLocal), Date.valueOf(dateFinLocal), selectedType, salle, tarif);
-                abonnementService.ajouter(abonnement, idSalle);
+                abonnementService.ajouter(abonnement, salle.getId_Salle());
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Abonnement ajouté avec succès !");
             } else {
                 // **Modification d'un abonnement existant**
