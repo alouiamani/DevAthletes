@@ -62,6 +62,11 @@
                   <MenuItem mnemonicParsing="false" text="Close" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" onAction="#ShowPlanning" text="Planning">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Planning" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
       <ImageView fitHeight="309.0" fitWidth="810.0" layoutX="-4.0" layoutY="40.0" opacity="0.47" pickOnBounds="true" smooth="false">
