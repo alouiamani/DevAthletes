@@ -86,6 +86,18 @@
                                     <Font name="Arial" size="6.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="listGym" layoutX="10.0" layoutY="216.0" mnemonicParsing="false" onAction="#onListGymButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="List Gym">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Arial" size="6.0" />
+                                 </font>
+                              </Button>
                               <Button fx:id="ReclamationId" mnemonicParsing="false" onAction="#onReclamationsButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Reclamation">
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">

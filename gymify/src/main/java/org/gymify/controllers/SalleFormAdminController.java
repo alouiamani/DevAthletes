@@ -6,24 +6,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.gymify.entities.Salle;
+import org.gymify.entities.User;
 import org.gymify.services.SalleService;
-
+import org.gymify.services.ServiceUser;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class SalleFormAdminController {
 
-    @FXML private TextField nomFX, adresseFX, numtelFX, emailFX,url_photoFX;
+    @FXML private TextField nomFX, adresseFX, numtelFX, emailFX, url_photoFX;
     @FXML private TextArea detailsFX;
+    @FXML private Label errorNom, errorAdresse, errorNumTel, errorEmail, errorDetails, errorUrlPhoto;
+    @FXML private ChoiceBox<String> responsableChoiceBox;
 
     private Salle salleAModifier;
     private SalleService salleService = new SalleService();
+    private ServiceUser userService = new ServiceUser();
 
     public void chargerSalle(Salle salle) {
         salleAModifier = salle;
@@ -34,13 +37,62 @@ public class SalleFormAdminController {
         emailFX.setText(salle.getEmail());
         url_photoFX.setText(salle.getUrl_photo());
     }
+
+    public void initialize() throws SQLException {
+        List<User> responsables = userService.afficher(); // Récupérer la liste des responsables
+        for (User responsable : responsables) {
+            responsableChoiceBox.getItems().add(responsable.getId_User() + " - " + responsable.getNom());
+        }
+    }
+
     @FXML
     private void btnEnregistrer(ActionEvent actionEvent) {
-        if (nomFX.getText().isEmpty() || adresseFX.getText().isEmpty() || emailFX.getText().isEmpty()
-                || detailsFX.getText().isEmpty() || numtelFX.getText().isEmpty() || url_photoFX.getText().isEmpty()) {
-            afficherAlerte("Erreur", "Veuillez remplir tous les champs obligatoires.");
-            return;
+        boolean hasErrors = false;
+
+        // Vérification des champs et gestion des erreurs
+        if (nomFX.getText().isEmpty()) {
+            errorNom.setText("Nom obligatoire");
+            hasErrors = true;
+        } else {
+            errorNom.setText("");
         }
+
+        if (adresseFX.getText().isEmpty()) {
+            errorAdresse.setText("Adresse obligatoire");
+            hasErrors = true;
+        } else {
+            errorAdresse.setText("");
+        }
+
+        if (numtelFX.getText().isEmpty()) {
+            errorNumTel.setText("Numéro de téléphone obligatoire");
+            hasErrors = true;
+        } else {
+            errorNumTel.setText("");
+        }
+
+        if (emailFX.getText().isEmpty()) {
+            errorEmail.setText("Email obligatoire");
+            hasErrors = true;
+        } else {
+            errorEmail.setText("");
+        }
+
+        if (detailsFX.getText().isEmpty()) {
+            errorDetails.setText("Détails obligatoires");
+            hasErrors = true;
+        } else {
+            errorDetails.setText("");
+        }
+
+        if (url_photoFX.getText().isEmpty()) {
+            errorUrlPhoto.setText("URL photo obligatoire");
+            hasErrors = true;
+        } else {
+            errorUrlPhoto.setText("");
+        }
+
+        if (hasErrors) return;
 
         Salle salle = new Salle(nomFX.getText(), adresseFX.getText(), detailsFX.getText(),
                 numtelFX.getText(), emailFX.getText(), url_photoFX.getText());
@@ -58,8 +110,6 @@ public class SalleFormAdminController {
             }
 
             afficherAlerte("Succès", message);
-
-            // Rediriger vers la page de liste des salles après l'enregistrement
             chargerListeSalles();
 
         } catch (SQLException e) {
@@ -68,12 +118,11 @@ public class SalleFormAdminController {
         }
     }
 
-    // Méthode pour charger la liste des salles
     private void chargerListeSalles() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) nomFX.getScene().getWindow(); // Récupérer la fenêtre actuelle
+            Stage stage = (Stage) nomFX.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -82,7 +131,6 @@ public class SalleFormAdminController {
         }
     }
 
-    // Méthode pour afficher une alerte
     private void afficherAlerte(String titre, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titre);
@@ -93,10 +141,9 @@ public class SalleFormAdminController {
 
     @FXML
     private void btnAnnuler(ActionEvent actionEvent) {
-        viderChamps(); // Effacer les champs
+        viderChamps();
     }
 
-    // Méthode pour vider tous les champs
     private void viderChamps() {
         nomFX.clear();
         adresseFX.clear();

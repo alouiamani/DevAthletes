@@ -353,4 +353,34 @@ public class DashboardAdminController  {
     }
 
 
+    @FXML
+    public void onListGymButtonClick(ActionEvent actionEvent) {
+        try {
+            // Charger le fichier FXML de la liste des salles
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir le contrôleur de la nouvelle scène
+            ListeDesSalleController controller = loader.getController();
+
+            // Créer une nouvelle scène avec la liste des salles
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Liste des Salles");
+
+            // Vous pouvez également appeler une méthode pour actualiser la liste des salles si nécessaire
+            try {
+                controller.refreshList();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Afficher la nouvelle scène
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
