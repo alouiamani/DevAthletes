@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement sécurisé</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .StripeElement--focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(38, 129, 227, 0.25);
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+    </style>
+</head>
+<body>
+<h1>Paiement sécurisé</h1>
+<form id="payment-form">
+    <div id="card-element">
+        <!-- Stripe Card Element sera inséré ici -->
+    </div>
+    <button id="submit-button">Payer</button>
+    <div id="error-message" style="color: red;"></div>
+</form>
+
+<script>
+    // Clé publique Stripe (remplace par ta clé publique)
+    console.log("Stripe.js chargé");
+
+    const stripe = Stripe('pk_test_51QxK9vRsbBRUlFEwJxFMCOXtty4MXIXiF3fVHrKJ1NGxhzTDZSiWM5UrfHkxDJHf3kYFAXno5BXLoKXc2E1ENVmS00MEFKTFLc');
+    console.log("Stripe initialisé");
+
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+    console.log("Élément de carte monté");
+
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        console.log("Formulaire soumis");
+
+        const submitButton = document.getElementById('submit-button');
+        submitButton.disabled = true;
+        console.log("Bouton désactivé");
+
+        const clientSecret = window.clientSecret;
+        console.log("ClientSecret utilisé : " + clientSecret);
+
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+            },
+        });
+
+        if (error) {
+            console.error("Erreur de paiement : " + error.message);
+            document.getElementById('error-message').textContent = error.message;
+            submitButton.disabled = false;
+        } else {
+            console.log("Paiement réussi ! ID : " + paymentIntent.id);
+            window.java.onPaymentSuccess(paymentIntent.id);
+        }
+    });
+</script>
+</body>
+</html>

@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -45,14 +46,21 @@
             <version>0.4</version>
         </dependency>
 
+
     </dependencies>
 
     <build>
-
         <plugins>
-
-            <plugin>
-
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+            <configuration>
+                <source>17</source>
+                <target>17</target>
+            </configuration>
+        </plugin>
+        <plugin>
                 <groupId>org.openjfx</groupId>
 
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -64,11 +72,10 @@
                     <mainClass>org.gymify.tests.MainApp</mainClass>
 
                 </configuration>
+        </plugin>
 
-            </plugin>
 
         </plugins>
-
     </build>
 
 </project>
