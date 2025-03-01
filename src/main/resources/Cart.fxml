@@ -7,7 +7,7 @@
 <HBox xmlns:fx="http://javafx.com/fxml/1" 
       xmlns="http://javafx.com/javafx/21"
       stylesheets="@styles.css"
-      fx:controller="controllers.listCommandeFront">
+      fx:controller="controllers.CartController">
     
     <!-- Include Sidebar -->
     <fx:include source="sidebar.fxml"/>
@@ -19,20 +19,20 @@
         </padding>
         
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Your Orders" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Shopping Cart" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
         </HBox>
         
-        <ListView fx:id="listCommandes" VBox.vgrow="ALWAYS">
+        <ListView fx:id="cartListView" VBox.vgrow="ALWAYS">
             <placeholder>
-                <Label text="No orders found" />
+                <Label text="Your cart is empty" />
             </placeholder>
         </ListView>
         
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Label fx:id="labelTotal" style="-fx-font-size: 16px;"/>
-            <Button fx:id="exportPdfBtn" text="Export PDF" 
-                    onAction="#exportToPDF"
+            <Label fx:id="totalLabel" style="-fx-font-size: 16px;"/>
+            <Button fx:id="checkoutButton" text="Checkout" 
+                    onAction="#handleCheckout"
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
         </HBox>
     </VBox>
-</HBox>
+</HBox> 

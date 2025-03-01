@@ -143,7 +143,7 @@ public class listCommandeFront {
         
         // Create a custom dialog
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Détails de la Commande");
+        dialog.setTitle("Commande Confirmee");
         dialog.setHeaderText("Commande #" + selectedCommande.getId_c());
 
         // Create the content
@@ -169,6 +169,19 @@ public class listCommandeFront {
 
         // Show the dialog
         dialog.showAndWait();
+    }
+
+    @FXML
+    private void handleBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listProduitFront.fxml"));
+            Parent parent = loader.load();
+            Stage stage = (Stage) listCommandes.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherErreur("Erreur", "Could not return to products page", e.getMessage());
+        }
     }
 
     private void afficherErreur(String titre, String enTete, String contenu) {

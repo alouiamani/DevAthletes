@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import services.ServiceCommande;
 import services.ServiceProduit;
 import utils.AuthToken;
+import services.CartService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,8 +39,12 @@ public class listProduitFront implements Initializable {
     @FXML
     private ComboBox<String> categoryFilter;
 
+    @FXML
+    private Button viewCartButton;
+
     private final ServiceProduit serviceProduit = new ServiceProduit();
     private final ServiceCommande serviceCommande = new ServiceCommande();
+    private final CartService cartService = new CartService();
 
     private List<Produit> allProducts = new ArrayList<>();
 
@@ -187,6 +192,53 @@ public class listProduitFront implements Initializable {
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void ajouterAuPanier() {
+        Produit produitSelectionne = listProduits.getSelectionModel().getSelectedItem();
+
+        if (produitSelectionne == null) {
+            afficherErreur("Erreur", "Veuillez sélectionner un produit.", "");
+            return;
+        }
+
+        // Vérification du stock
+        if (produitSelectionne.getStock_p() <= 0) {
+            afficherErreur("Erreur", "Le produit est en rupture de stock.", "");
+            return;
+        }
+
+        // Demander la quantité
+        TextInputDialog dialog = new TextInputDialog("1");
+        dialog.setTitle("Quantité");
+        dialog.setHeaderText("Entrez la quantité souhaitée");
+        dialog.setContentText("Quantité:");
+
+        dialog.showAndWait().ifPresent(quantiteStr -> {
+            try {
+                int quantite = Integer.parseInt(quantiteStr);
+                cartService.addToCart(produitSelectionne, quantite);
+                afficherInformation("Succès", "Produit ajouté au panier!");
+            } catch (NumberFormatException e) {
+                afficherErreur("Erreur", "Quantité invalide", "");
+            } catch (IllegalArgumentException e) {
+                afficherErreur("Erreur", e.getMessage(), "");
+            }
+        });
+    }
+
+    @FXML
+    private void afficherPanier() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cart.fxml"));
+            Parent parent = loader.load();
+            Stage stage = (Stage) viewCartButton.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherErreur("Erreur", "Impossible d'afficher le panier", e.getMessage());
         }
     }
 
