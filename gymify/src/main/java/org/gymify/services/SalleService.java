@@ -6,6 +6,7 @@ import org.gymify.utils.gymifyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public  class SalleService implements Iservices<Salle> {
     Connection connection;
@@ -135,7 +136,17 @@ public  class SalleService implements Iservices<Salle> {
         return salles;
     }
 
+    // Recherche des salles selon le texte de recherche
+    public List<Salle> searchSalles(String searchText) {
+        // Récupérer toutes les salles
+        List<Salle> allSalles = getAllSalles(searchText);
 
+        // Filtrer les salles en fonction du texte de recherche (ignorant la casse)
+        return allSalles.stream()
+                .filter(salle -> salle.getNom().toLowerCase().contains(searchText) ||
+                        salle.getAdresse().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+    }
 }
 
 

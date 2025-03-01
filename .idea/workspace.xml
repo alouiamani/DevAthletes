@@ -5,50 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/cssdialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/Capture.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/Fléche retour.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/alert.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/athlete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/coach.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/mny.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM_[Changes]/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_2025_7_35_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/Capture.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/Fléche retour.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/alert.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/athlete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/coach.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/mny.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/Capture.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/Fléche retour.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/alert.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/athlete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/coach.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/mny.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM_[Changes]1/—Pngtree—arrow arrows back point back_4984133.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2025_2_33_AM__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/AbonnementData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/images/3d-gym-equipment.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/stripe_payment.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/AbonnementCardUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/AbonnementCardUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeAbonnementRSController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeAbonnementRSController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/PaiementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/PaiementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ProfileMembreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementCardUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementCardUser.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementFormRS.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AbonnementFormRS.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/PaiementUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/PaiementUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,9 +25,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="HTML File" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -147,6 +114,7 @@
       <workItem from="1740748177083" duration="9724000" />
       <workItem from="1740763246262" duration="6017000" />
       <workItem from="1740784714602" duration="3991000" />
+      <workItem from="1740836258558" duration="4915000" />
     </task>
     <servers />
   </component>
