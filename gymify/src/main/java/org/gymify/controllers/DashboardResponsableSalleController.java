@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
@@ -270,5 +272,22 @@ public class DashboardResponsableSalleController {
         addUserPane.setVisible(false);
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
+    }
+
+    public void onListAbonnementButtonClick(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la liste des abonnements
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer la scène actuelle et remplacer son contenu
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            // Vous pouvez afficher une alerte en cas d'erreur
+        }
+
     }
 }

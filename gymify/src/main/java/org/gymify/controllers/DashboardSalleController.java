@@ -58,6 +58,7 @@ public class DashboardSalleController {
 
     @FXML
     private PieChart pieChartRevenus;
+    @FXML
     public void initialize() {
         // Charger les icônes
         iconMembres.setImage(new Image(getClass().getResource("/assets/athlete.png").toExternalForm()));

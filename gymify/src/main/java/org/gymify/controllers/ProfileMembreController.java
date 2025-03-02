@@ -10,33 +10,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.AnchorPane;
+
+import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
 import org.gymify.entities.User;
 import org.gymify.utils.AuthToken;
+import org.gymify.services.SalleService;
+import org.gymify.entities.Salle;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ProfileMembreController {
 
-    @FXML
-    private Button EditId;
+    @FXML private Button EditId;
+    @FXML private Label emailid;
+    @FXML private Label usernameid;
+    @FXML private ImageView profileImage;
+    @FXML private VBox sallesContainer; // Nouveau VBox pour afficher les salles
 
-    @FXML
-    private Label emailid;
+    private User loggedInUser;
 
-    @FXML
-    private Label usernameid;
-
-    @FXML
-    private ImageView profileImage; // Image de profil
-
-    private User loggedInUser; // Stocke l'utilisateur connecté
-
-    /**
-     * Initialisation du contrôleur.
-     * Récupère automatiquement l'utilisateur connecté via AuthToken.
-     */
     @FXML
     public void initialize() {
         User user = AuthToken.getCurrentUser();
@@ -47,25 +44,15 @@ public class ProfileMembreController {
         }
     }
 
-    /**
-     * Met à jour les informations du profil avec l'utilisateur connecté.
-     */
     public void setUser(User user) {
         if (user == null) {
             System.out.println("❌ Erreur : Aucun utilisateur reçu !");
             return;
         }
         this.loggedInUser = user;
-
-        // Debugging
-        System.out.println("✅ Utilisateur connecté : " + user.getNom() + " - " + user.getEmail());
-
         updateUI();
+        chargerSalles(); // Charger les salles lorsque l'utilisateur est défini
     }
-
-    /**
-     * Mise à jour de l'interface avec les infos de l'utilisateur connecté.
-     */
 
     private void updateUI() {
         if (loggedInUser != null) {
@@ -74,9 +61,7 @@ public class ProfileMembreController {
 
             String imageURL = loggedInUser.getImageURL();
             if (imageURL != null && !imageURL.isEmpty()) {
-
-                profileImage.setImage(new Image(imageURL)); // Charge directement l'image depuis l'URL
-
+                profileImage.setImage(new Image(imageURL));
             } else {
                 profileImage.setImage(new Image(getClass().getResource("/images/icons8-user-32.png").toString(), true));
             }
@@ -84,11 +69,26 @@ public class ProfileMembreController {
     }
 
 
+    private void chargerSalles() {
+        SalleService salleService = new SalleService();
+        List<Salle> salles = salleService.getAllSalles("");
 
-    /**
-     * Ouvre l'interface de modification du profil.
-     * Vérifie si un utilisateur est bien connecté avant.
-     */
+        sallesContainer.getChildren().clear(); // Clear existing salles
+
+        for (Salle salle : salles) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCardUser.fxml"));
+                Parent salleCard = loader.load();
+                SalleCardUserController controller = loader.getController();
+                controller.setSalleData(salle, this); // Pass 'this' (ProfileMembreController instance)
+                sallesContainer.getChildren().add(salleCard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     @FXML
     void editProfile(ActionEvent event) {
         if (loggedInUser == null) {
@@ -96,17 +96,13 @@ public class ProfileMembreController {
             return;
         }
 
-        System.out.println("✏️ Edition du profil de : " + loggedInUser.getNom());
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
             Parent root = loader.load();
 
-            // Passer l'utilisateur à l'interface de modification
             EditUserControllers editController = loader.getController();
-            editController.setUser(loggedInUser); // Passe l'utilisateur connecté
+            editController.setUser(loggedInUser);
 
-            // Ouvrir la scène d'édition
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -114,7 +110,6 @@ public class ProfileMembreController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("❌ Erreur lors de l'ouverture de l'éditeur de profil.");
         }
     }
 
@@ -130,9 +125,9 @@ public class ProfileMembreController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
+
 
     public void ShowPlanning(ActionEvent event) {
         try {
@@ -170,5 +165,15 @@ public class ProfileMembreController {
             System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
         }
     }
+    @FXML
+    private void ouvrirSalle(ActionEvent event) {
+        // Fait défiler la page vers la section des salles
+        sallesContainer.requestFocus();
+    }
+
 
 }
+
+
+
+
