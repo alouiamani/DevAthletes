@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
+    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -195,6 +198,7 @@
       <workItem from="1740729646138" duration="508000" />
       <workItem from="1740738683379" duration="1562000" />
       <workItem from="1740863553350" duration="13372000" />
+      <workItem from="1740905549769" duration="6425000" />
     </task>
     <servers />
   </component>
