@@ -19,18 +19,18 @@
    <top>
       <AnchorPane prefHeight="71.0" prefWidth="600.0" styleClass="Appbar" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox layoutX="134.0" layoutY="-1.0" prefHeight="71.0" prefWidth="434.0" stylesheets="@style.css">
+            <HBox layoutX="134.0" layoutY="-1.0" prefHeight="52.0" prefWidth="434.0" stylesheets="@style.css">
                <children>
                   <TextField fx:id="searchField" prefHeight="36.0" prefWidth="278.0" promptText="Search" stylesheets="@application.css">
                      <padding>
                         <Insets left="80.0" right="50.0" />
                      </padding></TextField>
-                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" stylesheets="@application.css" text="Add Gym" textFill="#fcf8f8">
+                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="18.0" prefWidth="111.0" stylesheets="@application.css" text="Add Gym" textFill="#fcf8f8">
                      <rotationAxis>
                         <Point3D x="50.0" y="50.0" z="50.0" />
                      </rotationAxis>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="20.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="30.0" right="90.0" />
@@ -51,7 +51,7 @@
                   <Insets left="20.0" top="30.0" />
                </padding>
             </HBox>
-            <Button fx:id="retour" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#retourDashboard" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #666871;" textFill="#a6a7a9">
+            <Button fx:id="retour" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#retourDashboard" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #e1d8d8;" textFill="#a6a7a9">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>

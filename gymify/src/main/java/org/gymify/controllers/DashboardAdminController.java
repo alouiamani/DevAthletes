@@ -58,10 +58,10 @@ public class DashboardAdminController  {
     private Label activityCountLabel;
 
     private User utilisateurSelectionne;
-    private final ServiceUser serviceUser = new ServiceUser() {
+    private final ServiceUser serviceUser = new ServiceUser();
 
-    };
 
+    @FXML
     public void initialize() {
         // Charger l'image de profil par défaut
 

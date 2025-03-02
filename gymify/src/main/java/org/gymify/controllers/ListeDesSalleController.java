@@ -80,15 +80,19 @@ public class ListeDesSalleController {
         afficherSalles(salles); // Affichez les salles filtrées
     }
 
-    // Ouvrir l'interface d'ajout/modification
     private void ouvrirFormulaireAjout() {
         try {
+            // Récupérer le stage actuel et le fermer
+            Stage currentStage = (Stage) searchField.getScene().getWindow(); // Ou n'importe quel autre composant de la fenêtre actuelle
+            currentStage.close(); // Fermer la fenêtre actuelle
+
+            // Charger et afficher la nouvelle fenêtre
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Ajouter une salle");
-            stage.show();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Ajouter une salle");
+            newStage.show(); // Afficher la nouvelle fenêtre
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,28 +109,20 @@ public class ListeDesSalleController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminDash.fxml"));
             Parent root = loader.load();
 
-            // Obtenir le contrôleur de la nouvelle scène
-            ListeDesSalleController controller = loader.getController();
-
             // Créer une nouvelle scène avec la liste des salles
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Liste des Salles");
-
-            // Vous pouvez également appeler une méthode pour actualiser la liste des salles si nécessaire
-            try {
-                controller.refreshList();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            stage.setTitle("Dashboard Admin");
 
             // Afficher la nouvelle scène
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 }
 
