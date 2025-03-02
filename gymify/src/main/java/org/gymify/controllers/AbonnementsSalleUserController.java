@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.gymify.entities.Abonnement;
+import org.gymify.entities.User;
 import org.gymify.services.AbonnementService;
 
 import java.io.IOException;
@@ -19,33 +20,28 @@ public class AbonnementsSalleUserController {
 
     private AbonnementService abonnementService = new AbonnementService();
     private int idSalle;
+    private User loggedInUser;
 
-    // Initialiser avec l'ID de la salle
-    public void initData(int idSalle) {
+    // Initialiser avec l'ID de la salle et l'utilisateur connecté
+    public void initData(int idSalle, User loggedInUser) {
         this.idSalle = idSalle;
-        chargerAbonnements(); // Charger les abonnements
+        this.loggedInUser = loggedInUser;
+        chargerAbonnements();
     }
 
-    // Charger les abonnements de la salle
     private void chargerAbonnements() {
         try {
             List<Abonnement> abonnements = abonnementService.getAbonnementsParSalle(idSalle);
-            abonnementContainer.getChildren().clear(); // Effacer les abonnements existants
+            abonnementContainer.getChildren().clear();
 
             for (Abonnement abonnement : abonnements) {
-                // Charger le fichier FXML de la carte d'abonnement
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementCardUser.fxml"));
                 VBox card = loader.load();
 
-                // Obtenir le contrôleur de la carte
                 AbonnementCardUserController controller = loader.getController();
-                controller.setAbonnementData(
-                        abonnement.getType_Abonnement(),
-                        abonnement.getDate_Début().toString(),
-                        abonnement.getDate_Fin().toString(),
-                        abonnement.getTarif());
+                controller.setAbonnementData(abonnement); // Passer l'abonnement sélectionné
+                controller.setSportif(loggedInUser); // Passer l'utilisateur connecté
 
-                // Ajouter la carte au conteneur
                 abonnementContainer.getChildren().add(card);
             }
         } catch (IOException | SQLException e) {
@@ -53,10 +49,6 @@ public class AbonnementsSalleUserController {
         }
     }
 
-    // Méthode pour ouvrir l'interface de paiement fictif
-
-
-    // Fermer la fenêtre
     @FXML
     private void fermerFenetre() {
         Stage stage = (Stage) abonnementContainer.getScene().getWindow();

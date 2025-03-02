@@ -4,8 +4,177 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
+    <list default="true" id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/00030000000D1A9D64C1360D" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0048425e-094d-46a9-a987-ffcae30cdec6.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/006e1d07-6faa-470f-88ae-f6c8635970fe.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/01811c39-5d52-4091-b986-6d440dc6add2.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/05808eb5-7e98-4a61-9749-4f6f39b86d8a.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/06MARS  ECHANGE SAI LOCATION EPS ATTACH.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0b50d1ca-e252-4ef2-ac73-65ee22ea89fd.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/1.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/12.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/127_0_0_1.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/14ceed18-4f67-4317-be2a-a991300198b5.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/2.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/222.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/22222.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/255226772_3075087592811198_211330417914205202_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28930.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28FEVRIER 2024  LOCAL BREAK OUT LBO VS S8HR.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/33.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/333333333.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/349381615_1301508924111481_2757355281465312693_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350240776_7192637474083248_3211370003301843127_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350356486_3520237251631645_2666995900536066787_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350363983_805022354673288_6467315026914686613_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350377341_953489262360674_8558102948446610441_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/37075ddb-eaa2-427d-b297-cdd47207fa3b.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28 (1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3d-gym-equipment.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/4.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/423737642_1630598854416990_7448063566741670276_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/426886920_1381233236115753_7441184454400173081_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/44.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/458745962_1045216663587833_2859987340786562364_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/461853759_1074679210937688_8539011207227997032_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462535562_1700699010721453_9107044530412074596_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462544302_559264273315496_1574423256468395614_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546293_520042297611550_201200720215018642_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546788_523566217108538_6526525107357948646_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546992_1517410715584832_4380018969233166938_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462547921_386572377859560_5127425628328080574_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462572280_1200287224604049_5698224244789358175_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576626_1271889847194353_5340326414269244202_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/467819174_841839214679884_1450980343263503378_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/472096911_9065551230194129_6041319493673325899_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473382886_459862403729120_3188489588988219359_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473747636_1532384957427339_3054972261695480161_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473761205_1753684998757275_5404351650192867742_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473803159_1122163082533042_120691810634097094_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474006646_1348250449863873_6586702011720491118_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474458592_1517629562257693_3561993464426196296_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474560673_1301549134394627_8542159817733676684_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474594563_1749564189226385_4189386600418699957_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474980036_1163753162048943_6212311728067664547_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475080845_1722985058270635_7165900306807803502_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475195316_490908900718974_7546015355154509223_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475725406_1270372624028538_5370485831288534310_n.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/555.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55555.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/565bf953-48cd-47c5-8b09-0b8249ba5fb5.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/566.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5d.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5z.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/66.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/666.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6e6dc27a-a943-43f3-bcc3-1f4b2c799306.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/701c518a-8c8a-4c69-bd23-eb99df71f7bc.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/768a23f7-541d-47bd-9285-a9b893ba2193.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/88.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/881.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8812.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/882.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8bea15b8-4e9e-4877-ae44-a53cfab71276.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d17c5df-c373-4d4e-9494-f6a07fbb2ab7.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d429cb0-c36f-4717-ad3a-02aca172accb.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AN24_25_TP1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 1  - jeu des 4 familles.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 3-  Partie prenante Texte et premiére phase du jeu .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Match Bubbles.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Trame Match Bubbles.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2 (1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AlouiAmani partie E de TD.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions (2).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptionsIncomplete.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject (1).zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Backlog-sprint-1.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Balti - Ena (Official Music Video).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Bande Organisée - Sch  Kofs  Jul  Naps  Soso maness  Elams  Solda  Houari  Clip Officiel.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos - Makhsernech  مخسرناش.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos ft. Samara - Ya Hbiba (Clip Officiel).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CARTES_Memoboost-GAME.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CCCA3-EXAM-23-24.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture d’écran 2025-02-26 222445.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture1.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture5.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capturemm.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 11_ Map.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda (1).pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 3_ Classe et Objet Partie 2.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 4_IPv6.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 5_DHCPv6_NS.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces (1).pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (2).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (3).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (4).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1) (1).pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1).pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021 (1).pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChatGPT (Early Version for Plus, Team, Enterprise, and Edu) Installer.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChromeSetup.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/a5ea6350-16dc-4554-8217-e2c0d0ff9d24.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/abonnement.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/activité 2  -organiser , c'est gagné.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/adc81455-00f7-43e9-b2bb-116a1b223a23.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/alert.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/aloui amani.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/am.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amani aloui.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amouna.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/analysenumérique.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/anglais.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/apache-maven-3.8.8-bin.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/atelier4.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/athlete.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avast_free_antivirus_setup_online.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avis présélection mastères 2024-2025.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bdz.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/beb2d5b8-4edc-41a1-a69c-b164b8665504.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon2.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bootstrap-4.3.1.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier (1).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/c2d3722c-24b0-451b-8704-8482c15c4a86.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ch5-resum.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/chp4-resum.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +184,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -29,12 +199,12 @@
     &quot;assignee&quot;: &quot;Wajdbenameur1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/alouiamani/DevAthletes.git",
-    "accountId": "93bf50ad-1146-45ec-b0fc-62c031d94e68"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
+    &quot;accountId&quot;: &quot;28975c7a-5a69-4be7-956c-70e52fd73678&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -48,34 +218,18 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/39/Documents/Payment&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-=======
-  &lt;component name=&quot;PropertiesComponent&quot;&gt;{
-  &amp;quot;keyToString&amp;quot;: {
-    &amp;quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&amp;quot;: &amp;quot;Run&amp;quot;,
-    &amp;quot;RunOnceActivity.ShowReadmeOnStart&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;git-widget-placeholder&amp;quot;: &amp;quot;main&amp;quot;,
-    &amp;quot;kotlin-language-version-configured&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;last_opened_file_path&amp;quot;: &amp;quot;C:/Users/ghabi/OneDrive/Documenten/GitHub/DevAthletes/gymify/src/main/resources&amp;quot;,
-    &amp;quot;node.js.detected.package.eslint&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;node.js.detected.package.tslint&amp;quot;: &amp;quot;true&amp;quot;,
-    &amp;quot;node.js.selected.package.eslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
-    &amp;quot;node.js.selected.package.tslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
-    &amp;quot;nodejs_package_manager_path&amp;quot;: &amp;quot;npm&amp;quot;,
-    &amp;quot;settings.editor.selected.configurable&amp;quot;: &amp;quot;preferences.JavaFX&amp;quot;,
-    &amp;quot;vue.rearranger.settings.migration&amp;quot;: &amp;quot;true&amp;quot;
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 059b9b11527a8a8b3fb8a7bb2ac6455598730279
   }
 }</component>
   <component name="RecentsManager">
@@ -101,7 +255,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
+      <changelist id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="" />
       <created>1740478202473</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -115,11 +269,32 @@
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
       <workItem from="1740699499918" duration="1192000" />
+      <workItem from="1740729352896" duration="8004000" />
+      <workItem from="1740748177083" duration="9724000" />
+      <workItem from="1740763246262" duration="6017000" />
+      <workItem from="1740784714602" duration="3991000" />
+      <workItem from="1740836258558" duration="13666000" />
+      <workItem from="1740861616558" duration="4418000" />
+      <workItem from="1740867150776" duration="4662000" />
+      <workItem from="1740871947892" duration="3551000" />
+      <workItem from="1740875967306" duration="1522000" />
+      <workItem from="1740877940186" duration="2968000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/AbonnementService.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

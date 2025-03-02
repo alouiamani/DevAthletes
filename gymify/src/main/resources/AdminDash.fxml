@@ -45,7 +45,7 @@
                            <children>
                               <AnchorPane prefHeight="146.0" prefWidth="178.0">
                                  <children>
-                                    <ImageView fitHeight="50.0" fitWidth="60.0" layoutX="65.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="profileImage" fitHeight="50.0" fitWidth="60.0" layoutX="65.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@images/user.png" />
                                        </image>
@@ -75,6 +75,18 @@
                                  </font>
                               </Button>
                               <Button fx:id="listuserId" mnemonicParsing="false" onAction="#onListUsersButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="List Users">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Arial" size="6.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="listGym" layoutX="10.0" layoutY="216.0" mnemonicParsing="false" onAction="#onListGymButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="List Gym">
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -271,7 +283,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
+                              <Label fx:id="activityCountLabel" layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>

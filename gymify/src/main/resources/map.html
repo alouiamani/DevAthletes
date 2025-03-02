@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+<script>
+    var map = L.map('map').setView([36.8065, 10.1815], 13); // Par défaut : Tunis
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    var marker = L.marker([36.8065, 10.1815], { draggable: true }).addTo(map);
+
+    function fetchAddress(lat, lon) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+                var address = data.display_name;
+                if (window.javaConnector) {
+                    window.javaConnector.setAddress(address);
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération de l’adresse:', error));
+    }
+
+    // Lorsque l'utilisateur clique sur la carte
+    map.on('click', function (e) {
+        var latlng = e.latlng;
+        marker.setLatLng(latlng); // Déplacer le marqueur au clic
+        fetchAddress(latlng.lat, latlng.lng); // Obtenir et envoyer l'adresse
+    });
+
+    // Lorsque l'utilisateur déplace le marqueur
+    marker.on('dragend', function (event) {
+        var latlng = marker.getLatLng();
+        fetchAddress(latlng.lat, latlng.lng);
+    });
+</script>
+</body>
+</html>
