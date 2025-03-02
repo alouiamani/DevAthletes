@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardResponsableSalleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/InterfaceEntraineurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ReclamationSportifController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ReclamationSportifController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ReclamationsAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ReclamationsAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceReclamation.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceReclamation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceReponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceReponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/DashboardReasponsable.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/InterfaceEntraineur.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ReclamationSportif.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ReclamationSportif.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ReclamationsAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ReclamationsAdmin.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="412c5e16-fae5-416a-b05c-28bb34985742" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -213,7 +194,7 @@
       <workItem from="1740699499918" duration="1192000" />
       <workItem from="1740729646138" duration="508000" />
       <workItem from="1740738683379" duration="1562000" />
-      <workItem from="1740863553350" duration="13137000" />
+      <workItem from="1740863553350" duration="13372000" />
     </task>
     <servers />
   </component>
