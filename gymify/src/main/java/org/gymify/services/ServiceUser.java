@@ -156,7 +156,11 @@ public class ServiceUser implements IGestionUser<User> {
                 .filter(user -> "Responsable_salle".equalsIgnoreCase(user.getRole())) // Filtre pour les responsables de salle
                 .collect(Collectors.toList());
     }
-
+    public List<User> afficherPourResponsable() throws SQLException {
+        return afficher().stream() // Récupère tous les utilisateurs
+                .filter(user -> "sportif".equalsIgnoreCase(user.getRole()) || "entraîneur".equalsIgnoreCase(user.getRole()))
+                .collect(Collectors.toList());
+    }
 
     public Optional<User> authentifier(String email, String password) {
         String query = "SELECT * FROM user WHERE email = ?";
