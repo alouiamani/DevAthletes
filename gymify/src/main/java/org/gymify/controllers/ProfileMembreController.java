@@ -151,6 +151,24 @@ public class ProfileMembreController {
     }
 
 
+    public void editPersonalInfo(ActionEvent event) {
+        try {
+            // Charger la nouvelle page FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditPersonalInfo.fxml"));
+            Parent root = loader.load();
 
+            // Obtenir la scène actuelle à partir de l'événement
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Edit Personal Info"); // Titre de la nouvelle fenêtre
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
+        }
+    }
 
 }

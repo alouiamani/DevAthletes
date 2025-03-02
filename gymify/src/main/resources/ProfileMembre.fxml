@@ -28,7 +28,12 @@
                   <Font name="System Bold" size="14.0" />
                </font></Label>
             <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-            <Button fx:id="EditId" layoutX="419.0" layoutY="58.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
+            <Button fx:id="EditId" layoutX="473.0" layoutY="42.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="473.0" layoutY="82.0" mnemonicParsing="false" onAction="#editPersonalInfo" prefHeight="30.0" prefWidth="138.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit Personal Info" textFill="#335581">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
