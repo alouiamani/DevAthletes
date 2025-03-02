@@ -1,0 +1,733 @@
+Index: gymify/src/main/resources/SalleCard.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import java.net.URL?>\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane prefHeight=\"361.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.gymify.controllers.SalleCardController\">\r\n   <children>\r\n      <HBox layoutX=\"31.0\" layoutY=\"57.0\" prefHeight=\"230.0\" prefWidth=\"388.0\" style=\"-fx-background-color: #ffffff;\" styleClass=\"card\">\r\n         <children>\r\n            <AnchorPane prefHeight=\"196.0\" prefWidth=\"118.0\">\r\n               <HBox.margin>\r\n                  <Insets right=\"24.0\" />\r\n               </HBox.margin>\r\n               <children>\r\n                  <ImageView fx:id=\"salleImageView\" fitHeight=\"193.0\" fitWidth=\"117.0\" pickOnBounds=\"true\" preserveRatio=\"true\" />\r\n               </children>\r\n            </AnchorPane>\r\n            <VBox prefHeight=\"202.0\" prefWidth=\"338.0\" style=\"-fx-background-color: #aacedc;\" styleClass=\"card\" stylesheets=\"@application.css\">\r\n               <children>\r\n                  <Label fx:id=\"nomLabel\" text=\"Nom de la salle \" textAlignment=\"CENTER\" textFill=\"#6f8964\" textOverrun=\"CENTER_WORD_ELLIPSIS\" underline=\"true\">\r\n                     <font>\r\n                        <Font name=\"System Bold\" size=\"18.0\" />\r\n                     </font>\r\n                     <padding>\r\n                        <Insets bottom=\"2.0\" />\r\n                     </padding>\r\n                  </Label>\r\n                  <HBox>\r\n                     <children>\r\n                        <ImageView fitHeight=\"20.0\" fitWidth=\"21.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/adresse%20(1).png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                        <Label fx:id=\"adresseLabel\" text=\"Adresse \">\r\n                           <padding>\r\n                              <Insets bottom=\"2.0\" />\r\n                           </padding>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <HBox>\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"2.0\" />\r\n                     </VBox.margin>\r\n                     <children>\r\n                        <ImageView fitHeight=\"21.0\" fitWidth=\"20.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/fichier.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                        <Label fx:id=\"detailsLabel\" prefHeight=\"85.0\" prefWidth=\"207.0\" text=\"Détails \" />\r\n                     </children>\r\n                  </HBox>\r\n                  <HBox>\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"2.0\" />\r\n                     </VBox.margin>\r\n                     <children>\r\n                        <ImageView fitHeight=\"21.0\" fitWidth=\"22.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/telephone.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                        <Label fx:id=\"numTelLabel\" text=\"Numéro de téléphone\" textFill=\"#d11a1a\">\r\n                           <padding>\r\n                              <Insets bottom=\"2.0\" />\r\n                           </padding>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <HBox>\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <children>\r\n                        <ImageView fitHeight=\"19.0\" fitWidth=\"20.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/gmail.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                        <Label fx:id=\"emailLabel\" text=\"Email \">\r\n                           <padding>\r\n                              <Insets bottom=\"2.0\" />\r\n                           </padding>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <HBox>\r\n                     <children>\r\n                        <Button fx:id=\"modifierBtn\" onAction=\"#modifierSalle\" prefHeight=\"26.0\" prefWidth=\"39.0\" style=\"-fx-background-color: #e7540b;\" textFill=\"#fcfaf9\">\r\n                           <padding>\r\n                              <Insets right=\"50.0\" />\r\n                           </padding>\r\n                           <HBox.margin>\r\n                              <Insets left=\"100.0\" right=\"10.0\" />\r\n                           </HBox.margin>\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"22.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@images/bouton-modifier%20(1).png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Button>\r\n                        <Button fx:id=\"supprimerBtn\" mnemonicParsing=\"false\" onAction=\"#supprimerSalle\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"17.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@images/supprimer.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Button>\r\n                     </children>\r\n                  </HBox>\r\n               </children>\r\n            </VBox>\r\n         </children>\r\n      </HBox>\r\n   </children>\r\n   <stylesheets>\r\n      <URL value=\"@application.css\" />\r\n   </stylesheets>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/SalleCard.fxml b/gymify/src/main/resources/SalleCard.fxml
+--- a/gymify/src/main/resources/SalleCard.fxml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/SalleCard.fxml	(date 1740910940754)
+@@ -7,125 +7,102 @@
+ <?import javafx.scene.image.Image?>
+ <?import javafx.scene.image.ImageView?>
+ <?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.FlowPane?>
+ <?import javafx.scene.layout.HBox?>
+ <?import javafx.scene.layout.VBox?>
+ <?import javafx.scene.text.Font?>
+ 
+-<AnchorPane prefHeight="361.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
++<AnchorPane prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
+    <children>
+-      <HBox layoutX="31.0" layoutY="57.0" prefHeight="230.0" prefWidth="388.0" style="-fx-background-color: #ffffff;" styleClass="card">
++
++      <!-- Container for Cards -->
++      <FlowPane fx:id="cardContainer" hgap="15.0" layoutX="8.0" layoutY="55.0" prefHeight="487.0" prefWidth="782.0" styleClass="card-container" vgap="15.0">
+          <children>
+-            <AnchorPane prefHeight="196.0" prefWidth="118.0">
+-               <HBox.margin>
+-                  <Insets right="24.0" />
+-               </HBox.margin>
+-               <children>
+-                  <ImageView fx:id="salleImageView" fitHeight="193.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" />
+-               </children>
+-            </AnchorPane>
+-            <VBox prefHeight="202.0" prefWidth="338.0" style="-fx-background-color: #aacedc;" styleClass="card" stylesheets="@application.css">
+-               <children>
+-                  <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
+-                     <font>
+-                        <Font name="System Bold" size="18.0" />
+-                     </font>
+-                     <padding>
+-                        <Insets bottom="2.0" />
+-                     </padding>
+-                  </Label>
+-                  <HBox>
+-                     <children>
+-                        <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+-                           <image>
+-                              <Image url="@images/adresse%20(1).png" />
+-                           </image>
+-                        </ImageView>
+-                        <Label fx:id="adresseLabel" text="Adresse ">
+-                           <padding>
+-                              <Insets bottom="2.0" />
+-                           </padding>
+-                        </Label>
+-                     </children>
+-                  </HBox>
+-                  <HBox>
+-                     <VBox.margin>
+-                        <Insets bottom="2.0" />
+-                     </VBox.margin>
+-                     <children>
+-                        <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+-                           <image>
+-                              <Image url="@images/fichier.png" />
+-                           </image>
+-                        </ImageView>
+-                        <Label fx:id="detailsLabel" prefHeight="85.0" prefWidth="207.0" text="Détails " />
+-                     </children>
+-                  </HBox>
+-                  <HBox>
+-                     <VBox.margin>
+-                        <Insets bottom="2.0" />
+-                     </VBox.margin>
+-                     <children>
+-                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+-                           <image>
+-                              <Image url="@images/telephone.png" />
+-                           </image>
+-                        </ImageView>
+-                        <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a">
+-                           <padding>
+-                              <Insets bottom="2.0" />
+-                           </padding>
+-                        </Label>
+-                     </children>
+-                  </HBox>
+-                  <HBox>
+-                     <VBox.margin>
+-                        <Insets />
+-                     </VBox.margin>
+-                     <children>
+-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+-                           <image>
+-                              <Image url="@images/gmail.png" />
+-                           </image>
+-                        </ImageView>
+-                        <Label fx:id="emailLabel" text="Email ">
+-                           <padding>
+-                              <Insets bottom="2.0" />
+-                           </padding>
+-                        </Label>
+-                     </children>
+-                  </HBox>
+-                  <HBox>
+-                     <children>
+-                        <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="26.0" prefWidth="39.0" style="-fx-background-color: #e7540b;" textFill="#fcfaf9">
+-                           <padding>
+-                              <Insets right="50.0" />
+-                           </padding>
+-                           <HBox.margin>
+-                              <Insets left="100.0" right="10.0" />
+-                           </HBox.margin>
+-                           <graphic>
+-                              <ImageView fitHeight="16.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+-                                 <image>
+-                                    <Image url="@images/bouton-modifier%20(1).png" />
+-                                 </image>
+-                              </ImageView>
+-                           </graphic>
+-                        </Button>
+-                        <Button fx:id="supprimerBtn" mnemonicParsing="false" onAction="#supprimerSalle">
+-                           <graphic>
+-                              <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+-                                 <image>
+-                                    <Image url="@images/supprimer.png" />
+-                                 </image>
+-                              </ImageView>
+-                           </graphic>
+-                        </Button>
+-                     </children>
+-                  </HBox>
+-               </children>
+-            </VBox>
+-         </children>
+-      </HBox>
++            <HBox prefHeight="234.0" prefWidth="402.0" style="-fx-background-color: #ffffff;" styleClass="card">
++               <children>
++                  <AnchorPane prefHeight="196.0" prefWidth="118.0">
++                     <HBox.margin>
++                        <Insets right="24.0" />
++                     </HBox.margin>
++                     <children>
++                        <ImageView fx:id="salleImageView" fitHeight="193.0" fitWidth="117.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
++                     </children>
++                  </AnchorPane>
++                  <VBox prefHeight="202.0" prefWidth="338.0" style="-fx-background-color: #aacedc;" styleClass="card">
++                     <children>
++                        <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
++                           <font>
++                              <Font name="System Bold" size="18.0" />
++                           </font>
++                        </Label>
++                        <HBox>
++                           <children>
++                              <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
++                                 <image>
++                                    <Image url="@images/adresse (1).png" />
++                                 </image>
++                              </ImageView>
++                              <Label fx:id="adresseLabel" text="Adresse " />
++                           </children>
++                        </HBox>
++                        <HBox>
++                           <children>
++                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
++                                 <image>
++                                    <Image url="@images/fichier.png" />
++                                 </image>
++                              </ImageView>
++                              <Label fx:id="detailsLabel" prefHeight="85.0" prefWidth="207.0" text="Détails " />
++                           </children>
++                        </HBox>
++                        <HBox>
++                           <children>
++                              <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
++                                 <image>
++                                    <Image url="@images/telephone.png" />
++                                 </image>
++                              </ImageView>
++                              <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a" />
++                           </children>
++                        </HBox>
++                        <HBox>
++                           <children>
++                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
++                                 <image>
++                                    <Image url="@images/gmail.png" />
++                                 </image>
++                              </ImageView>
++                              <Label fx:id="emailLabel" text="Email " />
++                           </children>
++                        </HBox>
++                        <HBox prefHeight="35.0" prefWidth="168.0">
++                           <children>
++                              <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
++                                 <graphic>
++                                    <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
++                                       <image>
++                                          <Image url="@images/editer.png" />
++                                       </image>
++                                    </ImageView>
++                                 </graphic>
++                              </Button>
++                              <Button fx:id="supprimerBtn" onAction="#supprimerSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
++                                 <graphic>
++                                    <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
++                                       <image>
++                                          <Image url="@images/supprimer.png" />
++                                       </image>
++                                    </ImageView>
++                                 </graphic>
++                              </Button>
++                           </children>
++                        </HBox>
++                     </children>
++                  </VBox>
++               </children>
++            </HBox>
++         </children>
++      </FlowPane>
+    </children>
+    <stylesheets>
+       <URL value="@application.css" />
+Index: gymify/src/main/resources/Login.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.PasswordField?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.text.Text?>\r\n\r\n<AnchorPane prefHeight=\"400.0\" prefWidth=\"600.0\" styleClass=\"left-side-background\" xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.gymify.controllers.LoginControllers\">\r\n   <children>\r\n      <AnchorPane cache=\"true\" layoutX=\"-9.0\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"424.0\" prefWidth=\"424.0\" styleClass=\"left-side-background\" stylesheets=\"/style.css\">\r\n         <children>\r\n            <TextField fx:id=\"emailTextField\" layoutX=\"96.0\" layoutY=\"147.0\" prefHeight=\"26.0\" prefWidth=\"239.0\" promptText=\"email\" />\r\n            <Button fx:id=\"LoginButton\" layoutX=\"161.0\" layoutY=\"306.0\" mnemonicParsing=\"false\" onAction=\"#LoginButtonOnAction\" prefHeight=\"26.0\" prefWidth=\"110.0\" styleClass=\"LoginBtn\" stylesheets=\"/style.css\" text=\"Login\" textFill=\"#344756\">\r\n               <font>\r\n                  <Font name=\"System Bold\" size=\"12.0\" />\r\n               </font>\r\n            </Button>\r\n            <Label layoutX=\"120.0\" layoutY=\"64.0\" text=\"Login to you account\" textFill=\"#faf0f0\">\r\n               <font>\r\n                  <Font name=\"Yu Gothic UI Bold\" size=\"20.0\" />\r\n               </font>\r\n            </Label>\r\n            <Label layoutX=\"83.0\" layoutY=\"119.0\" text=\"Email\" textFill=\"#f7f3f3\" />\r\n            <Label layoutX=\"82.0\" layoutY=\"187.0\" text=\"Password\" textFill=\"#faf4f4\" />\r\n            <Label layoutX=\"151.0\" layoutY=\"337.0\" text=\"New User?\" textFill=\"#efeaea\" />\r\n            <PasswordField fx:id=\"passwordTextField\" layoutX=\"97.0\" layoutY=\"212.0\" prefHeight=\"26.0\" prefWidth=\"239.0\" promptText=\"Password\" />\r\n            <Button fx:id=\"SignUpButton\" layoutX=\"220.0\" layoutY=\"333.0\" mnemonicParsing=\"false\" onAction=\"#SignUpButtonOnAction\" style=\"-fx-background-color: transparent;\" text=\"SignUp\" textFill=\"#69c8ff\">\r\n               <font>\r\n                  <Font name=\"System Bold\" size=\"12.0\" />\r\n               </font>\r\n            </Button>\r\n            <Button fx:id=\"ForgetPsswdButtonOnAction\" layoutX=\"199.0\" layoutY=\"248.0\" mnemonicParsing=\"false\" style=\"-fx-background-color: transparent;\" text=\"Forget The Password ?\" textFill=\"#c9c5c5\" />\r\n            <Label fx:id=\"LoginMessageTextField\" layoutX=\"140.0\" layoutY=\"274.0\" textFill=\"#f41c1c\">\r\n               <font>\r\n                  <Font size=\"15.0\" />\r\n               </font>\r\n            </Label>\r\n         </children></AnchorPane>\r\n      <AnchorPane layoutX=\"431.0\" prefHeight=\"424.0\" prefWidth=\"220.0\" styleClass=\"ForgetBtn\" stylesheets=\"/style.css\">\r\n         <children>\r\n            <ImageView fitHeight=\"220.0\" fitWidth=\"300.0\" layoutX=\"-15.0\" layoutY=\"91.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n               <image>\r\n                  <Image url=\"@images/logo.png\" />\r\n               </image>\r\n            </ImageView>\r\n            <Text fill=\"#246b91\" fontSmoothingType=\"LCD\" layoutX=\"20.0\" layoutY=\"269.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Welcome To\" textAlignment=\"CENTER\" wrappingWidth=\"230.1195068359375\">\r\n               <font>\r\n                  <Font name=\"Ebrima Bold\" size=\"24.0\" />\r\n               </font>\r\n            </Text>\r\n            <Text fill=\"#3aa4a2\" fontSmoothingType=\"LCD\" layoutX=\"14.0\" layoutY=\"307.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\" GYMIFY\" textAlignment=\"CENTER\" wrappingWidth=\"230.1195068359375\">\r\n               <font>\r\n                  <Font name=\"Impact\" size=\"25.0\" />\r\n               </font>\r\n            </Text>\r\n         </children>\r\n      </AnchorPane>\r\n   </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/Login.fxml b/gymify/src/main/resources/Login.fxml
+--- a/gymify/src/main/resources/Login.fxml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/Login.fxml	(date 1740907539236)
+@@ -10,9 +10,9 @@
+ <?import javafx.scene.text.Font?>
+ <?import javafx.scene.text.Text?>
+ 
+-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.LoginControllers">
++<AnchorPane prefHeight="555.0" prefWidth="800.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.LoginControllers">
+    <children>
+-      <AnchorPane cache="true" layoutX="-9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="424.0" styleClass="left-side-background" stylesheets="/style.css">
++      <AnchorPane cache="true" layoutX="-9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="424.0" styleClass="left-side-background" stylesheets="/style.css">
+          <children>
+             <TextField fx:id="emailTextField" layoutX="96.0" layoutY="147.0" prefHeight="26.0" prefWidth="239.0" promptText="email" />
+             <Button fx:id="LoginButton" layoutX="161.0" layoutY="306.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="26.0" prefWidth="110.0" styleClass="LoginBtn" stylesheets="/style.css" text="Login" textFill="#344756">
+@@ -41,19 +41,19 @@
+                </font>
+             </Label>
+          </children></AnchorPane>
+-      <AnchorPane layoutX="431.0" prefHeight="424.0" prefWidth="220.0" styleClass="ForgetBtn" stylesheets="/style.css">
++      <AnchorPane layoutX="405.0" prefHeight="555.0" prefWidth="394.0" styleClass="ForgetBtn" stylesheets="/style.css">
+          <children>
+-            <ImageView fitHeight="220.0" fitWidth="300.0" layoutX="-15.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
++            <ImageView fitHeight="220.0" fitWidth="300.0" layoutX="47.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                   <Image url="@images/logo.png" />
+                </image>
+             </ImageView>
+-            <Text fill="#246b91" fontSmoothingType="LCD" layoutX="20.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To" textAlignment="CENTER" wrappingWidth="230.1195068359375">
++            <Text fill="#246b91" fontSmoothingType="LCD" layoutX="82.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+                <font>
+                   <Font name="Ebrima Bold" size="24.0" />
+                </font>
+             </Text>
+-            <Text fill="#3aa4a2" fontSmoothingType="LCD" layoutX="14.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" GYMIFY" textAlignment="CENTER" wrappingWidth="230.1195068359375">
++            <Text fill="#3aa4a2" fontSmoothingType="LCD" layoutX="82.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" GYMIFY" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+                <font>
+                   <Font name="Impact" size="25.0" />
+                </font>
+Index: gymify/src/main/resources/ListeDesSalleAdmin.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import java.net.URL?>\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.geometry.Point3D?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.BorderPane?>\r\n<?import javafx.scene.layout.FlowPane?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<BorderPane prefHeight=\"400.0\" prefWidth=\"575.0\" xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.gymify.controllers.ListeDesSalleController\">\r\n   <top>\r\n      <AnchorPane prefHeight=\"71.0\" prefWidth=\"600.0\" styleClass=\"Appbar\" stylesheets=\"@style.css\" BorderPane.alignment=\"CENTER\">\r\n         <children>\r\n            <HBox layoutX=\"134.0\" layoutY=\"-1.0\" prefHeight=\"52.0\" prefWidth=\"434.0\" stylesheets=\"@style.css\">\r\n               <children>\r\n                  <TextField fx:id=\"searchField\" prefHeight=\"36.0\" prefWidth=\"278.0\" promptText=\"Search\" stylesheets=\"@application.css\">\r\n                     <padding>\r\n                        <Insets left=\"80.0\" right=\"50.0\" />\r\n                     </padding></TextField>\r\n                  <Button fx:id=\"ajoutBtn\" mnemonicParsing=\"false\" prefHeight=\"18.0\" prefWidth=\"111.0\" stylesheets=\"@application.css\" text=\"Add Gym\" textFill=\"#fcf8f8\">\r\n                     <rotationAxis>\r\n                        <Point3D x=\"50.0\" y=\"50.0\" z=\"50.0\" />\r\n                     </rotationAxis>\r\n                     <HBox.margin>\r\n                        <Insets left=\"20.0\" />\r\n                     </HBox.margin>\r\n                     <padding>\r\n                        <Insets left=\"30.0\" right=\"90.0\" />\r\n                     </padding>\r\n                     <graphic>\r\n                        <ImageView fitHeight=\"21.0\" fitWidth=\"19.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/Ajoute.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                     </graphic>\r\n                     <font>\r\n                        <Font name=\"System Bold\" size=\"12.0\" />\r\n                     </font>\r\n                  </Button>\r\n               </children>\r\n               <padding>\r\n                  <Insets left=\"20.0\" top=\"30.0\" />\r\n               </padding>\r\n            </HBox>\r\n            <Button fx:id=\"retour\" layoutX=\"8.0\" layoutY=\"14.0\" mnemonicParsing=\"false\" onAction=\"#retourDashboard\" prefHeight=\"35.0\" prefWidth=\"50.0\" style=\"-fx-background-color: #e1d8d8;\" textFill=\"#a6a7a9\">\r\n               <graphic>\r\n                  <ImageView fitHeight=\"15.0\" fitWidth=\"28.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <image>\r\n                        <Image url=\"@images/arrow.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n               </graphic>\r\n            </Button>\r\n         </children>\r\n      \r\n            </AnchorPane>\r\n   </top>\r\n   <center>\r\n      <ScrollPane prefHeight=\"329.0\" prefWidth=\"600.0\" BorderPane.alignment=\"CENTER\">\r\n         <content>\r\n            <FlowPane prefHeight=\"293.0\" prefWidth=\"587.0\" stylesheets=\"@style.css\">\r\n               <children>\r\n                   <VBox fx:id=\"sallesContainer\" prefHeight=\"291.0\" prefWidth=\"586.0\" />\r\n               </children>\r\n            </FlowPane>\r\n         </content>\r\n      </ScrollPane>\r\n   </center>\r\n   <bottom>\r\n      <AnchorPane prefHeight=\"27.0\" prefWidth=\"600.0\" styleClass=\"Appbar\" stylesheets=\"@style.css\" BorderPane.alignment=\"CENTER\" />\r\n   </bottom>\r\n   <stylesheets>\r\n      <URL value=\"@application.css\" />\r\n   </stylesheets>\r\n</BorderPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/ListeDesSalleAdmin.fxml b/gymify/src/main/resources/ListeDesSalleAdmin.fxml
+--- a/gymify/src/main/resources/ListeDesSalleAdmin.fxml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/ListeDesSalleAdmin.fxml	(date 1740910979003)
+@@ -4,6 +4,7 @@
+ <?import javafx.geometry.Insets?>
+ <?import javafx.geometry.Point3D?>
+ <?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.ScrollPane?>
+ <?import javafx.scene.control.TextField?>
+ <?import javafx.scene.image.Image?>
+@@ -13,19 +14,18 @@
+ <?import javafx.scene.layout.FlowPane?>
+ <?import javafx.scene.layout.HBox?>
+ <?import javafx.scene.layout.VBox?>
+-<?import javafx.scene.text.Font?>
+ 
+-<BorderPane prefHeight="400.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeDesSalleController">
++<BorderPane prefHeight="555.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeDesSalleController">
+    <top>
+       <AnchorPane prefHeight="71.0" prefWidth="600.0" styleClass="Appbar" stylesheets="@style.css" BorderPane.alignment="CENTER">
+          <children>
+-            <HBox layoutX="134.0" layoutY="-1.0" prefHeight="52.0" prefWidth="434.0" stylesheets="@style.css">
++            <HBox layoutX="341.0" layoutY="2.0" prefHeight="52.0" prefWidth="434.0" stylesheets="@style.css">
+                <children>
+                   <TextField fx:id="searchField" prefHeight="36.0" prefWidth="278.0" promptText="Search" stylesheets="@application.css">
+                      <padding>
+                         <Insets left="80.0" right="50.0" />
+                      </padding></TextField>
+-                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="18.0" prefWidth="111.0" stylesheets="@application.css" text="Add Gym" textFill="#fcf8f8">
++                  <Button fx:id="ajoutBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="124.0" style="-fx-background-color: #e6e2e2;" styleClass="round-btn" text="add gym" textFill="#6bb4dc">
+                      <rotationAxis>
+                         <Point3D x="50.0" y="50.0" z="50.0" />
+                      </rotationAxis>
+@@ -36,49 +36,57 @@
+                         <Insets left="30.0" right="90.0" />
+                      </padding>
+                      <graphic>
+-                        <ImageView fitHeight="21.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
++                        <ImageView fitHeight="15.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                               <Image url="@images/Ajoute.png" />
+                            </image>
+                         </ImageView>
+                      </graphic>
+-                     <font>
+-                        <Font name="System Bold" size="12.0" />
+-                     </font>
++                     <stylesheets>
++                        <URL value="@style.css" />
++                        <URL value="@application.css" />
++                     </stylesheets>
+                   </Button>
+                </children>
+                <padding>
+                   <Insets left="20.0" top="30.0" />
+                </padding>
+             </HBox>
+-            <Button fx:id="retour" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#retourDashboard" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #e1d8d8;" textFill="#a6a7a9">
+-               <graphic>
+-                  <ImageView fitHeight="15.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+-                     <image>
+-                        <Image url="@images/arrow.png" />
+-                     </image>
+-                  </ImageView>
+-               </graphic>
+-            </Button>
++            <Button fx:id="retour" layoutX="6.0" layoutY="4.0" mnemonicParsing="false" onAction="#retourDashboard" prefHeight="36.0" prefWidth="57.0" style="-fx-background-color: #e1d8d8;" textFill="#a6a7a9">
++               <stylesheets>
++                  <URL value="@style.css" />
++                  <URL value="@application.css" />
++               </stylesheets>
++            </Button>
++            <ImageView fitHeight="15.0" fitWidth="28.0" layoutX="27.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="arrow">
++               <image>
++                  <Image url="@images/arrow.png" />
++               </image>
++            </ImageView>
+          </children>
+       
+             </AnchorPane>
+    </top>
+    <center>
+-      <ScrollPane prefHeight="329.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+-         <content>
+-            <FlowPane prefHeight="293.0" prefWidth="587.0" stylesheets="@style.css">
+-               <children>
+-                   <VBox fx:id="sallesContainer" prefHeight="291.0" prefWidth="586.0" />
+-               </children>
+-            </FlowPane>
+-         </content>
+-      </ScrollPane>
++      <AnchorPane BorderPane.alignment="CENTER">
++         <children>
++            <ScrollPane prefHeight="454.0" prefWidth="794.0">
++               <content>
++                  <FlowPane prefHeight="293.0" prefWidth="587.0" stylesheets="@style.css">
++                     <children>
++                         <VBox fx:id="sallesContainer" prefHeight="448.0" prefWidth="796.0">
++                           <children>
++                              <Label text="Label" />
++                           </children>
++                        </VBox>
++                     </children>
++                  </FlowPane>
++               </content>
++            </ScrollPane>
++         </children>
++      </AnchorPane>
+    </center>
+    <bottom>
+-      <AnchorPane prefHeight="27.0" prefWidth="600.0" styleClass="Appbar" stylesheets="@style.css" BorderPane.alignment="CENTER" />
++      <AnchorPane prefHeight="27.0" prefWidth="800.0" styleClass="Appbar" stylesheets="@style.css" BorderPane.alignment="CENTER" />
+    </bottom>
+-   <stylesheets>
+-      <URL value="@application.css" />
+-   </stylesheets>
+ </BorderPane>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"92f5d1c6-c97d-4e02-ab98-b93caeaa10f9\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/gymify/src/main/resources/map.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/00030000000D1A9D64C1360D\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0048425e-094d-46a9-a987-ffcae30cdec6.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/006e1d07-6faa-470f-88ae-f6c8635970fe.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/01811c39-5d52-4091-b986-6d440dc6add2.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/05808eb5-7e98-4a61-9749-4f6f39b86d8a.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/06MARS  ECHANGE SAI LOCATION EPS ATTACH.docx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0b50d1ca-e252-4ef2-ac73-65ee22ea89fd.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/1.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/12.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/127_0_0_1.sql\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/14ceed18-4f67-4317-be2a-a991300198b5.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/2.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/222.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/22222.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/255226772_3075087592811198_211330417914205202_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28930.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28FEVRIER 2024  LOCAL BREAK OUT LBO VS S8HR.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/33.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/333333333.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/349381615_1301508924111481_2757355281465312693_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350240776_7192637474083248_3211370003301843127_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350356486_3520237251631645_2666995900536066787_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350363983_805022354673288_6467315026914686613_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350377341_953489262360674_8558102948446610441_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/37075ddb-eaa2-427d-b297-cdd47207fa3b.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28 (1).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3d-gym-equipment.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/4.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/423737642_1630598854416990_7448063566741670276_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/426886920_1381233236115753_7441184454400173081_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/44.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/458745962_1045216663587833_2859987340786562364_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/461853759_1074679210937688_8539011207227997032_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462535562_1700699010721453_9107044530412074596_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462544302_559264273315496_1574423256468395614_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546293_520042297611550_201200720215018642_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546788_523566217108538_6526525107357948646_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546992_1517410715584832_4380018969233166938_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462547921_386572377859560_5127425628328080574_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462572280_1200287224604049_5698224244789358175_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n (1).jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576626_1271889847194353_5340326414269244202_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/467819174_841839214679884_1450980343263503378_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/472096911_9065551230194129_6041319493673325899_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473382886_459862403729120_3188489588988219359_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473747636_1532384957427339_3054972261695480161_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473761205_1753684998757275_5404351650192867742_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473803159_1122163082533042_120691810634097094_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474006646_1348250449863873_6586702011720491118_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474458592_1517629562257693_3561993464426196296_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474560673_1301549134394627_8542159817733676684_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474594563_1749564189226385_4189386600418699957_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474980036_1163753162048943_6212311728067664547_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475080845_1722985058270635_7165900306807803502_n.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475195316_490908900718974_7546015355154509223_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475725406_1270372624028538_5370485831288534310_n.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/555.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55555.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/565bf953-48cd-47c5-8b09-0b8249ba5fb5.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/566.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5d.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5z.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/66.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/666.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6e6dc27a-a943-43f3-bcc3-1f4b2c799306.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/701c518a-8c8a-4c69-bd23-eb99df71f7bc.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/768a23f7-541d-47bd-9285-a9b893ba2193.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/88.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/881.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8812.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/882.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8bea15b8-4e9e-4877-ae44-a53cfab71276.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d17c5df-c373-4d4e-9494-f6a07fbb2ab7.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d429cb0-c36f-4717-ad3a-02aca172accb.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AN24_25_TP1.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 1  - jeu des 4 familles.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 3-  Partie prenante Texte et premiére phase du jeu .pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Match Bubbles.docx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Trame Match Bubbles.docx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2 (1).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AlouiAmani partie E de TD.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions (2).zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptionsIncomplete.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject (1).zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Backlog-sprint-1.docx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Balti - Ena (Official Music Video).mp3\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Bande Organisée - Sch  Kofs  Jul  Naps  Soso maness  Elams  Solda  Houari  Clip Officiel.mp3\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos - Makhsernech  مخسرناش.mp3\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos ft. Samara - Ya Hbiba (Clip Officiel).mp3\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CARTES_Memoboost-GAME.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CCCA3-EXAM-23-24.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture d’écran 2025-02-26 222445.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture1.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture5.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capturemm.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 11_ Map.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda (1).pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 3_ Classe et Objet Partie 2.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 4_IPv6.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 5_DHCPv6_NS.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces (1).pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (1).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (2).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (3).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (4).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1).pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1) (1).pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1).pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021 (1).pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021.pptx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChatGPT (Early Version for Plus, Team, Enterprise, and Edu) Installer.exe\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChromeSetup.exe\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/a5ea6350-16dc-4554-8217-e2c0d0ff9d24.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/abonnement.sql\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/activité 2  -organiser , c'est gagné.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/adc81455-00f7-43e9-b2bb-116a1b223a23.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/alert.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/aloui amani.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/am.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amani aloui.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amouna.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/analysenumérique.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/anglais.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/apache-maven-3.8.8-bin.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/atelier4.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/athlete.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avast_free_antivirus_setup_online.exe\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avis présélection mastères 2024-2025.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bdz.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/beb2d5b8-4edc-41a1-a69c-b164b8665504.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon2.PNG\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bootstrap-4.3.1.zip\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier (1).png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/c2d3722c-24b0-451b-8704-8482c15c4a86.jfif\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ch5-resum.pdf\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/chp4-resum.pdf\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Wajdbenameur1&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,\r\n    &quot;accountId&quot;: &quot;28975c7a-5a69-4be7-956c-70e52fd73678&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2tWqVbKt70BPbAqRkoaLtAdsWHj\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\r\n    &quot;Maven.gymify [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/39/Documents/Payment&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\ghabi\\OneDrive\\Documenten\\GitHub\\DevAthletes\\gymify\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\ghabi\\OneDrive\\Documenten\\GitHub\\DevAthletes\\gymify\\src\\main\\resources\\images\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\DevAthletes\\gymify\\DevAthletes\\gymify\\src\\main\\resources\\images\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"org.gymify.controllers\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"92f5d1c6-c97d-4e02-ab98-b93caeaa10f9\" name=\"Changes\" comment=\"\" />\r\n      <created>1740478202473</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1740478202473</updated>\r\n      <workItem from=\"1740478203553\" duration=\"190000\" />\r\n      <workItem from=\"1740478900693\" duration=\"266000\" />\r\n      <workItem from=\"1740479865466\" duration=\"1315000\" />\r\n      <workItem from=\"1740558525690\" duration=\"2006000\" />\r\n      <workItem from=\"1740561088555\" duration=\"73000\" />\r\n      <workItem from=\"1740563036573\" duration=\"795000\" />\r\n      <workItem from=\"1740558525690\" duration=\"906000\" />\r\n      <workItem from=\"1740560309890\" duration=\"29440000\" />\r\n      <workItem from=\"1740699499918\" duration=\"1192000\" />\r\n      <workItem from=\"1740729352896\" duration=\"8004000\" />\r\n      <workItem from=\"1740748177083\" duration=\"9724000\" />\r\n      <workItem from=\"1740763246262\" duration=\"6017000\" />\r\n      <workItem from=\"1740784714602\" duration=\"3991000\" />\r\n      <workItem from=\"1740836258558\" duration=\"13666000\" />\r\n      <workItem from=\"1740861616558\" duration=\"4418000\" />\r\n      <workItem from=\"1740867150776\" duration=\"4662000\" />\r\n      <workItem from=\"1740871947892\" duration=\"3551000\" />\r\n      <workItem from=\"1740875967306\" duration=\"1522000\" />\r\n      <workItem from=\"1740877940186\" duration=\"2968000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/AbonnementService.java</url>\r\n          <line>83</line>\r\n          <option name=\"timeStamp\" value=\"3\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/.idea/workspace.xml	(date 1740913287721)
+@@ -5,176 +5,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/gymify/src/main/resources/map.html" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardAdminController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/DashboardSalleController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/ListeDesSalleController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleFormAdminController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Responsable_Salle.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Salle.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/entities/Sportif.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/SalleService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/ServiceUser.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/AdminDash.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/Login.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/00030000000D1A9D64C1360D" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0048425e-094d-46a9-a987-ffcae30cdec6.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/006e1d07-6faa-470f-88ae-f6c8635970fe.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/01811c39-5d52-4091-b986-6d440dc6add2.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/05808eb5-7e98-4a61-9749-4f6f39b86d8a.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/06MARS  ECHANGE SAI LOCATION EPS ATTACH.docx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/0b50d1ca-e252-4ef2-ac73-65ee22ea89fd.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/1.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/12.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/127_0_0_1.sql" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/14ceed18-4f67-4317-be2a-a991300198b5.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/2.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/222.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/22222.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/255226772_3075087592811198_211330417914205202_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28930.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/28FEVRIER 2024  LOCAL BREAK OUT LBO VS S8HR.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/33.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/333333333.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/349381615_1301508924111481_2757355281465312693_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350240776_7192637474083248_3211370003301843127_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350356486_3520237251631645_2666995900536066787_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350363983_805022354673288_6467315026914686613_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/350377341_953489262360674_8558102948446610441_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/37075ddb-eaa2-427d-b297-cdd47207fa3b.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28 (1).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3a28.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/3d-gym-equipment.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/4.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/423737642_1630598854416990_7448063566741670276_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/426886920_1381233236115753_7441184454400173081_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/44.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/458745962_1045216663587833_2859987340786562364_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/461853759_1074679210937688_8539011207227997032_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462535562_1700699010721453_9107044530412074596_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462544302_559264273315496_1574423256468395614_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546293_520042297611550_201200720215018642_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546788_523566217108538_6526525107357948646_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462546992_1517410715584832_4380018969233166938_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462547921_386572377859560_5127425628328080574_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462553816_7909313115835777_2528386109067876734_n.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462572280_1200287224604049_5698224244789358175_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n (1).jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576547_522415550666932_1810104257189638848_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/462576626_1271889847194353_5340326414269244202_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/467819174_841839214679884_1450980343263503378_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/472096911_9065551230194129_6041319493673325899_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473382886_459862403729120_3188489588988219359_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473747636_1532384957427339_3054972261695480161_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473761205_1753684998757275_5404351650192867742_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/473803159_1122163082533042_120691810634097094_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474006646_1348250449863873_6586702011720491118_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474458592_1517629562257693_3561993464426196296_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474560673_1301549134394627_8542159817733676684_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474594563_1749564189226385_4189386600418699957_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/474980036_1163753162048943_6212311728067664547_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475080845_1722985058270635_7165900306807803502_n.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475195316_490908900718974_7546015355154509223_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/475725406_1270372624028538_5370485831288534310_n.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/555.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/55555.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/565bf953-48cd-47c5-8b09-0b8249ba5fb5.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/566.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5d.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/5z.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/66.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/666.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/6e6dc27a-a943-43f3-bcc3-1f4b2c799306.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/701c518a-8c8a-4c69-bd23-eb99df71f7bc.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/768a23f7-541d-47bd-9285-a9b893ba2193.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/88.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/881.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8812.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/882.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8bea15b8-4e9e-4877-ae44-a53cfab71276.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d17c5df-c373-4d4e-9494-f6a07fbb2ab7.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/8d429cb0-c36f-4717-ad3a-02aca172accb.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AN24_25_TP1.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 1  - jeu des 4 familles.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 3-  Partie prenante Texte et premiére phase du jeu .pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Match Bubbles.docx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Activité 4- Trame Match Bubbles.docx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2 (1).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Aloui Amani TD1.2.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AlouiAmani partie E de TD.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions (2).zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptions.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AppExceptionsIncomplete.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject (1).zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/AuthorProject.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Backlog-sprint-1.docx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Balti - Ena (Official Music Video).mp3" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Bande Organisée - Sch  Kofs  Jul  Naps  Soso maness  Elams  Solda  Houari  Clip Officiel.mp3" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos - Makhsernech  مخسرناش.mp3" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Blingos ft. Samara - Ya Hbiba (Clip Officiel).mp3" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CARTES_Memoboost-GAME.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CCCA3-EXAM-23-24.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page1.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/CIN page2.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture d’écran 2025-02-26 222445.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture1.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capture5.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Capturemm.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 11_ Map.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda (1).pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 12_ Interfaces fonctionnelles &amp; Expressions Lambda.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 3_ Classe et Objet Partie 2.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 4_IPv6.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 5_DHCPv6_NS.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces (1).pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre 8_ Interfaces.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (1).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (2).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (3).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1) (4).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre1 (1).pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1) (1).pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre2 (1).pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021 (1).pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/Chapitre5 ConceptionStatique (Partie 1) 2021.pptx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChatGPT (Early Version for Plus, Team, Enterprise, and Edu) Installer.exe" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ChromeSetup.exe" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/a5ea6350-16dc-4554-8217-e2c0d0ff9d24.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/abonnement.sql" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/activité 2  -organiser , c'est gagné.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/adc81455-00f7-43e9-b2bb-116a1b223a23.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/alert.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/aloui amani.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/am.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amani aloui.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/amouna.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/analysenumérique.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/anglais.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/apache-maven-3.8.8-bin.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/atelier4.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/athlete.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avast_free_antivirus_setup_online.exe" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/avis présélection mastères 2024-2025.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bdz.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/beb2d5b8-4edc-41a1-a69c-b164b8665504.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bon2.PNG" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bootstrap-4.3.1.zip" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier (1).png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/bouton-modifier.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/c2d3722c-24b0-451b-8704-8482c15c4a86.jfif" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/ch5-resum.pdf" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/images/Téléchargements/chp4-resum.pdf" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/application.css" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -278,7 +115,8 @@
+       <workItem from="1740867150776" duration="4662000" />
+       <workItem from="1740871947892" duration="3551000" />
+       <workItem from="1740875967306" duration="1522000" />
+-      <workItem from="1740877940186" duration="2968000" />
++      <workItem from="1740877940186" duration="5069000" />
++      <workItem from="1740906737997" duration="6457000" />
+     </task>
+     <servers />
+   </component>
+@@ -292,6 +130,11 @@
+           <url>file://$PROJECT_DIR$/gymify/src/main/java/org/gymify/services/AbonnementService.java</url>
+           <line>83</line>
+           <option name="timeStamp" value="3" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/gymify/src/main/java/org/gymify/controllers/SalleCardController.java</url>
++          <line>21</line>
++          <option name="timeStamp" value="4" />
+         </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+Index: gymify/src/main/resources/SalleFormAdmin.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import java.net.URL?>\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.ChoiceBox?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.SplitPane?>\r\n<?import javafx.scene.control.TextArea?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.ColumnConstraints?>\r\n<?import javafx.scene.layout.GridPane?>\r\n<?import javafx.scene.layout.RowConstraints?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.web.WebView?>\r\n\r\n<SplitPane dividerPositions=\"0.22994652406417107\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"406.0\" prefWidth=\"615.0\" stylesheets=\"@application.css\" xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.gymify.controllers.SalleFormAdminController\">\r\n    <items>\r\n        <AnchorPane prefHeight=\"401.0\" prefWidth=\"146.0\">\r\n            <children>\r\n                <ImageView fitHeight=\"405.0\" fitWidth=\"134.0\" layoutY=\"2.0\" pickOnBounds=\"true\" smooth=\"false\">\r\n               <image>\r\n                  <Image url=\"@images/3d-gym-equipment.jpg\" />\r\n               </image></ImageView>\r\n                <Button layoutX=\"6.0\" layoutY=\"7.0\" onAction=\"#retournerEnArriere\" prefHeight=\"35.0\" prefWidth=\"50.0\" style=\"-fx-background-color: #e1d8d8;\" textFill=\"#666871\">\r\n               <graphic>\r\n                  <ImageView fitHeight=\"20.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <image>\r\n                        <Image url=\"@images/arrow.png\" />\r\n                     </image>\r\n                  </ImageView>\r\n               </graphic></Button>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane minHeight=\"0.0\" minWidth=\"0.0\" prefHeight=\"398.0\" prefWidth=\"453.0\">\r\n            <children>\r\n                <GridPane layoutX=\"14.0\" layoutY=\"14.0\" prefHeight=\"318.0\" prefWidth=\"284.0\">\r\n                    <columnConstraints>\r\n                        <ColumnConstraints hgrow=\"SOMETIMES\" maxWidth=\"184.00003662109376\" minWidth=\"10.0\" prefWidth=\"159.19998779296876\" />\r\n                        <ColumnConstraints hgrow=\"SOMETIMES\" maxWidth=\"164.8000244140625\" minWidth=\"10.0\" prefWidth=\"125.60001220703126\" />\r\n                    </columnConstraints>\r\n                    <rowConstraints>\r\n                        <RowConstraints maxHeight=\"40.200018310546874\" minHeight=\"10.0\" prefHeight=\"36.200018310546874\" vgrow=\"SOMETIMES\" />\r\n                        <RowConstraints maxHeight=\"40.200018310546874\" minHeight=\"10.0\" prefHeight=\"22.000012207031247\" vgrow=\"SOMETIMES\" />\r\n                        <RowConstraints maxHeight=\"55.4\" minHeight=\"10.0\" prefHeight=\"50.79998779296875\" vgrow=\"SOMETIMES\" />\r\n                        <RowConstraints maxHeight=\"55.4\" minHeight=\"10.0\" prefHeight=\"10.599999999999994\" vgrow=\"SOMETIMES\" />\r\n                        <RowConstraints maxHeight=\"62.599999999999994\" minHeight=\"8.799999999999997\" prefHeight=\"62.599999999999994\" vgrow=\"SOMETIMES\" />\r\n                        <RowConstraints maxHeight=\"61.599993896484364\" minHeight=\"8.799999999999997\" prefHeight=\"12.199993896484386\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"72.80003662109375\" minHeight=\"0.0\" prefHeight=\"57.00000610351563\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"72.80003662109375\" minHeight=\"0.0\" prefHeight=\"16.599993896484364\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"80.80000000000001\" minHeight=\"10.0\" prefHeight=\"32.600006103515625\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"80.80000000000001\" minHeight=\"10.0\" prefHeight=\"16.80000000000001\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"80.80000000000001\" minHeight=\"10.0\" prefHeight=\"45.20000000000002\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints maxHeight=\"80.80000000000001\" minHeight=\"10.0\" prefHeight=\"13.199999999999989\" vgrow=\"SOMETIMES\" />\r\n                  <RowConstraints />\r\n                    </rowConstraints>\r\n                    <children>\r\n                        <Label cache=\"true\" text=\"Name :\" textAlignment=\"CENTER\" textFill=\"#232121\">\r\n                            <font>\r\n                                <Font size=\"14.0\" />\r\n                            </font>\r\n                        </Label>\r\n                        <Label cache=\"true\" text=\"Adress :\" textFill=\"#232121\" GridPane.rowIndex=\"2\">\r\n                            <font>\r\n                                <Font size=\"14.0\" />\r\n                            </font>\r\n                        </Label>\r\n                        <Label cache=\"true\" text=\"Phone Number\" textFill=\"#232121\" GridPane.rowIndex=\"6\">\r\n                            <font>\r\n                                <Font size=\"14.0\" />\r\n                            </font>\r\n                        </Label>\r\n                        <Label cache=\"true\" text=\"e-mail : \" textFill=\"#232121\" GridPane.rowIndex=\"8\">\r\n                            <font>\r\n                                <Font size=\"14.0\" />\r\n                            </font>\r\n                        </Label>\r\n                        <Label cache=\"true\" text=\"Details :\" textFill=\"#232121\" GridPane.rowIndex=\"4\">\r\n                            <font>\r\n                                <Font size=\"14.0\" />\r\n                            </font>\r\n                        </Label>\r\n                        <TextField fx:id=\"nomFX\" GridPane.columnIndex=\"1\" />\r\n                        <Label fx:id=\"errorNom\" prefHeight=\"8.0\" prefWidth=\"0.0\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"1\" />\r\n\r\n                        <TextField fx:id=\"adresseFX\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"2\" />\r\n                        <Label fx:id=\"errorAdresse\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"3\" />\r\n\r\n                        <TextArea fx:id=\"detailsFX\" prefHeight=\"56.0\" prefWidth=\"100.0\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"4\" />\r\n                        <Label fx:id=\"errorDetails\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"5\" />\r\n\r\n                        <TextField fx:id=\"numtelFX\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"6\" />\r\n                        <Label fx:id=\"errorNumTel\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"7\" />\r\n\r\n                        <TextField fx:id=\"emailFX\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"8\" />\r\n                        <Label fx:id=\"errorEmail\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"9\" />\r\n\r\n                        <TextField fx:id=\"url_photoFX\" prefHeight=\"42.0\" prefWidth=\"130.0\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"10\" />\r\n                        <Label fx:id=\"errorUrlPhoto\" textFill=\"red\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"11\" />\r\n\r\n                        <ChoiceBox fx:id=\"responsableChoiceBox\" prefHeight=\"26.0\" prefWidth=\"121.0\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"12\" />\r\n                  <Label cache=\"true\" text=\"Select Your Gym Photo :\" textFill=\"#232121\" GridPane.rowIndex=\"10\">\r\n                     <font>\r\n                        <Font size=\"14.0\" />\r\n                     </font>\r\n                  </Label>\r\n                  <Label cache=\"true\" text=\"Choose a Gym Manager :\" textFill=\"#dc0a0a\" GridPane.rowIndex=\"12\">\r\n                     <font>\r\n                        <Font size=\"14.0\" />\r\n                     </font>\r\n                  </Label>\r\n                  <Button fx:id=\"Image\" mnemonicParsing=\"false\" onAction=\"#choisirImage\" prefHeight=\"28.0\" prefWidth=\"48.0\" style=\"-fx-background-color: #e1d8d8;\" textFill=\"#e1d8d8\" GridPane.columnIndex=\"1\" GridPane.rowIndex=\"10\">\r\n                     <graphic>\r\n                        <ImageView fitHeight=\"15.0\" fitWidth=\"14.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                           <image>\r\n                              <Image url=\"@images/pngwing.com.png\" />\r\n                           </image>\r\n                        </ImageView>\r\n                     </graphic>\r\n                  </Button>\r\n                    </children>\r\n                </GridPane>\r\n                <Button layoutX=\"289.0\" layoutY=\"348.0\" mnemonicParsing=\"false\" onAction=\"#btnAnnuler\" text=\"Cancel\" textFill=\"#f7ebeb\" />\r\n                <Button alignment=\"CENTER\" contentDisplay=\"CENTER\" layoutX=\"82.0\" layoutY=\"348.0\" mnemonicParsing=\"false\" onAction=\"#btnEnregistrer\" prefHeight=\"27.0\" prefWidth=\"147.0\" style=\"-fx-background-color: #f77017;\" stylesheets=\"@application.css\" text=\"Done\" textFill=\"#f77017\" textOverrun=\"CENTER_ELLIPSIS\">\r\n                    <padding>\r\n                        <Insets left=\"50.0\" right=\"20.0\" />\r\n                    </padding>\r\n                </Button>\r\n            <WebView fx:id=\"mapView\" layoutX=\"298.0\" layoutY=\"182.0\" prefHeight=\"149.0\" prefWidth=\"163.0\" />\r\n            </children>\r\n        </AnchorPane>\r\n    </items>\r\n    <stylesheets>\r\n        <URL value=\"@application.css\" />\r\n    </stylesheets>\r\n</SplitPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/SalleFormAdmin.fxml b/gymify/src/main/resources/SalleFormAdmin.fxml
+--- a/gymify/src/main/resources/SalleFormAdmin.fxml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/SalleFormAdmin.fxml	(date 1740907895607)
+@@ -17,11 +17,11 @@
+ <?import javafx.scene.text.Font?>
+ <?import javafx.scene.web.WebView?>
+ 
+-<SplitPane dividerPositions="0.22994652406417107" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="615.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleFormAdminController">
++<SplitPane dividerPositions="0.2795591182364729" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleFormAdminController">
+     <items>
+         <AnchorPane prefHeight="401.0" prefWidth="146.0">
+             <children>
+-                <ImageView fitHeight="405.0" fitWidth="134.0" layoutY="2.0" pickOnBounds="true" smooth="false">
++                <ImageView fitHeight="554.0" fitWidth="180.0" layoutY="2.0" pickOnBounds="true" smooth="false">
+                <image>
+                   <Image url="@images/3d-gym-equipment.jpg" />
+                </image></ImageView>
+@@ -37,7 +37,7 @@
+         </AnchorPane>
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="453.0">
+             <children>
+-                <GridPane layoutX="14.0" layoutY="14.0" prefHeight="318.0" prefWidth="284.0">
++                <GridPane layoutX="96.0" layoutY="103.0" prefHeight="318.0" prefWidth="284.0">
+                     <columnConstraints>
+                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.00003662109376" minWidth="10.0" prefWidth="159.19998779296876" />
+                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.8000244140625" minWidth="10.0" prefWidth="125.60001220703126" />
+@@ -123,13 +123,13 @@
+                   </Button>
+                     </children>
+                 </GridPane>
+-                <Button layoutX="289.0" layoutY="348.0" mnemonicParsing="false" onAction="#btnAnnuler" text="Cancel" textFill="#f7ebeb" />
+-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="82.0" layoutY="348.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #f77017;" stylesheets="@application.css" text="Done" textFill="#f77017" textOverrun="CENTER_ELLIPSIS">
++                <Button layoutX="297.0" layoutY="474.0" mnemonicParsing="false" onAction="#btnAnnuler" text="Cancel" textFill="#f4efef" />
++                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="474.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #f77017;" stylesheets="@application.css" text="Done" textFill="#f77017" textOverrun="CENTER_ELLIPSIS">
+                     <padding>
+                         <Insets left="50.0" right="20.0" />
+                     </padding>
+                 </Button>
+-            <WebView fx:id="mapView" layoutX="298.0" layoutY="182.0" prefHeight="149.0" prefWidth="163.0" />
++            <WebView fx:id="mapView" layoutX="406.0" layoutY="236.0" prefHeight="171.0" prefWidth="194.0" />
+             </children>
+         </AnchorPane>
+     </items>
+Index: gymify/src/main/resources/ProfileMembre.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.Menu?>\r\n<?import javafx.scene.control.MenuBar?>\r\n<?import javafx.scene.control.MenuItem?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.shape.Circle?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.text.Text?>\r\n\r\n<ScrollPane xmlns=\"http://javafx.com/javafx/23.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.gymify.controllers.ProfileMembreController\">\r\n   <content>\r\n      <AnchorPane prefHeight=\"555.0\" prefWidth=\"800.0\" style=\"-fx-background-image: image/ggym.jpeg;\" stylesheets=\"/style.css\">\r\n         <children>\r\n            <MenuBar layoutX=\"-5.0\" prefHeight=\"41.0\" prefWidth=\"810.0\" style=\"-fx-background-color: #5999D6FF;\" styleClass=\"nav-form\" stylesheets=\"/style.css\">\r\n               <menus>\r\n                  <Menu mnemonicParsing=\"false\" text=\"                                                                                                                                   Activity\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"Close\" />\r\n                     </items>\r\n                  </Menu>\r\n                  <Menu mnemonicParsing=\"false\" text=\"Blog\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"Delete\" />\r\n                     </items>\r\n                  </Menu>\r\n                  <Menu fx:id=\"ReclamationMenuBar\" mnemonicParsing=\"false\" onAction=\"#ouvrirReclamation\" text=\"Reclamation\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"Reclamation\" />\r\n                     </items>\r\n                  </Menu>\r\n                  <Menu mnemonicParsing=\"false\" text=\"Events\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"About\" />\r\n                     </items>\r\n                  </Menu>\r\n                  <Menu mnemonicParsing=\"false\" text=\"Product\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"Close\" />\r\n                     </items>\r\n                  </Menu>\r\n                  <Menu fx:id=\"Sallemenubare\" mnemonicParsing=\"false\" onAction=\"#ouvrirSalle\" text=\"salle\">\r\n                     <items>\r\n                        <MenuItem mnemonicParsing=\"false\" text=\"explore\" />\r\n                     </items>\r\n                  </Menu>\r\n               </menus>\r\n            </MenuBar>\r\n            <ImageView fitHeight=\"309.0\" fitWidth=\"810.0\" layoutX=\"-4.0\" layoutY=\"40.0\" opacity=\"0.47\" pickOnBounds=\"true\" smooth=\"false\">\r\n               <image>\r\n                  <Image url=\"@images/vecteezy_ai-generated-a-gym-with-dark-exercise-equipment_37170421.jpg\" />\r\n               </image>\r\n            </ImageView>\r\n            <Text fill=\"#2c4f6b\" fontSmoothingType=\"LCD\" layoutX=\"157.0\" layoutY=\"181.0\" strokeType=\"OUTSIDE\" strokeWidth=\"0.0\" text=\"Welcome To Gymify\" textAlignment=\"CENTER\" wrappingWidth=\"418.5367126464844\">\r\n               <font>\r\n                  <Font name=\"Tw Cen MT Condensed Bold\" size=\"78.0\" />\r\n               </font>\r\n            </Text>\r\n            <ImageView fitHeight=\"82.0\" fitWidth=\"143.0\" layoutX=\"-32.0\" layoutY=\"40.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n               <image>\r\n                  <Image url=\"@images/logo.png\" />\r\n               </image>\r\n            </ImageView>\r\n            <VBox layoutY=\"350.0\" prefHeight=\"200.0\" prefWidth=\"787.0\">\r\n               <children>\r\n            \r\n                  <!-- Ajout du ScrollPane pour la liste des salles -->\r\n                  <ScrollPane prefHeight=\"300.0\" prefWidth=\"710.0\">\r\n                     <content>\r\n                        <VBox fx:id=\"sallesContainer\" prefHeight=\"330.0\" prefWidth=\"770.0\" spacing=\"10\" />\r\n                     </content>\r\n                  </ScrollPane>\r\n                  <AnchorPane fx:id=\"infouserid\" prefHeight=\"134.0\" prefWidth=\"758.0\" style=\"-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;\" stylesheets=\"/style.css\">\r\n                     <children>\r\n                        <Circle fill=\"#eaeef2\" layoutX=\"96.0\" layoutY=\"67.0\" radius=\"58.0\" stroke=\"#0c629e\" strokeType=\"INSIDE\" />\r\n                        <ImageView fx:id=\"profileImage\" fitHeight=\"93.0\" fitWidth=\"95.0\" layoutX=\"49.0\" layoutY=\"20.0\" pickOnBounds=\"true\" preserveRatio=\"true\" />\r\n                        <Label layoutX=\"185.0\" layoutY=\"42.0\" text=\"Username: \">\r\n                           <font>\r\n                              <Font name=\"System Bold\" size=\"14.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <Label fx:id=\"usernameid\" layoutX=\"294.0\" layoutY=\"43.0\" prefHeight=\"7.0\" prefWidth=\"59.0\" text=\"Username\" />\r\n                        <Label layoutX=\"192.0\" layoutY=\"78.0\" text=\"Email :\">\r\n                           <font>\r\n                              <Font name=\"System Bold\" size=\"14.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <Label fx:id=\"emailid\" layoutX=\"294.0\" layoutY=\"79.0\" text=\"Email \" />\r\n                        <Button fx:id=\"EditId\" layoutX=\"419.0\" layoutY=\"58.0\" mnemonicParsing=\"false\" onAction=\"#editProfile\" prefHeight=\"27.0\" prefWidth=\"95.0\" style=\"-fx-background-color: #dde0e4; -fx-background-radius: 15px;\" styleClass=\"LoginBtn\" text=\"Edit\" textFill=\"#335581\">\r\n                           <font>\r\n                              <Font name=\"System Bold\" size=\"14.0\" />\r\n                           </font>\r\n                        </Button>\r\n                        <Button layoutX=\"600.0\" layoutY=\"104.0\" mnemonicParsing=\"false\" prefHeight=\"30.0\" prefWidth=\"74.0\" style=\"-fx-background-color: transparent;\" text=\"Sign Out\" />\r\n                     </children>\r\n                  </AnchorPane>\r\n               </children>\r\n            </VBox>\r\n         </children>\r\n      </AnchorPane>\r\n   </content>\r\n</ScrollPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/ProfileMembre.fxml b/gymify/src/main/resources/ProfileMembre.fxml
+--- a/gymify/src/main/resources/ProfileMembre.fxml	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/ProfileMembre.fxml	(date 1740913201848)
+@@ -16,7 +16,7 @@
+ 
+ <ScrollPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
+    <content>
+-      <AnchorPane prefHeight="555.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
++      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
+          <children>
+             <MenuBar layoutX="-5.0" prefHeight="41.0" prefWidth="810.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
+                <menus>
+@@ -67,15 +67,8 @@
+                   <Image url="@images/logo.png" />
+                </image>
+             </ImageView>
+-            <VBox layoutY="350.0" prefHeight="200.0" prefWidth="787.0">
++            <VBox layoutY="350.0" prefHeight="500.0" prefWidth="787.0">
+                <children>
+-            
+-                  <!-- Ajout du ScrollPane pour la liste des salles -->
+-                  <ScrollPane prefHeight="300.0" prefWidth="710.0">
+-                     <content>
+-                        <VBox fx:id="sallesContainer" prefHeight="330.0" prefWidth="770.0" spacing="10" />
+-                     </content>
+-                  </ScrollPane>
+                   <AnchorPane fx:id="infouserid" prefHeight="134.0" prefWidth="758.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
+                      <children>
+                         <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
+@@ -100,9 +93,15 @@
+                         <Button layoutX="600.0" layoutY="104.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+                      </children>
+                   </AnchorPane>
++                  <!-- Ajout du ScrollPane pour la liste des salles sous les informations de l'utilisateur -->
++                  <ScrollPane layoutY="134.0" prefHeight="300.0" prefWidth="787.0">
++                     <content>
++                        <VBox fx:id="sallesContainer" prefHeight="330.0" prefWidth="770.0" spacing="10" />
++                     </content>
++                  </ScrollPane>
+                </children>
+             </VBox>
+          </children>
+       </AnchorPane>
+    </content>
+-</ScrollPane>
++</ScrollPane>
+\ No newline at end of file
+Index: gymify/src/main/resources/application.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.root {\r\n    -fx-background-color: #F4F4F4; /* Couleur de fond */\r\n}\r\n\r\n.button {\r\n    -fx-background-color: #007bff;\r\n    -fx-text-fill: white;\r\n    -fx-font-size: 14px;\r\n    -fx-padding: 8px 15px;\r\n    -fx-border-radius: 20px;\r\n    -fx-background-radius: 20px;\r\n    -fx-cursor: hand;\r\n    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);\r\n}\r\n\r\n.button:hover {\r\n    -fx-background-color: #0056b3;\r\n}\r\n\r\n.text-field {\r\n    -fx-border-radius: 15px;\r\n    -fx-background-radius: 15px;\r\n    -fx-padding: 5px;\r\n    -fx-border-color: #ccc;\r\n}\r\n\r\n.card {\r\n    -fx-background-color: #e6e1e1;\r\n    -fx-padding: 20px;\r\n    -fx-border-radius: 20px;\r\n    -fx-text-fill: white;\r\n    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);\r\n    -fx-transition: transform 0.3s ease-in-out;\r\n}\r\n\r\n.card:hover {\r\n    -fx-background-color: #FFFFFF;\r\n    -fx-transform: scale(1.2); /* Exemple correct d'utilisation de scale */\r\n\r\n}\r\n\r\n.card .abonnement-title {\r\n    -fx-font-size: 18px;\r\n    -fx-font-weight: bold;\r\n}\r\n\r\n.card .abonnement-details {\r\n    -fx-font-size: 14px;\r\n}\r\n\r\n.card .abonnement-actions {\r\n    -fx-spacing: 10px;\r\n    -fx-alignment: CENTER;\r\n\r\n\r\n}\r\n/* Appliquer un style arrondi à l'image */\r\n.image-round {\r\n    -fx-shape: \"M 0,10 Q 10,0 20,10 Q 30,20 20,30 Q 10,40 0,30 Q -10,20 0,10 Z\";\r\n    -fx-background-radius: 50%;\r\n    -fx-border-radius: 50%;\r\n    -fx-border-width: 2;\r\n    -fx-border-color: #ddd; /* Couleur de la bordure */\r\n    -fx-padding: 5;\r\n    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2); /* Ombre portée */\r\n    -fx-width: 100px;  /* Ajustez la taille de l'image */\r\n    -fx-height: 100px;\r\n    -fx-alignment: center;\r\n    -fx-background-color: #fff; /* Couleur de fond pour l'image */\r\n}\r\n\r\n/* Appliquer l'image avec une bordure arrondie */\r\n.image-view {\r\n    -fx-background-radius: 50%;\r\n    -fx-border-radius: 50%;\r\n    -fx-border-width: 3;\r\n    -fx-border-color: #2196F3; /* Bordure bleue */\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gymify/src/main/resources/application.css b/gymify/src/main/resources/application.css
+--- a/gymify/src/main/resources/application.css	(revision 94de44b525da945eab8541175611487b75063e29)
++++ b/gymify/src/main/resources/application.css	(date 1740887140150)
+@@ -4,7 +4,7 @@
+ 
+ .button {
+     -fx-background-color: #007bff;
+-    -fx-text-fill: white;
++    -fx-text-fill: #5f91ac;
+     -fx-font-size: 14px;
+     -fx-padding: 8px 15px;
+     -fx-border-radius: 20px;
