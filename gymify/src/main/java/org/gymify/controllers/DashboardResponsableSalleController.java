@@ -37,7 +37,7 @@ public class DashboardResponsableSalleController {
     @FXML private AnchorPane addUserPane, homePane, listUsersPane, EditUserPane;
     @FXML private Label welcomeLabel;
     @FXML private ImageView profileImage;
-
+    @FXML private TextField searchRoleField;
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser();
 
@@ -145,7 +145,6 @@ public class DashboardResponsableSalleController {
         }
     }
 
-    @FXML
     private void listUsersInVBox() {
         VBoxId.getChildren().clear();
 
@@ -155,13 +154,17 @@ public class DashboardResponsableSalleController {
             if (users.isEmpty()) {
                 System.out.println("⚠️ Aucun utilisateur trouvé !");
             } else {
+                System.out.println("✅ Utilisateurs récupérés pour affichage :");
+                users.forEach(user -> System.out.println(user.getNom() + " - " + user.getRole())); // Ajoute ce log
+
                 users.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
             }
         } catch (SQLException e) {
             System.err.println("❌ Erreur SQL : " + e.getMessage());
         }
     }
-    @FXML private TextField searchRoleField;
+
+
     @FXML void onSearchByRole(ActionEvent event) {
         String roleRecherche = searchRoleField.getText().trim();
 
