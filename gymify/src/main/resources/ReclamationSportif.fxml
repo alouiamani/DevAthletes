@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
@@ -12,34 +13,42 @@
 <AnchorPane prefHeight="555.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, #e3f2fd, #bbdefb);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ReclamationSportifController">
 
     <children>
-        <!-- Sidebar (menu à gauche) -->
+        <!-- Barre latérale gauche -->
         <VBox layoutX="0.0" layoutY="0.0" prefHeight="555.0" prefWidth="48.0" style="-fx-background-color: #e4860a; -fx-padding: 20; -fx-spacing: 20;" />
 
         <!-- Contenu principal -->
-        <VBox layoutX="86.0" layoutY="34.0" prefHeight="488.0" prefWidth="634.0" spacing="15" style="-fx-background-color: white; -fx-background-radius: 15;                      -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+        <VBox layoutX="98.0" layoutY="34.0" prefHeight="488.0" prefWidth="608.0" spacing="15" style="-fx-background-color: white; -fx-background-radius: 15;                      -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 5);">
 
-            <!-- En-tête stylisé -->
-            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 10;" text="📌  Reclamation" textFill="#e4860a" />
+            <!-- En-tête -->
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 10;" text="📌 Reclamations" textFill="#e4860a" />
 
-            <!-- Champ de recherche amélioré -->
-            <HBox spacing="10" />
+            <!-- Barre de recherche et filtre -->
+            <HBox spacing="10">
+                <ComboBox fx:id="filtreStatut" prefHeight="30.0" prefWidth="174.0" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+            </HBox>
 
             <!-- Liste des réclamations -->
-            <ListView fx:id="listReclamations" prefHeight="120.0" prefWidth="430.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <ListView fx:id="listReclamations" prefHeight="150.0" prefWidth="430.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #90a4ae;" />
 
-            <!-- Zone d'ajout de réclamation -->
+            <!-- Zone d'affichage de la réponse admin -->
+            <TextArea fx:id="txtReponseAdmin" editable="false" prefHeight="80.0" prefWidth="430.0" promptText="Réponse de l'admin..." style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #90a4ae;" wrapText="true" />
+
+            <!-- Zone d'ajout d'une nouvelle réclamation -->
             <TextField fx:id="txtSujet" promptText="Sujet" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #90a4ae;" />
 
-            <TextArea fx:id="txtDescription" prefHeight="80.0" prefWidth="430.0" promptText="Décrivez votre problème..." style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #90a4ae;" />
+            <TextArea fx:id="txtDescription" prefHeight="80.0" prefWidth="430.0" promptText="Décrivez votre problème..." style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #90a4ae;" wrapText="true" />
 
-            <!-- Boutons modernisés -->
+            <!-- Boutons -->
             <HBox alignment="CENTER" spacing="15">
                 <Button fx:id="btnEnvoyer" onAction="#envoyerReclamation" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #43a047; -fx-background-radius: 10; -fx-font-weight: bold;" text="📤 Envoyer" textFill="white" />
 
                 <Button fx:id="btnSupprimer" onAction="#supprimerReclamation" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e53935; -fx-background-radius: 10; -fx-font-weight: bold;" text="🗑 Supprimer" textFill="white" />
-            <Button onAction="#handleCancel" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2736c1; -fx-background-radius: 10; -fx-font-weight: bold;" text="Cancel" textFill="#f7f7fc" />
+
+                <Button fx:id="btnCancel" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2978cc; -fx-background-radius: 10; -fx-font-weight: bold;" text="❌ Annuler" textFill="white" />
             </HBox>
         </VBox>
-      <VBox layoutX="752.0" prefHeight="555.0" prefWidth="48.0" style="-fx-background-color: #e4860a; -fx-padding: 20; -fx-spacing: 20;" />
+
+        <!-- Barre latérale droite -->
+        <VBox layoutX="739.0" prefHeight="555.0" prefWidth="62.0" style="-fx-background-color: #e4860a; -fx-padding: 20; -fx-spacing: 20;" />
     </children>
 </AnchorPane>

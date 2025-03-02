@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,6 +17,8 @@ import org.gymify.entities.User;
 import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
+
+import static org.gymify.utils.AuthToken.logout;
 
 public class InterfaceEntraineurController {
 
@@ -65,6 +68,19 @@ public class InterfaceEntraineurController {
 
         updateUI();
     }
+    @FXML
+    private void onLogoutButtonClick(ActionEvent event) {
+        AuthToken.setCurrentUser(null);
+        logout();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            ((Node) event.getSource()).getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     /**
      * Mise à jour de l'interface avec les infos de l'entraîneur connecté.

@@ -300,7 +300,7 @@
                         </Label>
                         <AnchorPane layoutX="221.0" layoutY="58.0" prefHeight="128.0" prefWidth="188.0" styleClass="white-round-carts">
                            <children>
-                              <ImageView fitHeight="108.0" fitWidth="150.0" layoutX="19.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
+                              <ImageView fx:id="profileImage" fitHeight="108.0" fitWidth="150.0" layoutX="19.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
                            </children>
                         </AnchorPane>
                         <TextField fx:id="AddFirstNameFx" layoutX="88.0" layoutY="210.0" prefHeight="38.0" prefWidth="170.0" promptText="First Name" />
@@ -338,7 +338,7 @@
                         </Label>
                         <AnchorPane fx:id="EditImageId" layoutX="394.0" layoutY="95.0" prefHeight="170.0" prefWidth="175.0" styleClass="white-round-carts">
                            <children>
-                              <ImageView fitHeight="99.0" fitWidth="144.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
+                              <ImageView fx:id="profileImage" fitHeight="99.0" fitWidth="144.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
                               <Button fx:id="SaveUserFx11" layoutX="39.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: transparent;" styleClass="round-btn" text="Importer" textFill="#39526e">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
