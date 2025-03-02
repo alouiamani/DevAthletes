@@ -10,6 +10,7 @@ public class Commande {
     private Timestamp dateC;
     private List<CommandeProduit> commandeProduits = new ArrayList<>();
     private int user_id;
+    private List<Produit> produits;
 
     public Commande() {}
 
@@ -72,6 +73,14 @@ public class Commande {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
     }
 
     @Override

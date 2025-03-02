@@ -10,22 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<HBox prefHeight="861.0" prefWidth="1044.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.listProduitFront">
-    
-    <!-- Include Sidebar -->
-    <fx:include source="sidebar.fxml" />
-    
-    <!-- Main Content -->
-    <VBox spacing="100" HBox.hgrow="ALWAYS">
-        <padding>
-            <Insets bottom="50" left="100" right="100" top="100" />
-        </padding>
-        
-        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="280.0" spacing="100">
-            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Products" />
-            <Region prefWidth="129.0" HBox.hgrow="ALWAYS" />
-            <ComboBox fx:id="categoryFilter">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="controllers.listProduitFront" 
+            stylesheets="@styles.css"
+            prefWidth="1200" prefHeight="800">
+            
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Products" />
+            <ComboBox fx:id="categoryFilter" prefWidth="200" promptText="Select Category">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Tous" />
@@ -34,18 +29,26 @@
                     </FXCollections>
                 </items>
             </ComboBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="ordersListBtn" onAction="#afficherListeCommande" 
+                    text="Orders" styleClass="nav-button"/>
+            <Button fx:id="viewCartButton" onAction="#afficherPanier" 
+                    styleClass="cart-button"/>
         </HBox>
-        
-        <ListView fx:id="listProduits" prefHeight="700.0" prefWidth="644.0" VBox.vgrow="ALWAYS">
-            <placeholder>
-                <Label text="No products available" />
-            </placeholder>
-        </ListView>
-        
-        <HBox alignment="CENTER_RIGHT" spacing="100">
-            <Button fx:id="addOrderBtn" onAction="#ajouterAuPanier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add to Cart" />
-            <Button fx:id="viewCartButton" onAction="#afficherPanier" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="View Cart" />
-            <Button fx:id="ordersListBtn" onAction="#afficherListeCommande" style="-fx-background-color: #FF9800; -fx-text-fill: white;" text="View Orders" />
-        </HBox>
-    </VBox>
-</HBox>
+    </top>
+    
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20;">
+            <ListView fx:id="listProduits" VBox.vgrow="ALWAYS">
+                <placeholder>
+                    <Label text="No products available" />
+                </placeholder>
+            </ListView>
+        </VBox>
+    </center>
+    
+    <left>
+        <fx:include source="sidebar.fxml"/>
+    </left>
+    
+</BorderPane>

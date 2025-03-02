@@ -15,15 +15,18 @@ import services.ServiceCommande;
 import services.ServiceProduit;
 import utils.AuthToken;
 import services.CartService;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class listProduitFront implements Initializable {
 
@@ -50,10 +53,18 @@ public class listProduitFront implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Set custom cell factory to use ProductListCell
+        // Set this controller as the scene's user data
+        Platform.runLater(() -> {
+            if (listProduits.getScene() != null) {
+                listProduits.getScene().setUserData(this);
+            }
+        });
+        
+        // Set custom cell factory
         listProduits.setCellFactory(param -> new ProductListCell());
         
-        // Set default value
+        // Set default value and items for category filter
+        categoryFilter.setItems(FXCollections.observableArrayList("Tous", "complement", "accessoire"));
         categoryFilter.setValue("Tous");
         
         // Add listener for category filter
@@ -62,6 +73,42 @@ public class listProduitFront implements Initializable {
                 filterProducts();
             }
         });
+        
+        // Set cart icon for view cart button
+        try {
+            Image cartImage = new Image(getClass().getResourceAsStream("/icons/cart2.png"));
+            ImageView cartIcon = new ImageView(cartImage);
+            cartIcon.setFitHeight(20);
+            cartIcon.setFitWidth(20);
+            viewCartButton.setGraphic(cartIcon);
+            viewCartButton.setText(""); // Remove text, show only icon
+            
+            // Add some styling
+            viewCartButton.setStyle(
+                "-fx-background-color: transparent;" +
+                "-fx-padding: 5px;" +
+                "-fx-cursor: hand;"
+            );
+            
+            // Add hover effect
+            viewCartButton.setOnMouseEntered(e -> 
+                viewCartButton.setStyle(
+                    "-fx-background-color: #f0f0f0;" +
+                    "-fx-padding: 5px;" +
+                    "-fx-cursor: hand;"
+                )
+            );
+            viewCartButton.setOnMouseExited(e -> 
+                viewCartButton.setStyle(
+                    "-fx-background-color: transparent;" +
+                    "-fx-padding: 5px;" +
+                    "-fx-cursor: hand;"
+                )
+            );
+        } catch (Exception e) {
+            // If icon fails to load, keep text button
+            viewCartButton.setText("Panier");
+        }
         
         // Load products
         loadProduits();
@@ -172,11 +219,8 @@ public class listProduitFront implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/listCommandeFront.fxml"));
             Parent parent = loader.load();
-
-            // Get the scene from the ListView since it's always present
             Stage stage = (Stage) listProduits.getScene().getWindow();
             stage.setScene(new Scene(parent));
-
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement de l'interface listCommandeFront : " + e.getMessage());
             e.printStackTrace();
@@ -189,44 +233,67 @@ public class listProduitFront implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/listCommandeFront.fxml"));
             Parent parent = loader.load();
             Stage stage = (Stage) ordersListBtn.getScene().getWindow();
-            stage.setScene(new Scene(parent));
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.setMinWidth(1200);
+            stage.setMinHeight(800);
         } catch (IOException e) {
             e.printStackTrace();
+            afficherErreur("Erreur", "Impossible de charger la page", e.getMessage());
         }
     }
 
     @FXML
-    private void ajouterAuPanier() {
+    public void ajouterAuPanier() {
         Produit produitSelectionne = listProduits.getSelectionModel().getSelectedItem();
+        ajouterAuPanier(produitSelectionne);
+    }
 
-        if (produitSelectionne == null) {
+    public void ajouterAuPanier(Produit produit) {
+        if (produit == null) {
             afficherErreur("Erreur", "Veuillez sélectionner un produit.", "");
             return;
         }
-
-        // Vérification du stock
-        if (produitSelectionne.getStock_p() <= 0) {
-            afficherErreur("Erreur", "Le produit est en rupture de stock.", "");
-            return;
-        }
-
-        // Demander la quantité
-        TextInputDialog dialog = new TextInputDialog("1");
+        
+        // Select the product in the ListView
+        listProduits.getSelectionModel().select(produit);
+        
+        // Create an icon button for the quantity dialog
+        Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Quantité");
-        dialog.setHeaderText("Entrez la quantité souhaitée");
-        dialog.setContentText("Quantité:");
+        dialog.setHeaderText("Entrez la quantité souhaitée pour: " + produit.getNom_p());
 
-        dialog.showAndWait().ifPresent(quantiteStr -> {
+        // Set the button types
+        ButtonType confirmButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+
+        // Create the quantity input field
+        TextField quantityField = new TextField("1");
+        quantityField.setTextFormatter(new TextFormatter<>(change -> 
+            change.getControlNewText().matches("\\d*") ? change : null));
+        dialog.getDialogPane().setContent(quantityField);
+
+        // Convert the result to the quantity when the confirm button is clicked
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confirmButtonType) {
+                return quantityField.getText();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String quantiteStr = result.get();
             try {
                 int quantite = Integer.parseInt(quantiteStr);
-                cartService.addToCart(produitSelectionne, quantite);
+                cartService.addToCart(produit, quantite);
                 afficherInformation("Succès", "Produit ajouté au panier!");
             } catch (NumberFormatException e) {
                 afficherErreur("Erreur", "Quantité invalide", "");
             } catch (IllegalArgumentException e) {
                 afficherErreur("Erreur", e.getMessage(), "");
             }
-        });
+        }
     }
 
     @FXML
@@ -235,7 +302,10 @@ public class listProduitFront implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cart.fxml"));
             Parent parent = loader.load();
             Stage stage = (Stage) viewCartButton.getScene().getWindow();
-            stage.setScene(new Scene(parent));
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.setMinWidth(1200);
+            stage.setMinHeight(800);
         } catch (IOException e) {
             e.printStackTrace();
             afficherErreur("Erreur", "Impossible d'afficher le panier", e.getMessage());

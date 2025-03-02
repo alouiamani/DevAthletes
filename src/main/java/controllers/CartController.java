@@ -5,19 +5,26 @@ import entities.Commande;
 import entities.Produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import services.CartService;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CartController {
+public class CartController implements Initializable {
     @FXML
     private ListView<Produit> cartListView;
     @FXML
@@ -27,12 +34,95 @@ public class CartController {
     
     private final CartService cartService = new CartService();
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         updateCartView();
         
-        // Set custom cell factory
-        cartListView.setCellFactory(lv -> new CartItemCell());
+        cartListView.setCellFactory(lv -> new ListCell<Produit>() {
+            private final HBox content = new HBox(10);
+            private final Label nameLabel = new Label();
+            private final Label priceLabel = new Label();
+            private final Spinner<Integer> quantitySpinner = new Spinner<>(1, 100, 1);
+            private final Button removeButton = new Button();
+
+            {
+                try {
+                    Image trashImage = new Image(getClass().getResourceAsStream("/icons/poubelle.png"));
+                    ImageView trashIcon = new ImageView(trashImage);
+                    trashIcon.setFitHeight(16);
+                    trashIcon.setFitWidth(16);
+                    removeButton.setGraphic(trashIcon);
+                    removeButton.setText("");
+                    
+                    removeButton.setStyle(
+                        "-fx-background-color: transparent;" +
+                        "-fx-padding: 5px;" +
+                        "-fx-cursor: hand;"
+                    );
+                    
+                    removeButton.setOnMouseEntered(e -> 
+                        removeButton.setStyle(
+                            "-fx-background-color: #ffebee;" +
+                            "-fx-padding: 5px;" +
+                            "-fx-cursor: hand;"
+                        )
+                    );
+                    removeButton.setOnMouseExited(e -> 
+                        removeButton.setStyle(
+                            "-fx-background-color: transparent;" +
+                            "-fx-padding: 5px;" +
+                            "-fx-cursor: hand;"
+                        )
+                    );
+                } catch (Exception e) {
+                    removeButton.setText("X");
+                }
+
+                // Add quantity spinner listener
+                quantitySpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
+                    Produit item = getItem();
+                    if (item != null) {
+                        try {
+                            cartService.updateQuantity(item, newVal);
+                            CartController.this.updateCartView();
+                        } catch (IllegalArgumentException ex) {
+                            // Create alert directly instead of using showAlert
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText(null);
+                            alert.setContentText(ex.getMessage());
+                            alert.showAndWait();
+                            quantitySpinner.getValueFactory().setValue(oldVal);
+                        }
+                    }
+                });
+
+                content.setAlignment(Pos.CENTER_LEFT);
+                content.getChildren().addAll(nameLabel, priceLabel, quantitySpinner, removeButton);
+            }
+
+            @Override
+            protected void updateItem(Produit produit, boolean empty) {
+                super.updateItem(produit, empty);
+
+                if (empty || produit == null) {
+                    setGraphic(null);
+                } else {
+                    nameLabel.setText(produit.getNom_p());
+                    priceLabel.setText(String.format("%.2f dt", produit.getPrix_p()));
+                    quantitySpinner.getValueFactory().setValue(
+                        cartService.getCurrentCart().getItems().get(produit)
+                    );
+                    
+                    removeButton.setOnAction(e -> {
+                        cartService.removeFromCart(produit);
+                        CartController.this.updateCartView();
+                    });
+
+                    setGraphic(content);
+                }
+            }
+        });
     }
 
     private void updateCartView() {
@@ -117,62 +207,5 @@ public class CartController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    // Custom ListCell for cart items
-    private class CartItemCell extends ListCell<Produit> {
-        private final HBox content;
-        private final Label nameLabel;
-        private final Label priceLabel;
-        private final Spinner<Integer> quantitySpinner;
-        private final Button removeButton;
-
-        public CartItemCell() {
-            nameLabel = new Label();
-            priceLabel = new Label();
-            quantitySpinner = new Spinner<>();
-            quantitySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999, 1));
-            removeButton = new Button("Remove");
-            
-            content = new HBox(10);
-            content.getChildren().addAll(nameLabel, priceLabel, quantitySpinner, removeButton);
-
-            removeButton.setOnAction(e -> {
-                Produit item = getItem();
-                if (item != null) {
-                    cartService.removeFromCart(item);
-                    updateCartView();
-                }
-            });
-
-            quantitySpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
-                Produit item = getItem();
-                if (item != null) {
-                    try {
-                        cartService.updateQuantity(item, newVal);
-                        updateCartView();
-                    } catch (IllegalArgumentException ex) {
-                        showAlert(Alert.AlertType.WARNING, "Warning", ex.getMessage());
-                        quantitySpinner.getValueFactory().setValue(oldVal);
-                    }
-                }
-            });
-        }
-
-        @Override
-        protected void updateItem(Produit produit, boolean empty) {
-            super.updateItem(produit, empty);
-
-            if (empty || produit == null) {
-                setGraphic(null);
-            } else {
-                nameLabel.setText(produit.getNom_p());
-                priceLabel.setText(String.format("%.2f dt", produit.getPrix_p()));
-                quantitySpinner.getValueFactory().setValue(
-                    cartService.getCurrentCart().getItems().get(produit)
-                );
-                setGraphic(content);
-            }
-        }
     }
 } 

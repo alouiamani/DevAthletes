@@ -4,35 +4,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1" 
-      xmlns="http://javafx.com/javafx/21"
-      stylesheets="@styles.css"
-      fx:controller="controllers.listCommandeFront">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.listCommandeFront"
+            stylesheets="@styles.css"
+            prefWidth="1200" prefHeight="800">
     
-    <!-- Include Sidebar -->
-    <fx:include source="sidebar.fxml"/>
+    <left>
+        <fx:include source="sidebar.fxml"/>
+    </left>
     
-    <!-- Main Content -->
-    <VBox spacing="10" HBox.hgrow="ALWAYS">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-        </padding>
-        
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Your Orders" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-        </HBox>
-        
-        <ListView fx:id="listCommandes" VBox.vgrow="ALWAYS">
-            <placeholder>
-                <Label text="No orders found" />
-            </placeholder>
-        </ListView>
-        
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Label fx:id="labelTotal" style="-fx-font-size: 16px;"/>
-            <Button fx:id="exportPdfBtn" text="Export PDF" 
-                    onAction="#exportToPDF"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        </HBox>
-    </VBox>
-</HBox>
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Your Orders" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            </HBox>
+            
+            <ListView fx:id="listCommandes" 
+                      styleClass="orders-list-view" 
+                      VBox.vgrow="ALWAYS">
+                <placeholder>
+                    <Label text="No orders found" />
+                </placeholder>
+            </ListView>
+            
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="labelTotal" style="-fx-font-size: 16px;"/>
+                <Button fx:id="exportPdfBtn" text="Export PDF" 
+                        onAction="#exportToPDF"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

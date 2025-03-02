@@ -24,8 +24,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.awt.Desktop;
 
-public class listCommandeFront {
+public class listCommandeFront implements Initializable {
 
     @FXML
     private ListView<Commande> listCommandes;
@@ -43,15 +47,15 @@ public class listCommandeFront {
     private final ObservableList<Commande> observableCommandes = FXCollections.observableArrayList();
     private final PDFService pdfService = new PDFService();
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         // Set custom cell factory
         listCommandes.setCellFactory(param -> new CommandeListCell());
         listCommandes.setItems(observableCommandes);
-        chargerCommandes();
+        loadCommandes();
     }
 
-    private void chargerCommandes() {
+    private void loadCommandes() {
         try {
             observableCommandes.setAll(serviceCommande.afficher());
             calculerTotal();
@@ -101,26 +105,38 @@ public class listCommandeFront {
 
     @FXML
     private void exportToPDF() {
+        Commande selectedCommande = listCommandes.getSelectionModel().getSelectedItem();
+        if (selectedCommande == null) {
+            afficherErreur("Erreur", "Veuillez sélectionner une commande à exporter.", "");
+            return;
+        }
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Enregistrer le PDF");
+        fileChooser.setTitle("Enregistrer la facture");
         fileChooser.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
         );
-        fileChooser.setInitialFileName("commandes.pdf");
+        fileChooser.setInitialFileName("Facture_" + selectedCommande.getId_c() + ".pdf");
         
-        File file = fileChooser.showSaveDialog(null);
-        
+        File file = fileChooser.showSaveDialog(exportPdfBtn.getScene().getWindow());
         if (file != null) {
             try {
-                List<Commande> commandes = serviceCommande.afficher();
-                pdfService.generateCommandePDF(commandes, file.getAbsolutePath());
+                pdfService.exportCommandeToPDF(selectedCommande, file.getAbsolutePath());
+                afficherInformation("Succès", "La facture a été exportée avec succès!");
                 
-                afficherInformation("Succès", "Le PDF a été généré avec succès!");
+                // Ask if user wants to open the PDF
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Ouvrir le PDF");
+                alert.setHeaderText("La facture a été créée avec succès");
+                alert.setContentText("Voulez-vous ouvrir le fichier maintenant?");
                 
-            } catch (SQLException e) {
-                afficherErreur("Erreur", "Erreur lors de la récupération des commandes", e.getMessage());
-            } catch (DocumentException | IOException e) {
-                afficherErreur("Erreur", "Erreur lors de la génération du PDF", e.getMessage());
+                if (alert.showAndWait().get() == ButtonType.OK) {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().open(file);
+                    }
+                }
+            } catch (Exception e) {
+                afficherErreur("Erreur", "Impossible d'exporter la facture.", e.getMessage());
             }
         }
     }
