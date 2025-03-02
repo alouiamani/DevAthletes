@@ -9,8 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.gymify.entities.Objectifs;
 import org.gymify.entities.User;
+import org.gymify.entities.infoSportif;
 import org.gymify.services.ServiceUser;
+import org.gymify.services.infoSpotifService;
 import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
@@ -58,7 +61,9 @@ public class LoginControllers {
             switch (loggedInUser.getRole().trim().toLowerCase()) {
                 case "admin" -> ouvrirInterface("AdminDash.fxml", "🏢 Interface Admin", event);
                 case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
-                case "sportif" -> ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);
+                case "sportif" -> {
+                    ajouterInfoSportif(loggedInUser);
+                    ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);}
                 case "entraineur" -> ouvrirInterface("InterfaceEntraineur.fxml", "👨‍🏫 Interface Entraîneur", event);
                 default -> showAlert(Alert.AlertType.ERROR, "⚠️ Erreur", "Rôle inconnu : " + loggedInUser.getRole());
             }
@@ -110,5 +115,31 @@ public class LoginControllers {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    /**
+     * 🔹 Ajouter un infoSportif pour un utilisateur sportif s'il n'existe pas déjà
+     */
+    private void ajouterInfoSportif(User user) {
+        infoSpotifService infoSportifService = new infoSpotifService();
+
+        // Vérifier si un infoSportif existe déjà pour cet utilisateur
+        boolean infoSportifExists = infoSportifService.existsByUserId(user.getId_User());
+
+        if (!infoSportifExists) {
+            // Créer un nouvel infoSportif avec des valeurs par défaut
+            infoSportif newInfoSportif = new infoSportif();
+            newInfoSportif.setPoids(0); // Valeur par défaut
+            newInfoSportif.setTaille(0); // Valeur par défaut
+            newInfoSportif.setAge(0); // Valeur par défaut
+            newInfoSportif.setSexe("Non spécifié"); // Valeur par défaut
+            newInfoSportif.setObjectifs(Objectifs.PERTE_PROIDS); // Valeur par défaut
+            newInfoSportif.setUser(user); // Associer l'utilisateur
+
+            // Ajouter le nouvel infoSportif à la base de données
+            infoSportifService.Add(newInfoSportif);
+            System.out.println("✅ infoSportif ajouté pour l'utilisateur : " + user.getEmail());
+        } else {
+            System.out.println("ℹ️ infoSportif existe déjà pour l'utilisateur : " + user.getEmail());
+        }
     }
 }
