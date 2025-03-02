@@ -119,7 +119,6 @@ public class ServiceUser implements IGestionUser<User> {
         }
     }
 
-
     public List<User> afficher() throws SQLException {
         List<User> users = new ArrayList<>();
         String req = "SELECT * FROM user";
@@ -152,7 +151,7 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return users;
     }
-    public List<User> afficherPourResponsableAvecStream() throws SQLException {
+     public List<User> afficherPourResponsableAvecStream() throws SQLException {
         return afficher().stream() // Récupère tous les utilisateurs
                 .filter(user -> "sportif".equalsIgnoreCase(user.getRole()) || "entraîneur".equalsIgnoreCase(user.getRole()))
                 .collect(Collectors.toList());

@@ -1,79 +1,94 @@
 package org.gymify.services;
 
-
-import org.gymify.entities.Entraineur;
-import org.gymify.entities.Reclamation;
 import org.gymify.entities.Reponse;
-import org.gymify.entities.User;
-import org.gymify.services.IGestionUser;
+
 import org.gymify.utils.gymifyDataBase;
-
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+public class ServiceReponse implements Iservices<Reponse> {
+    private final Connection con;
 
-public class ServiceReponse implements Iservices <Reponse> {
-    Connection connection = gymifyDataBase.getInstance().getConnection();
-    public ServiceReponse() {}
+    public ServiceReponse() {
+        con = gymifyDataBase.getInstance().getConnection();
+    }
 
-    public void ajouter(Reponse reponse) throws SQLException {
-        String req = "INSERT INTO reponse (id_rec, message) VALUES ('" + reponse.getId_rec() + "', '" + reponse.getMessage() + "')";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(req);
-        System.out.println(" Réponse ajoutée !");
+    public void ajouter(Reponse reponse) {
+        String sql = "INSERT INTO reponse (id_rec, message, dateReponse) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, reponse.getId_rec());
+            pstmt.setString(2, reponse.getMessage());
+            pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // Ajout automatique de la date
+            pstmt.executeUpdate();
 
-
+            mettreAJourStatutReclamation(reponse.getId_rec(), "Traitée");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de l'ajout de la réponse : " + e.getMessage());
+        }
     }
 
 
     public void modifier(Reponse reponse) throws SQLException {
-        String req = "UPDATE reponse SET message=? WHERE id_Reponse=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(req);
-        preparedStatement.setString(1, reponse.getMessage());
-        preparedStatement.setInt(2, reponse.getId_Reponse());
-        preparedStatement.executeUpdate();
-        System.out.println("Réponse modifiée !");
-
 
     }
 
-
-    public void supprimer(int id_Reponse) throws SQLException {
-        String req = "DELETE FROM reponse WHERE id_Reponse=" + id_Reponse;
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(req);
-        System.out.println(" Réponse supprimée !");
-
-    }
-
-    public List<Reponse> afficher() throws SQLException {
-        List<Reponse> reponses = new ArrayList<>();
-        String req = "SELECT r.id_Reponse, r.id_rec, r.message, r.date_reponse, "
-                + "rec.id_reclamation, rec.sujet, rec.description "
-                + "FROM reponse r "
-                + "JOIN reclamation rec ON r.id_rec = rec.id_reclamation";
-
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(req);
-        while ( rs.next()) {
-            Reclamation reclamation = new Reclamation(
-                    rs.getInt("id_reclamation"),
-                    rs.getString("sujet"),
-                    rs.getString("description"));
-
-            Reponse reponse = new Reponse();
-            reponse.setId_Reponse(rs.getInt("id_Reponse"));
-            reponse.setId_rec(rs.getInt("id_rec"));
-            reponse.setMessage(rs.getString("message"));
-            reponse.setDateReponse(rs.getTimestamp("date_reponse"));
-            reponse.setReclamation(reclamation);
-            reponses.add(reponse);
+    public void supprimer(int id_Reponse) {
+        String sql = "DELETE FROM reponse WHERE id_Reponse = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id_Reponse);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression de la réponse : " + e.getMessage());
         }
-        return reponses;
     }
 
-}
+    public List<Reponse> afficher() {
+        List<Reponse> list = new ArrayList<>();
+        String sql = "SELECT * FROM reponse";
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                list.add(new Reponse(
+                        rs.getInt("id_Reponse"),
+                        rs.getInt("id_rec"),
+                        rs.getString("message"),
+                        rs.getTimestamp("dateReponse")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de l'affichage des réponses : " + e.getMessage());
+        }
+        return list;
+    }
 
+    public Reponse recupererParReclamation(int id_rec) {
+        String sql = "SELECT * FROM reponse WHERE id_rec = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id_rec);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Reponse(
+                        rs.getInt("id_Reponse"),
+                        rs.getInt("id_rec"),
+                        rs.getString("message"),
+                        rs.getTimestamp("dateReponse")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de la réponse : " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void mettreAJourStatutReclamation(int id_rec, String statut) {
+        String sql = "UPDATE reclamation SET statut = ? WHERE id_reclamation = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, statut);
+            pstmt.setInt(2, id_rec);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour du statut de la réclamation : " + e.getMessage());
+        }
+    }
+}
