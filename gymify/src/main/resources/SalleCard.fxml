@@ -7,125 +7,102 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="361.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
+<AnchorPane prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
    <children>
-      <HBox layoutX="31.0" layoutY="57.0" prefHeight="230.0" prefWidth="388.0" style="-fx-background-color: #ffffff;" styleClass="card">
+
+      <!-- Container for Cards -->
+      <FlowPane fx:id="cardContainer" hgap="15.0" layoutX="8.0" layoutY="55.0" prefHeight="487.0" prefWidth="782.0" styleClass="card-container" vgap="15.0">
          <children>
-            <AnchorPane prefHeight="196.0" prefWidth="118.0">
-               <HBox.margin>
-                  <Insets right="24.0" />
-               </HBox.margin>
+            <HBox prefHeight="234.0" prefWidth="402.0" style="-fx-background-color: #ffffff;" styleClass="card">
                <children>
-                  <ImageView fx:id="salleImageView" fitHeight="193.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-            <VBox prefHeight="202.0" prefWidth="338.0" style="-fx-background-color: #aacedc;" styleClass="card" stylesheets="@application.css">
-               <children>
-                  <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="2.0" />
-                     </padding>
-                  </Label>
-                  <HBox>
+                  <AnchorPane prefHeight="196.0" prefWidth="118.0">
+                     <HBox.margin>
+                        <Insets right="24.0" />
+                     </HBox.margin>
                      <children>
-                        <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/adresse%20(1).png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="adresseLabel" text="Adresse ">
-                           <padding>
-                              <Insets bottom="2.0" />
-                           </padding>
+                        <ImageView fx:id="salleImageView" fitHeight="193.0" fitWidth="117.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+                  <VBox prefHeight="202.0" prefWidth="338.0" style="-fx-background-color: #aacedc;" styleClass="card">
+                     <children>
+                        <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
                         </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets bottom="2.0" />
-                     </VBox.margin>
-                     <children>
-                        <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/fichier.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="detailsLabel" prefHeight="85.0" prefWidth="207.0" text="Détails " />
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets bottom="2.0" />
-                     </VBox.margin>
-                     <children>
-                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/telephone.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a">
-                           <padding>
-                              <Insets bottom="2.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <children>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/gmail.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="emailLabel" text="Email ">
-                           <padding>
-                              <Insets bottom="2.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="26.0" prefWidth="39.0" style="-fx-background-color: #e7540b;" textFill="#fcfaf9">
-                           <padding>
-                              <Insets right="50.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets left="100.0" right="10.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <HBox>
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/bouton-modifier%20(1).png" />
+                                    <Image url="@images/adresse (1).png" />
                                  </image>
                               </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="supprimerBtn" mnemonicParsing="false" onAction="#supprimerSalle">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                              <Label fx:id="adresseLabel" text="Adresse " />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/supprimer.png" />
+                                    <Image url="@images/fichier.png" />
                                  </image>
                               </ImageView>
-                           </graphic>
-                        </Button>
+                              <Label fx:id="detailsLabel" prefHeight="85.0" prefWidth="207.0" text="Détails " />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/telephone.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/gmail.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="emailLabel" text="Email " />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="168.0">
+                           <children>
+                              <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
+                                 <graphic>
+                                    <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/editer.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="supprimerBtn" onAction="#supprimerSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/supprimer.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
          </children>
-      </HBox>
+      </FlowPane>
    </children>
    <stylesheets>
       <URL value="@application.css" />

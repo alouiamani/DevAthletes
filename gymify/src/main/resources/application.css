@@ -4,7 +4,7 @@
 
 .button {
     -fx-background-color: #007bff;
-    -fx-text-fill: white;
+    -fx-text-fill: #5f91ac;
     -fx-font-size: 14px;
     -fx-padding: 8px 15px;
     -fx-border-radius: 20px;

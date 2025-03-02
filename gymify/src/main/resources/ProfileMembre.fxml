@@ -5,103 +5,103 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="555.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
-   <children>
-      <AnchorPane fx:id="infouserid" layoutX="71.0" layoutY="363.0" prefHeight="152.0" prefWidth="658.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
+<ScrollPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
+   <content>
+      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
          <children>
-            <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
-            <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="49.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="185.0" layoutY="42.0" text="Username: ">
+            <MenuBar layoutX="-5.0" prefHeight="41.0" prefWidth="810.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
+               <menus>
+                  <Menu mnemonicParsing="false" text="                                                                                                                                   Activity">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Blog">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                     </items>
+                  </Menu>
+                  <Menu fx:id="ReclamationMenuBar" mnemonicParsing="false" onAction="#ouvrirReclamation" text="Reclamation">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Reclamation" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Events">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Product">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu fx:id="Sallemenubare" mnemonicParsing="false" onAction="#ouvrirSalle" text="salle">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="explore" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <ImageView fitHeight="309.0" fitWidth="810.0" layoutX="-4.0" layoutY="40.0" opacity="0.47" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@images/vecteezy_ai-generated-a-gym-with-dark-exercise-equipment_37170421.jpg" />
+               </image>
+            </ImageView>
+            <Text fill="#2c4f6b" fontSmoothingType="LCD" layoutX="157.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Gymify" textAlignment="CENTER" wrappingWidth="418.5367126464844">
                <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Label fx:id="usernameid" layoutX="294.0" layoutY="43.0" prefHeight="7.0" prefWidth="59.0" text="Username" />
-            <Label layoutX="192.0" layoutY="78.0" text="Email :">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-            <Button fx:id="EditId" layoutX="473.0" layoutY="42.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
-               <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Tw Cen MT Condensed Bold" size="78.0" />
                </font>
-            </Button>
-            <Button layoutX="473.0" layoutY="82.0" mnemonicParsing="false" onAction="#editPersonalInfo" prefHeight="30.0" prefWidth="138.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit Personal Info" textFill="#335581">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            </Text>
+            <ImageView fitHeight="82.0" fitWidth="143.0" layoutX="-32.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/logo.png" />
+               </image>
+            </ImageView>
+            <VBox layoutY="350.0" prefHeight="500.0" prefWidth="787.0">
+               <children>
+                  <AnchorPane fx:id="infouserid" prefHeight="134.0" prefWidth="758.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
+                     <children>
+                        <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
+                        <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="49.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label layoutX="185.0" layoutY="42.0" text="Username: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usernameid" layoutX="294.0" layoutY="43.0" prefHeight="7.0" prefWidth="59.0" text="Username" />
+                        <Label layoutX="192.0" layoutY="78.0" text="Email :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
+                        <Button fx:id="EditId" layoutX="419.0" layoutY="58.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="600.0" layoutY="104.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+                     </children>
+                  </AnchorPane>
+                  <!-- Ajout du ScrollPane pour la liste des salles sous les informations de l'utilisateur -->
+                  <ScrollPane layoutY="134.0" prefHeight="300.0" prefWidth="787.0">
+                     <content>
+                        <VBox fx:id="sallesContainer" prefHeight="330.0" prefWidth="770.0" spacing="10" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
-      <MenuBar layoutX="-1.0" prefHeight="41.0" prefWidth="810.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
-         <menus>
-            <Menu mnemonicParsing="false" text="                                                                                                                                   Activity">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Blog">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-            </Menu>
-            <Menu fx:id="ReclamationMenuBar" mnemonicParsing="false" onAction="#ouvrirReclamation" text="Reclamation">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Reclamation" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Events">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Product">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" onAction="#ShowPlanning" text="Planning">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Planning" />
-               </items>
-            </Menu>
-            <Menu fx:id="Sallemenubare" mnemonicParsing="false" onAction="#ouvrirSalle" text="salle">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="explore" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <ImageView fitHeight="309.0" fitWidth="810.0" layoutX="-4.0" layoutY="40.0" opacity="0.47" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@images/ggym.jpeg" />
-         </image>
-      </ImageView>
-      <Text fill="#2c4f6b" fontSmoothingType="LCD" layoutX="191.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To GIMIFY" textAlignment="CENTER" wrappingWidth="418.5367126464844">
-         <font>
-            <Font name="Tw Cen MT Condensed Bold" size="78.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="69.0" fitWidth="106.0" layoutX="-18.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/logo.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="720.0" layoutY="515.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
-   </children>
-   <ScrollPane prefHeight="300.0" prefWidth="710.0">
-      <content>
-         <VBox fx:id="sallesContainer" prefHeight="330.0" prefWidth="770.0" spacing="10" />
-      </content>
-   </ScrollPane>
-
-</AnchorPane>
+   </content>
+</ScrollPane>
