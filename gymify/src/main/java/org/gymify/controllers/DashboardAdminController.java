@@ -67,12 +67,17 @@ public class DashboardAdminController  {
         // Charger l'image de profil par défaut
 
 
+            try {
+                profileImage.setImage(new Image(getClass().getResource("/images/user.png").toExternalForm()));
+            } catch (Exception e) {
+                System.out.println("Erreur chargement image profil: " + e.getMessage());
+            }
+        
 
-        if (profileImage == null) {
-            System.out.println("Erreur : profileImage est null !");
-        } else {
-            profileImage.setImage(new Image("images/icons8-user-32.png"));
-        }
+
+
+
+
 
         // Récupérer l'utilisateur connecté
         User currentUser = AuthToken.getCurrentUser();
@@ -88,7 +93,7 @@ public class DashboardAdminController  {
         }
 
         // Initialiser les rôles disponibles
-        AddRoleFx.getItems().addAll("Admin", "Responsable", "Entraîneur", "Sportif");
+        AddRoleFx.getItems().addAll("Admin", "Responsable de salle", "Entraîneur", "Sportif");
 
         // Initialiser les spécialités (uniquement pour les entraîneurs)
         AddSpecialiteFx.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
@@ -112,7 +117,10 @@ public class DashboardAdminController  {
 //        // Mettre à jour le texte du label avec le nombre d'activités
 //        activityCountLabel.setText(String.valueOf(activityCount));
     }
-
+    @FXML
+    private void onListGymButtonClick(ActionEvent event) {
+        // method implementation
+    }
     @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
@@ -222,7 +230,7 @@ public class DashboardAdminController  {
         Label roleLabel = new Label(user.getRole());
 
         for (Label label : new Label[]{nameLabel, lastNameLabel, emailLabel, roleLabel}) {
-            label.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #333;");
+            label.setStyle("-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #333;");
         }
 
         // Bouton Modifier (Edit)
@@ -333,7 +341,6 @@ public class DashboardAdminController  {
         homePane.setVisible(false);
         listUsersPane.setVisible(false);
         addUserPane.setVisible(false);
-
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
     }
@@ -370,5 +377,6 @@ public class DashboardAdminController  {
             } else {
                 showAlert(Alert.AlertType.WARNING, "Erreur", "La spécialité existe déjà ou est vide !");
             }
-        });}
+        });
+    }
 }

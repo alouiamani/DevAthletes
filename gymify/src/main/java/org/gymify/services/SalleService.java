@@ -6,6 +6,7 @@ import org.gymify.utils.gymifyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public  class SalleService implements Iservices<Salle> {
     Connection connection;
@@ -17,24 +18,33 @@ public  class SalleService implements Iservices<Salle> {
 
     @Override
     public void ajouter(Salle salle) throws SQLException {
+        if (salle == null || salle.getNom() == null || salle.getAdresse() == null || salle.getIdResponsable() == 0) {
+            throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
+        }
 
-        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email,url_photo) VALUES ('"
-                + salle.getNom() + "', '"
-                + salle.getAdresse() + "', '"
-                + salle.getDetails() + "', '"
-                + salle.getNum_tel() + "', '"
-                + salle.getEmail() + "', '" + salle.getUrl_photo() + "')";
+        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email,url_photo,responsableId) VALUES (?, ?, ?, ?, ?, ?,?)";
 
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(req);
-        System.out.println("Salle ajoutée avec succès !");
+        try (PreparedStatement pstmt = connection.prepareStatement(req)) {
+            pstmt.setString(1, salle.getNom());
+            pstmt.setString(2, salle.getAdresse());
+            pstmt.setString(3, salle.getDetails());
+            pstmt.setString(4, salle.getNum_tel());
+            pstmt.setString(5, salle.getEmail());
+            pstmt.setString(6, salle.getUrl_photo());
+            pstmt.setInt(7, salle.getIdResponsable());  // L'ID du responsable de salle
 
-
+            pstmt.executeUpdate();
+            System.out.println("✅ Salle ajoutée avec succès !");
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de l'ajout de la salle : " + e.getMessage());
+            throw e;
+        }
     }
+
 
     @Override
     public void modifier(Salle salle) throws SQLException {
-        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=? WHERE id_Salle=?";
+        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=?,responsableId=? WHERE id_Salle=?";
 
         // Vérifier la connexion
         if (connection == null) {
@@ -50,6 +60,7 @@ public  class SalleService implements Iservices<Salle> {
         preparedStatement.setString(5, salle.getEmail());
         preparedStatement.setString(6, salle.getUrl_photo()); // Éviter les null
         preparedStatement.setInt(7, salle.getId_Salle());
+        preparedStatement.setInt(8, salle.getIdResponsable());
 
         // Vérifier l'ID
         System.out.println("🔍 ID de la salle à modifier : " + salle.getId_Salle());
@@ -94,7 +105,7 @@ public  class SalleService implements Iservices<Salle> {
             salle.setNum_tel(rs.getString("num_tel"));
             salle.setEmail(rs.getString("email"));
             salle.setUrl_photo(rs.getString("url_photo"));
-
+            salle.setIdResponsable(rs.getInt("responsableId"));
 
             salles.add(salle);
         }
@@ -133,6 +144,29 @@ public  class SalleService implements Iservices<Salle> {
             e.printStackTrace();
         }
         return salles;
+    }
+
+    // Recherche des salles selon le texte de recherche
+    public List<Salle> searchSalles(String searchText) {
+        // Récupérer toutes les salles
+        List<Salle> allSalles = getAllSalles(searchText);
+
+        // Filtrer les salles en fonction du texte de recherche (ignorant la casse)
+        return allSalles.stream()
+                .filter(salle -> salle.getNom().toLowerCase().contains(searchText) ||
+                        salle.getAdresse().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+    }
+    public boolean isResponsableDejaAffecte(int responsableId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Salle WHERE responsableId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, responsableId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0; // Si le nombre d'occurrences est supérieur à 0, le responsable est déjà affecté
+            }
+        }
+        return false;
     }
 
 

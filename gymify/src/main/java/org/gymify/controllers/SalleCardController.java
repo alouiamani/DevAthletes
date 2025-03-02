@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,7 @@ import org.gymify.services.SalleService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class SalleCardController {
     @FXML private Label nomLabel;
@@ -70,11 +73,19 @@ public class SalleCardController {
 
     @FXML
     private void supprimerSalle() {
-        try {
-            salleService.supprimer(salle.getId_Salle());
-            parentController.refreshList();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Supprimer cette salle");
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer cette salle ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                salleService.supprimer(salle.getId_Salle());
+                parentController.refreshList();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

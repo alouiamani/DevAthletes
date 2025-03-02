@@ -11,7 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.gymify.entities.Salle;
-
+import org.gymify.entities.User;
+import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
 
@@ -22,13 +23,15 @@ public class SalleCardUserController {
     @FXML private Label salleTel;
     @FXML private Label salleEmail;
     @FXML private ImageView salleImageView;
-    @FXML private Button savoirPlusButton; // Ajout du bouton "Savoir plus"
+    @FXML private Button savoirPlusButton;
 
     private Salle salle;
+    private ProfileMembreController profileMembreController; // Change to ProfileMembreController
 
-    // Méthode pour afficher les informations d'une salle
-    public void setSalleData(Salle salle, ListeDesSallesUser listeDesSalleController) {
+    public void setSalleData(Salle salle, ProfileMembreController profileMembreController) {
         this.salle = salle;
+        this.profileMembreController = profileMembreController; // Set the ProfileMembreController instance
+
         salleName.setText(salle.getNom());
         salleLocation.setText("Adresse: " + salle.getAdresse());
         salleDetails.setText("Détails: " + salle.getDetails());
@@ -38,14 +41,12 @@ public class SalleCardUserController {
         if (salle.getUrl_photo() != null && !salle.getUrl_photo().isEmpty()) {
             salleImageView.setImage(new Image(salle.getUrl_photo(), true));
         } else {
-            salleImageView.setImage(new Image("/images/default-image.png", true)); // Image par défaut
+            salleImageView.setImage(new Image("/images/default-image.png", true));
         }
 
-        // Associer l'événement au bouton
         savoirPlusButton.setOnAction(event -> afficherAbonnement());
     }
 
-    // Méthode pour ouvrir l'interface AbonnementsSalle.fxml
     @FXML
     private void afficherAbonnement() {
         try {
@@ -53,7 +54,7 @@ public class SalleCardUserController {
             Parent root = loader.load();
 
             AbonnementsSalleUserController controller = loader.getController();
-            controller.initData(salle.getId_Salle()); // Passer l'ID de la salle
+            controller.initData(salle.getId_Salle(), AuthToken.getCurrentUser()); // Pass the logged-in user
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -62,8 +63,5 @@ public class SalleCardUserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setSalleData(Salle salle, ListeDesSalleController listeDesSalleController) {
     }
 }

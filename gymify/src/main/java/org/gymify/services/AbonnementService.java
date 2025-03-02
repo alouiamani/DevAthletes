@@ -101,7 +101,10 @@ public class AbonnementService implements Iservices<Abonnement> {
     }
     public List<Abonnement> getAbonnementsParSalle(int id_Salle) throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();
-        String req = "SELECT * FROM abonnement WHERE id_Salle = ?";
+        String req = "SELECT a.*, s.id_Salle, s.nom, s.adresse, s.details, s.num_tel, s.email " +
+                "FROM abonnement a " +
+                "JOIN salle s ON a.id_Salle = s.id_Salle " +
+                "WHERE a.id_Salle = ?"; // Jointure avec la table salle
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setInt(1, id_Salle);
@@ -115,6 +118,17 @@ public class AbonnementService implements Iservices<Abonnement> {
                 abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
                 abonnement.setTarif(rs.getDouble("tarif"));
 
+                // Création et initialisation de l'objet Salle
+                Salle salle = new Salle();
+                salle.setId_Salle(rs.getInt("id_Salle"));
+                salle.setNom(rs.getString("nom"));
+                salle.setAdresse(rs.getString("adresse"));
+                salle.setDetails(rs.getString("details"));
+                salle.setNum_tel(rs.getString("num_tel"));
+                salle.setEmail(rs.getString("email"));
+
+                abonnement.setSalle(salle);  // Associer la salle à l'abonnement
+
                 abonnements.add(abonnement);
             }
         } catch (SQLException e) {
@@ -124,5 +138,4 @@ public class AbonnementService implements Iservices<Abonnement> {
 
         return abonnements;
     }
-
 }

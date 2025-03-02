@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
@@ -14,76 +15,124 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<SplitPane dividerPositions="0.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleFormAdminController">
-  <items>
-      <AnchorPane prefHeight="398.0" prefWidth="211.0">
-         <children>
-            <ImageView fitHeight="398.0" fitWidth="236.0" layoutY="2.0" pickOnBounds="true" smooth="false">
+<SplitPane dividerPositions="0.2795591182364729" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleFormAdminController">
+    <items>
+        <AnchorPane prefHeight="401.0" prefWidth="146.0">
+            <children>
+                <ImageView fitHeight="554.0" fitWidth="180.0" layoutY="2.0" pickOnBounds="true" smooth="false">
                <image>
-                  <Image url="@../java/tn/gimify/assets/Capture.PNG" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <GridPane layoutX="43.0" layoutY="75.0" prefHeight="247.0" prefWidth="270.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.20001220703125" minWidth="10.0" prefWidth="154.20001220703125" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.199951171875" minWidth="10.0" prefWidth="115.79998779296875" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="40.200018310546874" minHeight="10.0" prefHeight="36.200018310546874" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="55.4" minHeight="10.0" prefHeight="39.99998779296875" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="55.2" minHeight="8.799999999999997" prefHeight="50.40001220703125" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="72.80003662109375" minHeight="0.0" prefHeight="44.199975585937494" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="36.800018310546875" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="39.199981689453125" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label cache="true" text="Nom : " textAlignment="CENTER" textFill="#232121">
+                  <Image url="@images/3d-gym-equipment.jpg" />
+               </image></ImageView>
+                <Button layoutX="6.0" layoutY="7.0" onAction="#retournerEnArriere" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #e1d8d8;" textFill="#666871">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="453.0">
+            <children>
+                <GridPane layoutX="96.0" layoutY="103.0" prefHeight="318.0" prefWidth="284.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.00003662109376" minWidth="10.0" prefWidth="159.19998779296876" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.8000244140625" minWidth="10.0" prefWidth="125.60001220703126" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="40.200018310546874" minHeight="10.0" prefHeight="36.200018310546874" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.200018310546874" minHeight="10.0" prefHeight="22.000012207031247" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="55.4" minHeight="10.0" prefHeight="50.79998779296875" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="55.4" minHeight="10.0" prefHeight="10.599999999999994" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="62.599999999999994" minHeight="8.799999999999997" prefHeight="62.599999999999994" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="61.599993896484364" minHeight="8.799999999999997" prefHeight="12.199993896484386" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="72.80003662109375" minHeight="0.0" prefHeight="57.00000610351563" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="72.80003662109375" minHeight="0.0" prefHeight="16.599993896484364" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="32.600006103515625" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="16.80000000000001" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="45.20000000000002" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.80000000000001" minHeight="10.0" prefHeight="13.199999999999989" vgrow="SOMETIMES" />
+                  <RowConstraints />
+                    </rowConstraints>
+                    <children>
+                        <Label cache="true" text="Name :" textAlignment="CENTER" textFill="#232121">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label cache="true" text="Adress :" textFill="#232121" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label cache="true" text="Phone Number" textFill="#232121" GridPane.rowIndex="6">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label cache="true" text="e-mail : " textFill="#232121" GridPane.rowIndex="8">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label cache="true" text="Details :" textFill="#232121" GridPane.rowIndex="4">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="nomFX" GridPane.columnIndex="1" />
+                        <Label fx:id="errorNom" prefHeight="8.0" prefWidth="0.0" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <TextField fx:id="adresseFX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="errorAdresse" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <TextArea fx:id="detailsFX" prefHeight="56.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="errorDetails" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                        <TextField fx:id="numtelFX" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="errorNumTel" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+                        <TextField fx:id="emailFX" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label fx:id="errorEmail" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+                        <TextField fx:id="url_photoFX" prefHeight="42.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label fx:id="errorUrlPhoto" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+
+                        <ChoiceBox fx:id="responsableChoiceBox" prefHeight="26.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label cache="true" text="Select Your Gym Photo :" textFill="#232121" GridPane.rowIndex="10">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label cache="true" text="Adresse :" textFill="#232121" GridPane.rowIndex="1">
+                  <Label cache="true" text="Choose a Gym Manager :" textFill="#dc0a0a" GridPane.rowIndex="12">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label cache="true" prefHeight="20.0" prefWidth="155.0" text="Numero de télephone: " textFill="#232121" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label cache="true" prefHeight="20.0" prefWidth="114.0" text="e-mail : " textFill="#232121" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label cache="true" text="Details :" textFill="#232121" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="nomFX" GridPane.columnIndex="1" />
-                  <TextField fx:id="emailFX" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="adresseFX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="numtelFX" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextArea fx:id="detailsFX" prefHeight="56.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Photo_url" GridPane.rowIndex="5" />
-                  <TextField fx:id="url_photoFX" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-               </children>
-            </GridPane>
-            <Button layoutX="216.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnAnnuler" text="❌ Annuler" textFill="#f7ebeb" />
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="27.0" prefWidth="147.0" stylesheets="@application.css" text="✔ Enregistrer" textFill="#f7f2f2" textOverrun="CENTER_ELLIPSIS">
-               <padding>
-                  <Insets left="50.0" right="20.0" />
-               </padding>
-            </Button>
-         </children></AnchorPane>
-  </items>
+                  <Button fx:id="Image" mnemonicParsing="false" onAction="#choisirImage" prefHeight="28.0" prefWidth="48.0" style="-fx-background-color: #e1d8d8;" textFill="#e1d8d8" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/pngwing.com.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                    </children>
+                </GridPane>
+                <Button layoutX="297.0" layoutY="474.0" mnemonicParsing="false" onAction="#btnAnnuler" text="Cancel" textFill="#f4efef" />
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="474.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #f77017;" stylesheets="@application.css" text="Done" textFill="#f77017" textOverrun="CENTER_ELLIPSIS">
+                    <padding>
+                        <Insets left="50.0" right="20.0" />
+                    </padding>
+                </Button>
+            <WebView fx:id="mapView" layoutX="406.0" layoutY="236.0" prefHeight="171.0" prefWidth="194.0" />
+            </children>
+        </AnchorPane>
+    </items>
     <stylesheets>
         <URL value="@application.css" />
     </stylesheets>

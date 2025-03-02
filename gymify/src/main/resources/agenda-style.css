@@ -1,0 +1,81 @@
+/* Style général de l'Agenda */
+.agenda {
+    -fx-background-color: #f6b2b2; /* Couleur de fond */
+    -fx-border-color: #ea5050; /* Bordure */
+    -fx-border-width: 1px;
+}
+
+/* Style des en-têtes de jour */
+.agenda .header {
+    -fx-background-color: #4CAF50; /* Couleur de fond des en-têtes */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 16px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-font-family: "Arial"; /* Police */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1); /* Ombre portée */
+}
+
+/* Style des cellules de l'Agenda */
+.agenda .cell {
+    -fx-background-color: white; /* Couleur de fond des cellules */
+    -fx-border-color: #ddd; /* Bordure des cellules */
+    -fx-border-width: 1px;
+    -fx-pref-width: 120px; /* Largeur des cellules */
+    -fx-pref-height: 80px; /* Hauteur des cellules */
+}
+
+/* Style des rendez-vous (Appointments) */
+.agenda .appointment {
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-background-radius: 5px; /* Coins arrondis */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1); /* Ombre portée */
+}
+
+/* Style des groupes de rendez-vous (Appointment Groups) */
+.yoga-group {
+    -fx-background-color: #8BC34A; /* Vert clair */
+    -fx-border-color: #689F38; /* Bordure verte foncée */
+}
+
+.salsa-group {
+    -fx-background-color: #FF5722; /* Orange */
+    -fx-border-color: #E64A19; /* Bordure orange foncé */
+}
+
+.default-group {
+    -fx-background-color: #2196F3; /* Bleu */
+    -fx-border-color: #1976D2; /* Bordure bleue */
+}
+
+/* Style des boutons de navigation */
+.agenda .button {
+    -fx-background-color: #4CAF50; /* Couleur de fond des boutons */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 12px; /* Taille de la police */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-background-radius: 5px; /* Coins arrondis */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1); /* Ombre portée */
+}
+
+/* Style des boutons de navigation au survol */
+.agenda .button:hover {
+    -fx-background-color: #45a049; /* Couleur de fond au survol */
+    -fx-cursor: hand; /* Curseur en forme de main */
+}
+
+/* Style des heures affichées sur le côté gauche */
+.agenda .time-header {
+    -fx-background-color: #f4f4f4; /* Couleur de fond */
+    -fx-text-fill: #333; /* Couleur du texte */
+    -fx-font-size: 12px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 5px; /* Espacement intérieur */
+}
+
+/* Style des séparateurs entre les jours */
+.agenda .day-separator {
+    -fx-border-color: #ddd; /* Couleur de la bordure */
+    -fx-border-width: 1px;
+}

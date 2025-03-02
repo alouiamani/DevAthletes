@@ -13,6 +13,18 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <repositories>
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+
+</repositories>
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -45,6 +57,7 @@
             <version>0.4</version>
         </dependency>
         <dependency>
+
             <groupId>org.eclipse.angus</groupId>
             <artifactId>angus-mail</artifactId>
             <version>2.0.2</version>
@@ -59,6 +72,13 @@
             <artifactId>jakarta.mail-api</artifactId>
             <version>2.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-agenda</artifactId>
+            <version>14-r1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
