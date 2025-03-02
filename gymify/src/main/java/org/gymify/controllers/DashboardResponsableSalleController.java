@@ -150,7 +150,7 @@ public class DashboardResponsableSalleController {
         VBoxId.getChildren().clear();
 
         try {
-            List<User> users = serviceUser.afficherPourResponsableAvecStream();
+            List<User> users = serviceUser.afficherPourResponsable();
 
             if (users.isEmpty()) {
                 System.out.println("⚠️ Aucun utilisateur trouvé !");
@@ -258,7 +258,7 @@ public class DashboardResponsableSalleController {
     }
 
     private void setUserProfileImage(String imageURL) {
-        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/Image/icons8-user-32.png"));
+        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/images/icons8-user-32.png"));
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
