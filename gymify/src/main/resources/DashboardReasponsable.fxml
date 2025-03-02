@@ -87,6 +87,18 @@
                                     <Font name="Arial" size="6.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="listabonnement1" layoutX="10.0" layoutY="227.0" mnemonicParsing="false" onAction="#onListAbonnementButtonClick" prefHeight="30.0" prefWidth="118.0" styleClass="nav-btn" stylesheets="@style.css" text="My Gym" textAlignment="JUSTIFY">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Arial" size="6.0" />
+                                 </font>
+                              </Button>
                               <Button fx:id="ReclamationId" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Reclamation">
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
@@ -163,7 +175,7 @@
                         </ScrollPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="homePane" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css" visible="false">
+                  <AnchorPane fx:id="homePane" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css">
                      <children>
                         <AnchorPane layoutX="27.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
@@ -329,7 +341,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="EditUserPane" layoutX="12.0" layoutY="11.0" prefHeight="502.0" prefWidth="602.0" style="-fx-background-color: #aacedc;" styleClass="white-round-carts" stylesheets="@style.css">
+                  <AnchorPane fx:id="EditUserPane" layoutX="12.0" layoutY="11.0" prefHeight="502.0" prefWidth="602.0" style="-fx-background-color: #aacedc;" styleClass="white-round-carts" stylesheets="@style.css" visible="false">
                      <children>
                         <Label layoutX="217.0" layoutY="14.0" prefHeight="22.0" prefWidth="247.0" text="Edit Your Account !" textFill="#296e79">
                            <font>

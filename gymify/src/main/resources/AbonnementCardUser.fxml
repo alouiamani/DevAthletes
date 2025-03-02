@@ -13,5 +13,5 @@
         <Label fx:id="dateDebutLabel" text="Début: " />
         <Label fx:id="dateFinLabel" text="Fin: " textFill="#e44242" />
         <Label fx:id="tarifLabel" text="Tarif: " />
-        <Button fx:id="inscrireButton" onAction="#ouvrirPaiementFictif" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="S'inscrire" />
+        <Button fx:id="payerButton" onAction="#handlePayerButtonClick" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="paye" />
     </VBox>

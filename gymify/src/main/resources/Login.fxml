@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.LoginControllers">
+<AnchorPane prefHeight="555.0" prefWidth="800.0" styleClass="left-side-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.LoginControllers">
    <children>
-      <AnchorPane cache="true" layoutX="-9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="424.0" styleClass="left-side-background" stylesheets="/style.css">
+      <AnchorPane cache="true" layoutX="-9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="424.0" styleClass="left-side-background" stylesheets="/style.css">
          <children>
             <TextField fx:id="emailTextField" layoutX="96.0" layoutY="147.0" prefHeight="26.0" prefWidth="239.0" promptText="email" />
             <Button fx:id="LoginButton" layoutX="161.0" layoutY="306.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="26.0" prefWidth="110.0" styleClass="LoginBtn" stylesheets="/style.css" text="Login" textFill="#344756">
@@ -41,19 +41,19 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane layoutX="431.0" prefHeight="424.0" prefWidth="220.0" styleClass="ForgetBtn" stylesheets="/style.css">
+      <AnchorPane layoutX="405.0" prefHeight="555.0" prefWidth="394.0" styleClass="ForgetBtn" stylesheets="/style.css">
          <children>
-            <ImageView fitHeight="220.0" fitWidth="300.0" layoutX="-15.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="220.0" fitWidth="300.0" layoutX="47.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
-            <Text fill="#246b91" fontSmoothingType="LCD" layoutX="20.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+            <Text fill="#246b91" fontSmoothingType="LCD" layoutX="82.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To" textAlignment="CENTER" wrappingWidth="230.1195068359375">
                <font>
                   <Font name="Ebrima Bold" size="24.0" />
                </font>
             </Text>
-            <Text fill="#3aa4a2" fontSmoothingType="LCD" layoutX="14.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" GYMIFY" textAlignment="CENTER" wrappingWidth="230.1195068359375">
+            <Text fill="#3aa4a2" fontSmoothingType="LCD" layoutX="82.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" GYMIFY" textAlignment="CENTER" wrappingWidth="230.1195068359375">
                <font>
                   <Font name="Impact" size="25.0" />
                </font>
