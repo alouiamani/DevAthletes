@@ -34,7 +34,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="ForgetPsswdButtonOnAction" layoutX="199.0" layoutY="248.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Forget The Password ?" textFill="#c9c5c5" />
+            <Button layoutX="199.0" layoutY="248.0" mnemonicParsing="false" onAction="#ForgetPsswdButtonOnAction" style="-fx-background-color: transparent;" text="Forget The Password ?" textFill="#c9c5c5" />
             <Label fx:id="LoginMessageTextField" layoutX="140.0" layoutY="274.0" textFill="#f41c1c">
                <font>
                   <Font size="15.0" />

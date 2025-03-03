@@ -85,7 +85,7 @@ public class LoginControllers {
      */
     @FXML
     void ForgetPsswdButtonOnAction(ActionEvent event) {
-        ouvrirInterface("ResetPassword.fxml", "🔑 Réinitialisation du mot de passe", event);
+        ouvrirInterface("ForgetPassword.fxml", "🔑 Réinitialisation du mot de passe", event);
     }
 
     /**

@@ -108,8 +108,6 @@ public class ForgetPasswordController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml")); // Remplace avec le bon chemin
             Parent root = loader.load();
-
-            // Obtenir la scène actuelle et changer son contenu
             Stage stage = (Stage) emailField.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
