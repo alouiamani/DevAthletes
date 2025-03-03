@@ -137,7 +137,7 @@ public class ProfileMembreController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Planning");
+            stage.setTitle("Profile");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
