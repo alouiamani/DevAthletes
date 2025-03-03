@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<HBox spacing="15" style="-fx-background-color: #ffffff; -fx-padding: 15px; -fx-border-color: #cccccc;       -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.CardEquipeController">
+
+    <!-- Rectangle coloré pour l'identité visuelle -->
+    <Rectangle arcHeight="10" arcWidth="10" height="80" style="-fx-fill: #2e86de;" width="8">
+        <effect>
+            <DropShadow color="#aaaaaa" offsetX="0.0" offsetY="2.0" radius="5.0" />
+        </effect>
+    </Rectangle>
+
+    <!-- Informations de l'équipe -->
+    <VBox fx:id="vboxEquipe" alignment="TOP_LEFT" spacing="10" xmlns="http://javafx.com/javafx/8.0.171">
+        <Label fx:id="nomEquipe" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Nom Equipe" />
+        <Label fx:id="niveauEquipe" style="-fx-text-fill: #555555; -fx-font-size: 14px;" text="Niveau : " />
+        <Label fx:id="nombreMembreEquipe" style="-fx-text-fill: #555555; -fx-font-size: 14px;" text="Membres : " />
+    </VBox>
+
+    <!-- Espacement flexible -->
+    <Region HBox.hgrow="ALWAYS" />
+
+    <!-- Boutons d'actions -->
+    <HBox spacing="10" style="-fx-alignment: center-right;">
+        <Button fx:id="btnModifier" onAction="#handleModifier" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Modifier" />
+
+        <Button fx:id="btnSupprimer" onAction="#handleSupprimer" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Supprimer" />
+
+        <Button fx:id="btnDetails" onAction="#handleDetails" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Détails" />
+    </HBox>
+
+</HBox>
