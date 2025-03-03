@@ -145,7 +145,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;">
+                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;" visible="false">
                      <children>
                         <TextField fx:id="searchRoleField" layoutX="22.0" layoutY="14.0" onAction="#onSearchByRole" prefHeight="26.0" prefWidth="298.0" promptText="Search " />
                         <Button fx:id="addUserButton" layoutX="461.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="22.0" prefWidth="131.0" style="-fx-background-color: #e6e2e2;" text="Add User" textFill="#5f91ac">
@@ -175,7 +175,7 @@
                         </ScrollPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="homePane" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css" visible="false">
+                  <AnchorPane fx:id="homePane" layoutX="-11.0" layoutY="-2.0" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css">
                      <children>
                         <AnchorPane layoutX="27.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
@@ -265,11 +265,6 @@
                         </AnchorPane>
                         <AnchorPane layoutX="432.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
-                              <Label layoutX="38.0" layoutY="58.0" text="Events" textFill="#e7e2e2">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/calendar.png" />
@@ -280,6 +275,11 @@
                                     <Font name="System Bold" size="17.0" />
                                  </font>
                               </Label>
+                              <Button layoutX="33.0" layoutY="59.0" mnemonicParsing="false" onAction="#OuvrirListeEvent" style="-fx-background-color: transparent;" text="Events" textFill="#f4f1f1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="231.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
