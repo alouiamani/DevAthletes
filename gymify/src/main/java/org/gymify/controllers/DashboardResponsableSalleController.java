@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
@@ -278,5 +280,21 @@ public class DashboardResponsableSalleController {
         addUserPane.setVisible(false);
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
+    }
+
+
+    @FXML
+    private void OuvrirListeEvent(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesEvennements.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Gérer mes Events");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="788.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.CardEvennementController">
+    <!-- Conteneur principal avec effet d'ombre et bordure arrondie -->
+    <HBox spacing="15" style="-fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-radius: 10px; -fx-padding: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.5, 0, 0);">
+        <!-- Image à gauche -->
+        <VBox alignment="CENTER" prefWidth="200.0" spacing="10">
+            <ImageView fx:id="eventImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 10px; -fx-background-color: #f0f0f0;" />
+        </VBox>
+
+        <!-- Informations centrales -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <HBox spacing="20">
+                <!-- Colonne 1 : Informations principales -->
+                <VBox prefWidth="250.0" spacing="8">
+                    <Label fx:id="eventName" style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Nom de l'événement" textFill="#2c3e50" />
+                    <Label fx:id="eventLocation" text="Lieu" textFill="#555555" />
+                    <Label fx:id="eventDate" text="Date" textFill="#777777" />
+                    <Label fx:id="eventTimeDebut" text="Heure de début" textFill="#888888" />
+                    <Label fx:id="eventTimeFin" text="Heure de fin" textFill="#999999" />
+                </VBox>
+                <!-- Colonne 2 : Détails supplémentaires -->
+                <VBox prefWidth="300.0" spacing="8">
+                    <Label fx:id="eventType" text="Type d'événement" textFill="#444444" />
+                    <Label fx:id="eventReward" text="Récompense" textFill="#666666" />
+                    <Label fx:id="eventDescription" text="Description de l'événement ici..." textFill="#666666" wrapText="true" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <!-- Boutons en bas à droite -->
+    <HBox alignment="CENTER_RIGHT" spacing="10" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <Button fx:id="btnDetails" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5px;" text="Détails" />
+        <Button fx:id="btnEdit" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5px;" text="Modifier" />
+        <Button fx:id="btnDelete" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5px;" text="🗑 Supprimer" />
+    </HBox>
+</AnchorPane>
