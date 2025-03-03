@@ -29,6 +29,18 @@ public class gymifyDataBase {
         return instance;
     }
     public Connection getConnection() {
-        return con;
+
+        try {
+            if (con == null || con.isClosed()) {
+                System.out.println("⚠️ Connexion MySQL fermée. Tentative de reconnexion...");
+                con = DriverManager.getConnection(URL, USER, PASSWORD);
+                System.out.println("✅ Reconnexion réussie !");
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la reconnexion : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    return con;
     }
 }
