@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommandation de Cours Sportifs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <style>
+        /* Global styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-top: 20px;
+        }
+
+        #prediction {
+            font-size: 16px;
+            color: #444;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        /* Recommandations styling */
+        .recommendations {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .recommendation-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .recommendation-card:hover {
+            transform: scale(1.03);
+        }
+
+        .recommendation-card h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-card p {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .recommendation-card strong {
+            color: #1e40af;
+        }
+
+        .loading {
+            color: #1e3a8a;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h2>Recommandation de Cours Sportifs</h2>
+<p id="prediction" class="loading">Chargement...</p>
+
+<script>
+    // Vérifier si TensorFlow.js est bien chargé
+    console.log("TensorFlow.js chargé :", !!tf);
+
+    // Fonction pour récupérer les données de l'utilisateur
+    async function fetchUserData(userId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+            if (!response.ok) throw new Error('Erreur lors de la récupération des données utilisateur');
+            const userData = await response.json();
+
+            // Convertir les champs en nombres et fournir des valeurs par défaut si nécessaire
+            userData.poids = parseFloat(userData.poids) || 70; // Poids par défaut : 70
+            userData.taille = parseFloat(userData.taille) || 1.75; // Taille par défaut : 1.75
+            userData.age = parseInt(userData.age, 10) || 30; // Âge par défaut : 30
+            userData.objectif = parseInt(userData.objectif, 10) || 1; // Objectif par défaut : 1
+
+            console.log("Données utilisateur traitées :", userData);
+            return userData;
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données utilisateur :", error);
+            return null;
+        }
+    }
+
+    // Fonction pour récupérer la liste des cours
+    async function fetchCourses() {
+        try {
+            const response = await fetch('http://localhost:3000/api/courses');
+            if (!response.ok) throw new Error('Erreur lors de la récupération des cours');
+            const courses = await response.json();
+
+            // Vérification de la structure des données des cours
+            const validCourses = courses.filter(course =>
+                course.title && course.description && course.heurDebut && course.heurFin && course.objectif
+            );
+
+            if (validCourses.length === 0) {
+                console.error("Aucun cours valide trouvé.");
+                document.getElementById("prediction").innerText = "Aucun cours valide disponible.";
+                return [];
+            }
+
+            console.log("Cours valides reçus :", validCourses);
+            return validCourses;
+        } catch (error) {
+            console.error("Erreur lors de la récupération des cours :", error);
+            return [];
+        }
+    }
+
+    // Fonction pour entraîner le modèle
+    async function trainModel(userData, courses) {
+        if (!userData || courses.length === 0) {
+            console.error("Données manquantes pour l'entraînement du modèle.");
+            return null;
+        }
+
+        const inputShape = 5; // Nombre de caractéristiques d'entrée
+        const outputShape = courses.length; // Nombre de classes à prédire
+
+        const model = tf.sequential({
+            layers: [
+                tf.layers.dense({ inputShape: [inputShape], units: 10, activation: 'relu' }),
+                tf.layers.dense({ units: outputShape, activation: 'softmax' }) // Nombre de classes = nombre de cours
+            ]
+        });
+
+        model.compile({
+            optimizer: 'adam',
+            loss: 'categoricalCrossentropy',
+            metrics: ['accuracy']
+        });
+
+        // Données d'entraînement simulées (assurez-vous que ces données sont bien formatées)
+        const trainingInputs = tf.tensor2d([
+            [75, 1.80, 25, 1, 2],   // Exemple 1
+            [85, 1.75, 30, 1, 1],   // Exemple 2
+            [60, 1.65, 20, 0, 2],   // Exemple 3
+            [70, 1.70, 22, 1, 3],   // Exemple 4
+            [80, 1.78, 27, 0, 1]    // Exemple 5
+        ]);
+
+        // Données de sortie (one-hot encoding)
+        const trainingOutputs = tf.tensor2d([
+            [1, 0], // Classe 0
+            [0, 1], // Classe 1
+            [1, 0], // Classe 0
+            [0, 1], // Classe 1
+            [1, 0]  // Classe 0
+        ]);
+
+        console.log("Forme des tenseurs d'entraînement :", trainingInputs.shape, trainingOutputs.shape);
+
+        await model.fit(trainingInputs, trainingOutputs, { epochs: 100 });
+
+        return model;
+    }
+
+    // Fonction pour obtenir les indices des top N valeurs dans un tableau
+    function getTopNIndices(array, n) {
+        const values = Array.from(array); // Convertir Float32Array en tableau standard
+        const sortedIndices = values
+            .map((value, index) => ({ value, index })) // Associer chaque valeur à son indice
+            .sort((a, b) => b.value - a.value) // Trier par ordre décroissant
+            .slice(0, n) // Prendre les N premiers
+            .map(item => item.index); // Extraire les indices
+
+        return sortedIndices;
+    }
+
+    // Fonction de prédiction (mise à jour pour afficher plusieurs recommandations)
+    async function predict(userId, numberOfRecommendations = 3) {
+        try {
+            console.log("Début de la prédiction...");
+
+            // 1️⃣ Récupérer les données
+            const userData = await fetchUserData(userId);
+            const courses = await fetchCourses();
+
+            if (!userData || courses.length === 0) {
+                document.getElementById("prediction").innerText = "Erreur : données manquantes.";
+                return;
+            }
+
+            console.log("Données utilisateur traitées :", userData);
+            console.log("Cours disponibles :", courses);
+
+            // 2️⃣ Vérifier que les données utilisateur sont correctes
+            if (
+                isNaN(userData.poids) ||
+                isNaN(userData.taille) ||
+                isNaN(userData.age) ||
+                isNaN(userData.objectif)
+            ) {
+                console.error("Les données utilisateur contiennent des valeurs invalides :", userData);
+                document.getElementById("prediction").innerText = "Erreur dans les données utilisateur.";
+                return;
+            }
+
+            // 3️⃣ Entraîner le modèle
+            const model = await trainModel(userData, courses);
+            if (!model) {
+                document.getElementById("prediction").innerText = "Erreur lors de l'entraînement du modèle.";
+                return;
+            }
+
+            // 4️⃣ Effectuer la prédiction
+            const input = tf.tensor2d([[
+                userData.poids,
+                userData.taille,
+                userData.age,
+                userData.sexe === 'Homme' ? 1 : 0,
+                userData.objectif
+            ]]);
+
+            console.log("Données d'entrée pour la prédiction :", input.arraySync());
+
+            const output = model.predict(input);
+            const prediction = await output.data();
+
+            console.log("Résultat brut de la prédiction :", prediction);
+
+            // 5️⃣ Vérifier que la prédiction est valide
+            if (!prediction || prediction.some(isNaN)) {
+                console.error("La prédiction contient des valeurs invalides :", prediction);
+                document.getElementById("prediction").innerText = "Erreur dans la prédiction.";
+                return;
+            }
+
+            // 6️⃣ Trouver les top N cours recommandés
+            const topNIndices = getTopNIndices(prediction, Math.min(numberOfRecommendations, courses.length));
+            console.log("Indices des cours recommandés :", topNIndices);
+
+            // 7️⃣ Afficher les recommandations
+            let recommendationsHTML = "<div class='recommendations'><h3>Recommandations :</h3>";
+            topNIndices.forEach((index, i) => {
+                const recommendedCourse = courses[index];
+                recommendationsHTML += `
+                    <div class="recommendation-card">
+                        <h3>Cours ${i + 1}: ${recommendedCourse.title}</h3>
+                        <p><strong>Description :</strong> ${recommendedCourse.description}</p>
+                        <p><strong>Heure de début :</strong> ${recommendedCourse.heurDebut}</p>
+                        <p><strong>Heure de fin :</strong> ${recommendedCourse.heurFin}</p>
+                        <p><strong>Objectif :</strong> ${recommendedCourse.objectif || "Non spécifié"}</p>
+                    </div>
+                `;
+            });
+            recommendationsHTML += "</div>";
+            document.getElementById("prediction").innerHTML = recommendationsHTML;
+        } catch (error) {
+            console.error("Erreur lors de la prédiction :", error);
+            document.getElementById("prediction").innerText = "Une erreur est survenue. Veuillez réessayer.";
+        }
+    }
+
+    // ID de l'utilisateur (remplacer par une valeur réelle)
+    const userId = 62; // Exemple : ID de l'utilisateur connecté
+    predict(userId, 3); // Afficher 3 recommandations
+</script>
+</body>
+</html>
