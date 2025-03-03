@@ -7,12 +7,16 @@
     <list default="true" id="92f5d1c6-c97d-4e02-ab98-b93caeaa10f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/java/org/gymify/utils/gymifyDataBase.java" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ListeDesSalleAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/Login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/ProfileMembre.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleCard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/SalleFormAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymify/src/main/resources/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/gymify/src/main/resources/application.css" afterDir="false" />
+>>>>>>> 79d59aa20576a6a256a7c60e564086985bcb1d2e
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,9 +44,23 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/alouiamani/DevAthletes.git&quot;,
+<<<<<<< HEAD
+    &quot;accountId&quot;: &quot;93bf50ad-1146-45ec-b0fc-62c031d94e68&quot;
+  }
+}</component>
+  <component name="MavenRunner">
+    <option name="environmentProperties">
+      <map>
+        <entry key="GMAIL_PASSWORD" value="sdlf aywm gdpz fevd" />
+        <entry key="GMAIL_USERNAME" value="ghabijihen9@gmail.com" />
+      </map>
+    </option>
+  </component>
+=======
     &quot;accountId&quot;: &quot;28975c7a-5a69-4be7-956c-70e52fd73678&quot;
   }
 }</component>
+>>>>>>> 79d59aa20576a6a256a7c60e564086985bcb1d2e
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -79,8 +97,79 @@
       <recent name="D:\DevAthletes\gymify\DevAthletes\gymify\src\main\resources\images" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.gymify.entities" />
+      <recent name="org.gymify.services" />
       <recent name="org.gymify.controllers" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="gymify [org.openjfx:javafx-maven-plugin:0.0.8:run]" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings">
+          <MavenGeneralSettings>
+            <option name="alwaysUpdateSnapshots" value="false" />
+            <option name="checksumPolicy" value="NOT_SET" />
+            <option name="customMavenHome" />
+            <option name="emulateTerminal" value="false" />
+            <option name="failureBehavior" value="NOT_SET" />
+            <option name="localRepository" value="" />
+            <option name="mavenHome" value="Bundled (Maven 3)" />
+            <option name="mavenHomeTypeForPersistence" value="BUNDLED3" />
+            <option name="nonRecursive" value="false" />
+            <option name="outputLevel" value="INFO" />
+            <option name="printErrorStackTraces" value="false" />
+            <option name="showDialogWithAdvancedSettings" value="false" />
+            <option name="threads" />
+            <option name="useMavenConfig" value="true" />
+            <option name="userSettingsFile" value="" />
+            <option name="workOffline" value="false" />
+          </MavenGeneralSettings>
+        </option>
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map>
+                <entry key="GMAIL_PASSWORD" value="sdlf aywm gdpz fevd" />
+                <entry key="GMAIL_USERNAME" value="ghabijihen9@gmail.com" />
+              </map>
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map />
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="runMavenInBackground" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value="" />
+          </MavenRunnerSettings>
+        </option>
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="org.openjfx:javafx-maven-plugin:0.0.8:run" />
+              </list>
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/gymify" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -107,6 +196,12 @@
       <workItem from="1740558525690" duration="906000" />
       <workItem from="1740560309890" duration="29440000" />
       <workItem from="1740699499918" duration="1192000" />
+<<<<<<< HEAD
+      <workItem from="1740729646138" duration="508000" />
+      <workItem from="1740738683379" duration="1562000" />
+      <workItem from="1740863553350" duration="13372000" />
+      <workItem from="1740905549769" duration="6425000" />
+=======
       <workItem from="1740729352896" duration="8004000" />
       <workItem from="1740748177083" duration="9724000" />
       <workItem from="1740763246262" duration="6017000" />
@@ -119,6 +214,7 @@
       <workItem from="1740877940186" duration="5069000" />
       <workItem from="1740906737997" duration="6457000" />
       <workItem from="1740913488427" duration="297000" />
+>>>>>>> 79d59aa20576a6a256a7c60e564086985bcb1d2e
     </task>
     <servers />
   </component>

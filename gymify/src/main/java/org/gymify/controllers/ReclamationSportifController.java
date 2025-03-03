@@ -3,8 +3,11 @@ package org.gymify.controllers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
+import org.gymify.entities.Reponse;
 import org.gymify.services.ServiceReclamation ;
 import org.gymify.entities.Reclamation;
+import org.gymify.services.ServiceReponse;
 import org.gymify.utils.AuthToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,156 +25,167 @@ import java.util.logging.Logger;
 public class ReclamationSportifController {
 
     @FXML
-    private TextField txtSujet, searchField;
+    private TextField searchField, txtSujet;
+
     @FXML
-    private TextArea txtDescription;
+    private TextArea txtDescription, txtReponseAdmin;
+
     @FXML
     private ListView<String> listReclamations;
 
-    private final ServiceReclamation serviceReclamation = new ServiceReclamation();
+    @FXML
+    private ComboBox<String> filtreStatut;
+
+    @FXML
+    private Button btnEnvoyer, btnSupprimer, btnCancel, btnRechercher;
+
     private final ObservableList<String> reclamationList = FXCollections.observableArrayList();
+    private final ServiceReclamation serviceReclamation = new ServiceReclamation();
+    private final ServiceReponse serviceReponse = new ServiceReponse();
+
     private static final Logger LOGGER = Logger.getLogger(ReclamationSportifController.class.getName());
+
+    private List<Reclamation> reclamations;
+    private Reclamation selectedReclamation = null;
+
 
     @FXML
     public void initialize() {
+        setupFiltreStatut();
         chargerReclamations();
+
+        listReclamations.setOnMouseClicked(event -> {
+            try {
+                afficherReponse(event);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    @FXML
-    private void envoyerReclamation(ActionEvent event) {
-        if (AuthToken.getCurrentUser() == null) {
-            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "⚠️ Aucun utilisateur connecté. Veuillez vous reconnecter !");
-            return;
-        }
+    /** Initialisation du filtre de statut */
+    private void setupFiltreStatut() {
+        filtreStatut.getItems().addAll("Tous", "⏳ En attente", "✅ Traité");
+        filtreStatut.setValue("Tous");
+        filtreStatut.setOnAction(event -> filtrerParStatut());
+    }
 
+    /** Charge et affiche les réclamations du sportif connecté */
+    private void chargerReclamations() {
+        try {
+            reclamations = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId_User());
+            afficherReclamations(reclamations);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erreur de chargement des réclamations", e);
+        }
+    }
+
+    /** Filtrage par statut */
+    private void filtrerParStatut() {
+        String statutSelectionne = filtreStatut.getValue();
+        try {
+            List<Reclamation> filteredList = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId_User());
+
+            if (!"Tous".equals(statutSelectionne)) {
+                filteredList.removeIf(r -> {
+                    Reponse rep = serviceReponse.recupererParReclamation(r.getId_reclamation());
+                    return ("✅ Traité".equals(statutSelectionne) && rep == null) ||
+                            ("⏳ En attente".equals(statutSelectionne) && rep != null);
+                });
+            }
+
+            afficherReclamations(filteredList);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erreur lors du filtrage", e);
+        }
+    }
+
+    /** Affichage des réclamations */
+    private void afficherReclamations(List<Reclamation> list) throws SQLException {
+        reclamationList.clear();
+        for (Reclamation r : list) {
+            Reponse rep = serviceReponse.recupererParReclamation(r.getId_reclamation());
+            String statut = (rep != null) ? "✅ Traité" : "⏳ En attente";
+            reclamationList.add("📝 " + r.getSujet() + " | 📌 " + statut);
+        }
+        listReclamations.setItems(reclamationList);
+    }
+
+    /** Affichage de la réponse admin */
+    private void afficherReponse(MouseEvent event) throws SQLException {
+        int selectedIndex = listReclamations.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            selectedReclamation = reclamations.get(selectedIndex);
+            Reponse reponse = serviceReponse.recupererParReclamation(selectedReclamation.getId_reclamation());
+            if (reponse != null) {
+                txtReponseAdmin.setText("🗨 Réponse : " + reponse.getMessage());
+            } else {
+                txtReponseAdmin.setText("⏳ En attente de réponse de l'admin...");
+            }
+        }
+    }
+
+    /** Recherche une réclamation */
+
+
+    /** Envoi d'une nouvelle réclamation */
+    @FXML
+    private void envoyerReclamation() {
         String sujet = txtSujet.getText().trim();
         String description = txtDescription.getText().trim();
-        int idUser = AuthToken.getCurrentUser().getId_User();
 
         if (sujet.isEmpty() || description.isEmpty()) {
-            afficherAlerte(Alert.AlertType.WARNING, "Champs vides", "Veuillez remplir tous les champs !");
+            showAlert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs !");
             return;
         }
 
-        Reclamation reclamation = new Reclamation(idUser, sujet, description);
+        Reclamation nouvelleReclamation = new Reclamation(AuthToken.getCurrentUser().getId_User(), sujet, description);
+
         try {
-            serviceReclamation.ajouter(reclamation);
-            afficherAlerte(Alert.AlertType.INFORMATION, "Succès", "Réclamation envoyée avec succès !");
+            serviceReclamation.ajouter(nouvelleReclamation);
+            showAlert(Alert.AlertType.INFORMATION, "Réclamation envoyée avec succès !");
             txtSujet.clear();
             txtDescription.clear();
             chargerReclamations();
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Erreur lors de l'ajout de la réclamation", e);
-            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Problème lors de l'ajout !");
+            LOGGER.log(Level.SEVERE, "Erreur lors de l'envoi", e);
+            showAlert(Alert.AlertType.ERROR, "Erreur lors de l'envoi !");
         }
     }
 
+    /** Suppression d'une réclamation */
     @FXML
     private void supprimerReclamation() {
-        String selectedItem = listReclamations.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null) {
-            afficherAlerte(Alert.AlertType.WARNING, "Suppression impossible", "Veuillez sélectionner une réclamation !");
+        int selectedIndex = listReclamations.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) {
+            showAlert(Alert.AlertType.WARNING, "Veuillez sélectionner une réclamation à supprimer !");
             return;
         }
 
-        int idReclamation = extraireIdReclamation(selectedItem);
-        if (idReclamation <= 0) {
-            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible d'extraire l'ID de la réclamation !");
-            return;
-        }
+        selectedReclamation = reclamations.get(selectedIndex);
 
-        // Confirmation avant suppression
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText(null);
-        alert.setContentText("Voulez-vous vraiment supprimer cette réclamation ?");
+        alert.setHeaderText("Voulez-vous vraiment supprimer cette réclamation ?");
+        alert.setContentText("Cette action est irréversible !");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                serviceReclamation.supprimer(idReclamation);
-                chargerReclamations();  // Rafraîchir la liste après suppression
-                afficherAlerte(Alert.AlertType.INFORMATION, "Succès", "Réclamation supprimée avec succès !");
+                serviceReclamation.supprimer(selectedReclamation.getId_reclamation());
+                showAlert(Alert.AlertType.INFORMATION, "Réclamation supprimée !");
+                chargerReclamations();
             } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Erreur lors de la suppression de la réclamation", e);
-                afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Problème lors de la suppression !");
+                LOGGER.log(Level.SEVERE, "Erreur lors de la suppression", e);
+                showAlert(Alert.AlertType.ERROR, "Erreur lors de la suppression !");
             }
         }
     }
 
-    @FXML
-    private void rechercherReclamation() {
-        String keyword = searchField.getText().trim().toLowerCase();
-        if (!keyword.isEmpty()) {
-            try {
-                List<Reclamation> resultats = serviceReclamation.afficher();
-                afficherReclamationsFiltrees(resultats, keyword);
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Erreur lors de la recherche des réclamations", e);
-                afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible d'effectuer la recherche !");
-            }
-        } else {
-            chargerReclamations();
-        }
-    }
-
-    private void chargerReclamations() {
-        try {
-            List<Reclamation> reclamations = serviceReclamation.afficher();
-            afficherReclamations(reclamations);
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Problème de connexion à la base", e);
-            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Problème de connexion à la base !");
-        }
-    }
-
-    private void afficherReclamations(List<Reclamation> reclamations) {
-        reclamationList.clear();
-        for (Reclamation r : reclamations) {
-            reclamationList.add("📝 Sujet: " + r.getSujet() + " | " + r.getDescription() + " | 📌 " + r.getStatut());
-        }
-        listReclamations.setItems(reclamationList);
-    }
-
-    private void afficherReclamationsFiltrees(List<Reclamation> reclamations, String keyword) {
-        reclamationList.clear();
-        for (Reclamation r : reclamations) {
-            if (r.getSujet().toLowerCase().contains(keyword) || r.getDescription().toLowerCase().contains(keyword)) {
-                reclamationList.add("📝 ID: " + r.getId_reclamation() + " | " + r.getSujet() + " | 📌 " + r.getStatut());
-            }
-        }
-        listReclamations.setItems(reclamationList);
-    }
-
-
-
-    private int extraireIdReclamation(String selectedItem) {
-        try {
-            String[] parts = selectedItem.split("ID: ");
-            if (parts.length < 2) {
-                throw new IllegalArgumentException("Format de texte invalide");
-            }
-            String idPart = parts[1].split(" \\| ")[0].trim();  // Extraction plus sûre
-            return Integer.parseInt(idPart);
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Erreur lors de l'extraction de l'ID de la réclamation", e);
-            afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Impossible d'extraire l'ID de la réclamation !");
-            return -1;
-        }
-    }
-
-
-    private void afficherAlerte(Alert.AlertType type, String titre, String message) {
+    /** Affiche une alerte */
+    private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
-        alert.setTitle(titre);
-        alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
-    }
-    @FXML
-    private void handleCancel(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/ProfileMembre.fxml"));
-        ((Node) event.getSource()).getScene().setRoot(root);
+        alert.show();
     }
 }

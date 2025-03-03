@@ -29,6 +29,17 @@ public class User {
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
     }
+    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL) {
+        this.id_User = id_User;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.dateNaissance = dateNaissance;
+        this.imageURL = imageURL;
+        this.reclamations = new ArrayList<>();
+    }
     public User(int id_User, String nom, String prenom, String email, String password, String role) {
         this.id_User = id_User;
         this.nom = nom;

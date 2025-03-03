@@ -8,13 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
-import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
@@ -39,7 +37,7 @@ public class DashboardResponsableSalleController {
     @FXML private AnchorPane addUserPane, homePane, listUsersPane, EditUserPane;
     @FXML private Label welcomeLabel;
     @FXML private ImageView profileImage;
-
+    @FXML private TextField searchRoleField;
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser();
 
@@ -61,6 +59,11 @@ public class DashboardResponsableSalleController {
         AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
 
         listUsersInVBox();
+    }
+    @FXML
+    private void onListAbonnementButtonClick(ActionEvent event) {
+        System.out.println("Liste des abonnements ouverte !");
+        // Ouvre l'interface ou effectue une action
     }
     @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
@@ -142,23 +145,26 @@ public class DashboardResponsableSalleController {
         }
     }
 
-    @FXML
     private void listUsersInVBox() {
         VBoxId.getChildren().clear();
 
         try {
-            List<User> users = serviceUser.afficherPourResponsableAvecStream();
+            List<User> users = serviceUser.afficherPourResponsable();
 
             if (users.isEmpty()) {
                 System.out.println("⚠️ Aucun utilisateur trouvé !");
             } else {
+                System.out.println("✅ Utilisateurs récupérés pour affichage :");
+                users.forEach(user -> System.out.println(user.getNom() + " - " + user.getRole())); // Ajoute ce log
+
                 users.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
             }
         } catch (SQLException e) {
             System.err.println("❌ Erreur SQL : " + e.getMessage());
         }
     }
-    @FXML private TextField searchRoleField;
+
+
     @FXML void onSearchByRole(ActionEvent event) {
         String roleRecherche = searchRoleField.getText().trim();
 
@@ -204,8 +210,8 @@ public class DashboardResponsableSalleController {
         for (Label label : new Label[]{nameLabel, lastNameLabel, emailLabel, roleLabel}) {
             label.setStyle("-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #333;");
         }
-        Button editButton = createImageButton("/Image/gear.png", event -> modifierUtilisateur(user));
-        Button deleteButton = createImageButton("/Image/delete.png", event -> supprimerUtilisateur(user));
+        Button editButton = createImageButton("/images/gear.png", event -> modifierUtilisateur(user));
+        Button deleteButton = createImageButton("/images/delete.png", event -> supprimerUtilisateur(user));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -255,7 +261,7 @@ public class DashboardResponsableSalleController {
     }
 
     private void setUserProfileImage(String imageURL) {
-        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/Image/icons8-user-32.png"));
+        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/images/icons8-user-32.png"));
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -272,22 +278,5 @@ public class DashboardResponsableSalleController {
         addUserPane.setVisible(false);
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
-    }
-
-    public void onListAbonnementButtonClick(ActionEvent event) {
-        try {
-            // Charger le fichier FXML de la liste des abonnements
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
-            Parent root = loader.load();
-
-            // Récupérer la scène actuelle et remplacer son contenu
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            // Vous pouvez afficher une alerte en cas d'erreur
-        }
-
     }
 }

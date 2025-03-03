@@ -19,11 +19,7 @@
       <AnchorPane fx:id="infouserid" layoutX="35.0" layoutY="246.0" prefHeight="130.0" prefWidth="594.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
          <children>
             <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
-            <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="50.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/icons8-user-32.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="50.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="185.0" layoutY="42.0" text="Username: ">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -58,6 +54,6 @@
             <Image url="@images/logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="575.0" layoutY="370.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+      <Button layoutX="575.0" layoutY="370.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
    </children>
 </AnchorPane>

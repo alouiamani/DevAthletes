@@ -57,16 +57,27 @@
             <version>0.4</version>
         </dependency>
         <dependency>
-            <groupId>org.jfxtras</groupId>
-            <artifactId>jfxtras-agenda</artifactId>
-            <version>11-r1</version>
+
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+            <version>2.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>jfxtras-agenda</artifactId>
             <version>14-r1</version>
         </dependency>
-
 
     </dependencies>
 

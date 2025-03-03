@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.gymify.entities.EmailSender;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ActivityService;
@@ -58,10 +59,10 @@ public class DashboardAdminController  {
     private Label activityCountLabel;
 
     private User utilisateurSelectionne;
-    private final ServiceUser serviceUser = new ServiceUser();
+    private final ServiceUser serviceUser = new ServiceUser() {
 
+    };
 
-    @FXML
     public void initialize() {
         // Charger l'image de profil par défaut
 
@@ -110,13 +111,16 @@ public class DashboardAdminController  {
 
         // Charger la liste des utilisateurs
         listUsersInVBox();
-        ActivityService activityService = new ActivityService();
-        int activityCount = activityService.getActivityCount();
-
-        // Mettre à jour le texte du label avec le nombre d'activités
-        activityCountLabel.setText(String.valueOf(activityCount));
+//        ActivityService activityService = new ActivityService();
+//        int activityCount = activityService.getActivityCount();
+//
+//        // Mettre à jour le texte du label avec le nombre d'activités
+//        activityCountLabel.setText(String.valueOf(activityCount));
     }
-
+    @FXML
+    private void onListGymButtonClick(ActionEvent event) {
+        // method implementation
+    }
     @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
@@ -191,12 +195,19 @@ public class DashboardAdminController  {
         }
 
         try {
-            User newUser = "Entraîneur".equals(role) ?
-                    new Entraineur(nom, prenom, email, password, dateNaissance, "", specialite) :
-                    new User(nom, prenom, email, password, role, dateNaissance, "");
+            User newUser;
+            if ("Entraîneur".equals(role)) {
+                newUser = new Entraineur(nom, prenom, email, password, dateNaissance, "", specialite);
+            } else {
+                newUser = new User(nom, prenom, email, password, role, dateNaissance, "");
+            }
 
             serviceUser.ajouter(newUser);
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
+
+            // 📧 ENVOI DE L'EMAIL AUTOMATIQUE
+            EmailSender.envoyerEmailInscription(email, nom, password, role);
+
             listUsersInVBox();
             showPane(listUsersPane);
         } catch (SQLException e) {
@@ -330,7 +341,6 @@ public class DashboardAdminController  {
         homePane.setVisible(false);
         listUsersPane.setVisible(false);
         addUserPane.setVisible(false);
-        manageClaimsPane.setVisible(false);
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
     }
@@ -352,35 +362,21 @@ public class DashboardAdminController  {
         }
     }
 
-
     @FXML
-    public void onListGymButtonClick(ActionEvent actionEvent) {
-        try {
-            // Charger le fichier FXML de la liste des salles
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
-            Parent root = loader.load();
+    private void ajouterSpecialite() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nouvelle spécialité");
+        dialog.setHeaderText("Ajouter une nouvelle spécialité");
+        dialog.setContentText("Nom de la spécialité :");
 
-            // Obtenir le contrôleur de la nouvelle scène
-            ListeDesSalleController controller = loader.getController();
-
-            // Créer une nouvelle scène avec la liste des salles
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Liste des Salles");
-
-            // Vous pouvez également appeler une méthode pour actualiser la liste des salles si nécessaire
-            try {
-                controller.refreshList();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        dialog.showAndWait().ifPresent(nouvelleSpecialite -> {
+            nouvelleSpecialite = nouvelleSpecialite.trim();
+            if (!nouvelleSpecialite.isEmpty() && !AddSpecialiteFx.getItems().contains(nouvelleSpecialite)) {
+                AddSpecialiteFx.getItems().add(nouvelleSpecialite);
+                AddSpecialiteFx.setValue(nouvelleSpecialite); // Sélectionner la nouvelle spécialité
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "La spécialité existe déjà ou est vide !");
             }
-
-            // Afficher la nouvelle scène
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
-
 }
