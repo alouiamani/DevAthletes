@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" style="-fx-background-color: linear-gradient(to bottom, #40a8c4, #1b2e44);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AjoutEquipeController">
+
+    <children>
+        <!-- Titre -->
+        <Label layoutX="260.0" layoutY="30.0" text="Équipe" textFill="white">
+            <font>
+                <Font name="Arial Bold" size="32.0" />
+            </font>
+        </Label>
+
+        <!-- Image et Upload -->
+        <ImageView fx:id="imagetf" fitHeight="120.0" fitWidth="180.0" layoutX="235.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: white; -fx-border-width: 2; -fx-border-radius: 10;" />
+        <Button layoutX="440.0" layoutY="165.0" onAction="#handleUploadImage" style="-fx-background-color: #40a8c4; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="📤 Upload" />
+
+        <!-- Champs de saisie -->
+        <Label layoutX="80.0" layoutY="220.0" text="Nom de l'équipe" textFill="white" />
+        <TextField fx:id="nameField" layoutX="80.0" layoutY="240.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #40a8c4; -fx-border-radius: 5;" />
+        <Label fx:id="ErrorNom" layoutX="80.0" layoutY="265.0" text="Nom invalide" textFill="red" visible="false" />
+
+        <Label layoutX="350.0" layoutY="220.0" text="Image URL" textFill="white" />
+        <TextField fx:id="imageurl" layoutX="350.0" layoutY="240.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #40a8c4; -fx-border-radius: 5;" />
+        <Label fx:id="ErrorImage" layoutX="350.0" layoutY="265.0" text="URL invalide" textFill="red" visible="false" />
+
+        <Label layoutX="80.0" layoutY="300.0" text="Niveau" textFill="white" />
+        <ComboBox fx:id="niveauequipe" layoutX="80.0" layoutY="320.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #40a8c4; -fx-border-radius: 5;" />
+        <Label fx:id="ErrorNiveau" layoutX="80.0" layoutY="345.0" text="Sélectionnez un niveau" textFill="red" visible="false" />
+
+        <Label layoutX="350.0" layoutY="300.0" text="Nombre de membres" textFill="white" />
+        <Spinner fx:id="membreSpinner" layoutX="350.0" layoutY="320.0" prefWidth="200.0" style="-fx-border-color: #40a8c4; -fx-border-radius: 5;" />
+        <Label fx:id="ErrorNombre" layoutX="350.0" layoutY="345.0" text="Nombre invalide" textFill="red" visible="false" />
+
+        <!-- Boutons -->
+        <Button fx:id="saveButton" layoutX="180.0" layoutY="420.0" onAction="#handleSaveButton" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="✅ Enregistrer" />
+        <Button fx:id="cancelButton" layoutX="320.0" layoutY="420.0" onAction="#handleCancelButton" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="❌ Annuler" />
+    </children>
+</AnchorPane>

@@ -56,7 +56,21 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version> <!-- ou la version qui vous convient -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openstreetmap.osmosis</groupId>
+            <artifactId>osmosis-core</artifactId>
+            <version>0.47.3</version>
+        </dependency>
+        <dependency>
+
+
 
             <groupId>org.eclipse.angus</groupId>
             <artifactId>angus-mail</artifactId>
