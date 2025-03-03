@@ -119,7 +119,6 @@ public class ServiceUser implements IGestionUser<User> {
         }
     }
 
-
     public List<User> afficher() throws SQLException {
         List<User> users = new ArrayList<>();
         String req = "SELECT * FROM user";
@@ -152,12 +151,50 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return users;
     }
-    public List<User> afficherPourResponsableAvecStream() throws SQLException {
+     public List<User> afficherPourResponsableAvecStream() throws SQLException {
         return afficher().stream() // Récupère tous les utilisateurs
                 .filter(user -> "Responsable_salle".equalsIgnoreCase(user.getRole())) // Filtre pour les responsables de salle
                 .collect(Collectors.toList());
     }
+    public List<User> afficherPourResponsable() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE role = 'sportif' OR role = 'entraîneur'";
 
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                User user;
+                if ("entraîneur".equalsIgnoreCase(rs.getString("role"))) {
+                    user = new Entraineur(
+                            rs.getInt("id_User"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getDate("dateNaissance"),
+                            rs.getString("role"),
+                            rs.getString("specialite")
+                    );
+                } else {
+                    user = new User(
+                            rs.getInt("id_User"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("role")
+                    );
+                    user.setDateNaissance(rs.getDate("dateNaissance"));
+                }
+                user.setImageURL(rs.getString("imageURL"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la récupération des utilisateurs pour le responsable : " + e.getMessage());
+            throw e;
+        }
+        return users;
+    }
 
     public Optional<User> authentifier(String email, String password) {
         String query = "SELECT * FROM user WHERE email = ?";
