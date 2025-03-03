@@ -18,7 +18,7 @@
    <content>
       <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
          <children>
-            <MenuBar layoutX="-5.0" prefHeight="41.0" prefWidth="810.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
+            <MenuBar layoutX="-105.0" prefHeight="42.0" prefWidth="910.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
                <menus>
                   <Menu mnemonicParsing="false" text="                                                                                                                                   Activity">
                      <items>
@@ -46,6 +46,11 @@
                      </items>
                   </Menu>
                   <Menu fx:id="Sallemenubare" mnemonicParsing="false" onAction="#ouvrirSalle" text="salle">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="explore" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" onAction="#ShowPlanning" text="planning">
                      <items>
                         <MenuItem mnemonicParsing="false" text="explore" />
                      </items>
@@ -85,12 +90,22 @@
                            </font>
                         </Label>
                         <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-                        <Button fx:id="EditId" layoutX="419.0" layoutY="58.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
+                        <Button fx:id="EditId" layoutX="536.0" layoutY="20.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button layoutX="600.0" layoutY="104.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+                        <Button layoutX="698.0" layoutY="98.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+                        <Button layoutX="536.0" layoutY="59.0" mnemonicParsing="false" onAction="#editPersonalInfo" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text=" edit Personnal Info" textFill="#335581">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="536.0" layoutY="98.0" mnemonicParsing="false" onAction="#PlanningForYou" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Planning For You" textFill="#335581">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                   <!-- Ajout du ScrollPane pour la liste des salles sous les informations de l'utilisateur -->
