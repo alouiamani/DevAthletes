@@ -2,23 +2,31 @@ package org.gymify.controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
 import org.gymify.entities.EventType;
+import org.gymify.services.EquipeEventService;
 import org.gymify.services.EventService;
 import org.gymify.utils.gymifyDataBase;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,10 +36,18 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Controller class for managing the addition or modification of events in the UI.
+ */
 public class AjoutEvennementController {
 
     @FXML private Label ErrorNom, ErrorImage, ErrorType, ErrorReward, ErrorDate, Errorhboxheuredebut, Errorhboxheurefin, ErrorDescription, ErrorLieu;
@@ -49,6 +65,8 @@ public class AjoutEvennementController {
     @FXML private ComboBox<String> typetf;
     @FXML private Button search;
     @FXML private WebView webviewtf;
+    @FXML private ListView<String> equipesListView;
+    @FXML private Label equipesLabel;
 
     private WebEngine webEngine;
     private double[] coords;
@@ -56,30 +74,50 @@ public class AjoutEvennementController {
     private ListeDesEvennementsController parentController;
     private Event currentEvent;
     private final EventService eventService = new EventService();
+    private final EquipeEventService equipeEventService = new EquipeEventService();
+    private List<Equipe> addedEquipes = new ArrayList<>();
+    private ObservableList<String> equipeNames = FXCollections.observableArrayList();
+    private static final Logger LOGGER = Logger.getLogger(AjoutEvennementController.class.getName());
 
     @FXML
     public void initialize() {
         connection = gymifyDataBase.getInstance().getConnection();
 
+        // Validate that critical FXML elements are initialized
+        if (nomtf == null || lieutf == null || datetf == null || descriptiontf == null || typetf == null ||
+                rewardtf == null || imagetf == null || imagetf1 == null || webviewtf == null || equipesListView == null) {
+            LOGGER.severe("One or more FXML elements are not properly initialized: " +
+                    "nomtf=" + nomtf + ", lieutf=" + lieutf + ", datetf=" + datetf + ", descriptiontf=" + descriptiontf +
+                    ", typetf=" + typetf + ", rewardtf=" + rewardtf + ", imagetf=" + imagetf + ", imagetf1=" + imagetf1 +
+                    ", webviewtf=" + webviewtf + ", equipesListView=" + equipesListView);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur d'initialisation de l'interface. Vérifiez le fichier FXML.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
         if (webviewtf != null) {
             try {
                 webEngine = webviewtf.getEngine();
                 if (webEngine == null) {
-                    System.err.println("WebEngine est null après initialisation !");
+                    LOGGER.severe("WebEngine est null après initialisation !");
                     return;
                 }
+                // Set a unique user data directory for WebView to avoid conflicts
+                String userDataDir = System.getProperty("java.io.tmpdir") + "/webview-" + System.currentTimeMillis();
+                System.setProperty("webview.user.data.dir", userDataDir);
+
                 webEngine.setOnError(event -> {
-                    System.err.println("Erreur WebView : " + event.getMessage());
+                    LOGGER.severe("Erreur WebView : " + event.getMessage());
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors du chargement de la carte OpenStreetMap : " + event.getMessage(), ButtonType.OK);
                     alert.showAndWait();
                 });
             } catch (Exception e) {
-                System.err.println("Erreur lors de l'initialisation du WebView : " + e.getMessage());
+                LOGGER.severe("Erreur lors de l'initialisation du WebView : " + e.getMessage());
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'initialisation de la carte OpenStreetMap : " + e.getMessage(), ButtonType.OK);
                 alert.showAndWait();
             }
         } else {
-            System.err.println("WebView non initialisé dans le FXML !");
+            LOGGER.severe("WebView non initialisé dans le FXML !");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Le composant de la carte n'est pas initialisé dans l'interface.", ButtonType.OK);
             alert.showAndWait();
         }
@@ -108,6 +146,11 @@ public class AjoutEvennementController {
         cbHeureFin.setValue("00");
         cbMinuteFin.setValue("00");
         cbSecondeFin.setValue("00");
+
+        equipesListView.setItems(equipeNames);
+
+        // Add click handler to equipesListView to edit a team
+        equipesListView.setOnMouseClicked(this::handleEquipeListClick);
 
         // Charger la carte après que la scène est initialisée
         nomtf.sceneProperty().addListener(new ChangeListener<Scene>() {
@@ -157,17 +200,38 @@ public class AjoutEvennementController {
         coords = new double[]{event.getLatitude(), event.getLongitude()};
         loadMap(event.getLatitude(), event.getLongitude());
 
+        // Safely handle heureDebut with null check and proper time extraction
         if (event.getHeureDebut() != null) {
-            String[] heureDebut = event.getHeureDebut().toString().split(":");
-            cbHeureDebut.setValue(heureDebut[0]);
-            cbMinuteDebut.setValue(heureDebut[1]);
-            cbSecondeDebut.setValue(heureDebut[2]);
+            LocalTime heureDebut = event.getHeureDebut();
+            cbHeureDebut.setValue(String.format("%02d", heureDebut.getHour()));
+            cbMinuteDebut.setValue(String.format("%02d", heureDebut.getMinute()));
+            cbSecondeDebut.setValue(String.format("%02d", heureDebut.getSecond()));
+        } else {
+            cbHeureDebut.setValue("00");
+            cbMinuteDebut.setValue("00");
+            cbSecondeDebut.setValue("00");
         }
+
+        // Safely handle heureFin with null check and proper time extraction
         if (event.getHeureFin() != null) {
-            String[] heureFin = event.getHeureFin().toString().split(":");
-            cbHeureFin.setValue(heureFin[0]);
-            cbMinuteFin.setValue(heureFin[1]);
-            cbSecondeFin.setValue(heureFin[2]);
+            LocalTime heureFin = event.getHeureFin();
+            cbHeureFin.setValue(String.format("%02d", heureFin.getHour()));
+            cbMinuteFin.setValue(String.format("%02d", heureFin.getMinute()));
+            cbSecondeFin.setValue(String.format("%02d", heureFin.getSecond()));
+        } else {
+            cbHeureFin.setValue("00");
+            cbMinuteFin.setValue("00");
+            cbSecondeFin.setValue("00");
+        }
+
+        // Load associated teams if editing an existing event
+        if (event.getEquipes() != null) {
+            addedEquipes.clear();
+            equipeNames.clear();
+            for (Equipe equipe : event.getEquipes()) {
+                addedEquipes.add(equipe);
+                equipeNames.add(equipe.getNom());
+            }
         }
     }
 
@@ -277,6 +341,13 @@ public class AjoutEvennementController {
             ErrorDescription.setVisible(false);
         }
 
+        // Check if at least one team is added
+        if (addedEquipes.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Vous devez ajouter au moins une équipe avant d'enregistrer l'événement.", ButtonType.OK);
+            alert.showAndWait();
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -321,10 +392,10 @@ public class AjoutEvennementController {
                 double lon = Double.parseDouble(jsonObject.getString("lon"));
                 return new double[]{lat, lon};
             } else {
-                System.err.println("Aucune coordonnée trouvée pour le lieu : " + location);
+                LOGGER.warning("Aucune coordonnée trouvée pour le lieu : " + location);
             }
         } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération des coordonnées pour le lieu : " + location + " - " + e.getMessage());
+            LOGGER.severe("Erreur lors de la récupération des coordonnées pour le lieu : " + location + " - " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -350,7 +421,11 @@ public class AjoutEvennementController {
                 "</body>\n" +
                 "</html>";
 
-        webEngine.loadContent(html);
+        if (webEngine != null) {
+            webEngine.loadContent(html);
+        } else {
+            LOGGER.severe("WebEngine is null. Cannot load map.");
+        }
     }
 
     @FXML
@@ -387,14 +462,28 @@ public class AjoutEvennementController {
         eventToSave.setHeureFin(java.time.LocalTime.parse(heureFin));
         eventToSave.setLatitude(coords[0]);
         eventToSave.setLongitude(coords[1]);
+        eventToSave.setEquipes(new HashSet<>(addedEquipes));
 
         try {
             if (currentEvent == null) {
                 eventService.ajouter(eventToSave);
+                // Add associations for all teams
+                for (Equipe equipe : addedEquipes) {
+                    System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
+                    equipeEventService.ajouter(equipe, eventToSave);
+                }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Événement ajouté avec succès !", ButtonType.OK);
                 alert.showAndWait();
             } else {
                 eventService.modifier(eventToSave);
+                // Remove existing associations and re-add new ones
+                for (Equipe equipe : eventService.getEquipesForEvent(eventToSave.getId())) {
+                    equipeEventService.supprimer(equipe, eventToSave);
+                }
+                for (Equipe equipe : addedEquipes) {
+                    System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
+                    equipeEventService.ajouter(equipe, eventToSave);
+                }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Événement modifié avec succès !", ButtonType.OK);
                 alert.showAndWait();
             }
@@ -407,6 +496,7 @@ public class AjoutEvennementController {
                 stage.close();
             }
         } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de l'enregistrement de l'événement : " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'enregistrement de l'événement : " + e.getMessage(), ButtonType.OK);
             alert.showAndWait();
             e.printStackTrace();
@@ -417,12 +507,13 @@ public class AjoutEvennementController {
         String query = "SELECT COUNT(*) FROM events WHERE nom = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, eventName);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
             }
         } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de la vérification de l'existence du nom de l'événement : " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -431,6 +522,10 @@ public class AjoutEvennementController {
     @FXML
     void annuler(ActionEvent event) {
         clearForm();
+        Stage stage = (Stage) nomtf.getScene().getWindow();
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     private void clearForm() {
@@ -449,6 +544,8 @@ public class AjoutEvennementController {
         cbSecondeFin.setValue("00");
         imagetf1.setImage(null);
         coords = null;
+        addedEquipes.clear();
+        equipeNames.clear();
 
         ErrorNom.setVisible(false);
         ErrorImage.setVisible(false);
@@ -463,7 +560,7 @@ public class AjoutEvennementController {
 
     @FXML
     void uploadBtn(ActionEvent event) {
-        System.out.println("Upload button clicked.");
+        LOGGER.info("Upload button clicked.");
 
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.bmp", "*.jpeg");
@@ -471,7 +568,7 @@ public class AjoutEvennementController {
 
         Stage stage = (Stage) nomtf.getScene().getWindow();
         if (stage == null) {
-            System.err.println("Erreur : Impossible de récupérer la scène pour le FileChooser.");
+            LOGGER.severe("Erreur : Impossible de récupérer la scène pour le FileChooser.");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur : Impossible d'ouvrir le sélecteur de fichiers.", ButtonType.OK);
             alert.showAndWait();
             return;
@@ -484,6 +581,79 @@ public class AjoutEvennementController {
             imagetf.setText(imagePath);
             Image image = new Image(imagePath);
             imagetf1.setImage(image);
+        }
+    }
+
+    @FXML
+    private void AjouterEquipe(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutEquipe.fxml"));
+            if (loader.getLocation() == null) {
+                LOGGER.severe("Cannot find AjoutEquipe.fxml. Ensure the file exists in src/main/resources/");
+                return;
+            }
+            Parent root = loader.load();
+
+            tn.esprit.controllers.AjoutEquipeController ajoutEquipeController = loader.getController();
+            ajoutEquipeController.setAjoutEvennementController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Ajouter Equipe");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            LOGGER.severe("Erreur lors de l'ouverture de la fenêtre d'ajout d'équipe : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Handle click on equipesListView to edit an existing team
+    @FXML
+    private void handleEquipeListClick(MouseEvent event) {
+        try {
+            String selectedTeamName = equipesListView.getSelectionModel().getSelectedItem();
+            if (selectedTeamName == null) {
+                return; // No team selected
+            }
+
+            Equipe selectedEquipe = addedEquipes.stream()
+                    .filter(e -> e.getNom().equals(selectedTeamName))
+                    .findFirst()
+                    .orElse(null);
+            if (selectedEquipe != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutEquipe.fxml"));
+                if (loader.getLocation() == null) {
+                    LOGGER.severe("Cannot find AjoutEquipe.fxml. Ensure the file exists in src/main/resources/");
+                    return;
+                }
+                Parent root = loader.load();
+                tn.esprit.controllers.AjoutEquipeController ajoutEquipeController = loader.getController();
+                ajoutEquipeController.setAjoutEvennementController(this);
+                ajoutEquipeController.handleModifier(selectedEquipe);
+
+                Stage stage = new Stage();
+                stage.setTitle("📩 Modifier Equipe");
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+        } catch (IOException e) {
+            LOGGER.severe("Erreur lors de l'ouverture de la fenêtre de modification d'équipe : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Method to add a team to the event
+    public void addEquipeToEvent(Equipe equipe) {
+        addedEquipes.add(equipe);
+        equipeNames.add(equipe.getNom());
+    }
+
+    // Method to update a team in the list after modification
+    public void updateEquipeInList(Equipe oldEquipe, Equipe newEquipe) {
+        int index = addedEquipes.indexOf(oldEquipe);
+        if (index != -1) {
+            addedEquipes.set(index, newEquipe);
+            equipeNames.set(index, newEquipe.getNom());
         }
     }
 }

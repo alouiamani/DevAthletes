@@ -4,18 +4,20 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<ScrollPane prefHeight="721.0" prefWidth="731.0" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AjoutEvennementController">
+<ScrollPane prefHeight="721.0" prefWidth="794.0" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AjoutEvennementController">
     <content>
-        <AnchorPane prefHeight="721.0" prefWidth="732.0" style="-fx-background-color: #f5f7fa; -fx-padding: 20;">
+        <AnchorPane prefHeight="749.0" prefWidth="791.0" style="-fx-background-color: #f5f7fa; -fx-padding: 20;">
             <children>
                 <!-- Titre -->
                 <Label layoutX="220.0" layoutY="27.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-effect: dropshadow(gaussian, #00A1A7, 10, 0.3, 0, 0);" text="Ajouter un Événement" textFill="#333333">
@@ -79,6 +81,11 @@
                     </children>
                 </HBox>
 
+                <VBox layoutX="649.0" layoutY="336.0" prefHeight="115.0" prefWidth="123.0" spacing="10">
+                    <Label fx:id="equipesLabel" text="Équipes Ajoutées :" />
+                    <ListView fx:id="equipesListView" prefHeight="100" />
+                </VBox>
+
                 <!-- Boutons -->
                 <Button layoutX="200.0" layoutY="671.0" onAction="#enregistrer" style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="✅ Enregistrer" />
                 <Button layoutX="400.0" layoutY="671.0" onAction="#annuler" style="-fx-background-color: #FF4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="❌ Annuler" />
@@ -93,6 +100,7 @@
                 <Label fx:id="ErrorDate" layoutX="120.0" layoutY="435.0" prefHeight="17.0" prefWidth="152.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorDate" textFill="#FF0000" visible="false" />
                 <Label fx:id="ErrorDescription" layoutX="440.0" layoutY="455.0" prefHeight="17.0" prefWidth="153.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorDescription" textFill="#FF0000" visible="false" />
                 <Label fx:id="ErrorLieu" layoutX="120.0" layoutY="495.0" prefHeight="17.0" prefWidth="96.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorLieu" textFill="#FF0000" visible="false" />
+                <Button layoutX="488.0" layoutY="470.0" onAction="#AjouterEquipe" style="-fx-background-color: #dd6d11; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="+ Ajouter Equipe" />
             </children>
         </AnchorPane>
     </content>

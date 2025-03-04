@@ -3,13 +3,13 @@ package org.gymify.entities;
 public enum EventType {
     COMPETITION,
     ENTRAINEMENT,
-    RANDONEE;
+    RANDONNEE;
 
     public enum Niveau {
         Debutant,
         Intermediaire,
         Avance,
-        Proffessionnel;
+        Professionnel;
     }
 
     public enum Reward {

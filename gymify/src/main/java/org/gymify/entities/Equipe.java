@@ -1,5 +1,8 @@
 package org.gymify.entities;
 
+import jdk.jfr.Event;
+import org.gymify.entities.EventType;
+
 import java.util.HashSet;
 import java.util.Set;
 

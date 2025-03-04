@@ -91,7 +91,7 @@ public class CardEquipeController {
             stage.setScene(new Scene(loader.load()));
 
             // Récupérer le contrôleur du formulaire et lui passer l'équipe à modifier
-            AjoutEquipeController controller = loader.getController();
+            tn.esprit.controllers.AjoutEquipeController controller = loader.getController();
             // (Optionnel) si vous souhaitez que le formulaire puisse lui-même rafraîchir la liste :
             controller.setListeDesEquipesController(listeDesEquipesController);
             controller.handleModifier(equipe); // Pré-remplir les champs
