@@ -15,7 +15,7 @@
       <AnchorPane cache="true" layoutX="-9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="424.0" styleClass="left-side-background" stylesheets="/style.css">
          <children>
             <TextField fx:id="emailTextField" layoutX="96.0" layoutY="147.0" prefHeight="26.0" prefWidth="239.0" promptText="email" />
-            <Button fx:id="LoginButton" layoutX="161.0" layoutY="306.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="26.0" prefWidth="110.0" styleClass="LoginBtn" stylesheets="/style.css" text="Login" textFill="#344756">
+            <Button fx:id="LoginButton" layoutX="157.0" layoutY="368.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="26.0" prefWidth="110.0" styleClass="LoginBtn" stylesheets="/style.css" text="Login" textFill="#344756">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -25,16 +25,27 @@
                   <Font name="Yu Gothic UI Bold" size="20.0" />
                </font>
             </Label>
+            <Button layoutX="304.0" layoutY="261.0" onAction="#generateNewCaptcha">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-refresh-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <TextField fx:id="captchaInputField" layoutX="97.0" layoutY="261.0" prefHeight="26.0" prefWidth="192.0" promptText="Entrez le captcha" />
+            <ImageView fx:id="captchaImageView" fitHeight="50" fitWidth="150" layoutX="150.0" layoutY="296.0" />
+
             <Label layoutX="83.0" layoutY="119.0" text="Email" textFill="#f7f3f3" />
             <Label layoutX="82.0" layoutY="187.0" text="Password" textFill="#faf4f4" />
-            <Label layoutX="151.0" layoutY="337.0" text="New User?" textFill="#efeaea" />
+            <Label layoutX="140.0" layoutY="432.0" text="New User?" textFill="#efeaea" />
             <PasswordField fx:id="passwordTextField" layoutX="97.0" layoutY="212.0" prefHeight="26.0" prefWidth="239.0" promptText="Password" />
-            <Button fx:id="SignUpButton" layoutX="220.0" layoutY="333.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: transparent;" text="SignUp" textFill="#69c8ff">
+            <Button fx:id="SignUpButton" layoutX="225.0" layoutY="428.0" mnemonicParsing="false" onAction="#SignUpButtonOnAction" style="-fx-background-color: transparent;" text="SignUp" textFill="#69c8ff">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="199.0" layoutY="248.0" mnemonicParsing="false" onAction="#ForgetPsswdButtonOnAction" style="-fx-background-color: transparent;" text="Forget The Password ?" textFill="#c9c5c5" />
+            <Button layoutX="148.0" layoutY="402.0" mnemonicParsing="false" onAction="#ForgetPsswdButtonOnAction" style="-fx-background-color: transparent;" text="Forget The Password ?" textFill="#c9c5c5" />
             <Label fx:id="LoginMessageTextField" layoutX="140.0" layoutY="274.0" textFill="#f41c1c">
                <font>
                   <Font size="15.0" />
