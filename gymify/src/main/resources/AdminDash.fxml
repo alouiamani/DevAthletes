@@ -197,23 +197,21 @@
                         </AnchorPane>
                         <TextField fx:id="EditNomId" layoutX="182.0" layoutY="109.0" prefHeight="34.0" prefWidth="174.0" promptText="First Name" />
                         <TextField fx:id="EditPrenomId" layoutX="183.0" layoutY="164.0" prefHeight="31.0" prefWidth="174.0" promptText="Last Name" />
-                        <ChoiceBox fx:id="EditRoleId" layoutX="185.0" layoutY="424.0" prefHeight="31.0" prefWidth="169.0" />
-                        <ChoiceBox fx:id="EditSpecialId" layoutX="185.0" layoutY="375.0" prefHeight="30.0" prefWidth="170.0" />
+                        <ChoiceBox fx:id="EditRoleId" layoutX="185.0" layoutY="393.0" prefHeight="31.0" prefWidth="169.0" />
+                        <ChoiceBox fx:id="EditSpecialId" layoutX="185.0" layoutY="336.0" prefHeight="30.0" prefWidth="170.0" />
                         <Label layoutX="101.0" layoutY="117.0" text="First Name :" textFill="#6e6363" />
                         <Label layoutX="101.0" layoutY="177.0" text="Last Name :" textFill="#6e6363" />
-                        <Label layoutX="105.0" layoutY="222.0" text="Password :" textFill="#6e6363" />
-                        <Label layoutX="105.0" layoutY="381.0" text="Specialite :" textFill="#6e6363" />
-                        <Label layoutX="108.0" layoutY="431.0" text="Role : " textFill="#6e6363" />
+                        <Label layoutX="104.0" layoutY="343.0" text="Specialite :" textFill="#6e6363" />
+                        <Label layoutX="104.0" layoutY="400.0" text="Role : " textFill="#6e6363" />
                         <Button fx:id="SaveEdit" layoutX="389.0" layoutY="334.0" mnemonicParsing="false" onAction="#saveEditUser" prefHeight="35.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: #16b93f;" styleClass="round-btn" text="Save" textFill="#0f1010">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Button>
-                        <PasswordField fx:id="EditPasswdId" layoutX="184.0" layoutY="213.0" prefHeight="34.0" prefWidth="171.0" promptText="Password" />
-                        <TextField fx:id="EditEmailId" layoutX="183.0" layoutY="267.0" prefHeight="31.0" prefWidth="172.0" promptText="Email" />
-                        <Label layoutX="101.0" layoutY="274.0" text="Email:" textFill="#6e6363" />
-                        <DatePicker fx:id="EditBirthId" layoutX="184.0" layoutY="319.0" prefHeight="40.0" prefWidth="172.0" />
-                        <Label layoutX="102.0" layoutY="330.0" text="Birth Date : " textFill="#6e6363" />
+                        <TextField fx:id="EditEmailId" layoutX="184.0" layoutY="221.0" prefHeight="31.0" prefWidth="172.0" promptText="Email" />
+                        <Label layoutX="101.0" layoutY="228.0" text="Email:" textFill="#6e6363" />
+                        <DatePicker fx:id="EditBirthId" layoutX="184.0" layoutY="279.0" prefHeight="40.0" prefWidth="172.0" />
+                        <Label layoutX="101.0" layoutY="290.0" text="Birth Date : " textFill="#6e6363" />
                         <Button fx:id="SaveEdit1" layoutX="482.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleCancelEdit" prefHeight="33.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: #d72c19;" styleClass="round-btn" text="Cancel" textFill="#151414">
                            <font>
                               <Font name="System Bold" size="13.0" />

@@ -9,6 +9,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +22,7 @@ import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
+import org.gymify.services.StatistiquesService;
 import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
@@ -25,12 +30,17 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static org.gymify.utils.AuthToken.logout;
 
 
 public class DashboardResponsableSalleController {
-
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML
+    private Label totalUsersLabel;
     @FXML private TextField AddEmailFx, AddFirstNameFx, AddLastNameFx, searchUserField, EditNomId, EditPrenomId, EditEmailId;
     @FXML private PasswordField AddPsswdFx, EditPasswdId;
     @FXML private ChoiceBox<String> AddRoleFx, AddSpecialiteFx, EditRoleId, EditSpecialId;
@@ -42,6 +52,7 @@ public class DashboardResponsableSalleController {
     @FXML private TextField searchRoleField;
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser();
+    private StatistiquesService statistiquesService=new StatistiquesService() {};
 
     public void initialize() {
         User currentUser = AuthToken.getCurrentUser();
@@ -59,7 +70,10 @@ public class DashboardResponsableSalleController {
         AddSpecialiteFx.setDisable(true);
 
         AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
+        int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
 
+        totalUsersLabel.setText("" + totalUsers);
+        afficherCourbeStatistiques();
         listUsersInVBox();
     }
     @FXML
@@ -296,5 +310,49 @@ public class DashboardResponsableSalleController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void ajouterSpecialite() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nouvelle spécialité");
+        dialog.setHeaderText("Ajouter une nouvelle spécialité");
+        dialog.setContentText("Nom de la spécialité :");
+
+        dialog.showAndWait().ifPresent(nouvelleSpecialite -> {
+            nouvelleSpecialite = nouvelleSpecialite.trim();
+            if (!nouvelleSpecialite.isEmpty() && !AddSpecialiteFx.getItems().contains(nouvelleSpecialite)) {
+                AddSpecialiteFx.getItems().add(nouvelleSpecialite);
+                AddSpecialiteFx.setValue(nouvelleSpecialite); // Sélectionner la nouvelle spécialité
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "La spécialité existe déjà ou est vide !");
+            }
+        });
+    }
+    private void afficherCourbeStatistiques() {
+        System.out.println("📊 Début affichage courbe");
+        Map<String, Integer> stats = statistiquesService.getNombreUtilisateursParRole();
+
+        if (stats.isEmpty()) {
+            System.out.println("❌ Aucune donnée reçue pour la courbe !");
+            return;
+        }
+
+        System.out.println("📊 Données reçues : " + stats);  // Vérification console
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Utilisateurs par rôle");
+
+        for (Map.Entry<String, Integer> entry : stats.entrySet()) {
+            XYChart.Data<String, Number> dataPoint = new XYChart.Data<>(entry.getKey(), entry.getValue());
+            series.getData().add(dataPoint);
+        }
+
+        // Nettoyer l'ancien contenu et ajouter les nouvelles données
+        lineChart.getData().clear();
+        lineChart.getData().add(series);
+
+        // Mise à jour des labels
+        xAxis.setLabel("Rôle");
+        yAxis.setLabel("Nombre d'utilisateurs");
     }
 }
