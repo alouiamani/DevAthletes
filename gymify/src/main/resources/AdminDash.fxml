@@ -261,18 +261,6 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="55.0" layoutY="254.0" prefHeight="256.0" prefWidth="505.0">
-                           <children>
-                              <LineChart layoutY="14.0" prefHeight="255.0" prefWidth="492.0" title="Total Enrolled Chart" AnchorPane.bottomAnchor="-13.199999999999989" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.399999999999977" AnchorPane.topAnchor="14.0">
-                                 <xAxis>
-                                    <CategoryAxis side="BOTTOM" />
-                                 </xAxis>
-                                 <yAxis>
-                                    <NumberAxis side="LEFT" />
-                                 </yAxis>
-                              </LineChart>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane layoutX="27.0" layoutY="22.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -285,7 +273,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
+                              <Label fx:id="totalUsersLabel" layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>
@@ -379,6 +367,18 @@
                               </AnchorPane>
                            </content>
                         </ScrollPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="80.0" layoutY="271.0" prefHeight="252.0" prefWidth="549.0">
+                     <children>
+                        <LineChart fx:id="lineChart" layoutX="1.0" prefHeight="251.0" prefWidth="530.0" title="Statistiques des utilisateur">
+                           <xAxis>
+                              <CategoryAxis label="Rôles" side="BOTTOM" fx:id="xAxis" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis" label="Nombre d'utilisateurs" side="LEFT" />
+                           </yAxis>
+                        </LineChart>
                      </children>
                   </AnchorPane>
                </children>
