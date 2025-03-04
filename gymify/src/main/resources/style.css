@@ -291,5 +291,174 @@
     -fx-scale-y: 1.1;
     -fx-transition: all 0.2s ease-in-out;
 }
+.form-pane {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 5);
+    -fx-padding: 20px;
+}
 
+.form-title {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center;
+}
+
+.input-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.input-field {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+.input-field:focused {
+    -fx-border-color: #3498db;
+    -fx-border-width: 2px;
+}
+
+.button-save {
+    -fx-background-color: #2ecc71;
+    -fx-background-radius: 12px;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-save:hover {
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.button-cancel {
+    -fx-background-color: #e74c3c;
+    -fx-background-radius: 12px;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-cancel:hover {
+    -fx-background-color: #c0392b;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.button-add {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 20px;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-add:hover {
+    -fx-background-color: #2980b9;
+}
+
+.image-container {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 15px;
+    -fx-alignment: center;
+}
+
+.profile-image {
+    -fx-background-radius: 50px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+}
+
+.button-import {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 8px;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+.button-import:hover {
+    -fx-background-color: #2980b9;
+}
+.user-vbox {
+    -fx-background-color: #f4f6f9;
+    -fx-padding: 10px;
+}
+
+.user-hbox {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
+    -fx-padding: 15px;
+    -fx-alignment: center-left;
+}
+
+.user-hbox:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);
+    -fx-background-color: #fafafa;
+}
+
+.user-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-font-weight: bold;
+}
+
+.edit-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+}
+
+.edit-btn:hover {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 5px;
+}
+
+.edit-btn .image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.edit-btn:hover .image-view {
+    -fx-effect: none;
+}
+
+.delete-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+}
+
+.delete-btn:hover {
+    -fx-background-color: #e74c3c;
+    -fx-background-radius: 5px;
+}
+
+.delete-btn .image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.delete-btn:hover .image-view {
+    -fx-effect: none;
+}
 

@@ -56,8 +56,19 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-        <dependency>
 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version> <!-- ou la version qui vous convient -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openstreetmap.osmosis</groupId>
+            <artifactId>osmosis-core</artifactId>
+            <version>0.47.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.angus</groupId>
             <artifactId>angus-mail</artifactId>
             <version>2.0.2</version>
@@ -76,15 +87,19 @@
         <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>jfxtras-agenda</artifactId>
-            <version>11-r1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jfxtras</groupId>
-            <artifactId>jfxtras-agenda</artifactId>
             <version>14-r1</version>
         </dependency>
-
-
+        <!-- Pour la manipulation d'images (Swing et ImageIO) -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-imaging</artifactId>
+            <version>1.0-alpha3</version> <!-- Dernière version stable -->
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>17</version> <!-- Mets la version de ton JavaFX -->
+        </dependency>
     </dependencies>
 
     <build>

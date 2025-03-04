@@ -1,0 +1,114 @@
+.bg-form {
+    -fx-background-color: linear-gradient(to bottom right,   #40a8c4,#222831);
+    background-color: #1E3A8A;
+}
+
+
+.enregistrer-btn{
+    -fx-background-color: linear-gradient(to bottom right, #1E3A8A,#00A1A7);
+    -fx-text-fill: #fff;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+
+}
+
+.annuler-btn{
+    -fx-background-color: linear-gradient(to bottom right, #1E3A8A,#00A1A7);
+    -fx-text-fill: #fff;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+
+}
+
+.sidebar-button {
+    -fx-background-color: #244975, #000000;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+.Appbar {
+    -fx-background-color: #244975, #000000;
+    -fx-text-fill: white;
+
+}
+.edit-button {
+    -fx-background-color: #1b2e44;
+    -fx-padding: 8px 12px;
+    -fx-background-radius: 40px;
+}
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-text-fill: white;
+
+}
+.activityDesign{
+    -fx-background-color:  #dd6d11;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 5);
+
+
+}
+.formActivityDesign{
+    -fx-background-color: #dd6d11;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 5);
+    -fx-background-radius: 30; /* Ajoute un rayon de 15px aux coins */
+    -fx-border-radius: 40;
+
+
+}
+.textfield{
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+
+
+
+}
+/* style.css */
+.main-pane {
+    -fx-background-color: #f4f4f4;
+}
+
+.activity-grid {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+}
+
+.add-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+}
+
+.add-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.vbox-style {
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10px;
+}
+.activity-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+}
+
+.edit-button-recherche {
+
+    -fx-padding: 8px 12px;
+    -fx-background-radius: 40px;
+}
+
+
+
+
+
+
