@@ -50,6 +50,7 @@ public class DashboardAdminController  {
     @FXML private LineChart<String, Number> lineChart;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
+    @FXML private TextField searchRoleField;
     @FXML
     private Label totalUsersLabel;
     @FXML private TextField AddEmailFx, AddFirstNameFx, AddLastNameFx, searchUserField;
@@ -375,7 +376,34 @@ public class DashboardAdminController  {
             e.printStackTrace();
         }
     }
+    @FXML
+    void onSearchByRole(ActionEvent event) {
+        String roleRecherche = searchRoleField.getText().trim();
 
+        if (VBoxId == null) {
+            System.out.println("❌ VBoxId est NULL ! Vérifie ton FXML.");
+            return;
+        }
+
+        if (roleRecherche.isEmpty()) {
+            listUsersInVBox(); // Recharge tous les utilisateurs si le champ est vide
+            return;
+        }
+
+        try {
+            List<User> filteredUsers = serviceUser.rechercherParRole(roleRecherche);
+
+            VBoxId.getChildren().clear();
+
+            if (filteredUsers.isEmpty()) {
+                System.out.println("⚠️ Aucun utilisateur trouvé avec le rôle : " + roleRecherche);
+            } else {
+                filteredUsers.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur SQL lors de la recherche : " + e.getMessage());
+        }
+    }
     @FXML
     private void ajouterSpecialite() {
         TextInputDialog dialog = new TextInputDialog();

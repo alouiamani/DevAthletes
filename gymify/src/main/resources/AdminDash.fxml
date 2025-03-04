@@ -351,7 +351,7 @@
                   </AnchorPane>
                   <AnchorPane fx:id="listUsersPane" layoutX="15.0" layoutY="15.0" prefHeight="494.0" prefWidth="603.0" style="-fx-border-radius: 9px;" visible="false">
                      <children>
-                        <TextField layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="238.0" promptText="Search " />
+                        <TextField fx:id="searchRoleField" layoutX="22.0" layoutY="14.0" onAction="#onSearchByRole" prefHeight="26.0" prefWidth="238.0" promptText="Search " />
                         <Button fx:id="addUserButton" layoutX="277.0" layoutY="15.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="22.0" prefWidth="131.0" style="-fx-background-color: #e6e2e2;" text="Add User" textFill="#5f91ac">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
