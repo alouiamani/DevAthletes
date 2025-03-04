@@ -84,7 +84,7 @@ public class LoginControllers {
 
             switch (loggedInUser.getRole().trim().toLowerCase()) {
                 case "admin" -> ouvrirInterface("AdminDash.fxml", "🏢 Interface Admin", event);
-                case "responsable" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
+                case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
                 case "sportif" -> {
                     ajouterInfoSportif(loggedInUser);
                     ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);

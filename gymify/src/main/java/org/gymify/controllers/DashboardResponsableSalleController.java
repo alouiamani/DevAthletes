@@ -58,7 +58,7 @@ public class DashboardResponsableSalleController {
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
             welcomeLabel.setText(" " + currentUser.getNom());
-            setUserProfileImage(currentUser.getImageURL());
+
         } else {
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Utilisateur non connecté.");
             logout();
@@ -212,29 +212,56 @@ public class DashboardResponsableSalleController {
 
 
     private HBox creerHBoxUtilisateur(User user) {
+        // Création de la HBox principale
         HBox hbox = new HBox(15);
         hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setPadding(new Insets(8, 10, 13, 3));
-        hbox.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #ddd; "
-                + "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
+        hbox.setPadding(new Insets(10));
+        hbox.getStyleClass().add("user-hbox"); // Ajout d'une classe CSS pour le style
 
+        // Utilisation d'un GridPane pour organiser les informations
+        GridPane infoGrid = new GridPane();
+        infoGrid.setHgap(20);
+        infoGrid.setVgap(5);
+        infoGrid.setAlignment(Pos.CENTER_LEFT);
 
+        // Labels pour les informations
         Label nameLabel = new Label(user.getNom());
+        nameLabel.getStyleClass().add("user-label");
+
         Label lastNameLabel = new Label(user.getPrenom());
+        lastNameLabel.getStyleClass().add("user-label");
+
         Label emailLabel = new Label(user.getEmail());
+        emailLabel.getStyleClass().add("user-label");
+
         Label roleLabel = new Label(user.getRole());
-        for (Label label : new Label[]{nameLabel, lastNameLabel, emailLabel, roleLabel}) {
-            label.setStyle("-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #333;");
-        }
+        roleLabel.getStyleClass().add("user-label");
+
+        // Ajout des labels au GridPane
+        infoGrid.add(new Label("Nom:"), 0, 0);
+        infoGrid.add(nameLabel, 1, 0);
+        infoGrid.add(new Label("Prénom:"), 0, 1);
+        infoGrid.add(lastNameLabel, 1, 1);
+        infoGrid.add(new Label("Email:"), 2, 0);
+        infoGrid.add(emailLabel, 3, 0);
+        infoGrid.add(new Label("Rôle:"), 2, 1);
+        infoGrid.add(roleLabel, 3, 1);
+
+        // Boutons d'action
         Button editButton = createImageButton("/images/gear.png", event -> modifierUtilisateur(user));
         Button deleteButton = createImageButton("/images/delete.png", event -> supprimerUtilisateur(user));
 
+        // Spacer pour pousser les boutons à droite
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        hbox.getChildren().addAll(nameLabel, lastNameLabel, emailLabel, roleLabel, spacer, editButton, deleteButton);
+        // Ajout des éléments à la HBox
+        hbox.getChildren().addAll(infoGrid, spacer, editButton, deleteButton);
+
         return hbox;
     }
+
+
 
     private Button createImageButton(String imagePath, javafx.event.EventHandler<ActionEvent> eventHandler) {
         Button button = new Button();
@@ -276,9 +303,7 @@ public class DashboardResponsableSalleController {
         });
     }
 
-    private void setUserProfileImage(String imageURL) {
-        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/images/icons8-user-32.png"));
-    }
+
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
