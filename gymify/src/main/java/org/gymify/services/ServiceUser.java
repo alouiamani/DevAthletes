@@ -280,12 +280,12 @@ public class ServiceUser implements IGestionUser<User> {
         return false;
     }
     public List<User> rechercherParRole(String role) throws SQLException {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE LOWER(role) = LOWER(?)"; // Ignore la casse
+        String sql = "SELECT * FROM user"; // Récupérer tous les utilisateurs
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, role);
-            ResultSet rs = pstmt.executeQuery();
+        List<User> users = new ArrayList<>();
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 User user;
@@ -306,10 +306,14 @@ public class ServiceUser implements IGestionUser<User> {
                 users.add(user);
             }
         } catch (SQLException e) {
-            System.err.println("❌ Erreur SQL lors de la recherche par rôle : " + e.getMessage());
+            System.err.println("❌ Erreur SQL lors de la récupération des utilisateurs : " + e.getMessage());
             throw e;
         }
-        return users;
+
+        // 🔥 Utilisation de Streams pour filtrer les utilisateurs par rôle
+        return users.stream()
+                .filter(user -> user.getRole().equalsIgnoreCase(role)) // Filtre par rôle
+                .collect(Collectors.toList()); // Convertit le Stream en List
     }
     public Optional<User> getUtilisateurById(int idUser) throws SQLException {
         String query = "SELECT * FROM user WHERE id_User = ?";
@@ -350,5 +354,22 @@ public class ServiceUser implements IGestionUser<User> {
         }
 
         return Optional.empty();
+    }
+    public int getTotalUsers() {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM user";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return total;
     }
 }
