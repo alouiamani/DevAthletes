@@ -92,8 +92,8 @@ public class DashboardAdminController  {
         }
 
         // Initialiser les rôles disponibles
-        AddRoleFx.getItems().addAll("Admin", "Responsable_salle", "Entraîneur", "Sportif");
-       EditRoleId.getItems().addAll("Admin", "Responsable_salle", "Entraîneur", "Sportif");
+        AddRoleFx.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
+       EditRoleId.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
 
         // Initialiser les spécialités (uniquement pour les entraîneurs)
         AddSpecialiteFx.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
