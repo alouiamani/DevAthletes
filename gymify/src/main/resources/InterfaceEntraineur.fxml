@@ -1,59 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.InterfaceEntraineurController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.InterfaceEntraineurController">
    <children>
-      <ImageView fitHeight="237.0" fitWidth="654.0" layoutX="-4.0" layoutY="-1.0" opacity="0.47" pickOnBounds="true" smooth="false">
+      <!-- Image de fond avec flou et opacité -->
+      <ImageView fitHeight="600.0" fitWidth="900.0" opacity="0.3" pickOnBounds="true">
          <image>
             <Image url="@images/ggym.jpeg" />
          </image>
+         <effect>
+            <GaussianBlur radius="10.0" />
+         </effect>
       </ImageView>
-      <AnchorPane fx:id="infouserid" layoutX="35.0" layoutY="246.0" prefHeight="130.0" prefWidth="594.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
+
+      <!-- Carte de profil -->
+      <AnchorPane fx:id="infouserid" layoutX="100.0" layoutY="204.0" prefHeight="240.0" prefWidth="700.0" styleClass="profile-card" stylesheets="@styles.css">
          <children>
-            <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
-            <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="50.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="185.0" layoutY="42.0" text="Username: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="usernameid" layoutX="294.0" layoutY="43.0" prefHeight="7.0" prefWidth="59.0" text="Username" />
-            <Label layoutX="192.0" layoutY="78.0" text="Email :">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-            <Button fx:id="EditId" layoutX="419.0" layoutY="73.0" mnemonicParsing="false" onAction="#showPlanning" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Planning" textFill="#335581">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="EditId1" layoutX="419.0" layoutY="27.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            <!-- Image de profil avec clip circulaire -->
+            <ImageView fx:id="profileImage" fitHeight="120.0" fitWidth="128.0" layoutX="32.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <clip>
+                  <Circle centerX="60.0" radius="60.0" />
+               </clip>
+            </ImageView>
+
+            <!-- Informations utilisateur -->
+            <Label layoutX="200.0" layoutY="60.0" styleClass="label-title" stylesheets="@styles.css" text="Username:" />
+            <Label fx:id="usernameid" layoutX="300.0" layoutY="60.0" styleClass="label-value" text="Username" />
+
+            <Label layoutX="200.0" layoutY="100.0" styleClass="label-title" text="Email:" />
+            <Label fx:id="emailid" layoutX="300.0" layoutY="100.0" styleClass="label-value" text="Email" />
+
+            <!-- Boutons -->
+            <Button fx:id="EditId1" layoutX="500.0" layoutY="60.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="40.0" prefWidth="140.0" styleClass="button-primary" stylesheets="@styles.css" text="Edit Profile" />
+            <Button fx:id="EditId" layoutX="500.0" layoutY="120.0" mnemonicParsing="false" onAction="#showPlanning" prefHeight="40.0" prefWidth="140.0" styleClass="button-secondary" stylesheets="@styles.css" text="Planning" />
          </children>
       </AnchorPane>
-      <Text fill="#2c4f6b" fontSmoothingType="LCD" layoutX="150.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To GIMIFY" textAlignment="CENTER" wrappingWidth="318.5367431640625">
-         <font>
-            <Font name="Tw Cen MT Condensed Bold" size="68.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="62.0" fitWidth="106.0" layoutX="-18.0" pickOnBounds="true" preserveRatio="true">
+
+      <!-- Titre de bienvenue -->
+      <Text layoutX="150.0" layoutY="120.0" styleClass="welcome-text" text="Welcome To GYMIFY" textAlignment="CENTER" wrappingWidth="600.0" />
+
+      <!-- Logo -->
+      <ImageView fitHeight="80.0" fitWidth="140.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="575.0" layoutY="370.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
+
+      <!-- Bouton de déconnexion -->
+      <Button layoutX="750.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="40.0" prefWidth="120.0" styleClass="logout-button" text="Sign Out" />
    </children>
+
+   <!-- Styles CSS intégrés -->
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
 </AnchorPane>
