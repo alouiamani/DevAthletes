@@ -69,9 +69,6 @@
             <version>0.47.3</version>
         </dependency>
         <dependency>
-
-
-
             <groupId>org.eclipse.angus</groupId>
             <artifactId>angus-mail</artifactId>
             <version>2.0.2</version>
@@ -92,7 +89,17 @@
             <artifactId>jfxtras-agenda</artifactId>
             <version>14-r1</version>
         </dependency>
-
+        <!-- Pour la manipulation d'images (Swing et ImageIO) -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-imaging</artifactId>
+            <version>1.0-alpha3</version> <!-- Dernière version stable -->
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>17</version> <!-- Mets la version de ton JavaFX -->
+        </dependency>
     </dependencies>
 
     <build>
