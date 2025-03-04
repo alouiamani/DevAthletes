@@ -44,7 +44,7 @@ public class ListeDesEquipesController {
                 }
                 FXMLLoader loader = new FXMLLoader(fxmlURL);
                 HBox card = loader.load();  // Charger l'élément graphique
-                tn.esprit.controllers.CardEquipeController controller = loader.getController();
+                CardEquipeController controller = loader.getController();
                 controller.setEquipe(equipe);  // Passer l'équipe au contrôleur
                 // Injecter ce contrôleur pour permettre le rafraîchissement après modification/suppression
                 controller.setListeDesEquipesController(this);

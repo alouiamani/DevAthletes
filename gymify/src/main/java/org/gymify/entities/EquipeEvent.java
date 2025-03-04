@@ -1,4 +1,4 @@
-package tn.esprit.entities;
+package org.gymify.entities;
 
 import org.gymify.entities.Event;
 
