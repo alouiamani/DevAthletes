@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="695.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeDesEvennementsController">
+    <VBox layoutY="-1.0" prefHeight="695.0" prefWidth="820.0" spacing="10" style="-fx-background-color: #f8f9fa; -fx-padding: 10px;" VBox.vgrow="ALWAYS">
+        <!-- AppBar -->
+        <HBox prefHeight="43.0" prefWidth="800.0" style="-fx-background-color: #2e86de; -fx-padding: 15px; -fx-alignment: center; -fx-background-radius: 10px;">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" text="Liste des Événements" />
+        </HBox>
+
+        <!-- Barre de recherche et boutons Ajouter et Liste Equipes -->
+        <HBox spacing="10" style="-fx-padding: 10px; -fx-alignment: center-left;">
+            <TextField fx:id="searchField" prefHeight="28.0" prefWidth="359.0" promptText="Rechercher un événement..." style="-fx-pref-width: 300px; -fx-border-radius: 5px; -fx-padding: 5px;" />
+            <Button fx:id="btnAjouter" onAction="#ajouterEvenement" prefHeight="28.0" prefWidth="199.0" style="-fx-background-color: #2e86de; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Ajouter Événement" />
+            <Button onAction="#ListeEquipes" prefHeight="28.0" prefWidth="199.0" style="-fx-background-color: #2e86de; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Liste Equipes" />
+        </HBox>
+
+        <!-- Liste des événements -->
+        <ScrollPane fx:id="scrollPaneEvennements" fitToWidth="true" prefHeight="557.0" prefWidth="800.0" style="-fx-background: transparent;">
+            <VBox fx:id="vboxEvennements" prefHeight="0.0" prefWidth="797.0" spacing="15" style="-fx-padding: 15px;" />
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

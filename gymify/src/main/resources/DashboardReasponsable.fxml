@@ -42,11 +42,11 @@
                <children>
                   <AnchorPane layoutX="-7.0" prefHeight="379.0" prefWidth="178.0">
                      <children>
-                        <VBox layoutX="7.0" prefHeight="526.0" prefWidth="162.0" spacing="10.0" styleClass="nav-form" stylesheets="@style.css">
+                        <VBox layoutX="7.0" prefHeight="554.0" prefWidth="162.0" spacing="10.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
                               <AnchorPane prefHeight="157.0" prefWidth="162.0">
                                  <children>
-                                    <ImageView fitHeight="50.0" fitWidth="62.0" layoutX="56.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="50.0" fitWidth="60.0" layoutX="56.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@images/user.png" />
                                        </image>
@@ -99,18 +99,6 @@
                                     <Font name="Arial" size="6.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="ReclamationId" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Reclamation">
-                                 <graphic>
-                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/chat.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Arial" size="8.0" />
-                                 </font>
-                              </Button>
                               <Button fx:id="ReclamationId1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Blog">
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
@@ -143,9 +131,9 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="498.0" prefWidth="628.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;">
+                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;" visible="false">
                      <children>
                         <TextField fx:id="searchRoleField" layoutX="22.0" layoutY="14.0" onAction="#onSearchByRole" prefHeight="26.0" prefWidth="298.0" promptText="Search " />
                         <Button fx:id="addUserButton" layoutX="461.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="22.0" prefWidth="131.0" style="-fx-background-color: #e6e2e2;" text="Add User" textFill="#5f91ac">
@@ -175,7 +163,7 @@
                         </ScrollPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="homePane" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css" visible="false">
+                  <AnchorPane fx:id="homePane" layoutY="15.0" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css">
                      <children>
                         <AnchorPane layoutX="27.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
@@ -213,18 +201,6 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="55.0" layoutY="254.0" prefHeight="256.0" prefWidth="505.0">
-                           <children>
-                              <LineChart layoutY="14.0" prefHeight="255.0" prefWidth="492.0" title="Total Enrolled Chart" AnchorPane.bottomAnchor="-13.199999999999989" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.399999999999977" AnchorPane.topAnchor="14.0">
-                                 <xAxis>
-                                    <CategoryAxis side="BOTTOM" />
-                                 </xAxis>
-                                 <yAxis>
-                                    <NumberAxis side="LEFT" />
-                                 </yAxis>
-                              </LineChart>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane layoutX="27.0" layoutY="22.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -237,7 +213,7 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
+                              <Label fx:id="totalUsersLabel" layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>
@@ -265,11 +241,6 @@
                         </AnchorPane>
                         <AnchorPane layoutX="432.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
-                              <Label layoutX="38.0" layoutY="58.0" text="Events" textFill="#e7e2e2">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/calendar.png" />
@@ -280,6 +251,11 @@
                                     <Font name="System Bold" size="17.0" />
                                  </font>
                               </Label>
+                              <Button layoutX="33.0" layoutY="59.0" mnemonicParsing="false" onAction="#OuvrirListeEvent" style="-fx-background-color: transparent;" text="Events" textFill="#f4f1f1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="231.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
@@ -301,85 +277,82 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="addUserPane" layoutX="13.0" layoutY="13.0" prefHeight="497.0" prefWidth="602.0" style="-fx-background-color: #aacedc;" styleClass="white-round-carts" stylesheets="@style.css" visible="false">
-                     <children>
-                        <Label layoutX="189.0" layoutY="14.0" prefHeight="32.0" prefWidth="252.0" text="Create New Account" textFill="#233f43">
-                           <font>
-                              <Font name="Ebrima Bold" size="25.0" />
-                           </font>
-                        </Label>
-                        <AnchorPane layoutX="221.0" layoutY="58.0" prefHeight="128.0" prefWidth="188.0" styleClass="white-round-carts">
-
-                        </AnchorPane>
-                        <TextField fx:id="AddFirstNameFx" layoutX="88.0" layoutY="210.0" prefHeight="38.0" prefWidth="170.0" promptText="First Name" />
-                        <TextField fx:id="AddLastNameFx" layoutX="88.0" layoutY="270.0" prefHeight="39.0" prefWidth="170.0" promptText="Last Name" />
-                        <ChoiceBox fx:id="AddRoleFx" layoutX="387.0" layoutY="277.0" prefHeight="38.0" prefWidth="183.0" />
-                        <ChoiceBox fx:id="AddSpecialiteFx" layoutX="387.0" layoutY="211.0" prefHeight="36.0" prefWidth="187.0" />
-                        <Label layoutX="9.0" layoutY="220.0" text="First Name :" textFill="#6e6363" />
-                        <Label layoutX="10.0" layoutY="279.0" text="Last Name :" textFill="#6e6363" />
-                        <Label layoutX="14.0" layoutY="344.0" text="Password :" textFill="#6e6363" />
-                        <Label layoutX="317.0" layoutY="220.0" text="Specialite :" textFill="#6e6363" />
-                        <Label layoutX="317.0" layoutY="288.0" text="Role : " textFill="#6e6363" />
-                        <Button fx:id="SaveUserFx" layoutX="187.0" layoutY="449.0" mnemonicParsing="false" onAction="#SaveAddUser" prefHeight="34.0" prefWidth="91.0" style="-fx-background-radius: 10px; -fx-background-color: #15cf78;" styleClass="round-btn" text="Save" textFill="#222323">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <PasswordField fx:id="AddPsswdFx" layoutX="88.0" layoutY="334.0" prefHeight="37.0" prefWidth="170.0" promptText="Password" />
-                        <TextField fx:id="AddEmailFx" layoutX="389.0" layoutY="340.0" prefHeight="36.0" prefWidth="177.0" promptText="Email" />
-                        <Label layoutX="317.0" layoutY="344.0" text="Email:" textFill="#6e6363" />
-                        <DatePicker fx:id="AddBirthFx" layoutX="225.0" layoutY="391.0" prefHeight="32.0" prefWidth="174.0" />
-                        <Label layoutX="111.0" layoutY="402.0" text="Birth Date :" textFill="#6e6363" />
-                        <Button layoutX="328.0" layoutY="449.0" mnemonicParsing="false" onAction="#handleCancelAdd" prefHeight="34.0" prefWidth="91.0" style="-fx-background-radius: 10px; -fx-background-color: #dc3615;" styleClass="round-btn" text="Cancel" textFill="#232020">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="EditUserPane" layoutX="12.0" layoutY="11.0" prefHeight="502.0" prefWidth="602.0" style="-fx-background-color: #aacedc;" styleClass="white-round-carts" stylesheets="@style.css" visible="false">
-                     <children>
-                        <Label layoutX="217.0" layoutY="14.0" prefHeight="22.0" prefWidth="247.0" text="Edit Your Account !" textFill="#296e79">
-                           <font>
-                              <Font name="Ebrima Bold" size="25.0" />
-                           </font>
-                        </Label>
-                        <AnchorPane fx:id="EditImageId" layoutX="394.0" layoutY="95.0" prefHeight="170.0" prefWidth="175.0" styleClass="white-round-carts">
+                        <AnchorPane layoutX="32.0" layoutY="266.0" prefHeight="239.0" prefWidth="562.0">
                            <children>
-                              <ImageView fx:id="profileImage" fitHeight="99.0" fitWidth="144.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
-                              <Button fx:id="SaveUserFx11" layoutX="39.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: transparent;" styleClass="round-btn" text="Importer" textFill="#39526e">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Button>
+                              <LineChart fx:id="lineChart" layoutX="21.0" layoutY="3.0" prefHeight="251.0" prefWidth="530.0" title="Static Of Users">
+                                 <xAxis>
+                                    <CategoryAxis label="Role" prefHeight="20.0" prefWidth="452.0" side="BOTTOM" fx:id="xAxis" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="yAxis" label="Number Of User" side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
                            </children>
                         </AnchorPane>
-                        <TextField fx:id="EditNomId" layoutX="166.0" layoutY="68.0" prefHeight="34.0" prefWidth="194.0" promptText="First Name" />
-                        <TextField fx:id="EditPrenomId" layoutX="166.0" layoutY="131.0" prefHeight="34.0" prefWidth="194.0" promptText="Last Name" />
-                        <ChoiceBox fx:id="EditRoleId" layoutX="170.0" layoutY="447.0" prefHeight="26.0" prefWidth="183.0" />
-                        <ChoiceBox fx:id="EditSpecialId" layoutX="165.0" layoutY="385.0" prefHeight="30.0" prefWidth="194.0" />
-                        <Label layoutX="79.0" layoutY="77.0" text="First Name :" textFill="#6e6363" />
-                        <Label layoutX="79.0" layoutY="139.0" text="Last Name :" textFill="#6e6363" />
-                        <Label layoutX="83.0" layoutY="209.0" text="Password :" textFill="#6e6363" />
-                        <Label layoutX="82.0" layoutY="391.0" text="Specialite :" textFill="#6e6363" />
-                        <Label layoutX="82.0" layoutY="451.0" text="Role : " textFill="#6e6363" />
-                        <Button fx:id="SaveEdit" layoutX="385.0" layoutY="311.0" mnemonicParsing="false" onAction="#saveEditUser" prefHeight="42.0" prefWidth="88.0" style="-fx-background-radius: 10px; -fx-background-color: #59c17a;" styleClass="round-btn" text="Save" textFill="#092b13">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <PasswordField fx:id="EditPasswdId" layoutX="167.0" layoutY="201.0" prefHeight="33.0" prefWidth="195.0" promptText="Password" />
-                        <TextField fx:id="EditEmailId" layoutX="168.0" layoutY="267.0" prefHeight="31.0" prefWidth="190.0" promptText="Email" />
-                        <Label layoutX="83.0" layoutY="274.0" text="Email:" textFill="#6e6363" />
-                        <DatePicker fx:id="EditBirthId" layoutX="166.0" layoutY="321.0" prefHeight="40.0" prefWidth="192.0" />
-                        <Label layoutX="80.0" layoutY="332.0" text="Birth Date : " textFill="#6e6363" />
-                        <Button layoutX="489.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleCancelEdit" prefHeight="42.0" prefWidth="88.0" style="-fx-background-radius: 10px; -fx-background-color: #d91b18;" styleClass="round-btn" text="Cancel" textFill="#1b1919">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="addUserPane" layoutX="8.0" layoutY="28.0" prefHeight="497.0" prefWidth="602.0" styleClass="form-pane" visible="false">
+                     <children>
+                        <!-- Titre -->
+                        <Label layoutX="147.0" layoutY="22.0" styleClass="form-title" text="Create New Account" />
+
+                        <!-- Champs de formulaire -->
+                        <TextField fx:id="AddFirstNameFx" layoutX="80.0" layoutY="100.0" prefHeight="40.0" prefWidth="200.0" promptText="First Name" styleClass="input-field" />
+                        <Label layoutX="80.0" layoutY="69.0" styleClass="input-label" text="First Name" />
+
+                        <TextField fx:id="AddLastNameFx" layoutX="80.0" layoutY="180.0" prefHeight="40.0" prefWidth="200.0" promptText="Last Name" styleClass="input-field" />
+                        <Label layoutX="81.0" layoutY="150.0" styleClass="input-label" text="Last Name" />
+
+                        <PasswordField fx:id="AddPsswdFx" layoutX="80.0" layoutY="260.0" prefHeight="40.0" prefWidth="200.0" promptText="Password" styleClass="input-field" />
+                        <Label layoutX="83.0" layoutY="226.0" styleClass="input-label" text="Password" />
+
+                        <TextField fx:id="AddEmailFx" layoutX="319.0" layoutY="100.0" prefHeight="40.0" prefWidth="200.0" promptText="Email" styleClass="input-field" />
+                        <Label layoutX="320.0" layoutY="78.0" styleClass="input-label" text="Email" />
+
+                        <ChoiceBox fx:id="AddSpecialiteFx" layoutX="319.0" layoutY="175.0" prefHeight="46.0" prefWidth="200.0" />
+                        <Label layoutX="323.0" layoutY="150.0" styleClass="input-label" text="Specialty" />
+
+                        <ChoiceBox fx:id="AddRoleFx" layoutX="319.0" layoutY="255.0" prefHeight="40.0" prefWidth="200.0" />
+                        <Label layoutX="323.0" layoutY="226.0" styleClass="input-label" text="Role" />
+
+                        <DatePicker fx:id="AddBirthFx" layoutX="200.0" layoutY="341.0" prefHeight="40.0" prefWidth="200.0" styleClass="input-field" />
+                        <Label layoutX="200.0" layoutY="311.0" styleClass="input-label" text="Birth Date" />
+
+                        <!-- Boutons -->
+                        <Button fx:id="SaveUserFx" layoutX="162.0" layoutY="407.0" mnemonicParsing="false" onAction="#SaveAddUser" prefHeight="45.0" prefWidth="100.0" styleClass="button-save" text="Save" />
+                        <Button layoutX="325.0" layoutY="407.0" mnemonicParsing="false" onAction="#handleCancelAdd" prefHeight="45.0" prefWidth="100.0" styleClass="button-cancel" text="Cancel" />
+
+                        <!-- Bouton Ajouter Spécialité -->
+                        <Button layoutX="530.0" layoutY="175.0" mnemonicParsing="false" onAction="#ajouterSpecialite" prefHeight="40.0" prefWidth="40.0" styleClass="button-add" text="+" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="EditUserPane" layoutX="8.0" layoutY="31.0" prefHeight="492.0" prefWidth="602.0" styleClass="form-pane" visible="false">
+                     <children>
+                        <!-- Titre -->
+                        <Label layoutX="180.0" layoutY="20.0" styleClass="form-title" text="Edit Your Account" />
+
+                        <!-- Champs de formulaire -->
+                        <TextField fx:id="EditNomId" layoutX="77.0" layoutY="114.0" prefHeight="40.0" prefWidth="200.0" promptText="First Name" styleClass="input-field" />
+                        <Label layoutX="80.0" layoutY="69.0" styleClass="input-label" text="First Name" />
+
+                        <TextField fx:id="EditPrenomId" layoutX="370.0" layoutY="114.0" prefHeight="40.0" prefWidth="200.0" promptText="Last Name" styleClass="input-field" />
+                        <Label layoutX="370.0" layoutY="69.0" styleClass="input-label" text="Last Name" />
+
+                        <TextField fx:id="EditEmailId" layoutX="77.0" layoutY="199.0" prefHeight="40.0" prefWidth="200.0" promptText="Email" styleClass="input-field" />
+                        <Label layoutX="77.0" layoutY="171.0" styleClass="input-label" text="Email" />
+
+                        <DatePicker fx:id="EditBirthId" layoutX="370.0" layoutY="198.0" minHeight="-Infinity" prefHeight="44.0" prefWidth="200.0" styleClass="input-field" />
+                        <Label layoutX="371.0" layoutY="171.0" styleClass="input-label" text="Birth Date" />
+
+                        <ChoiceBox fx:id="EditSpecialId" layoutX="77.0" layoutY="293.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" />
+                        <Label layoutX="83.0" layoutY="268.0" styleClass="input-label" text="Specialty" />
+
+                        <ChoiceBox fx:id="EditRoleId" layoutX="370.0" layoutY="293.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" />
+                        <Label layoutX="371.0" layoutY="268.0" styleClass="input-label" text="Role" />
+
+                        <!-- Boutons -->
+                        <Button fx:id="SaveEdit" layoutX="188.0" layoutY="385.0" mnemonicParsing="false" onAction="#saveEditUser" prefHeight="45.0" prefWidth="100.0" styleClass="button-save" text="Save" />
+                        <Button layoutX="335.0" layoutY="385.0" mnemonicParsing="false" onAction="#handleCancelEdit" prefHeight="45.0" prefWidth="100.0" styleClass="button-cancel" text="Cancel" />
                      </children>
                   </AnchorPane>
                </children>

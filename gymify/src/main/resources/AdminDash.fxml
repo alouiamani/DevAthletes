@@ -197,23 +197,21 @@
                         </AnchorPane>
                         <TextField fx:id="EditNomId" layoutX="182.0" layoutY="109.0" prefHeight="34.0" prefWidth="174.0" promptText="First Name" />
                         <TextField fx:id="EditPrenomId" layoutX="183.0" layoutY="164.0" prefHeight="31.0" prefWidth="174.0" promptText="Last Name" />
-                        <ChoiceBox fx:id="EditRoleId" layoutX="185.0" layoutY="424.0" prefHeight="31.0" prefWidth="169.0" />
-                        <ChoiceBox fx:id="EditSpecialId" layoutX="185.0" layoutY="375.0" prefHeight="30.0" prefWidth="170.0" />
+                        <ChoiceBox fx:id="EditRoleId" layoutX="185.0" layoutY="393.0" prefHeight="31.0" prefWidth="169.0" />
+                        <ChoiceBox fx:id="EditSpecialId" layoutX="185.0" layoutY="336.0" prefHeight="30.0" prefWidth="170.0" />
                         <Label layoutX="101.0" layoutY="117.0" text="First Name :" textFill="#6e6363" />
                         <Label layoutX="101.0" layoutY="177.0" text="Last Name :" textFill="#6e6363" />
-                        <Label layoutX="105.0" layoutY="222.0" text="Password :" textFill="#6e6363" />
-                        <Label layoutX="105.0" layoutY="381.0" text="Specialite :" textFill="#6e6363" />
-                        <Label layoutX="108.0" layoutY="431.0" text="Role : " textFill="#6e6363" />
+                        <Label layoutX="104.0" layoutY="343.0" text="Specialite :" textFill="#6e6363" />
+                        <Label layoutX="104.0" layoutY="400.0" text="Role : " textFill="#6e6363" />
                         <Button fx:id="SaveEdit" layoutX="389.0" layoutY="334.0" mnemonicParsing="false" onAction="#saveEditUser" prefHeight="35.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: #16b93f;" styleClass="round-btn" text="Save" textFill="#0f1010">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Button>
-                        <PasswordField fx:id="EditPasswdId" layoutX="184.0" layoutY="213.0" prefHeight="34.0" prefWidth="171.0" promptText="Password" />
-                        <TextField fx:id="EditEmailId" layoutX="183.0" layoutY="267.0" prefHeight="31.0" prefWidth="172.0" promptText="Email" />
-                        <Label layoutX="101.0" layoutY="274.0" text="Email:" textFill="#6e6363" />
-                        <DatePicker fx:id="EditBirthId" layoutX="184.0" layoutY="319.0" prefHeight="40.0" prefWidth="172.0" />
-                        <Label layoutX="102.0" layoutY="330.0" text="Birth Date : " textFill="#6e6363" />
+                        <TextField fx:id="EditEmailId" layoutX="184.0" layoutY="221.0" prefHeight="31.0" prefWidth="172.0" promptText="Email" />
+                        <Label layoutX="101.0" layoutY="228.0" text="Email:" textFill="#6e6363" />
+                        <DatePicker fx:id="EditBirthId" layoutX="184.0" layoutY="279.0" prefHeight="40.0" prefWidth="172.0" />
+                        <Label layoutX="101.0" layoutY="290.0" text="Birth Date : " textFill="#6e6363" />
                         <Button fx:id="SaveEdit1" layoutX="482.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleCancelEdit" prefHeight="33.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: #d72c19;" styleClass="round-btn" text="Cancel" textFill="#151414">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -261,18 +259,6 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="55.0" layoutY="254.0" prefHeight="256.0" prefWidth="505.0">
-                           <children>
-                              <LineChart layoutY="14.0" prefHeight="255.0" prefWidth="492.0" title="Total Enrolled Chart" AnchorPane.bottomAnchor="-13.199999999999989" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.399999999999977" AnchorPane.topAnchor="14.0">
-                                 <xAxis>
-                                    <CategoryAxis side="BOTTOM" />
-                                 </xAxis>
-                                 <yAxis>
-                                    <NumberAxis side="LEFT" />
-                                 </yAxis>
-                              </LineChart>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane layoutX="27.0" layoutY="22.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -285,7 +271,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
+                              <Label fx:id="totalUsersLabel" layoutX="88.0" layoutY="14.0" text="0" textFill="#f7f4f4">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>
@@ -349,11 +335,23 @@
                               </Label>
                            </children>
                         </AnchorPane>
+                        <AnchorPane layoutX="62.0" layoutY="262.0" prefHeight="252.0" prefWidth="549.0">
+                           <children>
+                              <LineChart fx:id="lineChart" layoutX="1.0" prefHeight="251.0" prefWidth="530.0" title="Statistiques des utilisateur">
+                                 <xAxis>
+                                    <CategoryAxis label="Rôles" side="BOTTOM" fx:id="xAxis" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="yAxis" label="Nombre d'utilisateurs" side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="listUsersPane" layoutX="15.0" layoutY="15.0" prefHeight="494.0" prefWidth="603.0" style="-fx-border-radius: 9px;" visible="false">
                      <children>
-                        <TextField layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="238.0" promptText="Search " />
+                        <TextField fx:id="searchRoleField" layoutX="22.0" layoutY="14.0" onAction="#onSearchByRole" prefHeight="26.0" prefWidth="238.0" promptText="Search " />
                         <Button fx:id="addUserButton" layoutX="277.0" layoutY="15.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="22.0" prefWidth="131.0" style="-fx-background-color: #e6e2e2;" text="Add User" textFill="#5f91ac">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
