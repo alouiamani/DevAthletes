@@ -3,7 +3,8 @@ package org.gymify.entities;
 public enum Objectifs {
     PERTE_PROIDS("perte de poids"),
     PRISE_DE_MASSE("prise de masse"),
-    ENDURANCE("endurance");
+    ENDURANCE("endurance"),
+    RELAXATION ("relaxation");
     private final String label;
 
     Objectifs(String label) {
