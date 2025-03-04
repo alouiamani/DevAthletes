@@ -173,6 +173,21 @@ public class ProfileMembreController {
         sallesContainer.requestFocus();
     }
 
+    @FXML
+    private void ouvrirEvent(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeParticipation.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Gérer mes Participations");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 
