@@ -20,9 +20,11 @@ import javafx.stage.Stage;
 import org.gymify.entities.Planning;
 import org.gymify.entities.User;
 import org.gymify.services.PlanningService;
+import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class planningController {
     @FXML
     private GridPane planningGrid;
     private User user;
+    private User userId= AuthToken.getCurrentUser();
 
 
     @FXML
@@ -131,6 +134,7 @@ public class planningController {
             planning.setDescription(desc);
             planning.setdateDebut(Date.valueOf(startDate));
             planning.setDateFin(Date.valueOf(endDate));
+            planning.setUser(userId);
 
             // Ajouter le planning dans la base de données
             planningService.Add(planning);
@@ -157,7 +161,7 @@ public class planningController {
     }
     private void displayPlanning() {
         PlanningService planningService = new PlanningService();
-        List<Planning> plannings = planningService.Display();
+        List<Planning> plannings = planningService.DisplayById(userId.getId_User());
         planningGrid.getChildren().clear();
 
         int row = 0;

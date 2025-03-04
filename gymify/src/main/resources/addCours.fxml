@@ -53,17 +53,17 @@
                   </Label>
                   <ComboBox fx:id="activityComboBox" layoutX="-18.0" layoutY="278.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" />
                   <Label fx:id="activityError" layoutX="-22.0" layoutY="314.0" prefHeight="15.0" prefWidth="183.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
-                  <ComboBox fx:id="hourDebut" layoutX="-45.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="61.0" />
+                  <ComboBox fx:id="hourDebut" layoutX="-45.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" promptText="10" />
                   <Label layoutX="-43.0" layoutY="171.0" prefHeight="18.0" prefWidth="98.0" text="Start Time:" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="10.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="minuteDebut" layoutX="22.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
-                  <ComboBox fx:id="secondDebut" layoutX="94.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
-                  <ComboBox fx:id="hourFin" layoutX="195.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
-                  <ComboBox fx:id="minuteFin" layoutX="268.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
-                  <ComboBox fx:id="secondFin" layoutX="338.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <ComboBox fx:id="minuteDebut" layoutX="22.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" />
+                  <ComboBox fx:id="secondDebut" layoutX="94.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" />
+                  <ComboBox fx:id="hourFin" layoutX="195.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" />
+                  <ComboBox fx:id="minuteFin" layoutX="268.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" />
+                  <ComboBox fx:id="secondFin" layoutX="338.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="62.0" />
                   <Label layoutX="200.0" layoutY="173.0" prefHeight="18.0" prefWidth="98.0" text="End Time:" textFill="#fffefe">
                      <font>
                         <Font name="System Italic" size="10.0" />

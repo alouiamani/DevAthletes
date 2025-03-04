@@ -56,8 +56,8 @@ public class CoursService implements IService<Cours> {
             req.setInt(8,cours.getPlanning().getId());
             }
             req.setInt(9,cours.getUser().getId_User());
-            req.setInt(10,cours.getId());
-            req.setInt(11,cours.getSalle().getId_Salle());
+            req.setInt(11,cours.getId());
+            req.setInt(10,cours.getSalle().getId_Salle());
 
 
             req.executeUpdate();

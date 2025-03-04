@@ -90,7 +90,7 @@ public  class SalleService implements Iservices<Salle> {
 
 
     @Override
-    public List<Salle> afficher() throws SQLException {
+    public  List<Salle> afficher() throws SQLException {
         List<Salle> salles = new ArrayList<>();
         String req = "SELECT * FROM salle";
         Statement statement = connection.createStatement();

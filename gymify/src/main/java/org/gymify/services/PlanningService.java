@@ -1,6 +1,8 @@
 package org.gymify.services;
 
+import org.gymify.entities.Activité;
 import org.gymify.entities.Planning;
+import org.gymify.entities.User;
 import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
@@ -16,11 +18,12 @@ public class PlanningService implements IService<Planning> {
     @Override
     public void Add(Planning planning) {
         try{
-            PreparedStatement req=con.prepareStatement ("INSERT INTO `planning`(`dateDebut`, `description`, `title`, `dateFin`) VALUES (?,?,?,?)");
+            PreparedStatement req=con.prepareStatement ("INSERT INTO `planning`(`dateDebut`, `description`, `title`, `dateFin`,`entaineur_id`) VALUES (?,?,?,?,?)");
             req.setDate(1,new Date(planning.getdateDebut().getTime()));
             req.setString(2,planning.getDescription());
             req.setString(3,planning.getTitle());
             req.setDate(4,new Date(planning.getdateFin().getTime()));
+            req.setInt(5,planning.getUser().getId_User());
             req.executeUpdate();
             System.out.println("Planning ajouté avec succès.");
 
@@ -78,6 +81,12 @@ public class PlanningService implements IService<Planning> {
                 planning.setDescription(rs.getString("description"));
                 planning.setTitle(rs.getString("title"));
                 planning.setDateFin(rs.getDate("dateFin"));
+                int entraineurId = rs.getInt("entaineur_id");
+                if (entraineurId != 0) {
+                   User user=new User(); // Créez une instance de l'activité
+                    user.setId_User(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
+                    planning.setUser(user);
+                }
                 plannings.add(planning);
             }
 
@@ -88,4 +97,41 @@ public class PlanningService implements IService<Planning> {
         }
         return plannings;
     }
+    public List<Planning> DisplayById(int userId) {
+        List<Planning> plannings = new ArrayList<>();
+        try {
+            // Exemple avec une base de données SQL
+            String query = "SELECT * FROM Planning WHERE `entaineur_id` = ?";
+
+            // Assurez-vous d'avoir une classe DatabaseConnection pour gérer la connexion
+            PreparedStatement statement = con.prepareStatement(query);
+
+            statement.setInt(1, userId); // Définir l'ID de l'utilisateur dans la requête
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Créer un objet Planning à partir des résultats de la requête
+                    Planning planning = new Planning();
+                    planning.setId(resultSet.getInt("id"));
+                    planning.setTitle(resultSet.getString("title"));
+                    planning.setDescription(resultSet.getString("description"));
+                    planning.setdateDebut(resultSet.getDate("dateDebut"));
+                    planning.setDateFin(resultSet.getDate("dateFin"));
+                    int entraineurId = resultSet.getInt("entaineur_id");
+                    if (entraineurId != 0) {
+                        User user = new User(); // Créez une instance de l'activité
+                        user.setId_User(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
+                        planning.setUser(user);
+                    }
+
+                    plannings.add(planning);
+                }
+            } }catch (SQLException e) {
+                System.out.println("Erreur lors de l'affichage des plannings : " + e.getMessage());
+
+            }
+
+            return plannings;
+        }
+
 }
