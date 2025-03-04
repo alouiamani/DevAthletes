@@ -79,7 +79,7 @@ public class ListeParticipationController {
                 if (matchesSearch) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardParticipation.fxml"));
                     Parent card = loader.load();
-                    tn.esprit.controllers.CardParticipationController controller = loader.getController();
+                   CardParticipationController controller = loader.getController();
                     controller.setParticipation(event, equipe);
                     vboxParticipations.getChildren().add(card);
                 }

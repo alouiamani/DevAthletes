@@ -71,7 +71,7 @@ public class ListeDesEvennementsController {
                     return;
                 }
                 AnchorPane card = loader.load(); // Changed from HBox to AnchorPane to match CardEvennement.fxml
-                tn.esprit.controllers.CardEvennementController controller = loader.getController();
+                CardEvennementController controller = loader.getController();
                 controller.setEvenement(event, this);
                 vboxEvennements.getChildren().add(card);
             }
@@ -97,7 +97,7 @@ public class ListeDesEvennementsController {
                 return;
             }
             Parent root = loader.load();
-            tn.esprit.controllers.AjoutEvennementController controller = loader.getController();
+            AjoutEvennementController controller = loader.getController();
             controller.setParentController(this);
 
             Stage stage = new Stage();
@@ -122,7 +122,7 @@ public class ListeDesEvennementsController {
                 return;
             }
             Parent root = loader.load();
-            tn.esprit.controllers.AjoutEvennementController controller = loader.getController();
+            AjoutEvennementController controller = loader.getController();
             controller.setEvenement(event, this);
 
             Stage stage = new Stage();

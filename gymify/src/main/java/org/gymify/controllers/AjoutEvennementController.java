@@ -594,7 +594,7 @@ public class AjoutEvennementController {
             }
             Parent root = loader.load();
 
-            tn.esprit.controllers.AjoutEquipeController ajoutEquipeController = loader.getController();
+           AjoutEquipeController ajoutEquipeController = loader.getController();
             ajoutEquipeController.setAjoutEvennementController(this);
 
             Stage stage = new Stage();
@@ -627,7 +627,7 @@ public class AjoutEvennementController {
                     return;
                 }
                 Parent root = loader.load();
-                tn.esprit.controllers.AjoutEquipeController ajoutEquipeController = loader.getController();
+                AjoutEquipeController ajoutEquipeController = loader.getController();
                 ajoutEquipeController.setAjoutEvennementController(this);
                 ajoutEquipeController.handleModifier(selectedEquipe);
 

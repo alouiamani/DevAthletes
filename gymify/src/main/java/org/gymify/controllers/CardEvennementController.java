@@ -155,7 +155,7 @@ public class CardEvennementController {
                 return;
             }
             Parent root = loader.load();
-            tn.esprit.controllers.AjoutEvennementController controller = loader.getController();
+            AjoutEvennementController controller = loader.getController();
             controller.setParentController(parentController);
             controller.setEvenement(evenement, parentController);
             Stage stage = new Stage();
