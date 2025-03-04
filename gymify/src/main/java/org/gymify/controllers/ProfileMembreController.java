@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,6 +24,8 @@ import org.gymify.entities.Salle;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.gymify.utils.AuthToken.logout;
 
 public class ProfileMembreController {
 
@@ -129,13 +132,12 @@ public class ProfileMembreController {
     }
 
 
-    public void ShowPlanning(ActionEvent event) {
+    public void onLogoutButtonClick(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/planningforuser.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
             Parent root = loader.load();
-
             Stage stage = new Stage();
-            stage.setTitle("Planning");
+            stage.setTitle("Profile");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

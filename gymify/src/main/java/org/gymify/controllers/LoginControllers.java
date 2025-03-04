@@ -8,7 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.gymify.entities.CaptchaGenerator;
 import org.gymify.entities.Objectifs;
 import org.gymify.entities.User;
 import org.gymify.entities.infoSportif;
@@ -31,9 +33,29 @@ public class LoginControllers {
 
     @FXML
     private TextField emailTextField;
+    @FXML
+    private ImageView captchaImageView;
+    @FXML
+    private TextField captchaInputField;
 
+    private String correctCaptcha;
+    @FXML
+    public void initialize() {
+        generateNewCaptcha();
+    }
     private final ServiceUser serviceUser = new ServiceUser() {};
 
+    /**
+     * 🔹 Action du bouton LOGIN
+     */
+    public void generateNewCaptcha() {
+        try {
+            correctCaptcha = CaptchaGenerator.generateCaptchaText();
+            captchaImageView.setImage(CaptchaGenerator.getCaptchaImage(correctCaptcha));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 🔹 Action du bouton LOGIN
      */
@@ -41,10 +63,16 @@ public class LoginControllers {
     void LoginButtonOnAction(ActionEvent event) throws SQLException {
         String email = emailTextField.getText().trim();
         String password = passwordTextField.getText().trim();
+        String userCaptcha = captchaInputField.getText().trim();
 
-        // Vérification des champs vides
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "⚠️ Champs vides", "Veuillez entrer un email et un mot de passe.");
+        if (email.isEmpty() || password.isEmpty() || userCaptcha.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "⚠️ Champs vides", "Veuillez remplir tous les champs.");
+            return;
+        }
+
+        if (!userCaptcha.equals(correctCaptcha)) {
+            showAlert(Alert.AlertType.ERROR, "❌ Erreur Captcha", "Le captcha est incorrect.");
+            generateNewCaptcha(); // Rafraîchir le captcha
             return;
         }
 
@@ -52,18 +80,15 @@ public class LoginControllers {
 
         if (userOpt.isPresent()) {
             User loggedInUser = userOpt.get();
-            System.out.println("✅ Connexion réussie : " + loggedInUser.getEmail() + " | Rôle : " + loggedInUser.getRole());
-
-            // Stocker l'utilisateur connecté
             AuthToken.setCurrentUser(loggedInUser);
 
-            // Vérifier le rôle et rediriger vers l'interface appropriée
             switch (loggedInUser.getRole().trim().toLowerCase()) {
                 case "admin" -> ouvrirInterface("AdminDash.fxml", "🏢 Interface Admin", event);
-                case "responsable" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
+                case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
                 case "sportif" -> {
                     ajouterInfoSportif(loggedInUser);
-                    ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);}
+                    ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);
+                }
                 case "entraineur" -> ouvrirInterface("InterfaceEntraineur.fxml", "👨‍🏫 Interface Entraîneur", event);
                 default -> showAlert(Alert.AlertType.ERROR, "⚠️ Erreur", "Rôle inconnu : " + loggedInUser.getRole());
             }
@@ -71,7 +96,6 @@ public class LoginControllers {
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Email ou mot de passe incorrect.");
         }
     }
-
     /**
      * 🔹 Redirection vers l'inscription
      */
@@ -85,7 +109,7 @@ public class LoginControllers {
      */
     @FXML
     void ForgetPsswdButtonOnAction(ActionEvent event) {
-        ouvrirInterface("ResetPassword.fxml", "🔑 Réinitialisation du mot de passe", event);
+        ouvrirInterface("ForgetPassword.fxml", "🔑 Réinitialisation du mot de passe", event);
     }
 
     /**
