@@ -1,4 +1,6 @@
-package org.gymify.entities;
+package tn.esprit.entities;
+
+import org.gymify.entities.Event;
 
 public class EquipeEvent {
     private int idEquipe;

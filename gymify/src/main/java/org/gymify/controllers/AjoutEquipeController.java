@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.EventType;
 import org.gymify.services.EquipeService;
@@ -13,6 +14,9 @@ import org.gymify.services.EquipeService;
 import java.io.File;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing the addition or modification of teams (equipes) in the UI.
+ */
 public class AjoutEquipeController {
 
     @FXML
@@ -27,13 +31,14 @@ public class AjoutEquipeController {
     private Label ErrorNom, ErrorNiveau, ErrorNombre, ErrorImage;
 
     private String imagePath = "";
-    private final EquipeService equipeService = new EquipeService();
+    private final EquipeService equipeService;
     private Equipe equipeAModifier = null;
-
-    // Pour permettre de rafraîchir la liste dans ListeDesEquipesController
     private ListeDesEquipesController listeDesEquipesController;
+    private AjoutEvennementController ajoutEvennementController;
 
-    public AjoutEquipeController() throws SQLException {}
+    public AjoutEquipeController() throws SQLException {
+        this.equipeService = new EquipeService();
+    }
 
     @FXML
     public void initialize() {
@@ -93,18 +98,37 @@ public class AjoutEquipeController {
             if (equipeAModifier == null) {
                 equipeService.ajouter(equipe); // Ajouter l'équipe à la base de données
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Équipe ajoutée avec succès !");
+
+                // Notify AjoutEvennementController if it exists
+                if (ajoutEvennementController != null) {
+                    ajoutEvennementController.addEquipeToEvent(equipe);
+                }
+
+                // Close the window
+                Stage stage = (Stage) nameField.getScene().getWindow();
+                stage.close();
             } else {
-                // Mode modification : conserver l'identifiant
+                // Mode modification: conserver l'identifiant
                 equipe.setId(equipeAModifier.getId());
                 equipeService.modifier(equipe); // Modifier l'équipe dans la base de données
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Équipe modifiée avec succès !");
+
+                // Update AjoutEvennementController if necessary
+                if (ajoutEvennementController != null) {
+                    ajoutEvennementController.updateEquipeInList(equipeAModifier, equipe);
+                }
+
+                // Close the window
+                Stage stage = (Stage) nameField.getScene().getWindow();
+                stage.close();
             }
 
             updateListeDesEquipes(); // Rafraîchir la liste si possible
             clearFields();
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Problème lors de l'ajout/modification !");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Problème lors de l'ajout/modification : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -117,6 +141,11 @@ public class AjoutEquipeController {
     // Méthode pour permettre d'injecter le contrôleur ListeDesEquipesController
     public void setListeDesEquipesController(ListeDesEquipesController controller) {
         this.listeDesEquipesController = controller;
+    }
+
+    // Méthode pour permettre d'injecter le contrôleur AjoutEvennementController
+    public void setAjoutEvennementController(AjoutEvennementController controller) {
+        this.ajoutEvennementController = controller;
     }
 
     private void resetErrors() {
@@ -138,6 +167,8 @@ public class AjoutEquipeController {
     @FXML
     void handleCancelButton() {
         clearFields();
+        Stage stage = (Stage) nameField.getScene().getWindow();
+        stage.close();
     }
 
     private void showAlert(Alert.AlertType type, String title, String content) {
@@ -151,7 +182,7 @@ public class AjoutEquipeController {
         }
     }
 
-    // Méthode appelée depuis CardEquipeController pour passer l'équipe à modifier
+    // Méthode appelée pour passer l'équipe à modifier
     public void handleModifier(Equipe equipe) {
         this.equipeAModifier = equipe;
         nameField.setText(equipe.getNom());
@@ -159,6 +190,12 @@ public class AjoutEquipeController {
         membreSpinner.getValueFactory().setValue(equipe.getNombreMembres());
         imagePath = equipe.getImageUrl();
         imageurl.setText(imagePath);
-        imagetf.setImage(new Image(new File(imagePath).toURI().toString()));
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                imagetf.setImage(new Image(new File(imagePath).toURI().toString()));
+            } catch (Exception e) {
+                imagetf.setImage(null);
+            }
+        }
     }
 }

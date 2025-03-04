@@ -1,5 +1,7 @@
 package org.gymify.services;
 
+import org.gymify.services.IServiceEvent;
+import org.gymify.utils.gymifyDataBase;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.EventType;
 import org.gymify.utils.gymifyDataBase;
@@ -8,6 +10,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing Equipe entities in the database.
+ */
 public class EquipeService implements IServiceEvent<Equipe> {
     private final Connection connection;
 
@@ -24,12 +29,18 @@ public class EquipeService implements IServiceEvent<Equipe> {
             throw new SQLException("Une équipe avec ce nom existe déjà.");
         }
         String req = "INSERT INTO equipe (nom, image_url, niveau, nombre_membres) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, equipe.getNom());
             preparedStatement.setString(2, equipe.getImageUrl());
             preparedStatement.setString(3, equipe.getNiveau().toString());
             preparedStatement.setInt(4, equipe.getNombreMembres());
             preparedStatement.executeUpdate();
+            // Retrieve the generated ID and set it on the Equipe object
+            try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    equipe.setId(rs.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             throw new SQLException("Erreur lors de l'ajout de l'équipe : " + e.getMessage());
         }
@@ -82,20 +93,7 @@ public class EquipeService implements IServiceEvent<Equipe> {
         return equipes;
     }
 
-    public boolean isNomEquipeExist(String nom) throws SQLException {
-        String req = "SELECT COUNT(*) FROM equipe WHERE nom = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
-            preparedStatement.setString(1, nom);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Erreur lors de la vérification de l'existence du nom de l'équipe : " + e.getMessage());
-        }
-        return false;
-    }
-
+    @Override
     public List<Equipe> recuperer() throws SQLException {
         List<Equipe> equipes = new ArrayList<>();
         String req = "SELECT * FROM equipe";
@@ -111,7 +109,31 @@ public class EquipeService implements IServiceEvent<Equipe> {
                 );
                 equipes.add(equipe);
             }
+        } catch (SQLException e) {
+            throw new SQLException("Erreur lors de la récupération des équipes : " + e.getMessage());
         }
         return equipes;
+    }
+
+    /**
+     * Checks if a team with the given name already exists in the database.
+     *
+     * @param nom the name of the team to check
+     * @return true if a team with the given name exists, false otherwise
+     * @throws SQLException if a database error occurs
+     */
+    public boolean isNomEquipeExist(String nom) throws SQLException {
+        String req = "SELECT COUNT(*) FROM equipe WHERE nom = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setString(1, nom);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erreur lors de la vérification de l'existence du nom de l'équipe : " + e.getMessage());
+        }
+        return false;
     }
 }

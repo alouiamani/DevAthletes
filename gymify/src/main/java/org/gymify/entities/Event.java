@@ -19,7 +19,8 @@ public class Event {
     private String lieu; // Nouveau champ ajouté
     private int id_salle;
     private EventType type;
-    private Set<Equipe> equipes = new HashSet<>();
+    private Set<tn.esprit.entities.Equipe> equipes = new HashSet<>();
+
 
     // Constructeur sans argument
     public Event() {}
@@ -101,8 +102,11 @@ public class Event {
     public EventType getType() { return type; }
     public void setType(EventType type) { this.type = type; }
 
-    public Set<Equipe> getEquipes() { return equipes; }
-    public void setEquipes(Set<Equipe> equipes) { this.equipes = equipes; }
+    public Equipe getEquipes() { return equipes; }
+    public void setEquipes(Set<tn.esprit.entities.Equipe> equipes) { this.equipes = equipes; }
+    public void addEquipe(tn.esprit.entities.Equipe equipe) {
+        this.equipes.add(equipe);
+    }
 
     @Override
     public String toString() {
