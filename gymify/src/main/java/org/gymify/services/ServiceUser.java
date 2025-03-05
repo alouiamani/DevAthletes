@@ -12,13 +12,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ServiceUser implements IGestionUser<User> {
-    private final Connection connection;
+    private  Connection connection;
 
     public ServiceUser() {
         this.connection = gymifyDataBase.getInstance().getConnection();
         if (this.connection == null) {
             throw new IllegalStateException("❌ La connexion à la base de données n'a pas été initialisée !");
         }
+    }
+    private Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = gymifyDataBase.getInstance().getConnection();
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération de la connexion : " + e.getMessage());
+        }
+        return connection;
     }
 
     @Override
@@ -27,7 +37,7 @@ public class ServiceUser implements IGestionUser<User> {
             throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
         }
 
-        String req = "INSERT INTO user (nom, prenom, email, password, role, dateNaissance, imageURL, specialite) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO user (nom, prenom, email, password, role, dateNaissance, imageURL, specialite) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
             pstmt.setString(1, user.getNom());
@@ -371,5 +381,23 @@ public class ServiceUser implements IGestionUser<User> {
         }
 
         return total;
+    }
+    public int getSalleIdByUserId(int id_User) throws SQLException {
+        String query = "SELECT id_salle FROM user WHERE id_user = ? AND role = 'Responsable_salle'";
+
+        try (
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setInt(1, id_User);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_salle");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération de l'ID de la salle : " + e.getMessage());
+            throw e;
+        }
+        return -1;
     }
 }
