@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SalleFormAdminController {
-
+/*
     @FXML private TextField nomFX, adresseFX, numtelFX, emailFX, url_photoFX;
     @FXML private TextArea detailsFX;
     @FXML private Label errorNom, errorAdresse, errorNumTel, errorEmail, errorDetails, errorUrlPhoto;
@@ -383,5 +383,5 @@ public class SalleFormAdminController {
             Platform.runLater(() -> adresseFX.setText(address));
         }
     }
-
+*/
 }

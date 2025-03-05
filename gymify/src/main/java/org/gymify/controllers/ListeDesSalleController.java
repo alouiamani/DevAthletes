@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ListeDesSalleController {
 
-    @FXML private FlowPane sallesContainer;
+   /*@FXML private FlowPane sallesContainer;
     @FXML private TextField searchField;
     @FXML private Button ajoutBtn;
 
@@ -126,4 +126,6 @@ public class ListeDesSalleController {
             e.printStackTrace();
         }
     }
+
+    */
 }

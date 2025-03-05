@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class SalleCardController {
-
+/*
     @FXML private Label nomLabel;
     @FXML private Label adresseLabel;
     @FXML private Label numTelLabel;
@@ -105,4 +105,6 @@ public class SalleCardController {
             }
         }
     }
+
+ */
 }

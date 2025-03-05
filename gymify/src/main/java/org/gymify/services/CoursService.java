@@ -194,4 +194,49 @@ public class CoursService implements IService<Cours> {
         }
         return coursList;
     }
+
+    public List<Cours> Displaycours() {
+        List<Cours> coursList = new ArrayList<>();
+        try {
+            String req = "SELECT c.*, s.nom AS salle_nom, u.nom AS user_nom " +
+                    "FROM cours c " +
+                    "LEFT JOIN salle s ON c.salle_id = s.id_salle " +
+                    "LEFT JOIN user u ON c.entaineur_id = u.id_user ";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(req);
+
+            while (rs.next()) {
+                Cours cours = new Cours();
+                cours.setId(rs.getInt("id"));
+                cours.setTitle(rs.getString("title"));
+                cours.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
+                cours.setHeureFin(rs.getTime("heurFin").toLocalTime());
+                cours.setDescription(rs.getString("description"));
+                cours.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
+                cours.setDateDebut(rs.getDate("dateDebut"));
+
+                // Charger la salle
+                Salle salle = new Salle();
+                salle.setId_Salle(rs.getInt("salle_id"));
+                salle.setNom(rs.getString("salle_nom"));
+                cours.setSalle(salle);
+
+                // Charger l'entraîneur
+                User entraineur = new User();
+                entraineur.setId_User(rs.getInt("entaineur_id"));
+                entraineur.setNom(rs.getString("user_nom"));
+                cours.setUser(entraineur);
+
+
+
+
+
+
+                coursList.add(cours);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'affichage des cours : " + e.getMessage());
+        }
+        return coursList;
+    }
 }
