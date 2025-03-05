@@ -1,5 +1,11 @@
 package org.gymify.entities;
 
+import org.gymify.utils.gymifyDataBase;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +20,7 @@ public class User {
     private Date dateNaissance;
     private String imageURL;
     private List<Reclamation> reclamations;
-
+private int id_Salle;
     // 🔹 Constructeurs
 
 
@@ -28,8 +34,9 @@ public class User {
         this.dateNaissance = dateNaissance;
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
+        this.id_Salle=id_Salle;
     }
-    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL) {
+    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL,int id_Salle) {
         this.id_User = id_User;
         this.nom = nom;
         this.prenom = prenom;
@@ -39,6 +46,7 @@ public class User {
         this.dateNaissance = dateNaissance;
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
+        this.id_Salle = id_Salle;
     }
     public User(int id_User, String nom, String prenom, String email, String password, String role) {
         this.id_User = id_User;
@@ -150,11 +158,11 @@ public class User {
     public List<Reclamation> getReclamations() {
         return reclamations;
     }
-
+    private Salle salle;
     public void setReclamations(List<Reclamation> reclamations) {
         this.reclamations = reclamations;
     }
-
+    private List<Abonnement> abonnements;
     @Override
     public String toString() {
         return "User{" +
@@ -168,4 +176,28 @@ public class User {
                 ", reclamations=" + reclamations +
                 '}';
     }
+
+
+
+        public int getSalleIdByUserId(int userId) throws SQLException {
+            String query = "SELECT id_salle FROM responsable_salle WHERE id_user = ?";
+            try (Connection conn = gymifyDataBase.getInstance().getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, userId);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("id_salle");
+                }
+            }
+            return -1; // Retourne -1 si aucun ID de salle n'est trouvé
+        }
+
+    public int getId_Salle() {
+        return id_Salle;
+    }
+
+    public void setId_Salle(int id_Salle) {
+        this.id_Salle = id_Salle;
+    }
 }
+
