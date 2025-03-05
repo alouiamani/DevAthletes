@@ -78,15 +78,15 @@ public class listProduitFront implements Initializable {
         try {
             Image cartImage = new Image(getClass().getResourceAsStream("/icons/cart2.png"));
             ImageView cartIcon = new ImageView(cartImage);
-            cartIcon.setFitHeight(20);
-            cartIcon.setFitWidth(20);
+            cartIcon.setFitHeight(35);
+            cartIcon.setFitWidth(35);
             viewCartButton.setGraphic(cartIcon);
             viewCartButton.setText(""); // Remove text, show only icon
             
             // Add some styling
             viewCartButton.setStyle(
                 "-fx-background-color: transparent;" +
-                "-fx-padding: 5px;" +
+                "-fx-padding: 10px;" +
                 "-fx-cursor: hand;"
             );
             
@@ -94,14 +94,14 @@ public class listProduitFront implements Initializable {
             viewCartButton.setOnMouseEntered(e -> 
                 viewCartButton.setStyle(
                     "-fx-background-color: #f0f0f0;" +
-                    "-fx-padding: 5px;" +
+                    "-fx-padding: 10px;" +
                     "-fx-cursor: hand;"
                 )
             );
             viewCartButton.setOnMouseExited(e -> 
                 viewCartButton.setStyle(
                     "-fx-background-color: transparent;" +
-                    "-fx-padding: 5px;" +
+                    "-fx-padding: 10px;" +
                     "-fx-cursor: hand;"
                 )
             );

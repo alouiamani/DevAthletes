@@ -1,0 +1,63 @@
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+}
+
+.text-field:focused {
+    -fx-border-color: #0d6efd;
+    -fx-effect: dropshadow(gaussian, rgba(13, 110, 253, 0.25), 0, 0, 0, 0);
+}
+
+.radio-button {
+    -fx-padding: 10;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #0d6efd;
+}
+
+.button {
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+}
+
+.button:pressed {
+    -fx-opacity: 0.8;
+}
+
+/* Cancel button hover effect */
+.button:hover {
+    -fx-background-color: derive(#e9ecef, -10%);
+}
+
+/* Pay Now button hover effect */
+.button:default:hover {
+    -fx-background-color: derive(#0d6efd, -10%);
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #212529;
+}
+
+/* Grid lines */
+.grid-pane {
+    -fx-grid-lines-visible: false;
+}
+
+/* Summary section */
+#totalLabel, #totalItemsLabel {
+    -fx-font-size: 16;
+} 

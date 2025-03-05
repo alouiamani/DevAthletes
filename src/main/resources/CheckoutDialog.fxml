@@ -3,64 +3,75 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" 
-      xmlns="http://javafx.com/javafx/21"
-      fx:controller="controllers.CheckoutDialogController"
-      spacing="20" style="-fx-background-color: white;">
-    
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.CheckoutDialogController"
+            styleClass="dialog-pane"
+            style="-fx-background-color: white; -fx-background-radius: 10;"
+            prefWidth="500" prefHeight="700">
 
-    <Label text="Checkout" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-    
-    <VBox spacing="10">
-        <Label text="Order Summary" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-        <GridPane vgap="10" hgap="10">
-            <Label text="Total Items:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="totalItemsLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            
-            <Label text="Subtotal:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Label fx:id="subtotalLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-            
-            <Label text="Tax (19%):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Label fx:id="taxLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            
-            <Label text="Total:" style="-fx-font-weight: bold;" 
-                   GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <Label fx:id="totalLabel" style="-fx-font-weight: bold;" 
-                   GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-        </GridPane>
-    </VBox>
-    
-    <Separator/>
-    
-    <VBox spacing="10">
-        <Label text="Payment Method" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-        <RadioButton fx:id="cardPayment" text="Credit Card" selected="true">
-            <toggleGroup>
-                <ToggleGroup fx:id="paymentMethod"/>
-            </toggleGroup>
-        </RadioButton>
-        <RadioButton fx:id="paypalPayment" text="PayPal" toggleGroup="$paymentMethod"/>
-    </VBox>
-    
-    <VBox fx:id="cardDetailsPane" spacing="10">
-        <TextField fx:id="cardNumber" promptText="Card Number"/>
-        <HBox spacing="10">
-            <TextField fx:id="expiryDate" promptText="MM/YY" prefWidth="100"/>
-            <TextField fx:id="cvv" promptText="CVV" prefWidth="70"/>
+    <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" 
+          AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+          style="-fx-padding: 30;">
+        
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Text text="Checkout" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="×" onAction="#handleCancel" 
+                    style="-fx-background-color: transparent; -fx-font-size: 18; -fx-cursor: hand;"/>
         </HBox>
-        <TextField fx:id="cardHolderName" promptText="Cardholder Name"/>
+
+        <!-- Order Summary -->
+        <VBox spacing="20">
+            <Label text="Résumé de la commande" styleClass="section-title"/>
+            <GridPane vgap="10" hgap="10">
+                <Label text="Articles:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="totalItemsLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                
+                <Label text="Sous-total:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="subtotalLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                
+                <Label text="TVA (19%):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="taxLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                
+                <Label text="Total:" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="total-label"/>
+                <Label fx:id="totalLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="total-amount"/>
+            </GridPane>
+        </VBox>
+
+        <!-- Payment Method -->
+        <VBox spacing="10">
+            <Label text="Mode de paiement" styleClass="section-title"/>
+            <VBox spacing="10">
+                <RadioButton fx:id="cardPayment" text="Carte bancaire" selected="true"/>
+                <RadioButton fx:id="paypalPayment" text="PayPal"/>
+            </VBox>
+        </VBox>
+
+        <!-- Card Details -->
+        <VBox fx:id="cardDetailsPane" spacing="10">
+            <Label text="Détails de la carte" styleClass="section-title"/>
+            <TextField fx:id="cardNumber" promptText="Numéro de carte"/>
+            <HBox spacing="10">
+                <TextField fx:id="expiryDate" promptText="Date d'expiration (MM/AA)"/>
+                <TextField fx:id="cvv" promptText="CVV"/>
+            </HBox>
+            <TextField fx:id="cardHolderName" promptText="Nom du titulaire"/>
+        </VBox>
+
+        <!-- Action Buttons -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" onAction="#handleCancel"/>
+            <Button text="Payer maintenant" onAction="#handlePayment" styleClass="primary-button"/>
+        </HBox>
     </VBox>
-    
-    <Region VBox.vgrow="ALWAYS"/>
-    
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Cancel" onAction="#handleCancel" 
-                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
-        <Button text="Pay Now" onAction="#handlePayment" 
-                style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
-    </HBox>
-</VBox> 
+
+    <stylesheets>
+        <URL value="@/styles/checkout.css"/>
+    </stylesheets>
+</AnchorPane> 

@@ -54,8 +54,8 @@ public class CartService {
             throw new IllegalStateException("Cart is empty");
         }
 
-        // Create new order
-        Commande commande = new Commande(currentCart.getTotal(), "PENDING");
+        // Create new order with the correct total from cart
+        Commande commande = new Commande(currentCart.getTotal(), "EN COURS"); // Change initial status to EN COURS
         commande.setUser_id(AuthToken.getCurrentUser().getId_User());
         
         // Add order to database
@@ -77,13 +77,6 @@ public class CartService {
             // Update product stock
             produit.setStock_p(produit.getStock_p() - quantity);
             serviceProduit.modifier(produit);
-        }
-        
-        // Update order status to "En cours" instead of "COMPLETED"
-        String sql = "UPDATE commande SET statut_c = 'En cours' WHERE id_c = ?";
-        try (PreparedStatement pst = connection.prepareStatement(sql)) {
-            pst.setInt(1, commandeId);
-            pst.executeUpdate();
         }
         
         // Clear cart after successful checkout
