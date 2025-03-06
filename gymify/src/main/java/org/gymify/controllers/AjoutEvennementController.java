@@ -21,8 +21,10 @@ import javafx.stage.Stage;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
 import org.gymify.entities.EventType;
+import org.gymify.entities.Salle;
 import org.gymify.services.EquipeEventService;
 import org.gymify.services.EventService;
+import org.gymify.services.SalleService;
 import org.gymify.utils.gymifyDataBase;
 
 import java.io.BufferedReader;
@@ -31,11 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,9 +43,6 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * Controller class for managing the addition or modification of events in the UI.
- */
 public class AjoutEvennementController {
 
     @FXML private Label ErrorNom, ErrorImage, ErrorType, ErrorReward, ErrorDate, Errorhboxheuredebut, Errorhboxheurefin, ErrorDescription, ErrorLieu;
@@ -67,6 +62,8 @@ public class AjoutEvennementController {
     @FXML private WebView webviewtf;
     @FXML private ListView<String> equipesListView;
     @FXML private Label equipesLabel;
+    @FXML private Button addTypeBtn, editTypeBtn, deleteTypeBtn;
+    @FXML private Button addRewardBtn, editRewardBtn, deleteRewardBtn;
 
     private WebEngine webEngine;
     private double[] coords;
@@ -77,7 +74,15 @@ public class AjoutEvennementController {
     private final EquipeEventService equipeEventService = new EquipeEventService();
     private List<Equipe> addedEquipes = new ArrayList<>();
     private ObservableList<String> equipeNames = FXCollections.observableArrayList();
+    private ObservableList<String> typeItems = FXCollections.observableArrayList();
+    private ObservableList<String> rewardItems = FXCollections.observableArrayList();
     private static final Logger LOGGER = Logger.getLogger(AjoutEvennementController.class.getName());
+    private int responsableId;
+
+    public void setResponsableId(int responsableId) {
+        this.responsableId = responsableId;
+        LOGGER.info("Responsable_Salle ID set: " + responsableId);
+    }
 
     @FXML
     public void initialize() {
@@ -85,13 +90,42 @@ public class AjoutEvennementController {
 
         // Validate that critical FXML elements are initialized
         if (nomtf == null || lieutf == null || datetf == null || descriptiontf == null || typetf == null ||
-                rewardtf == null || imagetf == null || imagetf1 == null || webviewtf == null || equipesListView == null) {
+                rewardtf == null || imagetf == null || imagetf1 == null || webviewtf == null || equipesListView == null ||
+                addTypeBtn == null || editTypeBtn == null || deleteTypeBtn == null ||
+                addRewardBtn == null || editRewardBtn == null || deleteRewardBtn == null) {
             LOGGER.severe("One or more FXML elements are not properly initialized: " +
                     "nomtf=" + nomtf + ", lieutf=" + lieutf + ", datetf=" + datetf + ", descriptiontf=" + descriptiontf +
                     ", typetf=" + typetf + ", rewardtf=" + rewardtf + ", imagetf=" + imagetf + ", imagetf1=" + imagetf1 +
-                    ", webviewtf=" + webviewtf + ", equipesListView=" + equipesListView);
+                    ", webviewtf=" + webviewtf + ", equipesListView=" + equipesListView +
+                    ", addTypeBtn=" + addTypeBtn + ", editTypeBtn=" + editTypeBtn + ", deleteTypeBtn=" + deleteTypeBtn +
+                    ", addRewardBtn=" + addRewardBtn + ", editRewardBtn=" + editRewardBtn + ", deleteRewardBtn=" + deleteRewardBtn);
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur d'initialisation de l'interface. Vérifiez le fichier FXML.", ButtonType.OK);
             alert.showAndWait();
+            return;
+        }
+
+        // Validate that the Responsable_Salle has an associated Salle
+        SalleService salleService = new SalleService();
+        try {
+            Salle salle = salleService.getSalleByResponsableId(responsableId);
+            if (salle == null) {
+                LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte. Veuillez contacter un administrateur ou ajouter une salle.", ButtonType.OK);
+                alert.showAndWait();
+                Stage stage = (Stage) nomtf.getScene().getWindow();
+                if (stage != null) {
+                    stage.close();
+                }
+                return;
+            }
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de la vérification de la salle associée : " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la vérification de la salle associée : " + e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+            Stage stage = (Stage) nomtf.getScene().getWindow();
+            if (stage != null) {
+                stage.close();
+            }
             return;
         }
 
@@ -102,7 +136,6 @@ public class AjoutEvennementController {
                     LOGGER.severe("WebEngine est null après initialisation !");
                     return;
                 }
-                // Set a unique user data directory for WebView to avoid conflicts
                 String userDataDir = System.getProperty("java.io.tmpdir") + "/webview-" + System.currentTimeMillis();
                 System.setProperty("webview.user.data.dir", userDataDir);
 
@@ -122,12 +155,15 @@ public class AjoutEvennementController {
             alert.showAndWait();
         }
 
+        // Initialiser les ComboBox avec les valeurs de l'ENUM
         for (EventType et : EventType.values()) {
-            typetf.getItems().add(et.name());
+            typeItems.add(et.name());
         }
         for (EventType.Reward r : EventType.Reward.values()) {
-            rewardtf.getItems().add(r.name());
+            rewardItems.add(r.name());
         }
+        typetf.setItems(typeItems);
+        rewardtf.setItems(rewardItems);
 
         for (int i = 0; i < 24; i++) {
             cbHeureDebut.getItems().add(String.format("%02d", i));
@@ -149,10 +185,8 @@ public class AjoutEvennementController {
 
         equipesListView.setItems(equipeNames);
 
-        // Add click handler to equipesListView to edit a team
         equipesListView.setOnMouseClicked(this::handleEquipeListClick);
 
-        // Charger la carte après que la scène est initialisée
         nomtf.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
@@ -161,12 +195,153 @@ public class AjoutEvennementController {
                     Stage stage = (Stage) nomtf.getScene().getWindow();
                     stage.setOnHidden(e -> {
                         if (webEngine != null) {
-                            webEngine.loadContent(""); // Libérer les ressources
+                            webEngine.loadContent("");
                             webEngine = null;
                         }
                     });
                     nomtf.sceneProperty().removeListener(this);
                 }
+            }
+        });
+
+        // Activer/désactiver les boutons de modification et suppression en fonction de la sélection
+        typetf.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            editTypeBtn.setDisable(newVal == null);
+            deleteTypeBtn.setDisable(newVal == null);
+        });
+
+        rewardtf.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            editRewardBtn.setDisable(newVal == null);
+            deleteRewardBtn.setDisable(newVal == null);
+        });
+    }
+
+    @FXML
+    private void addType() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nouveau Type");
+        dialog.setHeaderText("Ajouter un nouveau type d'événement");
+        dialog.setContentText("Nom du type :");
+
+        dialog.showAndWait().ifPresent(newType -> {
+            newType = newType.trim().toUpperCase();
+            if (!newType.isEmpty() && !typeItems.contains(newType)) {
+                typeItems.add(newType);
+                typetf.setValue(newType);
+                showWarning("Attention", "Le nouveau type '" + newType + "' a été ajouté dans l'interface, mais il ne sera pas sauvegardé dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "Le type existe déjà ou est vide !");
+            }
+        });
+    }
+
+    @FXML
+    private void editType() {
+        String selectedType = typetf.getValue();
+        if (selectedType == null) {
+            showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner un type à modifier.");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog(selectedType);
+        dialog.setTitle("Modifier Type");
+        dialog.setHeaderText("Modifier le type d'événement");
+        dialog.setContentText("Nouveau nom du type :");
+
+        dialog.showAndWait().ifPresent(newType -> {
+            newType = newType.trim().toUpperCase();
+            if (!newType.isEmpty() && !newType.equals(selectedType) && !typeItems.contains(newType)) {
+                int index = typeItems.indexOf(selectedType);
+                typeItems.set(index, newType);
+                typetf.setValue(newType);
+                showWarning("Attention", "Le type a été modifié dans l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+            } else if (newType.equals(selectedType)) {
+                // Pas de changement
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "Le nouveau type existe déjà ou est vide !");
+            }
+        });
+    }
+
+    @FXML
+    private void deleteType() {
+        String selectedType = typetf.getValue();
+        if (selectedType == null) {
+            showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner un type à supprimer.");
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Êtes-vous sûr de vouloir supprimer le type '" + selectedType + "' ?", ButtonType.YES, ButtonType.NO);
+        confirmation.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                typeItems.remove(selectedType);
+                typetf.setValue(null);
+                showWarning("Attention", "Le type a été supprimé de l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+            }
+        });
+    }
+
+    @FXML
+    private void addReward() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nouvelle Récompense");
+        dialog.setHeaderText("Ajouter une nouvelle récompense");
+        dialog.setContentText("Nom de la récompense :");
+
+        dialog.showAndWait().ifPresent(newReward -> {
+            newReward = newReward.trim().toUpperCase();
+            if (!newReward.isEmpty() && !rewardItems.contains(newReward)) {
+                rewardItems.add(newReward);
+                rewardtf.setValue(newReward);
+                showWarning("Attention", "La nouvelle récompense '" + newReward + "' a été ajoutée dans l'interface, mais elle ne sera pas sauvegardée dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "La récompense existe déjà ou est vide !");
+            }
+        });
+    }
+
+    @FXML
+    private void editReward() {
+        String selectedReward = rewardtf.getValue();
+        if (selectedReward == null) {
+            showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner une récompense à modifier.");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog(selectedReward);
+        dialog.setTitle("Modifier Récompense");
+        dialog.setHeaderText("Modifier la récompense");
+        dialog.setContentText("Nouveau nom de la récompense :");
+
+        dialog.showAndWait().ifPresent(newReward -> {
+            newReward = newReward.trim().toUpperCase();
+            if (!newReward.isEmpty() && !newReward.equals(selectedReward) && !rewardItems.contains(newReward)) {
+                int index = rewardItems.indexOf(selectedReward);
+                rewardItems.set(index, newReward);
+                rewardtf.setValue(newReward);
+                showWarning("Attention", "La récompense a été modifiée dans l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
+            } else if (newReward.equals(selectedReward)) {
+                // Pas de changement
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "La nouvelle récompense existe déjà ou est vide !");
+            }
+        });
+    }
+
+    @FXML
+    private void deleteReward() {
+        String selectedReward = rewardtf.getValue();
+        if (selectedReward == null) {
+            showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner une récompense à supprimer.");
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Êtes-vous sûr de vouloir supprimer la récompense '" + selectedReward + "' ?", ButtonType.YES, ButtonType.NO);
+        confirmation.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                rewardItems.remove(selectedReward);
+                rewardtf.setValue(null);
+                showWarning("Attention", "La récompense a été supprimée de l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
             }
         });
     }
@@ -200,7 +375,6 @@ public class AjoutEvennementController {
         coords = new double[]{event.getLatitude(), event.getLongitude()};
         loadMap(event.getLatitude(), event.getLongitude());
 
-        // Safely handle heureDebut with null check and proper time extraction
         if (event.getHeureDebut() != null) {
             LocalTime heureDebut = event.getHeureDebut();
             cbHeureDebut.setValue(String.format("%02d", heureDebut.getHour()));
@@ -212,7 +386,6 @@ public class AjoutEvennementController {
             cbSecondeDebut.setValue("00");
         }
 
-        // Safely handle heureFin with null check and proper time extraction
         if (event.getHeureFin() != null) {
             LocalTime heureFin = event.getHeureFin();
             cbHeureFin.setValue(String.format("%02d", heureFin.getHour()));
@@ -224,7 +397,6 @@ public class AjoutEvennementController {
             cbSecondeFin.setValue("00");
         }
 
-        // Load associated teams if editing an existing event
         if (event.getEquipes() != null) {
             addedEquipes.clear();
             equipeNames.clear();
@@ -254,16 +426,16 @@ public class AjoutEvennementController {
             ErrorImage.setVisible(false);
         }
 
-        if (typetf.getValue() == null) {
-            ErrorType.setText("Le type d'événement est obligatoire.");
+        if (typetf.getValue() == null || !typeItems.contains(typetf.getValue())) {
+            ErrorType.setText("Le type d'événement doit être une valeur valide de l'ENUM.");
             ErrorType.setVisible(true);
             isValid = false;
         } else {
             ErrorType.setVisible(false);
         }
 
-        if (rewardtf.getValue() == null) {
-            ErrorReward.setText("La récompense est obligatoire.");
+        if (rewardtf.getValue() == null || !rewardItems.contains(rewardtf.getValue())) {
+            ErrorReward.setText("La récompense doit être une valeur valide de l'ENUM.");
             ErrorReward.setVisible(true);
             isValid = false;
         } else {
@@ -341,7 +513,6 @@ public class AjoutEvennementController {
             ErrorDescription.setVisible(false);
         }
 
-        // Check if at least one team is added
         if (addedEquipes.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Vous devez ajouter au moins une équipe avant d'enregistrer l'événement.", ButtonType.OK);
             alert.showAndWait();
@@ -450,6 +621,11 @@ public class AjoutEvennementController {
         String heureDebut = cbHeureDebut.getValue() + ":" + cbMinuteDebut.getValue() + ":" + cbSecondeDebut.getValue();
         String heureFin = cbHeureFin.getValue() + ":" + cbMinuteFin.getValue() + ":" + cbSecondeFin.getValue();
 
+        // Vérifier si type et reward sont dans les valeurs initiales de l'ENUM
+        if (!EventType.valueOf(type).name().equals(type) || !EventType.Reward.valueOf(reward).name().equals(reward)) {
+            showWarning("Attention", "Les valeurs 'type' ou 'reward' modifiées ne sont pas valides dans la base de données actuelle. L'enregistrement peut échouer si elles ne correspondent pas à l'ENUM défini.");
+        }
+
         Event eventToSave = currentEvent != null ? currentEvent : new Event();
         eventToSave.setNom(nom);
         eventToSave.setImageUrl(imageUrl);
@@ -458,16 +634,15 @@ public class AjoutEvennementController {
         eventToSave.setLieu(lieu);
         eventToSave.setDescription(description);
         eventToSave.setDate(datetf.getValue());
-        eventToSave.setHeureDebut(java.time.LocalTime.parse(heureDebut));
-        eventToSave.setHeureFin(java.time.LocalTime.parse(heureFin));
+        eventToSave.setHeureDebut(LocalTime.parse(heureDebut));
+        eventToSave.setHeureFin(LocalTime.parse(heureFin));
         eventToSave.setLatitude(coords[0]);
         eventToSave.setLongitude(coords[1]);
         eventToSave.setEquipes(new HashSet<>(addedEquipes));
 
         try {
             if (currentEvent == null) {
-                eventService.ajouter(eventToSave);
-                // Add associations for all teams
+                eventService.ajouter(eventToSave, responsableId);
                 for (Equipe equipe : addedEquipes) {
                     System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
                     equipeEventService.ajouter(equipe, eventToSave);
@@ -476,7 +651,6 @@ public class AjoutEvennementController {
                 alert.showAndWait();
             } else {
                 eventService.modifier(eventToSave);
-                // Remove existing associations and re-add new ones
                 for (Equipe equipe : eventService.getEquipesForEvent(eventToSave.getId())) {
                     equipeEventService.supprimer(equipe, eventToSave);
                 }
@@ -495,6 +669,9 @@ public class AjoutEvennementController {
             if (stage != null) {
                 stage.close();
             }
+        } catch (IllegalArgumentException e) {
+            LOGGER.severe("Erreur : La valeur de 'type' ou 'reward' ne correspond pas à l'ENUM défini dans la base de données : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La valeur de 'type' ou 'reward' sélectionnée n'est pas valide dans la base de données actuelle. Veuillez utiliser uniquement les valeurs prédéfinies ou demander une mise à jour de l'ENUM.");
         } catch (SQLException e) {
             LOGGER.severe("Erreur lors de l'enregistrement de l'événement : " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'enregistrement de l'événement : " + e.getMessage(), ButtonType.OK);
@@ -594,7 +771,7 @@ public class AjoutEvennementController {
             }
             Parent root = loader.load();
 
-           AjoutEquipeController ajoutEquipeController = loader.getController();
+            AjoutEquipeController ajoutEquipeController = loader.getController();
             ajoutEquipeController.setAjoutEvennementController(this);
 
             Stage stage = new Stage();
@@ -607,13 +784,12 @@ public class AjoutEvennementController {
         }
     }
 
-    // Handle click on equipesListView to edit an existing team
     @FXML
     private void handleEquipeListClick(MouseEvent event) {
         try {
             String selectedTeamName = equipesListView.getSelectionModel().getSelectedItem();
             if (selectedTeamName == null) {
-                return; // No team selected
+                return;
             }
 
             Equipe selectedEquipe = addedEquipes.stream()
@@ -642,18 +818,32 @@ public class AjoutEvennementController {
         }
     }
 
-    // Method to add a team to the event
     public void addEquipeToEvent(Equipe equipe) {
         addedEquipes.add(equipe);
         equipeNames.add(equipe.getNom());
     }
 
-    // Method to update a team in the list after modification
     public void updateEquipeInList(Equipe oldEquipe, Equipe newEquipe) {
         int index = addedEquipes.indexOf(oldEquipe);
         if (index != -1) {
             addedEquipes.set(index, newEquipe);
             equipeNames.set(index, newEquipe.getNom());
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showWarning(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
