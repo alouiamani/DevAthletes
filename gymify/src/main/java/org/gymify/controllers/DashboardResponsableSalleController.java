@@ -68,9 +68,13 @@ public class DashboardResponsableSalleController {
         AddRoleFx.getItems().addAll("Entraîneur", "Sportif");
         AddSpecialiteFx.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
         AddSpecialiteFx.setDisable(true);
+        EditRoleId.getItems().addAll("Entraîneur", "Sportif");
+        EditSpecialId.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
+        EditSpecialId.setDisable(true);
 
         AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
         int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
+        EditRoleId.setOnAction(event -> EditSpecialId.setDisable(!"Entraîneur".equals(EditRoleId.getValue())));
 
         totalUsersLabel.setText("" + totalUsers);
         afficherCourbeStatistiques();
@@ -212,19 +216,19 @@ public class DashboardResponsableSalleController {
 
 
     private HBox creerHBoxUtilisateur(User user) {
-        // Création de la HBox principale
-        HBox hbox = new HBox(15);
+        // Création de la HBox principale avec une marge plus grande
+        HBox hbox = new HBox(20);
         hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setPadding(new Insets(10));
+        hbox.setPadding(new Insets(15));
         hbox.getStyleClass().add("user-hbox"); // Ajout d'une classe CSS pour le style
 
-        // Utilisation d'un GridPane pour organiser les informations
+        // Utilisation d'un GridPane pour organiser les informations de manière plus nette
         GridPane infoGrid = new GridPane();
-        infoGrid.setHgap(20);
-        infoGrid.setVgap(5);
+        infoGrid.setHgap(15);
+        infoGrid.setVgap(8);
         infoGrid.setAlignment(Pos.CENTER_LEFT);
 
-        // Labels pour les informations
+        // Labels pour les informations de l'utilisateur, ajout d'une classe CSS pour un style uniforme
         Label nameLabel = new Label(user.getNom());
         nameLabel.getStyleClass().add("user-label");
 
@@ -237,21 +241,25 @@ public class DashboardResponsableSalleController {
         Label roleLabel = new Label(user.getRole());
         roleLabel.getStyleClass().add("user-label");
 
-        // Ajout des labels au GridPane
+        // Ajout des labels et des titres dans le GridPane avec une meilleure disposition
         infoGrid.add(new Label("Nom:"), 0, 0);
         infoGrid.add(nameLabel, 1, 0);
         infoGrid.add(new Label("Prénom:"), 0, 1);
         infoGrid.add(lastNameLabel, 1, 1);
-        infoGrid.add(new Label("Email:"), 2, 0);
-        infoGrid.add(emailLabel, 3, 0);
-        infoGrid.add(new Label("Rôle:"), 2, 1);
-        infoGrid.add(roleLabel, 3, 1);
+        infoGrid.add(new Label("Email:"), 0, 2);
+        infoGrid.add(emailLabel, 1, 2);
+        infoGrid.add(new Label("Rôle:"), 0, 3);
+        infoGrid.add(roleLabel, 1, 3);
 
-        // Boutons d'action
+        // Personnalisation des boutons
         Button editButton = createImageButton("/images/gear.png", event -> modifierUtilisateur(user));
         Button deleteButton = createImageButton("/images/delete.png", event -> supprimerUtilisateur(user));
 
-        // Spacer pour pousser les boutons à droite
+        // Ajout d'un effet visuel pour les boutons
+        addButtonHoverEffect(editButton);
+        addButtonHoverEffect(deleteButton);
+
+        // Spacer pour pousser les boutons à droite et garder un espacement dynamique
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -261,17 +269,30 @@ public class DashboardResponsableSalleController {
         return hbox;
     }
 
-
-
+    // Méthode pour créer un bouton avec une image et un effet de survol
     private Button createImageButton(String imagePath, javafx.event.EventHandler<ActionEvent> eventHandler) {
         Button button = new Button();
         ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
-        icon.setFitWidth(20);
-        icon.setFitHeight(20);
+        icon.setFitWidth(42);  // Taille de l'icône légèrement plus grande pour plus de visibilité
+        icon.setFitHeight(42);
         button.setGraphic(icon);
         button.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
         button.setOnAction(eventHandler);
         return button;
+    }
+
+    // Ajout d'un effet de survol pour les boutons, avec un léger agrandissement et un changement de couleur
+    private void addButtonHoverEffect(Button button) {
+        button.setOnMouseEntered(e -> {
+            button.setScaleX(1.1);
+            button.setScaleY(1.1);
+            button.setStyle("-fx-background-color: #f0f0f0;");  // Couleur de fond claire lors du survol
+        });
+        button.setOnMouseExited(e -> {
+            button.setScaleX(1.0);
+            button.setScaleY(1.0);
+            button.setStyle("-fx-background-color: transparent;");
+        });
     }
 
     private void modifierUtilisateur(User user) {

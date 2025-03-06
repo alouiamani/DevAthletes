@@ -82,6 +82,14 @@ public class User {
         this.imageURL = imageURL;
     }
 
+    public User(int id_User, String nom, String prenom, String email, String role) {
+        this.id_User = id_User;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
+    }
+
     // 🔹 Getters et Setters
     public int getId_User() {
         return id_User;
