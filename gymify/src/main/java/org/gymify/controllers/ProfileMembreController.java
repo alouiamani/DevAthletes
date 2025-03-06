@@ -69,15 +69,10 @@ public class ProfileMembreController {
     }
 
     private void chargerSalles() {
-<<<<<<< HEAD
         SalleService salleService = new SalleService();
         try {
             List<Salle> salles = salleService.getAllSalles("");
             sallesContainer.getChildren().clear(); // Clear existing salles
-=======
-       SalleService salleService = new SalleService();
-        List<Salle> salles = salleService.getAllSalles("");
->>>>>>> origin/main
 
             for (Salle salle : salles) {
                 try {
@@ -188,7 +183,6 @@ public class ProfileMembreController {
 
     @FXML
     private void ouvrirSalle(ActionEvent event) {
-<<<<<<< HEAD
         sallesContainer.requestFocus();
     }
 
@@ -207,16 +201,10 @@ public class ProfileMembreController {
             e.printStackTrace();
         }
     }
-}
-=======
-        // Fait défiler la page vers la section des salles
-       sallesContainer.requestFocus();
-    }
 
     @FXML
     public void PlanningForYou(ActionEvent event) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/planningperso.fxml"));
             Parent root = loader.load();
 
@@ -232,7 +220,6 @@ public class ProfileMembreController {
             ex.printStackTrace();
             System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
         }
-
     }
 
     public void ShowPlanning(ActionEvent event) {
@@ -249,8 +236,3 @@ public class ProfileMembreController {
         }
     }
 }
-
-
-
-
->>>>>>> origin/main

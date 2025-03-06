@@ -70,6 +70,7 @@ public class SalleFormAdminController {
             }
         });
     }
+
     public void chargerSalle(Salle salle) {
         salleAModifier = salle;
         nomFX.setText(salle.getNom());
@@ -154,7 +155,6 @@ public class SalleFormAdminController {
                 salleService.ajouter(salle);
                 afficherAlerte("Succès", "La salle a été ajoutée avec succès !");
             } else {
-
                 // Modifier la salle existante si elle est en modification
                 salle.setId_Salle(salleAModifier.getId_Salle());
                 salleService.modifier(salle);
@@ -191,7 +191,6 @@ public class SalleFormAdminController {
             afficherAlerte("Erreur", "Une erreur est survenue lors de l'enregistrement.");
         }
     }
-
 
     private boolean validerChamps() {
         boolean hasErrors = false;
@@ -376,12 +375,11 @@ public class SalleFormAdminController {
         });
         JSObject window = (JSObject) webEngine.executeScript("window");
         window.setMember("javaConnector", this);
-
     }
+
     public class JavaConnector {
         public void setAddress(String address) {
             Platform.runLater(() -> adresseFX.setText(address));
         }
     }
-
 }

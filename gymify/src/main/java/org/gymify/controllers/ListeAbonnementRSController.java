@@ -1,4 +1,5 @@
 package org.gymify.controllers;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +30,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class ListeAbonnementRSController {
 
     @FXML
@@ -49,25 +49,26 @@ public class ListeAbonnementRSController {
 
     // Initialize method for setting up the salle and loading abonnements
     public void initialize() {
-
         setupChoiceBox();
 
         activiteChoiceBox.setOnAction(event -> loadFilteredAbonnements());
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            loadFilteredAbonnements();});
+            loadFilteredAbonnements();
+        });
     }
+
     private void setupChoiceBox() {
         List<String> activites = new ArrayList<>(activiteService.getActivityTypes());
         if (!activites.contains("Tous")) {
-            activites.add( 0,"Tous");  // Assurez-vous que "Tous" est toujours en première position
+            activites.add(0, "Tous");  // Assurez-vous que "Tous" est toujours en première position
         }
 
         activiteChoiceBox.setItems(FXCollections.observableArrayList(activites));
 
         activiteChoiceBox.setOnAction(event -> loadFilteredAbonnements());
         activiteChoiceBox.setValue("Tous");
-
     }
+
     private void loadFilteredAbonnements() {
         try {
             abonnementContainer.getChildren().clear(); // Effacer les abonnements existants
@@ -96,8 +97,8 @@ public class ListeAbonnementRSController {
             abonnements.forEach(ab -> abonnementContainer.getChildren().add(createAbonnementCard(ab)));
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des abonnements.");
-        }}
-
+        }
+    }
 
     // Method to set Salle ID and reload data if necessary
     public void setSalleId(int salleId) {
@@ -145,8 +146,6 @@ public class ListeAbonnementRSController {
         }
     }
 
-    // New method to fetch abonnements filtered by activity type directly from the database
-
     // Method to handle the Modify action
     private void handleModify(Abonnement abonnement) {
         try {
@@ -168,7 +167,6 @@ public class ListeAbonnementRSController {
 
     // Method to create the card for abonnement
     private VBox createAbonnementCard(Abonnement abonnement) {
-
         VBox card = new VBox(10);
         card.setStyle("-fx-background-color: #ffffff; -fx-padding: 15px; -fx-border-radius: 10px; " +
                 "-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 0);");
@@ -250,7 +248,7 @@ public class ListeAbonnementRSController {
         }
     }
 
-@FXML
+    @FXML
     // Handle adding new abonnement
     private void handleAddAbonnement(ActionEvent event) {
         try {
@@ -277,10 +275,6 @@ public class ListeAbonnementRSController {
         }
     }
 
-
-    // Method to check if the salle exists in the database
-
-
     // Method to show alert dialog
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -302,8 +296,5 @@ public class ListeAbonnementRSController {
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du retour au dashboard.");
         }
-
     }
-
 }
-

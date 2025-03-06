@@ -25,51 +25,34 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale; // Added for Locale.US
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Controller class for managing the list of participations (equipe-event associations) in the UI.
- */
 public class ListeParticipationController {
 
-    @FXML
-    private Button btnRetour;
-
-    @FXML
-    private ScrollPane scrollPaneParticipations;
-
-    @FXML
-    private TextField searchField;
-
-    @FXML
-    private VBox vboxParticipations;
-
-    @FXML
-    private WebView weatherWebView;
+    @FXML private Button btnRetour;
+    @FXML private ScrollPane scrollPaneParticipations;
+    @FXML private TextField searchField;
+    @FXML private VBox vboxParticipations;
+    @FXML private WebView weatherWebView;
 
     private final EquipeEventService equipeEventService = new EquipeEventService();
     private final EventService eventService = new EventService();
     private static final Logger LOGGER = Logger.getLogger(ListeParticipationController.class.getName());
 
-    // Cache for weather data
+    // Weather-related fields
     private String cachedWeatherHtml = null;
     private long lastWeatherFetchTime = 0;
-    private static final long WEATHER_CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
-
-    // Map for Open-Meteo weather codes to descriptions
+    private static final long WEATHER_CACHE_DURATION = 60 * 60 * 1000;
     private static final Map<Integer, String> WEATHER_CODE_MAP = new HashMap<>();
-
-    // Fixed coordinates for Tunis, Tunisia
     private static final double TUNIS_LATITUDE = 36.8065;
     private static final double TUNIS_LONGITUDE = 10.1815;
 
     static {
-        // Populate weather code map (based on WMO codes used by Open-Meteo)
         WEATHER_CODE_MAP.put(0, "Clear sky");
         WEATHER_CODE_MAP.put(1, "Mainly clear");
         WEATHER_CODE_MAP.put(2, "Partly cloudy");
@@ -86,19 +69,12 @@ public class ListeParticipationController {
         WEATHER_CODE_MAP.put(73, "Moderate snow fall");
         WEATHER_CODE_MAP.put(75, "Heavy snow fall");
         WEATHER_CODE_MAP.put(95, "Thunderstorm");
-        // Add more codes as needed
     }
 
     @FXML
     public void initialize() {
         loadParticipations("");
-
-        // Add listener for search field to filter participations
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            loadParticipations(newValue);
-        });
-
-        // Load weather forecast
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> loadParticipations(newValue));
         loadWeatherForecast();
     }
 
@@ -117,18 +93,20 @@ public class ListeParticipationController {
 
                 List<Equipe> equipes = equipeEventService.getEquipesForEvent(participation.getIdEvent());
                 if (equipes.isEmpty()) continue;
-                Equipe equipe = equipes.get(0); // Assuming one team per event
 
                 boolean matchesSearch = searchQuery == null || searchQuery.trim().isEmpty() ||
                         (event.getNom() != null && event.getNom().toLowerCase().contains(searchQuery.toLowerCase())) ||
                         (event.getType() != null && event.getType().name().toLowerCase().contains(searchQuery.toLowerCase()));
 
                 if (matchesSearch) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardParticipation.fxml"));
-                    Parent card = loader.load();
-                    CardParticipationController controller = loader.getController();
-                    controller.setParticipation(event, equipe);
-                    vboxParticipations.getChildren().add(card);
+                    for (Equipe equipe : equipes) { // Loop through all equipes, not just the first one
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardParticipation.fxml"));
+                        Parent card = loader.load();
+                        CardParticipationController controller = loader.getController();
+                        controller.setParticipation(event, equipe);
+                        controller.setParentController(this); // Set the parent controller
+                        vboxParticipations.getChildren().add(card);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -164,9 +142,8 @@ public class ListeParticipationController {
                 return;
             }
 
-            // Construct the Open-Meteo API URL for Tunis, using Locale.US to ensure dot as decimal separator
             String apiUrl = String.format(
-                    Locale.US, // Use Locale.US to ensure dot (.) as decimal separator
+                    Locale.US,
                     "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto",
                     TUNIS_LATITUDE, TUNIS_LONGITUDE
             );
@@ -200,12 +177,10 @@ public class ListeParticipationController {
             br.close();
             conn.disconnect();
 
-            // Parse the JSON response
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(response.toString());
             JsonNode dailyNode = rootNode.get("daily");
 
-            // Generate HTML table for the weather forecast
             StringBuilder html = new StringBuilder();
             html.append("<!DOCTYPE html>")
                     .append("<html>")
@@ -251,7 +226,6 @@ public class ListeParticipationController {
             lastWeatherFetchTime = currentTime;
             weatherWebView.getEngine().loadContent(cachedWeatherHtml);
             LOGGER.info("Successfully loaded weather forecast into WebView.");
-
         } catch (IOException e) {
             LOGGER.severe("Erreur lors du chargement des données météo: " + e.getMessage());
             weatherWebView.getEngine().loadContent("<html><body><p>Erreur lors du chargement des données météo: " + e.getMessage() + "</p></body></html>");
