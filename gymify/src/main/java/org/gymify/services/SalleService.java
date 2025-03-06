@@ -1,6 +1,5 @@
 package org.gymify.services;
 
-import org.gymify.entities.Event;
 import org.gymify.entities.Salle;
 import org.gymify.utils.gymifyDataBase;
 
@@ -154,7 +153,7 @@ public class SalleService implements Iservices<Salle> {
         return getAllSalles(searchText);
     }
 
-    public boolean isResponsableDejaAffecte(int responsableId) throws SQLException {
+    public boolean isResponsableDejaAffecte(int responsableId, int i) throws SQLException {
         String query = "SELECT COUNT(*) FROM salle WHERE responsableId = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, responsableId);
@@ -232,5 +231,11 @@ public class SalleService implements Iservices<Salle> {
             pstmt.setInt(1, idSalle);
             pstmt.executeUpdate();
         }
+    }
+
+    // New method to check if a salle exists
+    public boolean salleExiste(int salleId) throws SQLException {
+        Salle salle = getSalleById(salleId);
+        return salle != null;
     }
 }
