@@ -21,13 +21,13 @@
     <items>
         <AnchorPane prefHeight="401.0" prefWidth="146.0">
             <children>
-                <ImageView fitHeight="554.0" fitWidth="180.0" layoutY="2.0" pickOnBounds="true" smooth="false">
+                <ImageView fitHeight="554.0" fitWidth="206.0" layoutY="2.0" pickOnBounds="true" smooth="false">
                <image>
                   <Image url="@images/3d-gym-equipment.jpg" />
                </image></ImageView>
-                <Button layoutX="6.0" layoutY="7.0" onAction="#retournerEnArriere" prefHeight="35.0" prefWidth="23.0" style="-fx-background-color: #e1d8d8;" textFill="#666871">
+                <Button layoutX="1.0" layoutY="2.0" onAction="#retournerEnArriere" prefHeight="35.0" prefWidth="41.0" style="-fx-background-color: #e1d8d8;" textFill="#666871">
                <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/arrow.png" />
                      </image>
@@ -37,10 +37,9 @@
         </AnchorPane>
       <AnchorPane>
          <children>
-            <AnchorPane layoutX="20.0" layoutY="10.0" prefHeight="530.0" prefWidth="614.0" styleClass="card" stylesheets="@style.css">
+            <AnchorPane layoutY="6.0" prefHeight="542.0" prefWidth="554.0" styleClass="card">
                <children>
-                  <WebView fx:id="mapView" layoutX="392.0" layoutY="246.0" prefHeight="171.0" prefWidth="194.0" />
-                      <GridPane layoutX="48.0" layoutY="14.0" prefHeight="386.0" prefWidth="318.0">
+                      <GridPane layoutX="30.0" layoutY="59.0" prefHeight="386.0" prefWidth="318.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.00003662109376" minWidth="10.0" prefWidth="159.19998779296876" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.8000244140625" minWidth="10.0" prefWidth="125.60001220703126" />
@@ -89,22 +88,22 @@
                               <TextField fx:id="nomFX" GridPane.columnIndex="1" />
                               <Label fx:id="errorNom" prefHeight="8.0" prefWidth="0.0" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       
-                                                      <TextField fx:id="adresseFX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="adresseFX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label fx:id="errorAdresse" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       
-                                                      <TextArea fx:id="detailsFX" prefHeight="56.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                            <TextArea fx:id="detailsFX" prefHeight="56.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label fx:id="errorDetails" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       
-                                                      <TextField fx:id="numtelFX" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                            <TextField fx:id="numtelFX" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Label fx:id="errorNumTel" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       
-                                                      <TextField fx:id="emailFX" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                            <TextField fx:id="emailFX" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                               <Label fx:id="errorEmail" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       
-                                                      <TextField fx:id="url_photoFX" prefHeight="42.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                            <TextField fx:id="url_photoFX" prefHeight="42.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                               <Label fx:id="errorUrlPhoto" textFill="red" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       
-                                                      <ChoiceBox fx:id="responsableChoiceBox" prefHeight="26.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                                            <ChoiceBox fx:id="responsableChoiceBox" prefHeight="26.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                         <Label cache="true" text="Select Your Gym Photo :" textFill="#232121" GridPane.rowIndex="10">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -126,13 +125,21 @@
                         </Button>
                           </children>
                       </GridPane>
-                      <Button layoutX="333.0" layoutY="448.0" mnemonicParsing="false" onAction="#btnAnnuler" text="Cancel" textFill="#f4efef" />
-                      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="182.0" layoutY="448.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: #f77017;" stylesheets="@application.css" text="Done" textFill="#dfd9d6" textOverrun="CENTER_ELLIPSIS">
+                  <WebView fx:id="mapView" layoutX="357.0" layoutY="226.0" prefHeight="171.0" prefWidth="194.0" />
+                      <Button layoutX="502.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnAnnuler" styleClass="annuler-btn" stylesheets="@style.css" text="Cancel" textFill="#f21e1e" />
+                      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnEnregistrer" prefHeight="18.0" prefWidth="94.0" styleClass="LoginBtn" stylesheets="@style.css" text="Done" textFill="#dfd9d6" textOverrun="CENTER_ELLIPSIS">
                           <padding>
                               <Insets left="50.0" right="20.0" />
                           </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                       </Button>
                </children>
+               <stylesheets>
+                  <URL value="@design.css" />
+                  <URL value="@styles.css" />
+               </stylesheets>
             </AnchorPane>
          </children>
       </AnchorPane>

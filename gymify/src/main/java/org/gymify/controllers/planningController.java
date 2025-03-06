@@ -326,4 +326,13 @@ public class planningController {
         }
     }
 
+    public void planning(ActionEvent actionEvent) {
+    }
+
+    public void showActivityDashboard(ActionEvent actionEvent) {
+    }
+
+    public void logout(ActionEvent actionEvent) {
+
+    }
 }

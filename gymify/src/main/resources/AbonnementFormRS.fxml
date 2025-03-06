@@ -9,65 +9,54 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.31484350790207616" prefHeight="402.0" prefWidth="647.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
+<SplitPane dividerPositions="0.2615230460921843" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
    <items>
-      <ImageView fitHeight="399.0" fitWidth="205.0" pickOnBounds="true" smooth="false">
+      <ImageView fitHeight="553.0" fitWidth="240.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@images/3d-gym-equipment.jpg" />
          </image>
       </ImageView>
 
-      <AnchorPane prefHeight="400.0" prefWidth="451.0">
+      <AnchorPane fx:id="abonnementCard" prefHeight="554.0" prefWidth="555.0">
          <children>
-            <VBox fx:id="abonnementCard" layoutX="25.0" layoutY="19.0" prefHeight="362.0" prefWidth="384.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-padding: 10;" styleClass="card">
+            <ChoiceBox fx:id="typeActiviteChoiceBox" layoutX="-43.0" layoutY="44.0" prefWidth="150.0" />
+            <AnchorPane layoutX="155.0" layoutY="146.0" prefHeight="236.0" prefWidth="325.0">
                <children>
-                  <Label fx:id="nomAbonnementLabel" text="Nom de l'abonnement" textFill="#296e79">
-                     <VBox.margin>
-                        <Insets bottom="30.0" left="90.0" top="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-
-                  <Label text="Choose subscription type :" textAlignment="CENTER" textFill="#6e6363">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
-                  <ChoiceBox fx:id="typeAbonnementChoiceBox" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="50.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-
-                  <Label fx:id="dateDebutLabel" prefHeight="18.0" prefWidth="141.0" text="Date de début" textFill="#6e6363">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="dateFinLabel" text="Date de fin" textFill="#6e6363">
-                     <VBox.margin>
-                        <Insets bottom="30.0" left="50.0" />
-                     </VBox.margin>
-                  </Label>
-
-                  <Label text="Tarif :" textFill="#6e6363" />
-                  <TextField fx:id="tarifTextField" />
-
-                  <Button fx:id="handleAbonnement" mnemonicParsing="false" onAction="#handleAbonnementSelection" text="Confirm">
-                     <VBox.margin>
-                        <Insets left="130.0" top="50.0" />
-                     </VBox.margin>
-                  </Button>
+                  <TextField fx:id="tarifTextField" layoutX="39.0" layoutY="153.0" />
                </children>
-            </VBox>
+            </AnchorPane>
+
+            <!-- Nouveau ChoiceBox pour le type d'activité -->
+            <Label layoutX="-13.0" layoutY="24.0" text="Type d'activité :" textAlignment="CENTER" textFill="#6e6363">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Label>
+            <ChoiceBox fx:id="typeAbonnementChoiceBox" layoutX="127.0" layoutY="35.0" prefWidth="150.0" />
+
+            <Label layoutX="105.0" layoutY="16.0" text="Choose subscription type :" textAlignment="CENTER" textFill="#6e6363">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Label>
+
+            <Label fx:id="dateDebutLabel" layoutX="291.0" layoutY="38.0" prefHeight="18.0" prefWidth="141.0" text="Date de début" textFill="#6e6363">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Label>
+            <Label fx:id="dateFinLabel" layoutX="356.0" layoutY="14.0" text="Date de fin" textFill="#6e6363" />
+            <Label fx:id="nomAbonnementLabel" layoutX="295.0" layoutY="20.0" text="Nom de l'abonnement" textFill="#296e79">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+
+            <Label layoutX="299.0" layoutY="43.0" text="Tarif :" textFill="#6e6363" />
+
+            <Button fx:id="handleAbonnement" layoutX="450.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAbonnementSelection" style="-fx-background-color: ec520a;" text="Confirm" textFill="#ec520a" />
          </children>
       </AnchorPane>
    </items>

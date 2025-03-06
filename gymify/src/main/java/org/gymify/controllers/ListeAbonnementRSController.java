@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,8 +22,11 @@ import org.gymify.services.AbonnementService;
 import org.gymify.services.ActivityService;
 import org.gymify.services.SalleService;
 import org.gymify.services.ServiceUser;
+
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -55,6 +59,7 @@ public class ListeAbonnementRSController {
         activiteChoiceBox.setOnAction(event -> loadFilteredAbonnements());
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             loadFilteredAbonnements();});
+
     }
     private void setupChoiceBox() {
         List<String> activites = new ArrayList<>(activiteService.getActivityTypes());
@@ -93,35 +98,32 @@ public class ListeAbonnementRSController {
                     .collect(Collectors.toList());
 
             // Ajouter les abonnements filtrés à l'interface
-            abonnements.forEach(ab -> abonnementContainer.getChildren().add(createAbonnementCard(ab)));
+            for (Abonnement abonnement : abonnements) {
+                abonnementContainer.getChildren().add(createAbonnementCard(abonnement));
+            }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des abonnements.");
-        }}
+        }
+    }
 
 
     // Method to set Salle ID and reload data if necessary
     public void setSalleId(int salleId) {
         this.salleId = salleId;
-        System.out.println("Salle ID reçu : " + salleId); // Debug
         loadSalleData(); // Reload salle data when salleId is updated
     }
 
     // Method to load salle data and abonnements
     private void loadSalleData() {
-        System.out.println("Chargement des données de la salle pour ID: " + salleId);
-
         try {
             Salle salle = salleService.getSalleById(salleId);
             if (salle != null) {
-                System.out.println("Salle trouvée: " + salle.getNom());
                 salleLabel.setText("Abonnements de la salle: " + salle.getNom());
                 loadFilteredAbonnements();  // Reload abonnements after setting salle data
             } else {
-                System.out.println("Aucune salle trouvée !");
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Salle introuvable.");
             }
         } catch (SQLException e) {
-            System.out.println("Erreur SQL: " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur SQL lors du chargement des données de salle.");
         }
     }
@@ -135,7 +137,7 @@ public class ListeAbonnementRSController {
         if ("Tous".equals(activite)) {
             abonnements = abonnementService.afficherParSalle(salleId); // Charger tous les abonnements
         } else {
-            abonnements = abonnementService.getAbonnementsByActivityType(ActivityType.valueOf(activite.toUpperCase()));
+            abonnements = abonnementService.getAbonnementsByActivityType(String.valueOf(ActivityType.valueOf(activite.toUpperCase())));
         }
 
         // Afficher les abonnements filtrés
@@ -156,11 +158,10 @@ public class ListeAbonnementRSController {
             // Pass the salleId to the form controller
             controller.preFillForm(abonnement); // Fill the form with the details
 
-            Stage stage = (Stage) salleLabel.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Modifier un abonnement");
             stage.show();
-
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire de modification.");
         }
@@ -250,8 +251,9 @@ public class ListeAbonnementRSController {
         }
     }
 
-@FXML
+
     // Handle adding new abonnement
+    @FXML
     private void handleAddAbonnement(ActionEvent event) {
         try {
             if (salleService.salleExiste(salleId)) {
@@ -262,10 +264,9 @@ public class ListeAbonnementRSController {
                 AbonnementFormRSController controller = loader.getController();
                 controller.setSalleId(salleId);
 
-                // Get the current stage from the event
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-                stage.setTitle("Add un abonnement");
+                stage.setTitle("Modifier un abonnement");
                 stage.show();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "La salle avec l'ID " + salleId + " n'existe pas.");
@@ -276,7 +277,6 @@ public class ListeAbonnementRSController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire d'abonnement.");
         }
     }
-
 
     // Method to check if the salle exists in the database
 

@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="390.0" prefWidth="647.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeAbonnementRSController">
+<AnchorPane prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeAbonnementRSController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutX="1.0" layoutY="12.0" prefHeight="422.0" prefWidth="648.0" spacing="20">
-            <!-- Search bar (optional) -->
-            <TextField fx:id="searchField" prefHeight="46.0" prefWidth="648.0" promptText="Rechercher un abonnement">
-                <opaqueInsets>
-                    <Insets bottom="20.0" />
-                </opaqueInsets>
-            </TextField>
+         <!-- Search bar (optional) -->
+         <TextField fx:id="searchField" layoutX="23.0" layoutY="62.0" prefHeight="27.0" prefWidth="302.0" promptText="Rechercher un abonnement">
+             <opaqueInsets>
+                 <Insets bottom="20.0" />
+             </opaqueInsets>
+         </TextField>
 
-            <!-- Button to add a new subscription -->
-            <Button fx:id="addAbonnementButton" onAction="#handleAddAbonnement" text="Ajouter Abonnement" />
-            <ScrollPane prefHeight="317.0" prefWidth="648.0" styleClass="card" stylesheets="@styles.css">
-                <content>
+         <!-- Button to add a new subscription -->
+         <Button fx:id="addAbonnementButton" layoutX="637.0" layoutY="57.0" onAction="#handleAddAbonnement" prefHeight="11.0" prefWidth="159.0" style="-fx-background-color: #e6e2e2;" text=" ADD subscription">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Ajoute.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+         <ScrollPane layoutX="11.0" layoutY="166.0" prefHeight="402.0" prefWidth="800.0" styleClass="card" stylesheets="@styles.css">
+             <content>
 
-                    <!-- Container to hold the abonnement cards -->
-                    <FlowPane fx:id="abonnementContainer" alignment="CENTER" hgap="20" prefHeight="0.0" prefWidth="621.0" vgap="20">
+                 <!-- Container to hold the abonnement cards -->
+                 <FlowPane fx:id="abonnementContainer" alignment="CENTER" hgap="20" prefHeight="385.0" prefWidth="771.0" vgap="20">
                         <!-- Abonnement Cards will be dynamically added here -->
                     </FlowPane>
-                </content>
-            </ScrollPane>
-        </VBox>
+             </content>
+         </ScrollPane>
+      <Label fx:id="salleLabel" layoutX="23.0" layoutY="117.0" text="Label" textFill="#150900">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font></Label>
+      <ChoiceBox fx:id="activiteChoiceBox" layoutX="652.0" layoutY="140.0" prefWidth="150.0" />
+      <Label layoutX="652.0" layoutY="122.0" text="sorted by " textFill="#080808" />
+      <AnchorPane layoutY="-1.0" prefHeight="44.0" prefWidth="811.0" styleClass="Appbar" stylesheets="@style.css">
+         <children>
+            <Button fx:id="retour" layoutX="5.0" layoutY="4.0" mnemonicParsing="false" onAction="#retourDashboard" prefHeight="36.0" prefWidth="40.0" style="-fx-background-color: #e1d8d8;" textFill="#a6a7a9">
+               <stylesheets>
+                  <URL value="@style.css" />
+                  <URL value="@application.css" />
+               </stylesheets>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="20.0" layoutX="15.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Home.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="714.0" layoutY="13.0" text="My Gym" textFill="#f4efef" />
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

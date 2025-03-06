@@ -12,10 +12,10 @@ public class Salle {
     private String email;
     private String url_photo;
     private List<Abonnement> abonnements;
-    private int idResponsable;  // Utiliser int au lieu de String pour l'ID du responsable
+   // Utiliser int au lieu de String pour l'ID du responsable
 public Salle(){}
     // Constructeur avec idResponsable
-    public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
+    public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo) {
         this.id_Salle = id_Salle;
         this.nom = nom;
         this.adresse = adresse;
@@ -24,11 +24,11 @@ public Salle(){}
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-        this.idResponsable = idResponsable;  // Initialisation de l'ID du responsable
+       // Initialisation de l'ID du responsable
     }
 
     // Constructeur sans idResponsable pour la création d'une nouvelle salle
-    public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
+    public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo) {
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
@@ -36,29 +36,17 @@ public Salle(){}
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-        this.idResponsable = idResponsable;  // Initialisation de l'ID du responsable
+     // Initialisation de l'ID du responsable
     }
 
-    public Salle(int idSalle, String nom, String adresse, String details, String numTel, String email, String urlPhoto) {
+
+    public Salle(int idSalle, String nom) {
     this.id_Salle = idSalle;
     this.nom = nom;
-    this.adresse = adresse;
-    this.details = details;
-    this.num_tel = numTel;
-    this.email = email;
-    this.url_photo = urlPhoto;
-
-
     }
 
-    // Getters et setters
-    public int getIdResponsable() {
-        return this.idResponsable;
-    }
 
-    public void setIdResponsable(int idResponsable) {
-        this.idResponsable = idResponsable;
-    }
+
 
     public int getId_Salle() {
         return id_Salle;

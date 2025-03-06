@@ -14,7 +14,7 @@ public class ServiceReponse implements Iservices<Reponse> {
         con = gymifyDataBase.getInstance().getConnection();
     }
 
-    public void ajouter(Reponse reponse) {
+    public int ajouter(Reponse reponse) {
         String sql = "INSERT INTO reponse (id_rec, message, dateReponse) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, reponse.getId_rec());
@@ -26,6 +26,7 @@ public class ServiceReponse implements Iservices<Reponse> {
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'ajout de la réponse : " + e.getMessage());
         }
+        return 0;
     }
 
 

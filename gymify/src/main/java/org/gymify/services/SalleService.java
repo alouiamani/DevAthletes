@@ -1,6 +1,8 @@
 package org.gymify.services;
 
 import org.gymify.entities.Salle;
+import org.gymify.entities.User;
+import org.gymify.utils.AuthToken;
 import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
@@ -17,24 +19,36 @@ public  class SalleService implements Iservices<Salle> {
     }
 
     @Override
-    public void ajouter(Salle salle) throws SQLException {
-        if (salle == null || salle.getNom() == null || salle.getAdresse() == null || salle.getIdResponsable() == 0) {
+    public int ajouter(Salle salle) throws SQLException {
+        if (salle == null || salle.getNom() == null || salle.getAdresse() == null ) {
             throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
         }
 
-        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email,url_photo,responsableId) VALUES (?, ?, ?, ?, ?, ?,?)";
+        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email,url_photo) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(req)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, salle.getNom());
             pstmt.setString(2, salle.getAdresse());
             pstmt.setString(3, salle.getDetails());
             pstmt.setString(4, salle.getNum_tel());
             pstmt.setString(5, salle.getEmail());
             pstmt.setString(6, salle.getUrl_photo());
-            pstmt.setInt(7, salle.getIdResponsable());  // L'ID du responsable de salle
+
+
 
             pstmt.executeUpdate();
             System.out.println("✅ Salle ajoutée avec succès !");
+// L'ID du responsable de salle
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idSalle = generatedKeys.getInt(1);
+                    System.out.println("✅ Salle ajoutée avec succès. ID de la salle : " + idSalle);
+                    return idSalle;
+                } else {
+                    throw new SQLException("Échec de la récupération de l'ID de la salle.");
+                }
+            }
+
         } catch (SQLException e) {
             System.err.println("❌ Erreur lors de l'ajout de la salle : " + e.getMessage());
             throw e;
@@ -44,7 +58,7 @@ public  class SalleService implements Iservices<Salle> {
 
     @Override
     public void modifier(Salle salle) throws SQLException {
-        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=?,responsableId=? WHERE id_Salle=?";
+        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=? WHERE id_Salle=?";
 
         // Vérifier la connexion
         if (connection == null) {
@@ -58,9 +72,9 @@ public  class SalleService implements Iservices<Salle> {
         preparedStatement.setString(3, salle.getDetails());
         preparedStatement.setString(4, salle.getNum_tel());
         preparedStatement.setString(5, salle.getEmail());
-        preparedStatement.setString(6, salle.getUrl_photo()); // Éviter les null
+        preparedStatement.setString(6, salle.getUrl_photo());
         preparedStatement.setInt(7, salle.getId_Salle());
-        preparedStatement.setInt(8, salle.getIdResponsable());
+
 
         // Vérifier l'ID
         System.out.println("🔍 ID de la salle à modifier : " + salle.getId_Salle());
@@ -74,18 +88,29 @@ public  class SalleService implements Iservices<Salle> {
     }
 
 
-
-
-
     @Override
-    public void supprimer(int id) throws SQLException {
-        String req = "DELETE FROM salle WHERE id_Salle=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(req);
+    public void supprimer(int idSalle) throws SQLException {
+        // Supprimer d'abord les utilisateurs associés à la salle
+        String deleteUsersQuery = "DELETE FROM user WHERE id_Salle = ?";
+        try (PreparedStatement deleteUsersStatement = connection.prepareStatement(deleteUsersQuery)) {
+            deleteUsersStatement.setInt(1, idSalle);
+            deleteUsersStatement.executeUpdate();
+            System.out.println("Utilisateurs associés à la salle supprimés avec succès !");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression des utilisateurs associés : " + e.getMessage());
+            throw e;
+        }
 
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-        System.out.println(" Salle supprimé avec succès !");
-
+        // Ensuite, supprimer la salle
+        String deleteSalleQuery = "DELETE FROM salle WHERE id_Salle = ?";
+        try (PreparedStatement deleteSalleStatement = connection.prepareStatement(deleteSalleQuery)) {
+            deleteSalleStatement.setInt(1, idSalle);
+            deleteSalleStatement.executeUpdate();
+            System.out.println("Salle supprimée avec succès !");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression de la salle : " + e.getMessage());
+            throw e;
+        }
     }
 
 
@@ -97,7 +122,7 @@ public  class SalleService implements Iservices<Salle> {
 
         ResultSet rs = statement.executeQuery(req);
         while (rs.next()) {
-            Salle salle = new Salle(rs.getInt("id_salle"), rs.getString("nom"), rs.getString("adresse"), rs.getString("details"), rs.getString("num_tel"), rs.getString("email"), rs.getString("url_photo"));
+            Salle salle = new Salle(rs.getInt("id_Salle"), rs.getString("nom"), rs.getString("adresse"), rs.getString("details"), rs.getString("num_tel"), rs.getString("email"), rs.getString("url_photo"));
             salle.setId_Salle(rs.getInt("id_Salle"));
             salle.setNom(rs.getString("nom"));
             salle.setAdresse(rs.getString("adresse"));
@@ -105,7 +130,7 @@ public  class SalleService implements Iservices<Salle> {
             salle.setNum_tel(rs.getString("num_tel"));
             salle.setEmail(rs.getString("email"));
             salle.setUrl_photo(rs.getString("url_photo"));
-            salle.setIdResponsable(rs.getInt("responsableId"));
+
 
             salles.add(salle);
         }
@@ -113,6 +138,7 @@ public  class SalleService implements Iservices<Salle> {
 
         return salles;
     }
+
     public List<Salle> getAllSalles(String search) {
         List<Salle> salles = new ArrayList<>();
         String query = "SELECT * FROM salle WHERE nom LIKE ? OR adresse LIKE ?";
@@ -126,7 +152,7 @@ public  class SalleService implements Iservices<Salle> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id_salle");
+                int id = rs.getInt("id_Salle");
                 String nom = rs.getString("nom");
                 String adresse = rs.getString("adresse");
                 String details = rs.getString("details");
@@ -137,7 +163,7 @@ public  class SalleService implements Iservices<Salle> {
 
                 System.out.println("✅ Salle récupérée - ID: " + id + ", Nom: " + nom + ", Adresse: " + adresse);
 
-                Salle salle = new Salle(id, nom, adresse,details, numTel, email,  urlPhoto);
+                Salle salle = new Salle(id, nom, adresse, details, numTel, email, urlPhoto);
                 salles.add(salle);
             }
         } catch (SQLException e) {
@@ -157,19 +183,105 @@ public  class SalleService implements Iservices<Salle> {
                         salle.getAdresse().toLowerCase().contains(searchText))
                 .collect(Collectors.toList());
     }
-    public boolean isResponsableDejaAffecte(int responsableId) throws SQLException {
-        String query = "SELECT COUNT(*) FROM Salle WHERE responsableId = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, responsableId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1) > 0; // Si le nombre d'occurrences est supérieur à 0, le responsable est déjà affecté
+
+
+
+    public boolean salleExiste(int salleId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Salle WHERE id_salle = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next() && rs.getInt(1) > 0;
+        }
+    }
+
+    public Salle getSalleById(int salleId) throws SQLException {
+        String query = "SELECT * FROM Salle WHERE id_salle = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Salle(
+                        rs.getInt("id_Salle"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getString("détails"),
+                        rs.getString("num_tel"),
+                        rs.getString("email"),
+                        rs.getString("url_photo")
+
+                 );
+            }
+        }
+        return null;
+    }
+
+    public boolean isResponsableDejaAffecte(int idResponsable) throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE id_User = ? AND id_Salle IS NOT NULL";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, idResponsable);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
             }
         }
         return false;
     }
 
+    public void dissocierUtilisateursSalle(int idSalle) throws SQLException {
+        String req = "UPDATE user SET id_Salle = NULL WHERE id_Salle = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(req)) {
+            pstmt.setInt(1, idSalle);
+            pstmt.executeUpdate();
+            System.out.println("✅ Utilisateurs dissociés de la salle !");
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la dissociation des utilisateurs : " + e.getMessage());
+            throw e;
+        }
+    }
+    // Retourne null si aucune salle n'est trouvée
 
+    public int getIdSalleForCurrentUser() {
+        User currentUser = AuthToken.getCurrentUser();  // Récupère l'utilisateur connecté
+        if (currentUser == null) {
+            System.out.println("Aucun utilisateur connecté !");
+            return -1;  // Utilisateur non connecté
+        }
+
+        int idSalle = currentUser.getId_Salle();  // Récupère l'ID de la salle
+        if (idSalle == 0) {
+            System.out.println("L'utilisateur n'a pas de salle associée !");
+        } else {
+            System.out.println("L'ID de la salle de l'utilisateur connecté est : " + idSalle);
+        }
+
+        return idSalle;
+    }
+    public Salle getSallesById(int idSalle) {
+        if (idSalle <= 0) {
+            System.out.println("ID Salle invalide : " + idSalle);
+            return null;
+        }
+
+        // Logique pour récupérer la salle depuis la base de données (exemple)
+        Salle salle = findSalleById(idSalle);  // Trouver la salle par son ID dans la base
+        if (salle == null) {
+            System.out.println("Aucune salle trouvée pour l'ID : " + idSalle);
+        } else {
+            System.out.println("Salle trouvée : " + salle.getNom());
+        }
+        return salle;
+    }
+
+    // Simulation de la méthode qui cherche la salle dans la base de données
+    public Salle findSalleById(int idSalle) {
+        // Code pour interroger la base de données et récupérer la salle
+        // Retourne un objet Salle si trouvé, sinon retourne null
+        return new Salle(idSalle, "Salle Exemple");
+    }
 }
 
 

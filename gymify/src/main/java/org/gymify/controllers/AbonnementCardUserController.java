@@ -2,6 +2,7 @@ package org.gymify.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 import org.gymify.entities.Abonnement;
 import org.gymify.entities.AbonnementData;
 import org.gymify.entities.User;
-import org.gymify.entities.type_Abonnement;
+
 
 import java.io.IOException;
 

@@ -8,26 +8,42 @@ public class Abonnement {
     private Date Date_Fin;
     private type_Abonnement type_Abonnement;
     private Double tarif;
-    private Salle salle;
 
+    private Salle salle;
+    private Activité activite;
+
+    public String getTypeActivite() {
+        return typeActivite;
+    }
+
+    public void setTypeActivite(String typeActivite) {
+        this.typeActivite = typeActivite;
+    }
+
+    private String typeActivite;
     public Abonnement() {}
 
-    public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement,  Salle salle,Double tarif) {
+
+
+    public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement, Salle salle, Double tarif, Activité activite,String typeActivite) {
         this.Date_Début = Date_Début;
         this.Date_Fin = Date_Fin;
         this.type_Abonnement = type_Abonnement;
         this.salle = salle;
         this.tarif = tarif;
+        this.activite = activite;
+        this.typeActivite = typeActivite;
+
+
     }
 
     public int getId_Abonnement() {
         return id_Abonnement;
     }
 
-    public void setId_Abonnement(int id_Abonnement) {
-        this.id_Abonnement = id_Abonnement;
+    public void setId_Abonnement(int idAbonnement) {
+        this.id_Abonnement = idAbonnement;
     }
-
     public Date getDate_Début() {
         return Date_Début;
     }
@@ -61,14 +77,23 @@ public class Abonnement {
     }
 
     public Salle getSalle() {
-        System.out.println("Appel de getSalle() - Salle : " + salle);
         return salle;
     }
-
 
     public void setSalle(Salle salle) {
         this.salle = salle;
     }
+
+    public Activité getActivite() {
+        return activite;
+    }
+
+    public void setActivite(Activité activite) {
+        this.activite = activite;
+    }
+
+
+
 
     @Override
     public String toString() {
@@ -76,6 +101,9 @@ public class Abonnement {
                 ", Début: " + Date_Début +
                 ", Fin: " + Date_Fin +
                 ", Type: " + type_Abonnement +
-                ", Tarif: " + tarif + "DT";
+                ", Tarif: " + tarif + "DT" +
+                ", Activité: " + (activite != null ? activite.getNom() : "Aucune");
     }
+
+
 }

@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardAdminController"> <children>
+<AnchorPane fx:id="rootPane" prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardAdminController"> <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <AnchorPane prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -47,7 +47,7 @@
                                  <children>
                                     <ImageView fx:id="profileImage" fitHeight="50.0" fitWidth="60.0" layoutX="65.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/user.png" />
+                                          <Image url="/images/Home.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="58.0" layoutY="68.0" text="Welcome," textFill="WHITE">
@@ -142,7 +142,9 @@
                         <AnchorPane layoutX="206.0" layoutY="72.0" prefHeight="125.0" prefWidth="208.0" styleClass="white-round-carts">
                            <children>
                               <ImageView fitHeight="100.0" fitWidth="163.0" layoutX="23.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts">
-                               
+                                 <image>
+                                    <Image url="images/user.png" />
+                                 </image>
                               </ImageView>
                               <Button layoutX="67.0" layoutY="98.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: transparent;" styleClass="round-btn" text="Upload" textFill="#2e332f">
                                  <font>
@@ -356,7 +358,7 @@
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../../IdeaProjects/ProjetPiDev3a28/target/classes/Image/Ajoute.png" />
+                                    <Image url="@images/add.png" />
                                  </image>
                               </ImageView>
                            </graphic>

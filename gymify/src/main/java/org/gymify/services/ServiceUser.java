@@ -37,7 +37,7 @@ public class ServiceUser implements IGestionUser<User> {
             throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
         }
 
-        String req = "INSERT INTO user (nom, prenom, email, password, role, dateNaissance, imageURL, specialite) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String req = "INSERT INTO user (nom, prenom, email, password, role, specialite, dateNaissance, imageURL, id_Salle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
             pstmt.setString(1, user.getNom());
@@ -50,20 +50,27 @@ public class ServiceUser implements IGestionUser<User> {
 
             pstmt.setString(5, user.getRole());
 
-            // Gestion de la date de naissance
-            if (user.getDateNaissance() != null) {
-                pstmt.setDate(6, new java.sql.Date(user.getDateNaissance().getTime()));
-            } else {
-                pstmt.setNull(6, java.sql.Types.DATE);
-            }
-
-            pstmt.setString(7, user.getImageURL());
-
             // Gestion de la spécialité
             if (user instanceof Entraineur) {
-                pstmt.setString(8, ((Entraineur) user).getSpecialite());
+                pstmt.setString(6, ((Entraineur) user).getSpecialite());
             } else {
-                pstmt.setNull(8, java.sql.Types.VARCHAR);
+                pstmt.setNull(6, java.sql.Types.VARCHAR);
+            }
+
+            // Gestion de la date de naissance
+            if (user.getDateNaissance() != null) {
+                pstmt.setDate(7, new java.sql.Date(user.getDateNaissance().getTime()));
+            } else {
+                pstmt.setNull(7, java.sql.Types.DATE);
+            }
+
+            pstmt.setString(8, user.getImageURL());
+
+            // Gestion de l'ID de la salle
+            if ("Responsable_salle".equalsIgnoreCase(user.getRole())) {
+                pstmt.setInt(9, user.getId_Salle()); // Ajouter l'ID de la salle pour les responsables
+            } else {
+                pstmt.setNull(9, java.sql.Types.INTEGER); // Pas d'ID de salle pour les autres rôles
             }
 
             pstmt.executeUpdate();
@@ -77,7 +84,7 @@ public class ServiceUser implements IGestionUser<User> {
 
     @Override
     public void modifier(User user) throws SQLException {
-        String req = "UPDATE user SET nom=?, prenom=?, email=?, password=?, role=?, dateNaissance=?, imageURL=?, specialite=? WHERE id_User=?";
+        String req = "UPDATE user SET nom=?, prenom=?, email=?, password=?, role=?, dateNaissance=?, imageURL=?, specialite=?, id_Salle=? WHERE id_User=?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
             pstmt.setString(1, user.getNom());
@@ -88,6 +95,7 @@ public class ServiceUser implements IGestionUser<User> {
             pstmt.setDate(6, new Date(user.getDateNaissance().getTime())); // ✅ Gestion correcte de la date
             pstmt.setString(7, user.getImageURL());
 
+            // Gestion de la spécialité
             if (user instanceof Entraineur) {
                 Entraineur entraineur = (Entraineur) user;
                 pstmt.setString(8, entraineur.getSpecialite());  // Mettre à jour la spécialité des entraîneurs
@@ -95,16 +103,21 @@ public class ServiceUser implements IGestionUser<User> {
                 pstmt.setNull(8, java.sql.Types.VARCHAR);
             }
 
-            pstmt.setInt(9, user.getId_User());
+            // Gestion de l'ID de la salle
+            if ("Responsable_salle".equalsIgnoreCase(user.getRole())) {
+                pstmt.setInt(9, user.getId_Salle()); // Mettre à jour l'ID de la salle pour les responsables
+            } else {
+                pstmt.setNull(9, java.sql.Types.INTEGER); // Pas d'ID de salle pour les autres rôles
+            }
+
+            pstmt.setInt(10, user.getId_User());
             pstmt.executeUpdate();
             System.out.println("✅ Utilisateur modifié avec succès !");
         } catch (SQLException e) {
             System.err.println("❌ Erreur lors de la modification de l'utilisateur : " + e.getMessage());
             throw e;
         }
-        ;
     }
-
     @Override
     public void supprimer(int id_User) throws SQLException {
         // Vérifier si l'utilisateur existe avant de le supprimer
@@ -141,17 +154,24 @@ public class ServiceUser implements IGestionUser<User> {
                         rs.getInt("id_User"), rs.getString("nom"), rs.getString("prenom"),
                         rs.getString("email"), rs.getString("password"), rs.getString("role"));
                 user.setDateNaissance(rs.getDate("dateNaissance")); // ✅ Ajout de dateNaissance
-                user.setImageURL(rs.getString("imageURL")); // ✅ Ajout de imageURL
+                user.setImageURL(rs.getString("imageURL"));
+                user.setRole(rs.getString("role"));// ✅ Ajout de imageURL
 
-                // Récupérer la spécialité si l'utilisateur est un entraîneur
+                // Vérification du rôle de l'utilisateur
                 if ("Entraîneur".equals(user.getRole())) {
                     String specialite = rs.getString("specialite");
-                    Entraineur entraineur = new Entraineur(user.getNom(), user.getPrenom(), user.getEmail(), user.getPassword(),user.getDateNaissance(), user.getRole(), specialite);
+                    Entraineur entraineur = new Entraineur(user.getNom(), user.getPrenom(), user.getEmail(), user.getPassword(), user.getDateNaissance(), user.getRole(), specialite);
                     entraineur.setId_User(user.getId_User());
                     entraineur.setDateNaissance(user.getDateNaissance());
                     entraineur.setImageURL(user.getImageURL());
                     users.add(entraineur);
+                } else if ("responsable_salle".equals(user.getRole())) {
+                    // Si l'utilisateur est un responsable de salle, ajouter l'ID de la salle
+                    int salleId = rs.getInt("id_Salle"); // Récupérer l'ID de la salle
+                    user.setId_Salle(salleId); // Ajouter à l'objet User
+                    users.add(user);
                 } else {
+                    // Sinon, ajouter l'utilisateur normalement
                     users.add(user);
                 }
             }
@@ -161,9 +181,10 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return users;
     }
+
      public List<User> afficherPourResponsableAvecStream() throws SQLException {
         return afficher().stream() // Récupère tous les utilisateurs
-                .filter(user -> "Responsable_salle".equalsIgnoreCase(user.getRole())) // Filtre pour les responsables de salle
+                .filter(user -> "responsable_Salle".equalsIgnoreCase(user.getRole())) // Filtre pour les responsables de salle
                 .collect(Collectors.toList());
     }
     public List<User> afficherPourResponsable() throws SQLException {
@@ -223,7 +244,8 @@ public class ServiceUser implements IGestionUser<User> {
                             rs.getString("prenom"),
                             rs.getString("email"),
                             rs.getString("password"),
-                            rs.getString("role")
+                            rs.getString("role"),
+                            rs.getInt("id_Salle")
                     );
 
                     user.setDateNaissance(rs.getDate("dateNaissance"));
@@ -383,7 +405,7 @@ public class ServiceUser implements IGestionUser<User> {
         return total;
     }
     public int getSalleIdByUserId(int id_User) throws SQLException {
-        String query = "SELECT id_salle FROM user WHERE id_user = ? AND role = 'Responsable_salle'";
+        String query = "SELECT id_salle FROM user WHERE id_user = ? AND role = 'responsable_Salle'";
 
         try (
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -400,4 +422,37 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return -1;
     }
+    public void dissocierSalle(int idSalle) throws SQLException {
+        String query = "UPDATE user SET id_Salle = NULL WHERE id_Salle = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idSalle);
+            stmt.executeUpdate();
+        }
+    }
+    public void mettreAJourIdSalle(int idUser, int idSalle) throws SQLException {
+        String query = "UPDATE user SET id_Salle = ? WHERE id_User = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, idSalle);
+            pstmt.setInt(2, idUser);
+            pstmt.executeUpdate();
+            System.out.println("✅ ID de la salle mis à jour pour l'utilisateur avec ID: " + idUser);
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la mise à jour de l'ID de la salle : " + e.getMessage());
+            throw e;
+        }
+    }
+    public boolean isSalleDejaAssociee(int idSalle) throws SQLException {
+        // Vérifier dans la table User si un utilisateur a l'ID de salle correspondant
+        String query = "SELECT COUNT(*) FROM User WHERE id_Salle = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idSalle);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Si le comptage est supérieur à 0, la salle est déjà associée
+            }
+        }
+        return false;
+    }
+
+
 }

@@ -8,14 +8,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
+import org.gymify.services.StatistiquesService;
 import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
@@ -23,12 +30,17 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static org.gymify.utils.AuthToken.logout;
 
 
 public class DashboardResponsableSalleController {
-
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML
+    private Label totalUsersLabel;
     @FXML private TextField AddEmailFx, AddFirstNameFx, AddLastNameFx, searchUserField, EditNomId, EditPrenomId, EditEmailId;
     @FXML private PasswordField AddPsswdFx, EditPasswdId;
     @FXML private ChoiceBox<String> AddRoleFx, AddSpecialiteFx, EditRoleId, EditSpecialId;
@@ -40,12 +52,13 @@ public class DashboardResponsableSalleController {
     @FXML private TextField searchRoleField;
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser();
+    private StatistiquesService statistiquesService=new StatistiquesService() {};
 
     public void initialize() {
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
             welcomeLabel.setText(" " + currentUser.getNom());
-            setUserProfileImage(currentUser.getImageURL());
+
         } else {
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Utilisateur non connecté.");
             logout();
@@ -57,14 +70,48 @@ public class DashboardResponsableSalleController {
         AddSpecialiteFx.setDisable(true);
 
         AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
+        int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
 
+        totalUsersLabel.setText("" + totalUsers);
+        afficherCourbeStatistiques();
         listUsersInVBox();
     }
     @FXML
     private void onListAbonnementButtonClick(ActionEvent event) {
-        System.out.println("Liste des abonnements ouverte !");
-        // Ouvre l'interface ou effectue une action
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer l'ID de la salle du responsable connecté à partir de AuthToken
+            int salleId = AuthToken.getCurrentUser().getId_Salle();
+            if (salleId == 0) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "L'ID de la salle n'est pas valide.");
+
+            }
+            else{
+                showAlert(Alert.AlertType.ERROR, "Erreur", "L'ID DE SALLE EST ."+ salleId);}
+
+            System.out.println("Salle ID du responsable connecté : " + salleId);
+
+            // Passer l'ID de la salle au contrôleur
+            ListeAbonnementRSController controller = loader.getController();
+            controller.setSalleId(salleId);
+
+            // Afficher la nouvelle scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la liste des abonnements.");
+        }
     }
+
+
+
+    // Ouvre l'interface ou effectue une action
+
     @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
@@ -196,29 +243,56 @@ public class DashboardResponsableSalleController {
 
 
     private HBox creerHBoxUtilisateur(User user) {
+        // Création de la HBox principale
         HBox hbox = new HBox(15);
         hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setPadding(new Insets(8, 10, 13, 3));
-        hbox.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #ddd; "
-                + "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
+        hbox.setPadding(new Insets(10));
+        hbox.getStyleClass().add("user-hbox"); // Ajout d'une classe CSS pour le style
 
+        // Utilisation d'un GridPane pour organiser les informations
+        GridPane infoGrid = new GridPane();
+        infoGrid.setHgap(20);
+        infoGrid.setVgap(5);
+        infoGrid.setAlignment(Pos.CENTER_LEFT);
 
+        // Labels pour les informations
         Label nameLabel = new Label(user.getNom());
+        nameLabel.getStyleClass().add("user-label");
+
         Label lastNameLabel = new Label(user.getPrenom());
+        lastNameLabel.getStyleClass().add("user-label");
+
         Label emailLabel = new Label(user.getEmail());
+        emailLabel.getStyleClass().add("user-label");
+
         Label roleLabel = new Label(user.getRole());
-        for (Label label : new Label[]{nameLabel, lastNameLabel, emailLabel, roleLabel}) {
-            label.setStyle("-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #333;");
-        }
+        roleLabel.getStyleClass().add("user-label");
+
+        // Ajout des labels au GridPane
+        infoGrid.add(new Label("Nom:"), 0, 0);
+        infoGrid.add(nameLabel, 1, 0);
+        infoGrid.add(new Label("Prénom:"), 0, 1);
+        infoGrid.add(lastNameLabel, 1, 1);
+        infoGrid.add(new Label("Email:"), 2, 0);
+        infoGrid.add(emailLabel, 3, 0);
+        infoGrid.add(new Label("Rôle:"), 2, 1);
+        infoGrid.add(roleLabel, 3, 1);
+
+        // Boutons d'action
         Button editButton = createImageButton("/images/gear.png", event -> modifierUtilisateur(user));
         Button deleteButton = createImageButton("/images/delete.png", event -> supprimerUtilisateur(user));
 
+        // Spacer pour pousser les boutons à droite
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        hbox.getChildren().addAll(nameLabel, lastNameLabel, emailLabel, roleLabel, spacer, editButton, deleteButton);
+        // Ajout des éléments à la HBox
+        hbox.getChildren().addAll(infoGrid, spacer, editButton, deleteButton);
+
         return hbox;
     }
+
+
 
     private Button createImageButton(String imagePath, javafx.event.EventHandler<ActionEvent> eventHandler) {
         Button button = new Button();
@@ -260,9 +334,7 @@ public class DashboardResponsableSalleController {
         });
     }
 
-    private void setUserProfileImage(String imageURL) {
-        profileImage.setImage((imageURL != null && !imageURL.isEmpty()) ? new Image(imageURL) : new Image("/images/icons8-user-32.png"));
-    }
+
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -278,5 +350,65 @@ public class DashboardResponsableSalleController {
         addUserPane.setVisible(false);
         EditUserPane.setVisible(false);
         paneToShow.setVisible(true);
+    }
+
+
+    @FXML
+    private void OuvrirListeEvent(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesEvennements.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("📩 Gérer mes Events");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void ajouterSpecialite() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nouvelle spécialité");
+        dialog.setHeaderText("Ajouter une nouvelle spécialité");
+        dialog.setContentText("Nom de la spécialité :");
+
+        dialog.showAndWait().ifPresent(nouvelleSpecialite -> {
+            nouvelleSpecialite = nouvelleSpecialite.trim();
+            if (!nouvelleSpecialite.isEmpty() && !AddSpecialiteFx.getItems().contains(nouvelleSpecialite)) {
+                AddSpecialiteFx.getItems().add(nouvelleSpecialite);
+                AddSpecialiteFx.setValue(nouvelleSpecialite); // Sélectionner la nouvelle spécialité
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Erreur", "La spécialité existe déjà ou est vide !");
+            }
+        });
+    }
+    private void afficherCourbeStatistiques() {
+        System.out.println("📊 Début affichage courbe");
+        Map<String, Integer> stats = statistiquesService.getNombreUtilisateursParRole();
+
+        if (stats.isEmpty()) {
+            System.out.println("❌ Aucune donnée reçue pour la courbe !");
+            return;
+        }
+
+        System.out.println("📊 Données reçues : " + stats);  // Vérification console
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Utilisateurs par rôle");
+
+        for (Map.Entry<String, Integer> entry : stats.entrySet()) {
+            XYChart.Data<String, Number> dataPoint = new XYChart.Data<>(entry.getKey(), entry.getValue());
+            series.getData().add(dataPoint);
+        }
+
+        // Nettoyer l'ancien contenu et ajouter les nouvelles données
+        lineChart.getData().clear();
+        lineChart.getData().add(series);
+
+        // Mise à jour des labels
+        xAxis.setLabel("Rôle");
+        yAxis.setLabel("Nombre d'utilisateurs");
     }
 }

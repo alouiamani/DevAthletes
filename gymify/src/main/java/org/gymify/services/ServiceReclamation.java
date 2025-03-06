@@ -15,10 +15,10 @@ public class ServiceReclamation implements Iservices<Reclamation> {
     public ServiceReclamation() {}
 
 
-    public void ajouter(Reclamation reclamation) throws SQLException {
+    public int ajouter(Reclamation reclamation) throws SQLException {
         if (!utilisateurExiste(reclamation.getId_user())) {
             System.err.println("Erreur : L'utilisateur avec l'ID " + reclamation.getId_user() + " n'existe pas !");
-            return;
+            return 0;
         }
 
         String req = "INSERT INTO reclamation (id_user, sujet, description, statut) VALUES (?, ?, ?, ?)";
@@ -31,6 +31,7 @@ public class ServiceReclamation implements Iservices<Reclamation> {
             pstmt.executeUpdate();
             System.out.println("Réclamation ajoutée avec succès !");
         }
+        return 0;
     }
 
     private boolean utilisateurExiste(int idUser) throws SQLException {

@@ -224,4 +224,23 @@ public class activityController {
             e.printStackTrace();
         }
     }
+
+    public void showUserDashboard(ActionEvent actionEvent) {
+    }
+
+    public void showActivityDashboard(ActionEvent actionEvent) {
+    }
+
+    public void showGymDashboard(ActionEvent actionEvent) {
+    }
+
+    public void subscription(ActionEvent actionEvent) {
+    }
+
+    public void statistique(ActionEvent actionEvent) {
+    }
+
+    public void logout(ActionEvent actionEvent) {
+
+    }
 }

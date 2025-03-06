@@ -3,7 +3,6 @@ package org.gymify.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -21,7 +20,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class SalleCardController {
-
     @FXML private Label nomLabel;
     @FXML private Label adresseLabel;
     @FXML private Label numTelLabel;
@@ -35,73 +33,74 @@ public class SalleCardController {
     private SalleService salleService = new SalleService();
     private ListeDesSalleController parentController;
 
+    public void setParentController(ListeDesSalleController parentController) {
+        this.parentController = parentController;
+    }
+
     public void setSalleData(Salle salle, ListeDesSalleController parentController) {
         this.salle = salle;
         this.parentController = parentController;
 
-        // Mettre à jour les labels
+        // Mise à jour des labels
         nomLabel.setText(salle.getNom());
         adresseLabel.setText(salle.getAdresse());
         detailsLabel.setText(salle.getDetails());
         numTelLabel.setText(salle.getNum_tel());
         emailLabel.setText(salle.getEmail());
 
-        System.out.println("Chargement de l'image pour : " + salle.getNom());
-
         if (salle.getUrl_photo() != null && !salle.getUrl_photo().isEmpty()) {
-            try {
-                salleImageView.setImage(new Image(salle.getUrl_photo(), true));
-            } catch (Exception e) {
-                System.out.println("Erreur de chargement de l'image, utilisation de l'image par défaut.");
-                salleImageView.setImage(new Image("/images/default-image.png", true));
-            }
+            salleImageView.setImage(new Image(salle.getUrl_photo(), true));
         } else {
             salleImageView.setImage(new Image("/images/default-image.png", true)); // Image par défaut
         }
 
-        modifierBtn.setOnAction(event -> modifierSalle(event));
-        supprimerBtn.setOnAction(e -> supprimerSalle());
+        modifierBtn.setOnAction(e -> modifierSalle());
+        supprimerBtn.setOnAction(e -> supprimerSalle(e));
     }
 
     @FXML
-    private void modifierSalle(ActionEvent event) {
+    private void modifierSalle() {
         try {
-            // Charger le fichier FXML du formulaire d'ajout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
             Parent root = loader.load();
+
+            // Passer la salle et le contrôleur parent au formulaire de modification
             SalleFormAdminController controller = loader.getController();
-            // Pass the salleId to the form controller
-            controller.chargerSalle(salle);
-            // Obtenir la scène actuelle (celle de la fenêtre ouverte)
-            Scene currentScene = ((Node) event.getSource()).getScene();
+            controller.chargerSalle(salle, parentController);
 
-            // Définir la nouvelle scène dans le même Stage
-            Stage currentStage = (Stage) currentScene.getWindow();
-            currentStage.setScene(new Scene(root));
-
-            // Optionnel : définir un titre pour la scène si nécessaire
-            currentStage.setTitle("Ajouter une salle");
-
+            // Ouvrir le formulaire de modification dans une nouvelle fenêtre
+            Stage stage = (Stage)modifierBtn .getScene().getWindow();
+            stage.setTitle("Modifier une salle");
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
-
     @FXML
-    private void supprimerSalle() {
+    private void supprimerSalle(ActionEvent actionEvent) {
+        if (salle == null) {
+            System.out.println("Aucune salle sélectionnée !");
+            return;
+        }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Supprimer cette salle");
-        alert.setContentText("Êtes-vous sûr de vouloir supprimer cette salle ?");
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText("Voulez-vous vraiment supprimer cette salle ?");
+        alert.setContentText("Cette action est irréversible.");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 salleService.supprimer(salle.getId_Salle());
-                System.out.println("Salle supprimée : " + salle.getNom());
-                parentController.refreshList(); // Rafraîchir la liste après suppression
+                System.out.println("Salle supprimée avec succès !");
+
+                // Actualiser la liste des salles
+                if (parentController != null) {
+                    parentController.chargerSalles();
+                }
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("Erreur lors de la suppression de la salle : " + e.getMessage());
             }
         }
     }

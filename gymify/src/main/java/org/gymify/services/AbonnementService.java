@@ -2,9 +2,7 @@ package org.gymify.services;
 
 
 
-import org.gymify.entities.Abonnement;
-import org.gymify.entities.Salle;
-import org.gymify.entities.type_Abonnement;
+import org.gymify.entities.*;
 import org.gymify.utils.gymifyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
@@ -137,5 +135,140 @@ public class AbonnementService implements Iservices<Abonnement> {
         }
 
         return abonnements;
+    }
+    // Récupérer la liste des types d'activités distincts
+    public List<String> getActivityTypes() throws SQLException {
+        List<String> activityTypes = new ArrayList<>();
+        String query = "SELECT DISTINCT typeActivite FROM Abonnement";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                activityTypes.add(rs.getString("typeActivite"));
+            }
+        }
+        return activityTypes;
+    }
+
+    // Afficher les abonnements d'une salle spécifique
+    public List<Abonnement> afficherParSalle(int salleId) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+        String query = "SELECT * FROM Abonnement WHERE id_salle = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                abonnements.add(mapResultSetToAbonnement(rs));
+            }
+        }
+        return abonnements;
+    }
+
+    // Récupérer une salle par ID
+
+
+    // Récupérer les abonnements par type d'activité
+    public List<Abonnement> getAbonnementsByActivityType(String typeActivite) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+        String query = "SELECT * FROM Abonnement WHERE typeActivite = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, typeActivite);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                abonnements.add(mapResultSetToAbonnement(rs));
+            }
+        }
+        return abonnements;
+    }
+
+    private Abonnement mapResultSetToAbonnement(ResultSet rs) throws SQLException {
+        Abonnement abonnement = new Abonnement();
+
+        abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
+        abonnement.setDate_Début(rs.getDate("Date_Début"));
+        abonnement.setDate_Fin(rs.getDate("Date_Fin"));
+        abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement").toUpperCase()));
+        abonnement.setTarif(rs.getDouble("tarif"));
+
+        // Récupération de la salle associée
+        int salleId = rs.getInt("salle_id");
+        if (!rs.wasNull()) {
+            abonnement.setSalle(getSalleById(salleId));
+        }
+
+        // Récupération de l'activité associée
+        int activiteId = rs.getInt("activite_id");
+        if (!rs.wasNull()) {
+            abonnement.setActivite(getActiviteById(activiteId));
+        }
+
+        // Récupération du type d'activité
+        abonnement.setTypeActivite(rs.getString("typeActivite"));
+
+        return abonnement;
+    }
+// Vérifier si une salle existe
+
+    public List<Abonnement> getAbonnementsBySalleAndActivityType(int salleId, String selectedActivity) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+
+        String query = "SELECT * FROM Abonnement WHERE salle_id = ? AND typeActivite = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            pstmt.setString(2, selectedActivity); // Convert enum to String
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                abonnements.add(mapResultSetToAbonnement(rs));
+            }
+        }
+
+        return abonnements;
+    }
+    public Activité getActiviteById(int activiteId) throws SQLException {
+        Activité activite = null;
+        String query = "SELECT * FROM Activité WHERE id_activite = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, activiteId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                activite = new Activité();
+                activite.setId(rs.getInt("id_activite"));
+                activite.setNom(rs.getString("nom"));
+                activite.setType(ActivityType.valueOf(rs.getString("type")));
+                activite.setDescription(rs.getString("description"));
+                activite.setUrl(rs.getString("URL"));
+            }
+        }
+        return activite;
+    }
+    public Salle getSalleById(int salleId) throws SQLException {
+        Salle salle = null;
+        String query = "SELECT * FROM Salle WHERE id_salle = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                salle = new Salle();
+                salle.setId_Salle(rs.getInt("id_salle"));
+                salle.setNom(rs.getString("nom"));
+                salle.setAdresse(rs.getString("adresse"));
+                salle.setDetails(rs.getString("détails"));
+                salle.setNum_tel(rs.getString("num_tel"));
+                salle.setEmail(rs.getString("email"));
+            }
+        }
+        return salle;
     }
 }

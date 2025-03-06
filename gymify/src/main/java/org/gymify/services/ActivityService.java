@@ -108,6 +108,39 @@ public class ActivityService implements IService<Activité>{
     }
 
 
+    public List<String> getActivityTypes() {
+        List<String> activityTypes = new ArrayList<>();
+
+        for (ActivityType type : ActivityType.values()) {
+            activityTypes.add(type.name());
+        }
+
+        return activityTypes;
+    }
+    public List<Activité> getActivities() {
+        List<Activité> activities = new ArrayList<>();
+        String query = "SELECT * FROM Activité";
+        try  {
+
+            try (Statement stmt = con.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)) {
+
+                while (rs.next()) {
+                    Activité activity = new Activité();
+                    activity.setId(rs.getInt("id"));
+                    activity.setNom(rs.getString("nom"));
+                    activity.setType(ActivityType.valueOf(rs.getString("type")));
+                    activity.setDescription(rs.getString("description"));
+                    activity.setUrl(rs.getString("url"));
+                    activities.add(activity);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activities;
+    }
+
 
 
 }

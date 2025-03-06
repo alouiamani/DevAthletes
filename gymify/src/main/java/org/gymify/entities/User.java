@@ -21,6 +21,23 @@ public class User {
     private String imageURL;
     private List<Reclamation> reclamations;
 private int id_Salle;
+    public List<Abonnement> getAbonnements() {
+        return abonnements;
+    }
+
+    public void setAbonnements(List<Abonnement> abonnements) {
+        this.abonnements = abonnements;
+    }
+
+    public Salle getSalle() {
+        return salle;
+    }
+
+    public void setSalle(Salle salle) {
+        this.salle = salle;
+    }
+
+
     // 🔹 Constructeurs
 
 
@@ -68,7 +85,15 @@ private int id_Salle;
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
     }
-
+public User(int id_User, String nom, String prenom, String email, String password, String role,int id_Salle){
+        this.id_User = id_User;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.id_Salle = id_Salle;
+}
 
 
     public User(String nom, String prenom, String password, String email, String role) {
@@ -163,6 +188,22 @@ private int id_Salle;
         this.reclamations = reclamations;
     }
     private List<Abonnement> abonnements;
+
+
+
+    public class AuthToken {
+        private static User currentUser;  // Utilisateur actuellement connecté
+
+        // Méthode pour définir l'utilisateur connecté
+        public static void setCurrentUser(User user) {
+            currentUser = user;
+        }
+
+        // Méthode pour obtenir l'utilisateur connecté
+        public static User getCurrentUser() {
+            return currentUser;
+        }
+    }
     @Override
     public String toString() {
         return "User{" +

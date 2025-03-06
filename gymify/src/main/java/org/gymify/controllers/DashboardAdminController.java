@@ -35,6 +35,7 @@ import org.gymify.utils.AuthToken;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Date;
@@ -73,18 +74,37 @@ public class DashboardAdminController  {
     private final ServiceUser serviceUser = new ServiceUser() {
 
     };
-
     public void initialize() {
-            try {
-                profileImage.setImage(new Image(getClass().getResource("/images/user.png").toExternalForm()));
-            } catch (Exception e) {
-                System.out.println("Erreur chargement image profil: " + e.getMessage());
+        // Load the profile image
+        try {
+            // Use the correct relative path
+            URL imageUrl = getClass().getResource("/images/profile-user.png");
+            System.out.println("Image URL: " + imageUrl); // Debugging: Check the URL
+            if (imageUrl != null) {
+                profileImage.setImage(new Image(imageUrl.toExternalForm()));
+            } else {
+                System.out.println("Image not found: /images/profile-user.png");
             }
+        } catch (Exception e) {
+            System.out.println("Erreur chargement image profil: " + e.getMessage());
+        }
+
+        // Rest of your initialization code
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
             welcomeLabel.setText(" " + currentUser.getNom());
             if (currentUser.getImageURL() != null) {
-                profileImage.setImage(new Image(currentUser.getImageURL()));
+                try {
+                    // Convert file path to URL
+                    File file = new File(currentUser.getImageURL());
+                    if (file.exists()) {
+                        profileImage.setImage(new Image(file.toURI().toURL().toExternalForm()));
+                    } else {
+                        System.out.println("Image file does not exist: " + currentUser.getImageURL());
+                    }
+                } catch (MalformedURLException e) {
+                    System.out.println("Invalid image path: " + currentUser.getImageURL());
+                }
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Utilisateur non connecté.");
@@ -94,12 +114,13 @@ public class DashboardAdminController  {
 
         // Initialiser les rôles disponibles
         AddRoleFx.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
-       EditRoleId.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
+        EditRoleId.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
 
         // Initialiser les spécialités (uniquement pour les entraîneurs)
         AddSpecialiteFx.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
         AddSpecialiteFx.setDisable(true);
         EditSpecialId.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
+
         // Activer/désactiver la spécialité en fonction du rôle
         AddRoleFx.setOnAction(event -> {
             if ("Entraîneur".equals(AddRoleFx.getValue())) {
@@ -107,34 +128,45 @@ public class DashboardAdminController  {
             } else {
                 AddSpecialiteFx.setDisable(true);
                 AddSpecialiteFx.setValue(null);
-
             }
         });
+
         AddRoleFx.setOnAction(event -> {
             if ("Entraîneur".equals(EditRoleId.getValue())) {
-
                 EditSpecialId.setDisable(false);
             } else {
-
                 EditSpecialId.setValue(null);
                 EditSpecialId.setDisable(true);
             }
         });
-        int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
 
+        int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
         totalUsersLabel.setText("" + totalUsers);
+
         afficherCourbeStatistiques();
-        // Charger la liste des utilisateurs
         listUsersInVBox();
-//        ActivityService activityService = new ActivityService();
-//        int activityCount = activityService.getActivityCount();
-//
-//        // Mettre à jour le texte du label avec le nombre d'activités
-//        activityCountLabel.setText(String.valueOf(activityCount));
     }
     @FXML
     private void onListGymButtonClick(ActionEvent event) {
-        // method implementation
+        try {
+            // Load the FXML file for the new scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
+
+            // Create the new scene
+            Parent root = loader.load();
+
+            // Get the current stage (window)
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error if the FXML file can't be loaded
+        }
+
     }
     @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
     @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
@@ -387,23 +419,22 @@ public class DashboardAdminController  {
 
         if (roleRecherche.isEmpty()) {
             listUsersInVBox(); // Recharge tous les utilisateurs si le champ est vide
-            return;
-        }
-
-        try {
-            List<User> filteredUsers = serviceUser.rechercherParRole(roleRecherche);
-
-            VBoxId.getChildren().clear();
-
-            if (filteredUsers.isEmpty()) {
-                System.out.println("⚠️ Aucun utilisateur trouvé avec le rôle : " + roleRecherche);
-            } else {
-                filteredUsers.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
+        } else {
+            try {
+                List<User> filteredUsers = serviceUser.afficher().stream()
+                        .filter(user -> user.getRole().toLowerCase().contains(roleRecherche.toLowerCase()))
+                        .collect(Collectors.toList());
+                VBoxId.getChildren().clear(); // Clear existing users
+                for (User user : filteredUsers) {
+                    HBox userBox = creerHBoxUtilisateur(user);
+                    VBoxId.getChildren().add(userBox); // Add filtered users
+                }
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible de rechercher les utilisateurs.");
             }
-        } catch (SQLException e) {
-            System.out.println("❌ Erreur SQL lors de la recherche : " + e.getMessage());
         }
     }
+
     @FXML
     private void ajouterSpecialite() {
         TextInputDialog dialog = new TextInputDialog();

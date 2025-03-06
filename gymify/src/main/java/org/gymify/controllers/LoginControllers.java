@@ -82,23 +82,30 @@ public class LoginControllers {
             User loggedInUser = userOpt.get();
             AuthToken.setCurrentUser(loggedInUser);
 
+            // Afficher un message avec les informations de l'utilisateur
+            String userInfoMessage = "Utilisateur connecté : \n" +
+                    "Nom : " + loggedInUser.getNom() + "\n" +
+                    "Email : " + loggedInUser.getEmail() + "\n" +
+                    "Rôle : " + loggedInUser.getRole() + "\n" +
+                    "id_Salle : " +loggedInUser.getId_Salle()  ;
+            showAlert(Alert.AlertType.INFORMATION, "Connexion réussie", userInfoMessage);
+
             switch (loggedInUser.getRole().trim().toLowerCase()) {
-                case "admin" -> ouvrirInterface("AdminDash.fxml", "🏢 Interface Admin", event);
-                case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", "📋 Interface Responsable", event);
+                case "admin" -> ouvrirInterface("AdminDash.fxml", "Interface Admin", event);
+                case "responsable_salle" -> ouvrirInterface("DashboardReasponsable.fxml", " Interface Responsable", event);
                 case "sportif" -> {
                     ajouterInfoSportif(loggedInUser);
-                    ouvrirInterface("ProfileMembre.fxml", "🏋️ Interface Membre", event);
+                    ouvrirInterface("ProfileMembre.fxml", " Interface Membre", event);
                 }
-                case "entraineur" -> ouvrirInterface("InterfaceEntraineur.fxml", "👨‍🏫 Interface Entraîneur", event);
-                default -> showAlert(Alert.AlertType.ERROR, "⚠️ Erreur", "Rôle inconnu : " + loggedInUser.getRole());
+                case "entraineur" -> ouvrirInterface("InterfaceEntraineur.fxml", " Interface Entraîneur", event);
+                default -> showAlert(Alert.AlertType.ERROR, " Erreur", "Rôle inconnu : " + loggedInUser.getRole());
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Email ou mot de passe incorrect.");
+            showAlert(Alert.AlertType.ERROR, " Erreur", "Email ou mot de passe incorrect.");
         }
     }
-    /**
-     * 🔹 Redirection vers l'inscription
-     */
+
+
     @FXML
     void SignUpButtonOnAction(ActionEvent event) {
         ouvrirInterface("Signup.fxml", "📝 Inscription", event);
@@ -119,7 +126,6 @@ public class LoginControllers {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + fxmlFile));
             Parent root = loader.load();
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(new Scene(root));

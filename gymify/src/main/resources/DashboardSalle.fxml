@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -11,8 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<?import java.net.URL?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardSalleController">
    <children>
       <HBox alignment="CENTER" layoutX="16.0" layoutY="35.0" prefHeight="100.0" prefWidth="562.0" spacing="10.0">
@@ -29,7 +28,7 @@
                      <children>
                         <ImageView fx:id="iconMembres" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/athlete.png" />
+                              <Image url="@../../../../../../../../Downloads/athlete.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblMembres" text="+10 membres" textFill="#f4f3f3">
@@ -53,7 +52,7 @@
                      <children>
                         <ImageView fx:id="iconEntraineur" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/coach.png" />
+                              <Image url="@../../../../../../../../Downloads/coach.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblEntraineur" text="+9 entraineur" textFill="#f4f3f3">
@@ -74,7 +73,7 @@
                      <children>
                         <ImageView fx:id="iconAlerte" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/alert.png" />
+                              <Image url="@../../../../../../../../Downloads/alert.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblReclamations" text="+5 reclamations" textFill="#f4f3f3">
@@ -95,7 +94,7 @@
                      <children>
                         <ImageView fx:id="iconMoney" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/mny.png" />
+                              <Image url="@../../../../../../../../Downloads/mny.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblMoney" text="+1052000 DT" textFill="#f4f3f3">
