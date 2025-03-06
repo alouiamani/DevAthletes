@@ -36,6 +36,7 @@ public class SalleCardController {
     private ListeDesSalleController parentController;
 
     public void setSalleData(Salle salle, ListeDesSalleController parentController) {
+        /*
         this.salle = salle;
         this.parentController = parentController;
 
@@ -103,6 +104,6 @@ public class SalleCardController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 }

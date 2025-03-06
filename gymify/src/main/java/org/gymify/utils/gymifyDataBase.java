@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class gymifyDataBase {
     static gymifyDataBase instance;
-    final String URL = "jdbc:mysql://localhost:3306/project_dev";
+    final String URL = "jdbc:mysql://localhost:3306/project_dev_3";
     final String USER = "root";
     final String PASSWORD = "";
     Connection con ;

@@ -18,34 +18,7 @@
    <content>
       <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
          <children>
-<<<<<<< HEAD
-            <AnchorPane fx:id="infouserid" layoutX="105.0" layoutY="245.0" prefHeight="112.0" prefWidth="590.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
-               <children>
-                  <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
-                  <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="49.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label layoutX="185.0" layoutY="42.0" text="Username: ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="usernameid" layoutX="294.0" layoutY="43.0" prefHeight="7.0" prefWidth="59.0" text="Username" />
-                  <Label layoutX="192.0" layoutY="78.0" text="Email :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-                  <Button fx:id="EditId" layoutX="472.0" layoutY="52.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
-            <MenuBar layoutX="-5.0" prefHeight="41.0" prefWidth="810.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
-=======
             <MenuBar layoutX="-105.0" prefHeight="42.0" prefWidth="910.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
->>>>>>> origin/main
                <menus>
                   <Menu mnemonicParsing="false" text="                                                                                                                                   Activity">
                      <items>

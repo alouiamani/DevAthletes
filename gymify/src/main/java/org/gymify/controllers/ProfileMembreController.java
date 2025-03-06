@@ -219,6 +219,21 @@ public class ProfileMembreController {
         } catch (IOException ex) {
             ex.printStackTrace();
             System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
+        } try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/planningperso.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle à partir de l'événement
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("planning"); // Titre de la nouvelle fenêtre
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
         }
     }
 
