@@ -30,7 +30,7 @@ public class GoogleCalendarService {
     private static Credential getCredentials() throws Exception {
         // Load credentials from the credentials.json file
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-                JSON_FACTORY, new InputStreamReader(GoogleCalendarService.class.getResourceAsStream("/client_secret_426973845068-i5dlbsneuv5a2ctqig2aotfai3f33kll.apps.googleusercontent.com.json")));
+                JSON_FACTORY, new InputStreamReader(GoogleCalendarService.class.getResourceAsStream("/secretkey.json")));
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
