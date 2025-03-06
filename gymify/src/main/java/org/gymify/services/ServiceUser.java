@@ -382,7 +382,7 @@ public class ServiceUser implements IGestionUser<User> {
 
         return total;
     }
-<<<<<<< HEAD
+
     public List<User> getUtilisateurByRole(String role) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user WHERE role = ?";
@@ -404,7 +404,7 @@ public class ServiceUser implements IGestionUser<User> {
             System.err.println("Erreur lors de la récupération des utilisateurs par rôle : " + e.getMessage());
         }
         return users;
-=======
+    }
     public int getSalleIdByUserId(int id_User) throws SQLException {
         String query = "SELECT id_salle FROM user WHERE id_user = ? AND role = 'Responsable_salle'";
 
@@ -422,6 +422,6 @@ public class ServiceUser implements IGestionUser<User> {
             throw e;
         }
         return -1;
->>>>>>> origin/main
+
     }
 }
