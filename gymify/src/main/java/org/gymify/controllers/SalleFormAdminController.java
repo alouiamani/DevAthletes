@@ -11,8 +11,10 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
+import org.gymify.entities.Responsable_Salle;
 import org.gymify.entities.Salle;
 import org.gymify.entities.User;
+import org.gymify.services.EmailService;
 import org.gymify.services.SalleService;
 import org.gymify.services.ServiceUser;
 import javafx.concurrent.Worker;
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,8 +137,8 @@ public class SalleFormAdminController {
 
         int idResponsable = Integer.parseInt(parts[0]);  // Convertir l'ID du responsable en int
 
-        // Vérifier si le responsable est déjà affecté à une salle
-        boolean responsableDejaAffecte = salleService.isResponsableDejaAffecte(idResponsable);
+        // Vérifier si le responsable est déjà affecté à une salle avec deux paramètres
+        boolean responsableDejaAffecte = salleService.isResponsableDejaAffecte(idResponsable, salleAModifier != null ? salleAModifier.getId_Salle() : 0);
         if (responsableDejaAffecte) {
             afficherAlerte("Erreur", "Ce responsable est déjà affecté à une salle.");
             return;
@@ -147,20 +150,47 @@ public class SalleFormAdminController {
 
         try {
             if (salleAModifier == null) {
+                // Ajouter la salle si elle n'est pas en modification
                 salleService.ajouter(salle);
                 afficherAlerte("Succès", "La salle a été ajoutée avec succès !");
             } else {
+
+                // Modifier la salle existante si elle est en modification
                 salle.setId_Salle(salleAModifier.getId_Salle());
                 salleService.modifier(salle);
                 afficherAlerte("Succès", "La salle a été modifiée avec succès !");
             }
             chargerListeSalles();
+            // Créer une instance de ServiceUser
+            ServiceUser serviceUser = new ServiceUser();
+
+            // Récupérer le responsable avec son ID
+            Optional<User> responsableOpt = serviceUser.getUtilisateurById(idResponsable);
+            if (responsableOpt.isPresent()) {
+                User responsable = responsableOpt.get();  // Récupérer l'utilisateur (responsable)
+                String emailResponsable = responsable.getEmail();  // Récupérer l'email du responsable
+
+                String sujet = "Affectation ou modification d'une salle";
+                String message = "Bonjour " + responsable.getNom() + ",\n\n" +
+                        "Vous avez été affecté(e) à une salle. Détails :\n\n" +
+                        "Nom de la salle : " + salle.getNom() + "\n" +
+                        "Adresse : " + salle.getAdresse() + "\n\n" +
+                        "Cordialement,\nL'équipe de gestion des salles.";
+
+                // Appel du service d'envoi d'email
+                EmailService.envoyerEmail(emailResponsable, sujet, message);
+            } else {
+                afficherAlerte("Erreur", "Responsable non trouvé.");
+            }
+
+            // Recharger la liste des salles pour afficher les mises à jour
+
         } catch (SQLException e) {
+            // Gestion des erreurs
             e.printStackTrace();
             afficherAlerte("Erreur", "Une erreur est survenue lors de l'enregistrement.");
         }
     }
-
 
 
     private boolean validerChamps() {

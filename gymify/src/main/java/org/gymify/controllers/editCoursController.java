@@ -86,13 +86,8 @@ public class editCoursController {
                 dateDebutedit.setValue(localDateDebut);
             }
 
-            Date dateFin = cours.getDateFin();
-            if (dateFin != null) {
-                LocalDate localDateFin = Instant.ofEpochMilli(dateFin.getTime())
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate();
-                dateFinedit.setValue(localDateFin);
-            }
+
+
 
             // Set time fields for start time
             LocalTime heureDebut = cours.getHeureDebut();
@@ -144,7 +139,7 @@ public class editCoursController {
             currentCours.setTitle(newTitle);
             currentCours.setDescription(newDescription);
             currentCours.setDateDebut(newDateDebutTime);
-            currentCours.setDateFin(newDateFinTime);
+
             currentCours.setHeureDebut(newHeureDebut);
             currentCours.setHeureFin(newHeureFin);
             currentCours.setActivité(selectedActivity);

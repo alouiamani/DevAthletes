@@ -69,10 +69,15 @@ public class ProfileMembreController {
     }
 
     private void chargerSalles() {
+<<<<<<< HEAD
         SalleService salleService = new SalleService();
         try {
             List<Salle> salles = salleService.getAllSalles("");
             sallesContainer.getChildren().clear(); // Clear existing salles
+=======
+       SalleService salleService = new SalleService();
+        List<Salle> salles = salleService.getAllSalles("");
+>>>>>>> origin/main
 
             for (Salle salle : salles) {
                 try {
@@ -183,6 +188,7 @@ public class ProfileMembreController {
 
     @FXML
     private void ouvrirSalle(ActionEvent event) {
+<<<<<<< HEAD
         sallesContainer.requestFocus();
     }
 
@@ -202,3 +208,49 @@ public class ProfileMembreController {
         }
     }
 }
+=======
+        // Fait défiler la page vers la section des salles
+       sallesContainer.requestFocus();
+    }
+
+    @FXML
+    public void PlanningForYou(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/planningperso.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle à partir de l'événement
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("planning"); // Titre de la nouvelle fenêtre
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
+        }
+
+    }
+
+    public void ShowPlanning(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/planningforuser.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Planning");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+>>>>>>> origin/main
