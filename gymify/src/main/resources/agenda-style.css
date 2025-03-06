@@ -79,3 +79,6 @@
     -fx-border-color: #ddd; /* Couleur de la bordure */
     -fx-border-width: 1px;
 }
+.google-event {
+    -fx-background-color: yellow;
+}

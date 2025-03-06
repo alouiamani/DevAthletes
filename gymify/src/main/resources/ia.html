@@ -5,7 +5,6 @@
     <title>Recommandation de Cours Sportifs</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <style>
-        /* Global styling */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
@@ -34,7 +33,6 @@
             margin: 30px auto;
         }
 
-        /* Recommandations styling */
         .recommendations {
             display: flex;
             flex-direction: column;
@@ -85,8 +83,16 @@
 <p id="prediction" class="loading">Chargement...</p>
 
 <script>
-    // Vérifier si TensorFlow.js est bien chargé
-    console.log("TensorFlow.js chargé :", !!tf);
+    // Fonction pour générer dynamiquement les données de sortie (one-hot encoding)
+    function generateTrainingOutputs(numExamples, numClasses) {
+        const outputs = [];
+        for (let i = 0; i < numExamples; i++) {
+            const output = new Array(numClasses).fill(0); // Remplir avec des 0
+            output[i % numClasses] = 1; // One-hot encoding (1 pour la classe correcte)
+            outputs.push(output);
+        }
+        return tf.tensor2d(outputs);
+    }
 
     // Fonction pour récupérer les données de l'utilisateur
     async function fetchUserData(userId) {
@@ -158,7 +164,7 @@
             metrics: ['accuracy']
         });
 
-        // Données d'entraînement simulées (assurez-vous que ces données sont bien formatées)
+        // Données d'entraînement simulées
         const trainingInputs = tf.tensor2d([
             [75, 1.80, 25, 1, 2],   // Exemple 1
             [85, 1.75, 30, 1, 1],   // Exemple 2
@@ -167,14 +173,9 @@
             [80, 1.78, 27, 0, 1]    // Exemple 5
         ]);
 
-        // Données de sortie (one-hot encoding)
-        const trainingOutputs = tf.tensor2d([
-            [1, 0], // Classe 0
-            [0, 1], // Classe 1
-            [1, 0], // Classe 0
-            [0, 1], // Classe 1
-            [1, 0]  // Classe 0
-        ]);
+        // Générer dynamiquement les données de sortie
+        const numExamples = 5; // Nombre d'exemples d'entraînement
+        const trainingOutputs = generateTrainingOutputs(numExamples, outputShape);
 
         console.log("Forme des tenseurs d'entraînement :", trainingInputs.shape, trainingOutputs.shape);
 
@@ -195,7 +196,7 @@
         return sortedIndices;
     }
 
-    // Fonction de prédiction (mise à jour pour afficher plusieurs recommandations)
+    // Fonction de prédiction
     async function predict(userId, numberOfRecommendations = 3) {
         try {
             console.log("Début de la prédiction...");

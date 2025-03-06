@@ -10,13 +10,15 @@ public class Planning {
     private Date dateFin;
     private String description;
     private String title;
+    private User user;
     List<Cours> courses;
     public Planning() {}
-    public Planning(Date dateDebut, String description, String title, Date dateFin) {
+    public Planning(Date dateDebut, String description, String title, Date dateFin, User user) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.description = description;
         this.title=title;
+        this.user = user;
         this.courses=new ArrayList<>();
 
     }
@@ -58,6 +60,12 @@ public class Planning {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Cours> getCourses() {

@@ -68,6 +68,7 @@ public class SalleFormAdminController {
             }
         });
     }
+<<<<<<< HEAD
     private void ajouterValidationEnTempsReel() {
         nomFX.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.trim().isEmpty()) {
@@ -143,6 +144,10 @@ public class SalleFormAdminController {
 
 
     public void chargerSalle(Salle salle, ListeDesSalleController parentController) {
+=======
+
+    public void chargerSalle(Salle salle) {
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
         salleAModifier = salle;
         nomFX.setText(salle.getNom());
         adresseFX.setText(salle.getAdresse());
@@ -394,4 +399,35 @@ public class SalleFormAdminController {
             afficherAlerte("Erreur", "Impossible de retourner à l'interface précédente.");
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+    private void chargerCarte() {
+        webEngine = mapView.getEngine();
+        webEngine.load(getClass().getResource("/map.html").toExternalForm());
+
+        // Attendre que la page soit chargée
+        webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                System.out.println("Carte chargée avec succès !");
+            }
+        });
+
+        // Récupérer l'adresse sélectionnée dans le champ adresseFX
+        webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                webEngine.executeScript("window.javaConnector = { setAddress: function(address) { javafx.scene.web.WebEngine.call('setAddress', address); } }");
+            }
+        });
+        JSObject window = (JSObject) webEngine.executeScript("window");
+        window.setMember("javaConnector", this);
+    }
+
+    public class JavaConnector {
+        public void setAddress(String address) {
+            Platform.runLater(() -> adresseFX.setText(address));
+        }
+    }
+}
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7

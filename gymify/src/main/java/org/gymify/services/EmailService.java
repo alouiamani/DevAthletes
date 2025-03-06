@@ -1,7 +1,10 @@
 package org.gymify.services;
 
+<<<<<<< HEAD
 import org.gymify.entities.Salle;
 
+=======
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
@@ -12,7 +15,11 @@ public class EmailService {
     private static final String USERNAME = "amani.aloui@esprit.tn";  // Ton adresse email
     private static final String PASSWORD = "X(382817226370ah+";        // Ton mot de passe
 
+<<<<<<< HEAD
     public static void envoyerEmail(String destinataire, String sujet, Salle salle, boolean isAjout) {
+=======
+    public static void envoyerEmail(String destinataire, String sujet, String messageText) {
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp-mail.outlook.com");
         properties.put("mail.smtp.port", "587");
@@ -32,12 +39,16 @@ public class EmailService {
             message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinataire));
             message.setSubject(sujet);
+<<<<<<< HEAD
 
+=======
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
             // Créer une partie HTML pour le contenu de l'email
             MimeMultipart multipart = new MimeMultipart("related");
 
             // Partie texte HTML
             MimeBodyPart htmlPart = new MimeBodyPart();
+<<<<<<< HEAD
             String htmlContent = "<html>"
                     + "<head>"
                     + "<style>"
@@ -73,12 +84,28 @@ public class EmailService {
                     + "</div>"
                     + "</body>"
                     + "</html>";
+=======
+            String htmlContent = "<html><body>"
+                    + "<h2>Bonjour, " + messageText + "</h2>"
+                    + "<p>Nous vous informons que vous avez été affecté(e) à une nouvelle salle. Voici les détails :</p>"
+                    + "<p><strong>Nom de la salle :</strong> " + messageText + "</p>"
+                    + "<p><strong>Adresse :</strong> " + messageText + "</p>"
+                    + "<br><img src=\"cid:logo\">"
+                    + "<p>Cordialement, l'équipe de gestion des salles</p>"
+                    + "</body></html>";
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
             htmlPart.setContent(htmlContent, "text/html");
 
             // Partie logo
             MimeBodyPart imagePart = new MimeBodyPart();
+<<<<<<< HEAD
             FileDataSource fds = new FileDataSource("C:\\Users\\39\\Documents\\GitHub\\DevAthletes\\DevAthletes\\gymify\\src\\main\\resources\\images\\logo.png");  // Spécifie le chemin de ton logo
             imagePart.setDataHandler(new DataHandler(fds));
+=======
+            // No need to cast to DataSource
+            FileDataSource fds = new FileDataSource("/logo.png");  // Spécifie le chemin de ton logo
+            imagePart.setDataHandler(new DataHandler(fds)); // Directly use fds
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
             imagePart.setHeader("Content-ID", "<logo>");
 
             // Ajouter les parties au multipart
@@ -93,6 +120,13 @@ public class EmailService {
             System.out.println("Email envoyé avec succès.");
         } catch (MessagingException e) {
             e.printStackTrace();
+<<<<<<< HEAD
             System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
         }
     }}
+=======
+            System.err.println("Error while sending email: " + e.getMessage());
+        }
+    }
+}
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7

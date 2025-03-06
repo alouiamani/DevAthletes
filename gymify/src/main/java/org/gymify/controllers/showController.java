@@ -1,5 +1,6 @@
 package org.gymify.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import org.gymify.entities.Cours;
 import org.gymify.entities.Planning;
 import org.gymify.entities.User;
@@ -36,14 +38,16 @@ public class showController {
     @FXML
     private Label planningTitle;
     @FXML
-    private DatePicker datePicker;
-    @FXML
     private ListView<Cours> listView;
     private Planning selectedPlanning;
     private CoursService coursService = new CoursService();
     private User user;
     @FXML
     private GridPane calendarGrid;
+    @FXML
+    private TextField rechercheCours;
+
+    private LocalDate selectedDate; // Variable pour stocker la date sélectionnée
 
     public void setPlanningData(Planning planning, User user) {
         if (planning != null) {
@@ -126,8 +130,12 @@ public class showController {
                 // Appliquer un style différent au label cliqué
                 dayLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #fff; -fx-background-color: #073a4d; -fx-border-color: #010917; -fx-border-width: 1px; -fx-padding: 5px;");
 
+                // Mettre à jour la date sélectionnée
+                selectedDate = currentDate;
+
                 // Filtrer et afficher les cours
-                filterAndDisplayCoursesByDate(currentDate);
+                String searchText = rechercheCours.getText().trim().toLowerCase();
+                filterAndDisplayCoursesByDate(selectedDate, searchText);
             });
 
             // Ajouter le label à la grille
@@ -141,24 +149,34 @@ public class showController {
         calendarGrid.setPrefWidth(daysBetween * 80); // 80 = largeur estimée par colonne
     }
 
-    private void filterAndDisplayCoursesByDate(LocalDate selectedDate) {
+    private void filterAndDisplayCoursesByDate(LocalDate selectedDate, String searchText) {
         if (selectedDate != null) {
             List<Cours> allCourses = coursService.getCoursByPlanning(selectedPlanning);
             List<Cours> filteredCourses = allCourses.stream()
                     .filter(cours -> {
-                        Date dateDebut = cours.getDateDebut(); // Toujours un java.sql.Date
+                        Date dateDebut = cours.getDateDebut();
                         if (dateDebut != null) {
                             // Convertir java.sql.Date à java.util.Date
                             Date utilDate = new Date(dateDebut.getTime());
                             // Convertir java.util.Date à LocalDate
                             Instant instant = utilDate.toInstant();
                             LocalDate dateDebutLocalDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-                            return dateDebutLocalDate.isEqual(selectedDate);
+
+                            // Vérifier si la date du cours correspond à la date sélectionnée
+                            boolean matchesDate = dateDebutLocalDate.isEqual(selectedDate);
+
+                            // Vérifier si le texte de recherche correspond au titre ou à la description du cours
+                            boolean matchesText = searchText.isEmpty()
+                                    || cours.getTitle().toLowerCase().contains(searchText)
+                                    || cours.getDescription().toLowerCase().contains(searchText);
+
+                            return matchesDate && matchesText;
                         }
                         return false;
                     })
                     .collect(Collectors.toList());
 
+            // Mettre à jour la ListView avec les cours filtrés
             listView.getItems().setAll(filteredCourses);
         }
     }
@@ -196,17 +214,19 @@ public class showController {
         }
     }
 
-    public void filterCoursesByDate(ActionEvent actionEvent) {
-        LocalDate selectedDate = datePicker.getValue();
-        if (selectedDate != null) {
-            filterAndDisplayCoursesByDate(selectedDate);
-        }
-    }
-
     public void initialize() {
         // Charger le fichier CSS
         listView.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
+        // Ajouter un écouteur pour le champ de recherche
+        rechercheCours.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (selectedDate != null) {
+                String searchText = newValue.trim().toLowerCase();
+                filterAndDisplayCoursesByDate(selectedDate, searchText);
+            }
+        });
+
+        // Configurer la ListView
         listView.setCellFactory(new Callback<ListView<Cours>, ListCell<Cours>>() {
             @Override
             public ListCell<Cours> call(ListView<Cours> param) {
@@ -265,11 +285,10 @@ public class showController {
                                 if (confirmed) {
                                     // Supprimer le cours
                                     coursService.Delete(item);
-                                        refreshCourseList();
-                                    } else {
-                                        showAlert("Erreur", "La suppression du cours a échoué.");
-                                    }
-
+                                    refreshCourseList();
+                                } else {
+                                    showAlert("Erreur", "La suppression du cours a échoué.");
+                                }
                             });
 
                             // Agencer la date et les boutons
@@ -302,6 +321,7 @@ public class showController {
             }
         });
     }
+
     private void showEditCoursePopup(Cours cours) {
         try {
             // Charger le fichier FXML de la popup d'édition
@@ -348,9 +368,12 @@ public class showController {
 
     // Méthode pour rafraîchir la liste des cours
     private void refreshCourseList() {
-        List<Cours> updatedCourses = coursService.getCoursByPlanning(selectedPlanning);
-        listView.getItems().setAll(updatedCourses);
+        if (selectedDate != null) {
+            String searchText = rechercheCours.getText().trim().toLowerCase();
+            filterAndDisplayCoursesByDate(selectedDate, searchText);
+        }
     }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -358,7 +381,6 @@ public class showController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     public void goBackPage(ActionEvent event) {
         try {

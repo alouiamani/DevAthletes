@@ -38,6 +38,7 @@ public class SalleCardController {
     }
 
     public void setSalleData(Salle salle, ListeDesSalleController parentController) {
+        /*
         this.salle = salle;
         this.parentController = parentController;
 
@@ -102,6 +103,6 @@ public class SalleCardController {
             } catch (SQLException e) {
                 System.out.println("Erreur lors de la suppression de la salle : " + e.getMessage());
             }
-        }
+        }*/
     }
 }

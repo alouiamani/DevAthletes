@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ListeDesSalleController {
 
-    @FXML private FlowPane sallesContainer;
+   /*@FXML private FlowPane sallesContainer;
     @FXML private TextField searchField;
 
     @FXML private Button ajoutBtn;
@@ -150,3 +150,21 @@ public class ListeDesSalleController {
     }}
 
 
+<<<<<<< HEAD
+=======
+    @FXML
+    private void retourDashboard(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminDash.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    */
+}
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7

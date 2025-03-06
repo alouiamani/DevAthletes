@@ -50,7 +50,7 @@ public class ListeAbonnementRSController {
     private ServiceUser serviceUser = new ServiceUser();
     private ActivityService activiteService = new ActivityService(); // Service for activities
     private Connection connection;
-
+/*
     // Initialize method for setting up the salle and loading abonnements
     public void initialize() {
 
@@ -303,7 +303,7 @@ public class ListeAbonnementRSController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du retour au dashboard.");
         }
 
-    }
+    }*/
 
 }
 

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +18,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="C:\Users\Mega-PC\IdeaProjects\Pi\src\main\resources\style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.showController">
     <children>
         <!-- Barre d'application -->
-        <AnchorPane layoutX="-11.0" layoutY="-13.0" prefHeight="58.0" prefWidth="618.0" styleClass="Appbar" stylesheets="@style.css">
+        <AnchorPane layoutX="-11.0" layoutY="-13.0" prefHeight="58.0" prefWidth="626.0" styleClass="Appbar" stylesheets="@style.css">
             <children>
                 <Label layoutX="88.0" layoutY="20.0" prefHeight="25.0" prefWidth="105.0" text="Courses" textFill="#eaeaea">
                     <font>
@@ -37,16 +38,16 @@
         </AnchorPane>
 
         <!-- Section principale -->
-        <Pane layoutX="6.0" layoutY="36.0" prefHeight="364.0" prefWidth="140.0">
+        <Pane layoutX="6.0" layoutY="36.0" prefHeight="364.0" prefWidth="607.0">
             <children>
                 <Button layoutX="490.0" layoutY="27.0" mnemonicParsing="false" onAction="#showAddCoursPage" prefHeight="19.0" prefWidth="96.0" styleClass="Appbar" stylesheets="@style.css" text="Add Courses">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Label fx:id="planningTitle" alignment="TOP_LEFT" layoutX="69.0" layoutY="19.0" prefHeight="40.0" prefWidth="253.0" text="Label">
+                <Label fx:id="planningTitle" alignment="TOP_LEFT" layoutX="10.0" layoutY="27.0" prefHeight="25.0" prefWidth="177.0" text="Label">
                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
+                        <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
       
@@ -76,6 +77,12 @@
                         </GridPane>
                     </content>
                 </ScrollPane>
+            <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="173.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/search.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="rechercheCours" layoutX="200.0" layoutY="27.0" prefHeight="28.0" prefWidth="208.0" />
             </children>
         </Pane>
 

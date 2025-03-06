@@ -1,47 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.calendarController">
-   <children>
-      <MenuBar layoutX="-15.0" prefHeight="42.0" prefWidth="819.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
-         <menus>
-            <Menu mnemonicParsing="false" text="Activity">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Blog">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Reclamation">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Reclamation" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Events">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Product">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Planning">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Planning" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <StackPane fx:id="calendarContainer" layoutX="26.0" layoutY="53.0" prefHeight="330.0" prefWidth="752.0" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Appbar" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.calendarController">
+
+      <StackPane fx:id="calendarContainer" layoutY="70.0" prefHeight="328.0" prefWidth="771.0" />
+      <Button layoutX="562.0" layoutY="21.0" mnemonicParsing="false" onAction="#OpenWithGoogleCalendar" prefHeight="32.0" prefWidth="194.0" styleClass="white-bg" stylesheets="@style.css" text="Open with Google Calendar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   <Label layoutX="59.0" layoutY="22.0" prefHeight="27.0" prefWidth="232.0" text="Planning of the week" textFill="WHITE">
+      <font>
+         <Font name="System Bold Italic" size="18.0" />
+      </font>
+   </Label>
+
 </AnchorPane>

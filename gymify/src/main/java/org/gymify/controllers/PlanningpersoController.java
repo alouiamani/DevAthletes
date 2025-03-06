@@ -1,7 +1,11 @@
 package org.gymify.controllers;
 
 import javafx.concurrent.Worker;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -13,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import org.gymify.entities.User;
 import org.gymify.utils.AuthToken;
 
@@ -70,5 +75,24 @@ public class PlanningpersoController implements Initializable {
                 System.err.println("❌ Échec du chargement de la page.");
             }
         });
+    }
+
+    public void BackToPage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileMembre.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle à partir de l'événement
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("ProfileMembre"); // Titre de la nouvelle fenêtre
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.err.println("Erreur lors du chargement de la page EditPersonalInfo.fxml");
+        }
     }
 }

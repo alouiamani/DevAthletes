@@ -19,6 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
+<<<<<<< HEAD
+=======
+import org.gymify.entities.EmailSender;
+>>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
@@ -172,6 +176,9 @@ public class DashboardResponsableSalleController {
 
             serviceUser.ajouter(newUser);
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
+            // 📧 ENVOI DE L'EMAIL AUTOMATIQUE
+            EmailSender.envoyerEmailInscription(email, nom, password, role);
+
             listUsersInVBox();
             showPane(listUsersPane);
         } catch (SQLException e) {

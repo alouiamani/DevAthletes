@@ -7,6 +7,7 @@ import org.gymify.entities.*;
 import org.gymify.services.ActivityService;
 import org.gymify.services.CoursService;
 import org.gymify.services.SalleService;
+import org.gymify.utils.AuthToken;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -57,6 +58,7 @@ public class coursController {
     private RadioButton enduranceradio;
     @FXML
     private RadioButton relaxationradio;
+    private User userId= AuthToken.getCurrentUser();
 
     private CoursService coursService = new CoursService();
     private Planning planning;
@@ -246,7 +248,7 @@ public class coursController {
         cours.setActivité(selectedActivity);
         cours.setSalle(selectedSalle);
         cours.setPlanning(planning);
-        cours.setUser(user);
+        cours.setUser(userId);
         cours.setObjectifs(selectedObjective); // Assigner l'objectif sélectionné
 
         // Enregistrement du cours via le service
