@@ -1,17 +1,15 @@
 package org.gymify.controllers;
 
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.gymify.entities.Salle;
 import org.gymify.services.SalleService;
 
@@ -21,108 +19,111 @@ import java.util.List;
 
 public class ListeDesSalleController {
 
-    @FXML private VBox sallesContainer;
+    @FXML private FlowPane sallesContainer;
     @FXML private TextField searchField;
-
     @FXML private Button ajoutBtn;
 
     private SalleService salleService = new SalleService();
-    private PauseTransition pause = new PauseTransition(Duration.millis(300));
 
     @FXML
-    public void initialize() throws SQLException {
-        // Ajouter un listener sur le champ de recherche
+    public void initialize() {
+        try {
+            System.out.println("Chargement des salles...");
+            searchSalles();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Écouteur sur le champ de recherche
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            pause.setOnFinished(event -> {
-                try {
-                    searchSalles();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            pause.playFromStart();
+            try {
+                searchSalles();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
-        ajoutBtn.setOnAction(event -> ouvrirFormulaireAjout());
-        searchSalles(); // Charger toutes les salles au démarrage
+        // Gestion du bouton d'ajout
+        ajoutBtn.setOnAction(event -> ouvrirFormulaireAjout(event));
     }
 
     private void afficherSalles(List<Salle> salles) {
         sallesContainer.getChildren().clear(); // Effacer les salles existantes
+        System.out.println("Nombre de salles à afficher : " + salles.size());
 
         for (Salle salle : salles) {
             try {
+                System.out.println("Ajout de la salle : " + salle.getNom());
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCard.fxml"));
                 Parent salleCard = loader.load();
 
                 SalleCardController controller = loader.getController();
                 controller.setSalleData(salle, this);
 
-                sallesContainer.getChildren().add(salleCard); // Ajouter la carte de la salle à la liste
+                sallesContainer.getChildren().add(salleCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        // Forcer l'affichage des cartes
+        sallesContainer.requestLayout();
     }
 
-    // Recherche des salles par texte (via le service)
     private void searchSalles() throws SQLException {
-        String search = searchField.getText().toLowerCase();
+        String search = searchField.getText().trim().toLowerCase();
         List<Salle> salles;
 
-        // Vérifiez si le champ de recherche est vide
         if (search.isEmpty()) {
-            salles = salleService.afficher(); // Si vide, chargez toutes les salles
+            salles = salleService.afficher(); // Charger toutes les salles
         } else {
-            salles = salleService.searchSalles(search); // Sinon, utilisez la méthode de recherche
+            salles = salleService.searchSalles(search); // Filtrer les salles
         }
 
-        afficherSalles(salles); // Affichez les salles filtrées
+        afficherSalles(salles);
     }
-
-    private void ouvrirFormulaireAjout() {
+    @FXML
+    private void ouvrirFormulaireAjout(ActionEvent event) {
         try {
-            // Récupérer le stage actuel et le fermer
-            Stage currentStage = (Stage) searchField.getScene().getWindow(); // Ou n'importe quel autre composant de la fenêtre actuelle
-            currentStage.close(); // Fermer la fenêtre actuelle
-
-            // Charger et afficher la nouvelle fenêtre
+            // Charger le fichier FXML du formulaire d'ajout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleFormAdmin.fxml"));
             Parent root = loader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.setTitle("Ajouter une salle");
-            newStage.show(); // Afficher la nouvelle fenêtre
+
+            // Obtenir la scène actuelle (celle de la fenêtre ouverte)
+            Scene currentScene = ((Node) event.getSource()).getScene();
+
+            // Définir la nouvelle scène dans le même Stage
+            Stage currentStage = (Stage) currentScene.getWindow();
+            currentStage.setScene(new Scene(root));
+
+            // Optionnel : définir un titre pour la scène si nécessaire
+            currentStage.setTitle("Ajouter une salle");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Rafraîchir la liste après modification/suppression
-    public void refreshList() throws SQLException {
-        searchSalles();
+
+    public void refreshList() {
+        try {
+            searchSalles();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void retourDashboard(ActionEvent actionEvent) {
+    @FXML
+    private void retourDashboard(javafx.event.ActionEvent event) {
         try {
-            // Charger le fichier FXML de la liste des salles
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminDash.fxml"));
             Parent root = loader.load();
-
-            // Créer une nouvelle scène avec la liste des salles
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Dashboard Admin");
-
-            // Afficher la nouvelle scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }
-

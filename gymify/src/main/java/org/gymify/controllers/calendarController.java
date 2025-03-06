@@ -114,20 +114,16 @@ public class calendarController {
             }
 
             // Vérifier si les dates sont null
-            if (cours.getDateDebut() == null || cours.getDateFin() == null) {
+            if (cours.getDateDebut() == null ) {
                 System.err.println("Erreur : Les dates du cours sont null.");
                 return null;
             }
 
             // Convertir java.sql.Date en java.util.Date
             java.util.Date utilDateDebut = new java.util.Date(cours.getDateDebut().getTime());
-            java.util.Date utilDateFin = new java.util.Date(cours.getDateFin().getTime());
 
             // Convertir java.util.Date en LocalDate
             LocalDate startDate = utilDateDebut.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            LocalDate endDate = utilDateFin.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
 
@@ -139,7 +135,7 @@ public class calendarController {
 
             // Combiner LocalDate et LocalTime pour obtenir LocalDateTime
             LocalDateTime startDateTime = LocalDateTime.of(startDate, cours.getHeureDebut());
-            LocalDateTime endDateTime = LocalDateTime.of(endDate, cours.getHeureFin());
+            LocalDateTime endDateTime = LocalDateTime.of(startDate, cours.getHeureFin());
 
             // Créer un rendez-vous pour l'agenda
             Agenda.AppointmentImplLocal appointment = new Agenda.AppointmentImplLocal()
