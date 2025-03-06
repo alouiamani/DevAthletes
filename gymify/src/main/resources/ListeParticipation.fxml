@@ -7,23 +7,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="695.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeParticipationController">
-    <VBox layoutY="-1.0" prefHeight="695.0" prefWidth="820.0" spacing="10" style="-fx-background-color: #f8f9fa; -fx-padding: 10px;" VBox.vgrow="ALWAYS">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeParticipationController">
+    <VBox layoutY="0.0" prefHeight="600.0" prefWidth="600.0" spacing="8" style="-fx-background-color: #f8f9fa; -fx-padding: 8px; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
         <!-- AppBar -->
-        <HBox prefHeight="43.0" prefWidth="800.0" style="-fx-background-color: #2e86de; -fx-padding: 15px; -fx-alignment: center; -fx-background-radius: 10px;">
-            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" text="Liste des Participations" />
+        <HBox prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #2e86de; -fx-padding: 10px; -fx-alignment: center; -fx-background-radius: 5px;">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" text="Liste des Participations" />
         </HBox>
 
-        <!-- Barre de recherche et bouton Retour -->
-        <HBox spacing="10" style="-fx-padding: 10px; -fx-alignment: center-left;">
-            <TextField fx:id="searchField" prefHeight="28.0" prefWidth="359.0" promptText="Rechercher une participation..." style="-fx-pref-width: 300px; -fx-border-radius: 5px; -fx-padding: 5px;" />
-            <Button fx:id="btnRetour" prefHeight="28.0" prefWidth="199.0" style="-fx-background-color: #2e86de; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 5px 10px;" text="Retour" />
+        <!-- Barre de recherche et flèche de retour -->
+        <HBox spacing="8" style="-fx-padding: 8px; -fx-alignment: center-left;">
+            <Button fx:id="btnRetour" onAction="#goBack" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #2e86de; -fx-font-size: 20px; -fx-cursor: hand;" text="⬅" />
+            <TextField fx:id="searchField" prefHeight="30.0" prefWidth="300.0" promptText="Rechercher une participation..." style="-fx-pref-width: 250px; -fx-border-radius: 5px; -fx-padding: 5px; -fx-background-color: white; -fx-border-color: #dcdcdc;" />
         </HBox>
 
         <!-- Liste des participations -->
-        <ScrollPane fx:id="scrollPaneParticipations" fitToWidth="true" prefHeight="557.0" prefWidth="800.0" style="-fx-background: transparent;">
-            <VBox fx:id="vboxParticipations" prefHeight="0.0" prefWidth="797.0" spacing="15" style="-fx-padding: 15px;" />
+        <ScrollPane fx:id="scrollPaneParticipations" fitToWidth="true" prefHeight="250.0" prefWidth="600.0" style="-fx-background: transparent; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+            <VBox fx:id="vboxParticipations" spacing="10" style="-fx-padding: 10px;" />
+        </ScrollPane>
+
+        <!-- Label et ScrollPane pour la météo hebdomadaire -->
+        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Météo de la semaine" />
+        <ScrollPane prefHeight="200.0" prefWidth="600.0" style="-fx-background: transparent; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="NEVER">
+            <WebView fx:id="weatherWebView" prefWidth="600.0" style="-fx-border-color: #dcdcdc; -fx-border-radius: 5px;" />
         </ScrollPane>
     </VBox>
 </AnchorPane>

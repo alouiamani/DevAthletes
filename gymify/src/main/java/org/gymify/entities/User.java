@@ -1,11 +1,5 @@
 package org.gymify.entities;
 
-import org.gymify.utils.gymifyDataBase;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,14 +11,20 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private String specialite;
     private Date dateNaissance;
     private String imageURL;
+    private int id_Salle;
+    private Integer id_equipe; // New field for equipe ID
     private List<Reclamation> reclamations;
-private int id_Salle;
-    // 🔹 Constructeurs
-
 
     public User() {
+        this.reclamations = new ArrayList<>();
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
+    }
+
+    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL) {
         this.id_User = id_User;
         this.nom = nom;
         this.prenom = prenom;
@@ -34,20 +34,10 @@ private int id_Salle;
         this.dateNaissance = dateNaissance;
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
-        this.id_Salle=id_Salle;
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
     }
-    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL,int id_Salle) {
-        this.id_User = id_User;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.dateNaissance = dateNaissance;
-        this.imageURL = imageURL;
-        this.reclamations = new ArrayList<>();
-        this.id_Salle = id_Salle;
-    }
+
     public User(int id_User, String nom, String prenom, String email, String password, String role) {
         this.id_User = id_User;
         this.nom = nom;
@@ -55,10 +45,12 @@ private int id_Salle;
         this.password = password;
         this.email = email;
         this.role = role;
-
+        this.reclamations = new ArrayList<>();
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
     }
 
-    public User(String nom, String prenom, String email, String password,  String role,Date dateNaissance, String imageURL) {
+    public User(String nom, String prenom, String email, String password, String role, Date dateNaissance, String imageURL) {
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
@@ -67,30 +59,33 @@ private int id_Salle;
         this.dateNaissance = dateNaissance;
         this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
     }
-
-
 
     public User(String nom, String prenom, String password, String email, String role) {
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.email = email;
-        this.role = "Sportif";
-
+        this.role = role;
+        this.reclamations = new ArrayList<>();
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
     }
-    public User(String nom, String prenom,  String email, String role,Date dateNaissance, String imageURL) {
 
+    public User(String nom, String prenom, String email, String role, Date dateNaissance, String imageURL) {
         this.nom = nom;
         this.prenom = prenom;
-
         this.email = email;
         this.role = role;
         this.dateNaissance = dateNaissance;
         this.imageURL = imageURL;
+        this.reclamations = new ArrayList<>();
+        this.id_Salle = 0; // Default value for id_Salle
+        this.id_equipe = null; // Initialize id_equipe as null
     }
 
-    // 🔹 Getters et Setters
     public int getId_User() {
         return id_User;
     }
@@ -139,11 +134,19 @@ private int id_Salle;
         this.role = role;
     }
 
-    public Date getDateNaissance() { // ✅ Correction ici
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
+    }
+
+    public Date getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) { // ✅ Correction ici
+    public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -155,14 +158,30 @@ private int id_Salle;
         this.imageURL = imageURL;
     }
 
+    public int getId_Salle() {
+        return id_Salle;
+    }
+
+    public void setId_Salle(int id_Salle) {
+        this.id_Salle = id_Salle;
+    }
+
+    public Integer getId_equipe() {
+        return id_equipe;
+    }
+
+    public void setId_equipe(Integer id_equipe) {
+        this.id_equipe = id_equipe;
+    }
+
     public List<Reclamation> getReclamations() {
         return reclamations;
     }
-    private Salle salle;
+
     public void setReclamations(List<Reclamation> reclamations) {
         this.reclamations = reclamations;
     }
-    private List<Abonnement> abonnements;
+
     @Override
     public String toString() {
         return "User{" +
@@ -171,33 +190,12 @@ private int id_Salle;
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
+                ", specialite='" + specialite + '\'' +
                 ", dateNaissance=" + dateNaissance +
                 ", imageURL='" + imageURL + '\'' +
+                ", id_Salle=" + id_Salle +
+                ", id_equipe=" + id_equipe +
                 ", reclamations=" + reclamations +
                 '}';
     }
-
-
-
-        public int getSalleIdByUserId(int userId) throws SQLException {
-            String query = "SELECT id_salle FROM responsable_salle WHERE id_user = ?";
-            try (Connection conn = gymifyDataBase.getInstance().getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setInt(1, userId);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt("id_salle");
-                }
-            }
-            return -1; // Retourne -1 si aucun ID de salle n'est trouvé
-        }
-
-    public int getId_Salle() {
-        return id_Salle;
-    }
-
-    public void setId_Salle(int id_Salle) {
-        this.id_Salle = id_Salle;
-    }
 }
-
