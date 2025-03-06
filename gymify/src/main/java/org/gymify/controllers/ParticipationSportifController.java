@@ -8,35 +8,56 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.gymify.entities.Equipe;
+import org.gymify.entities.Event;
+import org.gymify.entities.User;
+import org.gymify.services.EquipeService;
+import org.gymify.services.ServiceUser;
 
-/**
- * Controller class for handling the ParticipationSportif form UI.
- */
+import java.sql.SQLException;
+import java.util.logging.Logger;
+
 public class ParticipationSportifController {
 
-    @FXML
-    private Button btnAnnuler;
+    @FXML private Button btnAnnuler;
+    @FXML private Button btnConfirmer;
+    @FXML private TextField emailField;
+    @FXML private TextField nomField;
+    @FXML private TextField prenomField;
+    @FXML private Label ErrorNom;
+    @FXML private Label ErrorPrenom;
+    @FXML private Label ErrorEmail;
 
-    @FXML
-    private Button btnConfirmer;
+    private User sportif;
+    private Equipe equipe;
+    private Event event;
+    private ServiceUser userService;
+    private EquipeService equipeService;
+    private static final Logger LOGGER = Logger.getLogger(ParticipationSportifController.class.getName());
 
-    @FXML
-    private TextField emailField;
+    public ParticipationSportifController() {
+        userService = new ServiceUser();
+        try {
+            equipeService = new EquipeService();
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de l'initialisation d'EquipeService: " + e.getMessage());
+        }
+    }
 
-    @FXML
-    private TextField nomField;
+    public void setSportif(User sportif) {
+        this.sportif = sportif;
+        nomField.setText(sportif.getNom());
+        prenomField.setText(sportif.getPrenom());
+        emailField.setText(sportif.getEmail());
+    }
 
-    @FXML
-    private TextField prenomField;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
 
-    @FXML
-    private Label ErrorNom;
-
-    @FXML
-    private Label ErrorPrenom;
-
-    @FXML
-    private Label ErrorEmail;
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     @FXML
     void confirmerParticipation(ActionEvent event) {
@@ -51,7 +72,6 @@ public class ParticipationSportifController {
 
         // Validate fields
         boolean hasError = false;
-
         if (nom.isEmpty()) {
             ErrorNom.setVisible(true);
             hasError = true;
@@ -64,34 +84,42 @@ public class ParticipationSportifController {
             ErrorEmail.setVisible(true);
             hasError = true;
         }
-
-        // If there are errors, stop processing
         if (hasError) {
             return;
         }
 
-        // Show success message
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Participation réussie pour " + nom + " " + prenom + "!", ButtonType.OK);
-        alert.showAndWait();
+        try {
+            // Update the Sportif's details
+            sportif.setNom(nom);
+            sportif.setPrenom(prenom);
+            sportif.setEmail(email);
 
-        // Close the window
-        Stage stage = (Stage) btnConfirmer.getScene().getWindow();
-        stage.close();
+            // Add the Sportif to the Equipe
+            equipeService.addSportifToEquipe(sportif, equipe.getId());
+
+            // Show success message
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Participation réussie pour " + nom + " " + prenom + " dans l'équipe " + equipe.getNom() + "!", ButtonType.OK);
+            alert.showAndWait();
+
+            // Close the window
+            Stage stage = (Stage) btnConfirmer.getScene().getWindow();
+            stage.close();
+
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de la confirmation de la participation: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur: " + e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     @FXML
     void annuler(ActionEvent event) {
-        // Clear the form fields
         nomField.clear();
         prenomField.clear();
         emailField.clear();
-
-        // Hide error messages
         ErrorNom.setVisible(false);
         ErrorPrenom.setVisible(false);
         ErrorEmail.setVisible(false);
-
-        // Close the window to return to the previous interface
         Stage stage = (Stage) btnAnnuler.getScene().getWindow();
         stage.close();
     }

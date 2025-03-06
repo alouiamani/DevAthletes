@@ -4,25 +4,28 @@ import java.sql.Timestamp;
 
 public class Reponse {
     private int id_Reponse;
-    private int id_rec;
+    private int id_rec; // ID de la réclamation
+    private int id_user_admin; // ID de l'Admin qui répond
     private String message;
     private Timestamp dateReponse;
-    private Reclamation reclamation;
+    private Reclamation reclamation; // Association avec la réclamation
+
     public Reponse() {}
-    public Reponse(int id_Reponse, int id_rec, String message, Timestamp dateReponse) {
+
+    public Reponse(int id_Reponse, int id_rec, int id_user_admin, String message, Timestamp dateReponse) {
         this.id_Reponse = id_Reponse;
         this.id_rec = id_rec;
+        this.id_user_admin = id_user_admin;
         this.message = message;
         this.dateReponse = dateReponse;
     }
-    public Reponse(int id_rec, String message) {
+
+    public Reponse(int id_rec, int id_user_admin, String message) {
         this.id_rec = id_rec;
+        this.id_user_admin = id_user_admin;
         this.message = message;
-
+        this.dateReponse = new Timestamp(System.currentTimeMillis()); // Date actuelle
     }
-
-
-
 
     public int getId_Reponse() {
         return id_Reponse;
@@ -38,6 +41,14 @@ public class Reponse {
 
     public void setId_rec(int id_rec) {
         this.id_rec = id_rec;
+    }
+
+    public int getId_user_admin() {
+        return id_user_admin;
+    }
+
+    public void setId_user_admin(int id_user_admin) {
+        this.id_user_admin = id_user_admin;
     }
 
     public String getMessage() {
@@ -69,6 +80,7 @@ public class Reponse {
         return "Reponse{" +
                 "id_Reponse=" + id_Reponse +
                 ", id_rec=" + id_rec +
+                ", id_user_admin=" + id_user_admin +
                 ", message='" + message + '\'' +
                 ", dateReponse=" + dateReponse +
                 ", reclamation=" + reclamation +

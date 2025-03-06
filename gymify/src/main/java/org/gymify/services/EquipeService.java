@@ -1,26 +1,25 @@
 package org.gymify.services;
 
-import org.gymify.services.IServiceEvent;
-import org.gymify.utils.gymifyDataBase;
 import org.gymify.entities.Equipe;
+import org.gymify.entities.Event;
 import org.gymify.entities.EventType;
+import org.gymify.entities.User;
 import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Service class for managing Equipe entities in the database.
- */
 public class EquipeService implements IServiceEvent<Equipe> {
     private final Connection connection;
+    private final ServiceUser userService; // Add ServiceUser to handle User modifications
 
     public EquipeService() throws SQLException {
         connection = gymifyDataBase.getInstance().getConnection();
         if (connection == null) {
             throw new SQLException("Erreur : Connexion à la base de données non établie !");
         }
+        userService = new ServiceUser(); // Initialize ServiceUser
     }
 
     @Override
@@ -35,7 +34,6 @@ public class EquipeService implements IServiceEvent<Equipe> {
             preparedStatement.setString(3, equipe.getNiveau().toString());
             preparedStatement.setInt(4, equipe.getNombreMembres());
             preparedStatement.executeUpdate();
-            // Retrieve the generated ID and set it on the Equipe object
             try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
                 if (rs.next()) {
                     equipe.setId(rs.getInt(1));
@@ -115,13 +113,6 @@ public class EquipeService implements IServiceEvent<Equipe> {
         return equipes;
     }
 
-    /**
-     * Checks if a team with the given name already exists in the database.
-     *
-     * @param nom the name of the team to check
-     * @return true if a team with the given name exists, false otherwise
-     * @throws SQLException if a database error occurs
-     */
     public boolean isNomEquipeExist(String nom) throws SQLException {
         String req = "SELECT COUNT(*) FROM equipe WHERE nom = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
@@ -135,5 +126,65 @@ public class EquipeService implements IServiceEvent<Equipe> {
             throw new SQLException("Erreur lors de la vérification de l'existence du nom de l'équipe : " + e.getMessage());
         }
         return false;
+    }
+
+    // Method to get the number of Sportif members in an Equipe
+    public int getNombreSportifsInEquipe(int equipeId) throws SQLException {
+        String req = "SELECT COUNT(*) FROM user WHERE role = 'sportif' AND id_equipe = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(req)) {
+            pstmt.setInt(1, equipeId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    // Method to add a Sportif to an Equipe
+    public void addSportifToEquipe(User sportif, int equipeId) throws SQLException {
+        // Check if the Sportif already belongs to an Equipe
+        if (sportif.getId_equipe() != null) {
+            throw new SQLException("Ce sportif appartient déjà à une équipe (ID: " + sportif.getId_equipe() + ").");
+        }
+
+        // Check the number of members in the Equipe
+        int currentMembers = getNombreSportifsInEquipe(equipeId);
+        if (currentMembers >= 8) {
+            throw new SQLException("L'équipe est complète (8 membres maximum).");
+        }
+
+        // Update the Sportif's id_equipe using ServiceUser
+        sportif.setId_equipe(equipeId);
+        userService.modifier(sportif); // Use ServiceUser to modify the User
+
+        // Update the Equipe's nombreMembres
+        String updateEquipeReq = "UPDATE equipe SET nombre_membres = nombre_membres + 1 WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateEquipeReq)) {
+            pstmt.setInt(1, equipeId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    // Method to get Equipe by ID
+    public Equipe getEquipeById(int equipeId) throws SQLException {
+        String req = "SELECT * FROM equipe WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(req)) {
+            pstmt.setInt(1, equipeId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Equipe equipe = new Equipe(
+                            rs.getInt("id"),
+                            rs.getString("nom"),
+                            rs.getString("image_url"),
+                            EventType.Niveau.valueOf(rs.getString("niveau")),
+                            rs.getInt("nombre_membres")
+                    );
+                    return equipe;
+                }
+            }
+        }
+        return null;
     }
 }
