@@ -1,9 +1,6 @@
 package org.gymify.services;
 
-import org.gymify.entities.Activité;
-import org.gymify.entities.Cours;
-import org.gymify.entities.Planning;
-import org.gymify.entities.User;
+import org.gymify.entities.*;
 import org.gymify.utils.gymifyDataBase;
 
 
@@ -20,16 +17,17 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Add(Cours cours) {
         try {
-            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `dateDebut`, `dateFin`, `heurDebut`, `heurFin`, `activité_id`, `planning_id`, `entaineur_id`) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `objectif`, `dateDebut`, `heurDebut`, `heurFin`, `activité_id`, `planning_id`, `entaineur_id`, `salle_id`) VALUES (?,?,?,?,?,?,?,?,?,?)");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
-            req.setDate(3, new Date(cours.getDateDebut().getTime()));
-            req.setDate(4, new Date(cours.getDateFin().getTime()));
+            req.setString(3,cours.getObjectifs().name());
+            req.setDate(4, new Date(cours.getDateDebut().getTime()));
             req.setTime(5, Time.valueOf(cours.getHeureDebut()));
             req.setTime(6, Time.valueOf(cours.getHeureFin()));
             req.setInt(7, cours.getActivité().getId());
             req.setInt(8, cours.getPlanning().getId());
             req.setInt(9,cours.getUser().getId_User());
+            req.setInt(10,cours.getSalle().getId_Salle());
 
 
 
@@ -46,11 +44,11 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Update(Cours cours) {
         try {
-            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`dateDebut`=?,`dateFin`=?,`heurDebut`=?,`heurFin`=?,`activité_id`=?,`planning_id`=?,`entaineur_id`=? WHERE id=?");
+            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`objectif`=?,`dateDebut`=?,`heurDebut`=?,`heurFin`=?,`activité_id`=?,`planning_id`=?,`entaineur_id`=?,`salle_id`=? WHERE id=?");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
-            req.setDate(3, new Date(cours.getDateDebut().getTime()));
-            req.setDate(4, new Date(cours.getDateFin().getTime()));
+            req.setString(3, cours.getObjectifs().name());
+            req.setDate(4, new Date(cours.getDateDebut().getTime()));
             req.setTime(5, Time.valueOf(cours.getHeureDebut()));
             req.setTime(6, Time.valueOf(cours.getHeureFin()));
             if(cours.getActivité() != null && cours.getPlanning() != null){
@@ -59,6 +57,7 @@ public class CoursService implements IService<Cours> {
             }
             req.setInt(9,cours.getUser().getId_User());
             req.setInt(10,cours.getId());
+            req.setInt(11,cours.getSalle().getId_Salle());
 
 
             req.executeUpdate();
@@ -99,8 +98,8 @@ public class CoursService implements IService<Cours> {
                 cour.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
                 cour.setHeureFin(rs.getTime("heurFin").toLocalTime());
                 cour.setDescription(rs.getString("description"));
+                cour.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
                 cour.setDateDebut(rs.getDate("dateDebut"));
-                cour.setDateFin(rs.getDate("dateFin"));
                 int activitéId = rs.getInt("activité_id");
                 if (activitéId != 0) {
                     Activité activité = new Activité(); // Créez une instance de l'activité
@@ -120,6 +119,12 @@ public class CoursService implements IService<Cours> {
                     User entaineur = new User();
                     entaineur.setId_User(entaineurId);
                     cour.setUser(entaineur);
+                }
+                int salleId = rs.getInt("salle_id");
+                if (salleId != 0) {
+                    Salle salle= new Salle();
+                    salle.setId_Salle(salleId);
+                    cour.setSalle(salle);
                 }
 
 
@@ -154,7 +159,9 @@ public class CoursService implements IService<Cours> {
                 cours.setHeureFin(rs.getTime("heurFin").toLocalTime());
                 cours.setDescription(rs.getString("description"));
                 cours.setDateDebut(rs.getDate("dateDebut"));
-                cours.setDateFin(rs.getDate("dateFin"));
+                cours.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
+
+
 
                 // Récupérer l'activité associée
                 int activitéId = rs.getInt("activité_id");
