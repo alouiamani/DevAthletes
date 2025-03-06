@@ -372,4 +372,26 @@ public class ServiceUser implements IGestionUser<User> {
 
         return total;
     }
+    public List<User> getUtilisateurByRole(String role) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE role = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, role);  // Remplacer par le rôle que vous voulez rechercher
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("id_user"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("role")  // Assurez-vous que le rôle est récupéré
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des utilisateurs par rôle : " + e.getMessage());
+        }
+        return users;
+    }
 }
