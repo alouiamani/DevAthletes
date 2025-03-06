@@ -21,10 +21,8 @@ import javafx.stage.Stage;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
 import org.gymify.entities.EventType;
-import org.gymify.entities.Salle;
 import org.gymify.services.EquipeEventService;
 import org.gymify.services.EventService;
-import org.gymify.services.SalleService;
 import org.gymify.utils.gymifyDataBase;
 
 import java.io.BufferedReader;
@@ -33,7 +31,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,6 +45,9 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Controller class for managing the addition or modification of events in the UI.
+ */
 public class AjoutEvennementController {
 
     @FXML private Label ErrorNom, ErrorImage, ErrorType, ErrorReward, ErrorDate, Errorhboxheuredebut, Errorhboxheurefin, ErrorDescription, ErrorLieu;
@@ -73,12 +78,6 @@ public class AjoutEvennementController {
     private List<Equipe> addedEquipes = new ArrayList<>();
     private ObservableList<String> equipeNames = FXCollections.observableArrayList();
     private static final Logger LOGGER = Logger.getLogger(AjoutEvennementController.class.getName());
-    private int responsableId;
-
-    public void setResponsableId(int responsableId) {
-        this.responsableId = responsableId;
-        LOGGER.info("Responsable_Salle ID set: " + responsableId);
-    }
 
     @FXML
     public void initialize() {
@@ -96,31 +95,6 @@ public class AjoutEvennementController {
             return;
         }
 
-        // Validate that the Responsable_Salle has an associated Salle
-        SalleService salleService = new SalleService();
-        try {
-            Salle salle = salleService.getSalleByResponsableId(responsableId);
-            if (salle == null) {
-                LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte. Veuillez contacter un administrateur ou ajouter une salle.", ButtonType.OK);
-                alert.showAndWait();
-                Stage stage = (Stage) nomtf.getScene().getWindow();
-                if (stage != null) {
-                    stage.close();
-                }
-                return;
-            }
-        } catch (SQLException e) {
-            LOGGER.severe("Erreur lors de la vérification de la salle associée : " + e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la vérification de la salle associée : " + e.getMessage(), ButtonType.OK);
-            alert.showAndWait();
-            Stage stage = (Stage) nomtf.getScene().getWindow();
-            if (stage != null) {
-                stage.close();
-            }
-            return;
-        }
-
         if (webviewtf != null) {
             try {
                 webEngine = webviewtf.getEngine();
@@ -128,6 +102,7 @@ public class AjoutEvennementController {
                     LOGGER.severe("WebEngine est null après initialisation !");
                     return;
                 }
+                // Set a unique user data directory for WebView to avoid conflicts
                 String userDataDir = System.getProperty("java.io.tmpdir") + "/webview-" + System.currentTimeMillis();
                 System.setProperty("webview.user.data.dir", userDataDir);
 
@@ -174,8 +149,10 @@ public class AjoutEvennementController {
 
         equipesListView.setItems(equipeNames);
 
+        // Add click handler to equipesListView to edit a team
         equipesListView.setOnMouseClicked(this::handleEquipeListClick);
 
+        // Charger la carte après que la scène est initialisée
         nomtf.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
@@ -184,7 +161,7 @@ public class AjoutEvennementController {
                     Stage stage = (Stage) nomtf.getScene().getWindow();
                     stage.setOnHidden(e -> {
                         if (webEngine != null) {
-                            webEngine.loadContent("");
+                            webEngine.loadContent(""); // Libérer les ressources
                             webEngine = null;
                         }
                     });
@@ -223,6 +200,7 @@ public class AjoutEvennementController {
         coords = new double[]{event.getLatitude(), event.getLongitude()};
         loadMap(event.getLatitude(), event.getLongitude());
 
+        // Safely handle heureDebut with null check and proper time extraction
         if (event.getHeureDebut() != null) {
             LocalTime heureDebut = event.getHeureDebut();
             cbHeureDebut.setValue(String.format("%02d", heureDebut.getHour()));
@@ -234,6 +212,7 @@ public class AjoutEvennementController {
             cbSecondeDebut.setValue("00");
         }
 
+        // Safely handle heureFin with null check and proper time extraction
         if (event.getHeureFin() != null) {
             LocalTime heureFin = event.getHeureFin();
             cbHeureFin.setValue(String.format("%02d", heureFin.getHour()));
@@ -245,6 +224,7 @@ public class AjoutEvennementController {
             cbSecondeFin.setValue("00");
         }
 
+        // Load associated teams if editing an existing event
         if (event.getEquipes() != null) {
             addedEquipes.clear();
             equipeNames.clear();
@@ -361,6 +341,7 @@ public class AjoutEvennementController {
             ErrorDescription.setVisible(false);
         }
 
+        // Check if at least one team is added
         if (addedEquipes.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Vous devez ajouter au moins une équipe avant d'enregistrer l'événement.", ButtonType.OK);
             alert.showAndWait();
@@ -477,16 +458,16 @@ public class AjoutEvennementController {
         eventToSave.setLieu(lieu);
         eventToSave.setDescription(description);
         eventToSave.setDate(datetf.getValue());
-        eventToSave.setHeureDebut(LocalTime.parse(heureDebut));
-        eventToSave.setHeureFin(LocalTime.parse(heureFin));
+        eventToSave.setHeureDebut(java.time.LocalTime.parse(heureDebut));
+        eventToSave.setHeureFin(java.time.LocalTime.parse(heureFin));
         eventToSave.setLatitude(coords[0]);
         eventToSave.setLongitude(coords[1]);
         eventToSave.setEquipes(new HashSet<>(addedEquipes));
 
         try {
             if (currentEvent == null) {
-                // Add the event with the dynamically retrieved responsableId
-                eventService.ajouter(eventToSave, responsableId);
+                eventService.ajouter(eventToSave);
+                // Add associations for all teams
                 for (Equipe equipe : addedEquipes) {
                     System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
                     equipeEventService.ajouter(equipe, eventToSave);
@@ -495,6 +476,7 @@ public class AjoutEvennementController {
                 alert.showAndWait();
             } else {
                 eventService.modifier(eventToSave);
+                // Remove existing associations and re-add new ones
                 for (Equipe equipe : eventService.getEquipesForEvent(eventToSave.getId())) {
                     equipeEventService.supprimer(equipe, eventToSave);
                 }
@@ -612,7 +594,7 @@ public class AjoutEvennementController {
             }
             Parent root = loader.load();
 
-            AjoutEquipeController ajoutEquipeController = loader.getController();
+           AjoutEquipeController ajoutEquipeController = loader.getController();
             ajoutEquipeController.setAjoutEvennementController(this);
 
             Stage stage = new Stage();
@@ -625,12 +607,13 @@ public class AjoutEvennementController {
         }
     }
 
+    // Handle click on equipesListView to edit an existing team
     @FXML
     private void handleEquipeListClick(MouseEvent event) {
         try {
             String selectedTeamName = equipesListView.getSelectionModel().getSelectedItem();
             if (selectedTeamName == null) {
-                return;
+                return; // No team selected
             }
 
             Equipe selectedEquipe = addedEquipes.stream()
@@ -659,11 +642,13 @@ public class AjoutEvennementController {
         }
     }
 
+    // Method to add a team to the event
     public void addEquipeToEvent(Equipe equipe) {
         addedEquipes.add(equipe);
         equipeNames.add(equipe.getNom());
     }
 
+    // Method to update a team in the list after modification
     public void updateEquipeInList(Equipe oldEquipe, Equipe newEquipe) {
         int index = addedEquipes.indexOf(oldEquipe);
         if (index != -1) {

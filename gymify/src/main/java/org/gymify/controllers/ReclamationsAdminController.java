@@ -9,8 +9,6 @@ import javafx.scene.text.Text;
 import org.gymify.entities.Reclamation;
 import org.gymify.entities.Reponse;
 import org.gymify.entities.User;
-import org.gymify.services.ServiceReclamation;
-import org.gymify.services.ServiceReponse;
 import org.gymify.services.ServiceUser;
 
 import java.sql.SQLException;
@@ -18,11 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+import org.gymify.services.ServiceReclamation;
+import org.gymify.services.ServiceReponse;
+
 public class ReclamationsAdminController {
     @FXML
     private VBox listReponsesContainer;
     @FXML private VBox listContainer;
     @FXML private TextArea textReponse;
+    @FXML private Button btnEnvoyer, btnToutSelectionner, btnToutSelectionnerReponses, btnSupprimerReponses;
+    @FXML private ComboBox<String> filtreStatut; // Recherche par statut
 
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
     private final ServiceReponse serviceReponse = new ServiceReponse();
@@ -31,25 +35,43 @@ public class ReclamationsAdminController {
     private final List<CheckBox> checkBoxList = new ArrayList<>();
     private final List<CheckBox> checkBoxReponsesList = new ArrayList<>();
 
-    private int idAdmin; // ID de l'administrateur
-
     public void initialize() {
         try {
-            // Récupérer l'utilisateur administrateur connecté (vous pouvez ajuster cette partie selon votre logique)
-            ServiceUser serviceUtilisateur = new ServiceUser();
-            List<User> adminList = serviceUtilisateur.getUtilisateurByRole("Admin"); // Recherche l'utilisateur avec le rôle 'Admin'
-
-            if (!adminList.isEmpty()) {
-                idAdmin = adminList.get(0).getId_User(); // Récupérer l'ID de l'administrateur
-            } else {
-                throw new SQLException("Administrateur introuvable.");
-            }
-
             chargerReclamations();
             chargerReponses();
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des données : " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private void chargerReponses() throws SQLException {
+        if (listReponsesContainer == null) {
+            System.err.println("Erreur : listReponsesContainer est null.");
+            return;
+        }
+
+        listReponsesContainer.getChildren().clear(); // Vider avant de recharger
+        checkBoxReponsesList.clear(); // Vider la liste des CheckBox
+
+        List<Reponse> reponseList = serviceReponse.afficher(); // Récupère toutes les réponses
+
+        for (Reponse rep : reponseList) {
+            HBox card = new HBox(10);
+            card.setStyle("-fx-background-color: #e3f2fd; -fx-padding: 10px; -fx-border-radius: 5px; -fx-border-color: #90caf9;");
+            card.setPrefWidth(300);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setUserData(rep); // Stocker l'objet Reponse
+            checkBox.setOnAction(event -> toggleSelectionReponse(checkBox));
+
+            Text text = new Text("📨 " + rep.getMessage());
+            text.setFont(new Font(12));
+
+            checkBoxReponsesList.add(checkBox);
+            card.getChildren().addAll(checkBox, text);
+            listReponsesContainer.getChildren().add(card);
         }
     }
 
@@ -83,35 +105,6 @@ public class ReclamationsAdminController {
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les réclamations.");
             e.printStackTrace();
-        }
-    }
-
-    private void chargerReponses() throws SQLException {
-        if (listReponsesContainer == null) {
-            System.err.println("Erreur : listReponsesContainer est null.");
-            return;
-        }
-
-        listReponsesContainer.getChildren().clear(); // Vider avant de recharger
-        checkBoxReponsesList.clear(); // Vider la liste des CheckBox
-
-        List<Reponse> reponseList = serviceReponse.afficher(); // Récupère toutes les réponses
-
-        for (Reponse rep : reponseList) {
-            HBox card = new HBox(10);
-            card.setStyle("-fx-background-color: #e3f2fd; -fx-padding: 10px; -fx-border-radius: 5px; -fx-border-color: #90caf9;");
-            card.setPrefWidth(300);
-
-            CheckBox checkBox = new CheckBox();
-            checkBox.setUserData(rep); // Stocker l'objet Reponse
-            checkBox.setOnAction(event -> toggleSelectionReponse(checkBox));
-
-            Text text = new Text("📨 " + rep.getMessage());
-            text.setFont(new Font(12));
-
-            checkBoxReponsesList.add(checkBox);
-            card.getChildren().addAll(checkBox, text);
-            listReponsesContainer.getChildren().add(card);
         }
     }
 
@@ -188,6 +181,7 @@ public class ReclamationsAdminController {
         }
     }
 
+
     @FXML
     private void ajouterReponse() {
         if (selectedReclamations.isEmpty()) {
@@ -205,8 +199,7 @@ public class ReclamationsAdminController {
 
         try {
             for (Reclamation rec : selectedReclamations) {
-                // Utiliser l'ID de l'administrateur récupéré dynamiquement
-                Reponse reponse = new Reponse(rec.getId_reclamation(), idAdmin, message); // ID de l'administrateur dynamique
+                Reponse reponse = new Reponse(rec.getId_reclamation(), message);
                 serviceReponse.ajouter(reponse);
             }
 
@@ -222,7 +215,6 @@ public class ReclamationsAdminController {
             e.printStackTrace();
         }
     }
-
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

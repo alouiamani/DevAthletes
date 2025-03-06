@@ -133,7 +133,7 @@
          <center>
             <AnchorPane prefHeight="498.0" prefWidth="628.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;">
+                  <AnchorPane fx:id="listUsersPane" prefHeight="525.0" prefWidth="626.0" style="-fx-border-radius: 9px;" visible="false">
                      <children>
                         <TextField fx:id="searchRoleField" layoutX="22.0" layoutY="14.0" onAction="#onSearchByRole" prefHeight="26.0" prefWidth="298.0" promptText="Search " />
                         <Button fx:id="addUserButton" layoutX="461.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddUserButtonClick" prefHeight="22.0" prefWidth="131.0" style="-fx-background-color: #e6e2e2;" text="Add User" textFill="#5f91ac">
@@ -145,11 +145,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <ScrollPane layoutX="8.0" layoutY="67.0" maxHeight="2000.0" maxWidth="2000.0" prefHeight="450.0" prefWidth="611.0">
+                        <ScrollPane layoutX="8.0" layoutY="67.0" prefHeight="450.0" prefWidth="611.0">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="610.0">
                                  <children>
-                                    <VBox fx:id="VBoxId" accessibleRole="LIST_VIEW" alignment="TOP_CENTER" layoutX="9.0" maxHeight="2000.0" maxWidth="2000.0" prefHeight="2000.0" prefWidth="602.0" spacing="10.0">
+                                    <VBox fx:id="VBoxId" accessibleRole="LIST_VIEW" alignment="TOP_CENTER" layoutX="9.0" prefHeight="2000.0" prefWidth="602.0" spacing="10.0">
                                        <opaqueInsets>
                                           <Insets top="10.0" />
                                        </opaqueInsets>
@@ -163,7 +163,7 @@
                         </ScrollPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="homePane" layoutY="15.0" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css" visible="false">
+                  <AnchorPane fx:id="homePane" layoutY="15.0" prefHeight="524.0" prefWidth="626.0" styleClass="white-bg" stylesheets="@style.css">
                      <children>
                         <AnchorPane layoutX="27.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>

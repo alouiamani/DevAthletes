@@ -12,14 +12,9 @@ public class Salle {
     private String email;
     private String url_photo;
     private List<Abonnement> abonnements;
-    private List<Event> events;
-    private int idResponsable;
-
-    public Salle() {
-        this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-    }
-
+    private int idResponsable;  // Utiliser int au lieu de String pour l'ID du responsable
+public Salle(){}
+    // Constructeur avec idResponsable
     public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
         this.id_Salle = id_Salle;
         this.nom = nom;
@@ -29,10 +24,10 @@ public class Salle {
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-        this.idResponsable = idResponsable;
+        this.idResponsable = idResponsable;  // Initialisation de l'ID du responsable
     }
 
+    // Constructeur sans idResponsable pour la création d'une nouvelle salle
     public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
         this.nom = nom;
         this.adresse = adresse;
@@ -41,23 +36,22 @@ public class Salle {
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-        this.idResponsable = idResponsable;
+        this.idResponsable = idResponsable;  // Initialisation de l'ID du responsable
     }
 
     public Salle(int idSalle, String nom, String adresse, String details, String numTel, String email, String urlPhoto) {
-        this.id_Salle = idSalle;
-        this.nom = nom;
-        this.adresse = adresse;
-        this.details = details;
-        this.num_tel = numTel;
-        this.email = email;
-        this.url_photo = urlPhoto;
-        this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-        this.idResponsable = 0; // Default value, should be set later if needed
+    this.id_Salle = idSalle;
+    this.nom = nom;
+    this.adresse = adresse;
+    this.details = details;
+    this.num_tel = numTel;
+    this.email = email;
+    this.url_photo = urlPhoto;
+
+
     }
 
+    // Getters et setters
     public int getIdResponsable() {
         return this.idResponsable;
     }
@@ -131,40 +125,9 @@ public class Salle {
         abonnement.setSalle(this);
     }
 
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = (events != null) ? events : new ArrayList<>();
-    }
-
-    public void addEvent(Event event) {
-        if (event != null) {
-            this.events.add(event);
-            event.setIdSalle(this.id_Salle);
-        }
-    }
-
-    public void removeEvent(Event event) {
-        if (event != null) {
-            this.events.remove(event);
-            event.setIdSalle(0);
-        }
-    }
-
     @Override
     public String toString() {
-        return "Salle{" +
-                "id_Salle=" + id_Salle +
-                ", nom='" + nom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", details='" + details + '\'' +
-                ", num_tel='" + num_tel + '\'' +
-                ", email='" + email + '\'' +
-                ", url_photo='" + url_photo + '\'' +
-                ", idResponsable=" + idResponsable +
-                ", events=" + events.size() +
-                '}';
+        return "l'id de salle est : " + id_Salle + " le nom de salle est : " + nom + " l'adresse de salle est : " + adresse
+                + " les détails de salle sont : " + details + " le numéro de tel de salle est : " + num_tel + " l'email de salle est : " + email;
     }
 }

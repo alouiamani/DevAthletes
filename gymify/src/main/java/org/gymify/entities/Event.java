@@ -13,20 +13,22 @@ public class Event {
     private LocalTime heureFin;
     private String description;
     private String imageUrl;
-    private EventType.Reward reward;
+    private EventType.Reward reward; // Utilisation de l'enum Reward
     private double latitude;
     private double longitude;
-    private String lieu;
+    private String lieu; // Nouveau champ ajouté
     private int id_salle;
-    private Salle salle;
     private EventType type;
     private Set<Equipe> equipes = new HashSet<>();
 
+
+    // Constructeur sans argument
     public Event() {}
 
+    // Constructeur avec tous les paramètres
     public Event(int id, String nom, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
                  String description, String imageUrl, EventType.Reward reward, double latitude,
-                 double longitude, String lieu, int id_salle, Salle salle, EventType type) {
+                 double longitude, String lieu, int id_salle, EventType type) {
         this.id = id;
         this.nom = nom;
         this.date = date;
@@ -39,13 +41,13 @@ public class Event {
         this.longitude = longitude;
         this.lieu = lieu;
         this.id_salle = id_salle;
-        this.salle = salle;
         this.type = type;
     }
 
+    // Constructeur sans ID (pour la création d'événements)
     public Event(String nom, LocalDate date, LocalTime heureDebut, LocalTime heureFin,
                  String description, String imageUrl, EventType.Reward reward, double latitude,
-                 double longitude, String lieu, int id_salle, Salle salle, EventType type) {
+                 double longitude, String lieu, int id_salle, EventType type) {
         this.nom = nom;
         this.date = date;
         this.heureDebut = heureDebut;
@@ -57,10 +59,10 @@ public class Event {
         this.longitude = longitude;
         this.lieu = lieu;
         this.id_salle = id_salle;
-        this.salle = salle;
         this.type = type;
     }
 
+    // Getters et Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -95,27 +97,13 @@ public class Event {
     public void setLieu(String lieu) { this.lieu = lieu; }
 
     public int getIdSalle() { return id_salle; }
-    public void setIdSalle(int id_salle) {
-        this.id_salle = id_salle;
-    }
-
-    public Salle getSalle() { return salle; }
-    public void setSalle(Salle salle) {
-        this.salle = salle;
-        if (salle != null) {
-            this.id_salle = salle.getId_Salle();
-            salle.addEvent(this);
-        } else {
-            this.id_salle = 0;
-        }
-    }
+    public void setIdSalle(int id_salle) { this.id_salle = id_salle; }
 
     public EventType getType() { return type; }
     public void setType(EventType type) { this.type = type; }
 
     public Set<Equipe> getEquipes() { return equipes; }
     public void setEquipes(Set<Equipe> equipes) { this.equipes = equipes; }
-
     public void addEquipe(Equipe equipe) {
         this.equipes.add(equipe);
     }

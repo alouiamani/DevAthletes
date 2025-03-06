@@ -91,17 +91,35 @@ public class DashboardAdminController  {
             logout();
             return;
         }
-        AddRoleFx.getItems().addAll("Entraîneur", "Responsable_salle", "Sportif");
+
+        // Initialiser les rôles disponibles
+        AddRoleFx.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
+       EditRoleId.getItems().addAll("Admin", "responsable_salle", "Entraîneur", "Sportif");
+
+        // Initialiser les spécialités (uniquement pour les entraîneurs)
         AddSpecialiteFx.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
         AddSpecialiteFx.setDisable(true);
-        EditRoleId.getItems().addAll("Entraîneur", "Sportif");
         EditSpecialId.getItems().addAll("Fitness", "Yoga", "Boxe", "Musculation");
-        EditSpecialId.setDisable(true);
+        // Activer/désactiver la spécialité en fonction du rôle
+        AddRoleFx.setOnAction(event -> {
+            if ("Entraîneur".equals(AddRoleFx.getValue())) {
+                AddSpecialiteFx.setDisable(false);
+            } else {
+                AddSpecialiteFx.setDisable(true);
+                AddSpecialiteFx.setValue(null);
 
-        AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
+            }
+        });
+        AddRoleFx.setOnAction(event -> {
+            if ("Entraîneur".equals(EditRoleId.getValue())) {
 
-        EditRoleId.setOnAction(event -> EditSpecialId.setDisable(!"Entraîneur".equals(EditRoleId.getValue())));
+                EditSpecialId.setDisable(false);
+            } else {
 
+                EditSpecialId.setValue(null);
+                EditSpecialId.setDisable(true);
+            }
+        });
         int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
 
         totalUsersLabel.setText("" + totalUsers);
@@ -211,87 +229,60 @@ public class DashboardAdminController  {
             showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible d'ajouter l'utilisateur.");
         }
     }
+
     private HBox creerHBoxUtilisateur(User user) {
-        // Création de la HBox principale avec une marge plus grande
-        HBox hbox = new HBox(20);
+        HBox hbox = new HBox(15); // Espacement entre les éléments
         hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setPadding(new Insets(15));
-        hbox.getStyleClass().add("user-hbox"); // Ajout d'une classe CSS pour le style
+        hbox.setPadding(new Insets(10, 12, 18, 3)); // (top, right, bottom, left)
 
-        // Utilisation d'un GridPane pour organiser les informations de manière plus nette
-        GridPane infoGrid = new GridPane();
-        infoGrid.setHgap(15);
-        infoGrid.setVgap(8);
-        infoGrid.setAlignment(Pos.CENTER_LEFT);
+        hbox.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #ddd; "
+                + "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
 
-        // Labels pour les informations de l'utilisateur, ajout d'une classe CSS pour un style uniforme
+        // Labels stylisés
         Label nameLabel = new Label(user.getNom());
-        nameLabel.getStyleClass().add("user-label");
-
         Label lastNameLabel = new Label(user.getPrenom());
-        lastNameLabel.getStyleClass().add("user-label");
-
         Label emailLabel = new Label(user.getEmail());
-        emailLabel.getStyleClass().add("user-label");
-
         Label roleLabel = new Label(user.getRole());
-        roleLabel.getStyleClass().add("user-label");
 
-        // Ajout des labels et des titres dans le GridPane avec une meilleure disposition
-        infoGrid.add(new Label("Nom:"), 0, 0);
-        infoGrid.add(nameLabel, 1, 0);
-        infoGrid.add(new Label("Prénom:"), 0, 1);
-        infoGrid.add(lastNameLabel, 1, 1);
-        infoGrid.add(new Label("Email:"), 0, 2);
-        infoGrid.add(emailLabel, 1, 2);
-        infoGrid.add(new Label("Rôle:"), 0, 3);
-        infoGrid.add(roleLabel, 1, 3);
+        for (Label label : new Label[]{nameLabel, lastNameLabel, emailLabel, roleLabel}) {
+            label.setStyle("-fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #333;");
+        }
 
-        // Personnalisation des boutons
-        Button editButton = createImageButton("/images/gear.png", event -> modifierUtilisateur(user));
-        Button deleteButton = createImageButton("/images/delete.png", event -> supprimerUtilisateur(user));
+        // Bouton Modifier (Edit)
+        Button editButton = new Button();
+        ImageView editIcon = new ImageView(new Image(getClass().getResource("/images/gear.png").toExternalForm()));
+        editIcon.setFitWidth(20);
+        editIcon.setFitHeight(20);
+        editButton.setGraphic(editIcon);
+        editButton.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
+        editButton.setOnAction(event -> modifierUtilisateur(user));
+        addHoverEffect(editButton);
 
-        // Ajout d'un effet visuel pour les boutons
-        addButtonHoverEffect(editButton);
-        addButtonHoverEffect(deleteButton);
+        // Bouton Supprimer (Delete)
+        Button deleteButton = new Button();
+        ImageView deleteIcon = new ImageView(new Image(getClass().getResource("/images/delete.png").toExternalForm()));
+        deleteIcon.setFitWidth(20);
+        deleteIcon.setFitHeight(20);
+        deleteButton.setGraphic(deleteIcon);
+        deleteButton.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
+        deleteButton.setOnAction(event -> supprimerUtilisateur(user));
+        addHoverEffect(deleteButton);
 
-        // Spacer pour pousser les boutons à droite et garder un espacement dynamique
+        // Espacement dynamique pour bien aligner les boutons à droite
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Ajout des éléments à la HBox
-        hbox.getChildren().addAll(infoGrid, spacer, editButton, deleteButton);
-
+        hbox.getChildren().addAll(nameLabel, lastNameLabel, emailLabel, roleLabel, spacer, editButton, deleteButton);
         return hbox;
     }
 
-    // Méthode pour créer un bouton avec une image et un effet de survol
-    private Button createImageButton(String imagePath, javafx.event.EventHandler<ActionEvent> eventHandler) {
-        Button button = new Button();
-        ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
-        icon.setFitWidth(42);  // Taille de l'icône légèrement plus grande pour plus de visibilité
-        icon.setFitHeight(42);
-        button.setGraphic(icon);
-        button.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
-        button.setOnAction(eventHandler);
-        return button;
+    // Effet au survol pour les boutons (agrandissement léger)
+    private void addHoverEffect(Button button) {
+        button.setOnMouseEntered(e -> button.setScaleX(1.1));
+        button.setOnMouseEntered(e -> button.setScaleY(1.1));
+        button.setOnMouseExited(e -> button.setScaleX(1.0));
+        button.setOnMouseExited(e -> button.setScaleY(1.0));
     }
-
-    // Ajout d'un effet de survol pour les boutons, avec un léger agrandissement et un changement de couleur
-    private void addButtonHoverEffect(Button button) {
-        button.setOnMouseEntered(e -> {
-            button.setScaleX(1.1);
-            button.setScaleY(1.1);
-            button.setStyle("-fx-background-color: #f0f0f0;");  // Couleur de fond claire lors du survol
-        });
-        button.setOnMouseExited(e -> {
-            button.setScaleX(1.0);
-            button.setScaleY(1.0);
-            button.setStyle("-fx-background-color: transparent;");
-        });
-    }
-
-
 
 
     private void modifierUtilisateur(User user) {

@@ -6,30 +6,29 @@ import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ActivityService implements IService<Activité> {
+public class ActivityService implements IService<Activité>{
     private Connection con;
-
     public ActivityService() {
-        con = gymifyDataBase.getInstance().getConnection();
+        con= gymifyDataBase.getInstance().getConnection();
     }
-
     @Override
     public void Add(Activité activité) {
         try {
-            PreparedStatement req = con.prepareStatement("INSERT INTO `activité`(`nom`, `type`, `description`, `url`) VALUES (?,?,?,?)");
-            req.setString(1, activité.getNom());
+            PreparedStatement req= con.prepareStatement("INSERT INTO `activité`(`nom`, `type`, `description`, `url`) VALUES (?,?,?,?)");
+            req.setString(1,activité.getNom());
             req.setString(2, activité.getType().name());
-            req.setString(3, activité.getDescription());
+            req.setString(3,activité.getDescription());
             req.setString(4, activité.getUrl());
             req.executeUpdate();
             System.out.println("Activité ajoutée avec succès !");
-        } catch (SQLException e) {
+
+        }catch (SQLException e){
             System.out.println("Erreur lors de l'ajout de l'activité : " + e.getMessage());
         }
+
+
     }
 
     @Override
@@ -40,24 +39,28 @@ public class ActivityService implements IService<Activité> {
             req.setString(2, activité.getType().name());
             req.setString(3, activité.getDescription());
             req.setString(4, activité.getUrl());
-            req.setInt(5, activité.getId());
+            req.setInt(5,activité.getId());
             req.executeUpdate();
             System.out.println("Activité modifié avec succès !");
         } catch (SQLException e) {
             System.out.println("Erreur lors de la mise à jour de l'activité : " + e.getMessage());
+
         }
+
     }
 
     @Override
     public void Delete(Activité activité) {
-        try {
-            PreparedStatement req = con.prepareStatement("DELETE FROM `activité` WHERE id=?");
-            req.setInt(1, activité.getId());
+        try{
+            PreparedStatement req= con.prepareStatement("DELETE FROM `activité` WHERE id=?");
+            req.setInt(1,activité.getId());
             req.executeUpdate();
             System.out.println("Activité supprimée avec succès !");
-        } catch (SQLException e) {
+        }catch(SQLException e){
             System.out.println("Erreur lors de la suppression de l'activité : " + e.getMessage());
+
         }
+
     }
 
     @Override
@@ -77,13 +80,16 @@ public class ActivityService implements IService<Activité> {
                 activité.setDescription(rs.getString("description"));
                 activité.setUrl(rs.getString("url"));
                 activités.add(activité);
+
             }
+
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return activités;
     }
-
     public int getActivityCount() {
         int count = 0;
         try {
@@ -101,9 +107,7 @@ public class ActivityService implements IService<Activité> {
         return count;
     }
 
-    public List<String> getActivityTypes() {
-        return Arrays.stream(ActivityType.values())
-                .map(Enum::name)
-                .collect(Collectors.toList());
-    }
+
+
+
 }

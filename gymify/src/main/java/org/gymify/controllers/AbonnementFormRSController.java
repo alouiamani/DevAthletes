@@ -1,3 +1,4 @@
+
 package org.gymify.controllers;
 
 import javafx.collections.FXCollections;
@@ -15,7 +16,7 @@ import org.gymify.entities.Abonnement;
 import org.gymify.entities.Salle;
 import org.gymify.entities.type_Abonnement;
 import org.gymify.services.AbonnementService;
-import org.gymify.services.SalleService;
+
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -45,18 +46,18 @@ public class AbonnementFormRSController {
 
     @FXML
     private Button handleAbonnement;
-
     @FXML
     private ImageView myImageView;
+    @FXML
 
     private LocalDate dateDebut;
     private Abonnement isModification; // Objet pour modification (évite de créer un nouvel abonnement)
     private Salle salle;
     private final AbonnementService abonnementService = new AbonnementService();
-    private final SalleService salleService = new SalleService(); // Added SalleService
 
     @FXML
     public void initialize() {
+
         typeAbonnementChoiceBox.setItems(FXCollections.observableArrayList(type_Abonnement.values()));
         typeAbonnementChoiceBox.setValue(type_Abonnement.mois);
         typeAbonnementChoiceBox.setConverter(new StringConverter<type_Abonnement>() {
@@ -79,8 +80,7 @@ public class AbonnementFormRSController {
         updateDetails();
     }
 
-    // Renamed from initData to preFillForm to match the call in ListeAbonnementRSController
-    public void preFillForm(Abonnement abonnement) {
+    public void initData(Abonnement abonnement) {
         if (abonnement != null) {
             System.out.println("Abonnement reçu : " + abonnement);
             isModification = abonnement;
@@ -110,27 +110,14 @@ public class AbonnementFormRSController {
             }
 
             tarifTextField.setText(String.valueOf(abonnement.getTarif()));
+
         } else {
-            System.out.println("⚠️ ERREUR : preFillForm() a reçu un abonnement NULL !");
+            System.out.println("⚠️ ERREUR : initData() a reçu un abonnement NULL !");
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les données de l'abonnement !");
         }
     }
 
-    // Added setSalleId method to match the call in ListeAbonnementRSController
-    public void setSalleId(int salleId) {
-        try {
-            Salle salle = salleService.getSalleById(salleId);
-            if (salle != null) {
-                this.salle = salle;
-                idSalleTextField.setText(String.valueOf(salleId));
-                idSalleTextField.setDisable(true);
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Salle avec l'ID " + salleId + " introuvable.");
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Erreur lors de la récupération de la salle : " + e.getMessage());
-        }
-    }
+
 
     private void updateDetails() {
         type_Abonnement selectedType = typeAbonnementChoiceBox.getValue();
@@ -155,6 +142,8 @@ public class AbonnementFormRSController {
         dateFinLabel.setText(dateFin.toString());
     }
 
+
+
     @FXML
     private void handleAbonnementSelection(ActionEvent actionEvent) {
         try {
@@ -172,15 +161,17 @@ public class AbonnementFormRSController {
             }
 
             if (typeAbonnementChoiceBox.getValue() == null) {
-                showAlert(Alert.AlertType.ERROR, "Veuillez sélectionner un type d'abonnement.", "Veuillez entrer valide.");
+                showAlert(Alert.AlertType.ERROR, "Veuillez sélectionner un type d'abonnement.","Veuillez entrer valide.");
                 return;
             }
 
             // Récupération et validation de l'ID de la salle
             if (salle == null) {
-                showAlert(Alert.AlertType.ERROR, "", "Aucune salle associée à cet abonnement.");
+                showAlert(Alert.AlertType.ERROR, "","Aucune salle associée à cet abonnement.");
                 return;
             }
+
+
 
             // Utilisation de ta méthode pour récupérer les abonnements par salle
             List<Abonnement> abonnements = abonnementService.getAbonnementsParSalle(salle.getId_Salle());
@@ -218,6 +209,8 @@ public class AbonnementFormRSController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur inattendue est survenue : " + e.getMessage());
         }
     }
+
+
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);

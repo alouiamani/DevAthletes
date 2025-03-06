@@ -9,11 +9,10 @@ public class Abonnement {
     private type_Abonnement type_Abonnement;
     private Double tarif;
     private Salle salle;
-    private Activité activite; // Added field for Activité
 
     public Abonnement() {}
 
-    public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement, Salle salle, Double tarif) {
+    public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement,  Salle salle,Double tarif) {
         this.Date_Début = Date_Début;
         this.Date_Fin = Date_Fin;
         this.type_Abonnement = type_Abonnement;
@@ -66,17 +65,9 @@ public class Abonnement {
         return salle;
     }
 
+
     public void setSalle(Salle salle) {
         this.salle = salle;
-    }
-
-    // Added getter and setter for Activité
-    public Activité getActivite() {
-        return activite;
-    }
-
-    public void setActivite(Activité activite) {
-        this.activite = activite;
     }
 
     @Override
