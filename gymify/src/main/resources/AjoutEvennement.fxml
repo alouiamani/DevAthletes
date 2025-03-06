@@ -15,30 +15,30 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<ScrollPane prefHeight="721.0" prefWidth="794.0" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AjoutEvennementController">
+<ScrollPane prefHeight="729.0" prefWidth="869.0" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AjoutEvennementController">
     <content>
-        <AnchorPane prefHeight="749.0" prefWidth="791.0" style="-fx-background-color: #f5f7fa; -fx-padding: 20;">
+        <AnchorPane prefHeight="731.0" prefWidth="993.0" style="-fx-background-color: #f5f7fa; -fx-padding: 20;">
             <children>
                 <!-- Titre -->
-                <Label layoutX="220.0" layoutY="27.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-effect: dropshadow(gaussian, #00A1A7, 10, 0.3, 0, 0);" text="Ajouter un Événement" textFill="#333333">
+                <Label layoutX="282.0" layoutY="26.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-effect: dropshadow(gaussian, #00A1A7, 10, 0.3, 0, 0);" text="Ajouter un Événement" textFill="#333333">
                     <font>
                         <Font name="Arial Bold" size="28.0" />
                     </font>
                 </Label>
 
                 <!-- Section Nom et Image -->
-                <Label layoutX="39.0" layoutY="100.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nom :" textFill="#333333" />
-                <TextField fx:id="nomtf" layoutX="94.0" layoutY="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Label layoutX="73.0" layoutY="100.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nom :" textFill="#333333" />
+                <TextField fx:id="nomtf" layoutX="131.0" layoutY="96.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
 
-                <Label layoutX="335.0" layoutY="102.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Image URL :" textFill="#333333" />
-                <TextField fx:id="imagetf" layoutX="417.0" layoutY="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
-                <Button fx:id="uploadBtn" layoutX="629.0" layoutY="100.0" onAction="#uploadBtn" style="-fx-background-color: #1E3A8A; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="📤 Upload" />
+                <Label layoutX="400.0" layoutY="100.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Image URL :" textFill="#333333" />
+                <TextField fx:id="imagetf" layoutX="485.0" layoutY="96.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Button fx:id="uploadBtn" layoutX="696.0" layoutY="96.0" onAction="#uploadBtn" style="-fx-background-color: #1E3A8A; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="📤 Upload" />
 
                 <ImageView fx:id="imagetf1" fitHeight="100.0" fitWidth="150.0" layoutX="280.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #00A86B; -fx-border-width: 2; -fx-border-radius: 10;" />
 
                 <!-- Section Heure Début & Fin -->
-                <Label layoutX="24.0" layoutY="270.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Heure Début :" textFill="#333333" />
-                <HBox fx:id="hboxheuredebut" layoutX="124.0" layoutY="270.0" prefHeight="33.0" prefWidth="198.0" style="-fx-spacing: 10;">
+                <Label layoutX="22.0" layoutY="270.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Heure Début :" textFill="#333333" />
+                <HBox fx:id="hboxheuredebut" layoutX="132.0" layoutY="263.0" prefHeight="33.0" prefWidth="198.0" style="-fx-spacing: 10;">
                     <children>
                         <ComboBox fx:id="cbHeureDebut" prefWidth="70.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
                         <ComboBox fx:id="cbMinuteDebut" prefWidth="70.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
@@ -46,8 +46,8 @@
                     </children>
                 </HBox>
 
-                <Label layoutX="339.0" layoutY="270.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Heure Fin :" textFill="#333333" />
-                <HBox fx:id="hboxheurefin" layoutX="430.0" layoutY="270.0" prefHeight="33.0" prefWidth="205.0" style="-fx-spacing: 10;">
+                <Label layoutX="397.0" layoutY="270.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Heure Fin :" textFill="#333333" />
+                <HBox fx:id="hboxheurefin" layoutX="492.0" layoutY="263.0" prefHeight="33.0" prefWidth="205.0" style="-fx-spacing: 10;">
                     <children>
                         <ComboBox fx:id="cbHeureFin" prefWidth="70.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
                         <ComboBox fx:id="cbMinuteFin" prefWidth="70.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
@@ -55,40 +55,49 @@
                     </children>
                 </HBox>
 
-                <!-- Type et Récompense -->
-                <Label layoutX="50.0" layoutY="340.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Type :" textFill="#333333" />
-                <ComboBox fx:id="typetf" layoutX="120.0" layoutY="340.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <!-- Type et Récompense avec Boutons -->
+                <Label layoutX="73.0" layoutY="340.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Type :" textFill="#333333" />
+                <ComboBox fx:id="typetf" layoutX="132.0" layoutY="336.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Button fx:id="addTypeBtn" layoutX="297.0" layoutY="336.0" onAction="#addType" style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="➕" />
+                <Button fx:id="editTypeBtn" layoutX="330.0" layoutY="336.0" onAction="#editType" style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="✎" />
+                <Button fx:id="deleteTypeBtn" layoutX="361.0" layoutY="336.0" onAction="#deleteType" style="-fx-background-color: #FF4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="🗑️" />
 
-                <Label layoutX="340.0" layoutY="344.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Reward:" textFill="#333333" />
-                <ComboBox fx:id="rewardtf" layoutX="433.0" layoutY="340.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Label layoutX="413.0" layoutY="340.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Reward:" textFill="#333333" />
+                <ComboBox fx:id="rewardtf" layoutX="497.0" layoutY="336.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Button fx:id="addRewardBtn" layoutX="662.0" layoutY="336.0" onAction="#addReward" style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="➕" />
+                <Button fx:id="editRewardBtn" layoutX="696.0" layoutY="336.0" onAction="#editReward" style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="✎" />
+                <Button fx:id="deleteRewardBtn" layoutX="730.0" layoutY="336.0" onAction="#deleteReward" style="-fx-background-color: #FF4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="🗑️" />
 
                 <!-- Date -->
-                <Label layoutX="50.0" layoutY="400.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Date :" textFill="#333333" />
-                <DatePicker fx:id="datetf" layoutX="120.0" layoutY="400.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Label layoutX="74.0" layoutY="404.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Date :" textFill="#333333" />
+                <DatePicker fx:id="datetf" layoutX="129.0" layoutY="400.0" prefHeight="28.0" prefWidth="187.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
 
                 <!-- Description -->
-                <Label layoutX="333.0" layoutY="404.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Description :" textFill="#333333" />
-                <TextArea fx:id="descriptiontf" layoutX="433.0" layoutY="403.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Label layoutX="388.0" layoutY="404.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Description :" textFill="#333333" />
+                <TextArea fx:id="descriptiontf" layoutX="495.0" layoutY="403.0" prefHeight="50.0" prefWidth="181.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
 
                 <!-- Lieu & Carte -->
-                <Label layoutX="50.0" layoutY="470.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Lieu :" textFill="#333333" />
-                <TextField fx:id="lieutf" layoutX="120.0" layoutY="470.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
-                <Button fx:id="search" layoutX="330.0" layoutY="470.0" onAction="#rechercherBtn" style="-fx-background-color: #1E90FF; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="🔍 Rechercher" />
+                <Label layoutX="75.0" layoutY="474.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Lieu :" textFill="#333333" />
+                <TextField fx:id="lieutf" layoutX="131.0" layoutY="470.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-text-fill: #333333; -fx-border-color: #1E3A8A; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                <Button fx:id="search" layoutX="352.0" layoutY="470.0" onAction="#rechercherBtn" style="-fx-background-color: #1E90FF; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="🔍 Rechercher" />
 
-                <HBox fx:id="hboxcartetf" layoutX="59.0" layoutY="519.0" prefHeight="150.0" prefWidth="590.0" style="-fx-border-color: #1E3A8A; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <HBox fx:id="hboxcartetf" layoutX="124.0" layoutY="512.0" prefHeight="150.0" prefWidth="590.0" style="-fx-border-color: #1E3A8A; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10;">
                     <children>
                         <WebView fx:id="webviewtf" prefHeight="150.0" prefWidth="590.0" style="-fx-background-radius: 10;" />
                     </children>
                 </HBox>
 
-                <VBox layoutX="649.0" layoutY="336.0" prefHeight="115.0" prefWidth="123.0" spacing="10">
-                    <Label fx:id="equipesLabel" text="Équipes Ajoutées :" />
-                    <ListView fx:id="equipesListView" prefHeight="100" />
+                <VBox layoutX="715.0" layoutY="405.0" prefHeight="107.0" prefWidth="124.0" spacing="10">
+                    <Label fx:id="equipesLabel" text="Equipes Ajoutées :">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font></Label>
+                    <ListView fx:id="equipesListView" prefHeight="94.0" prefWidth="117.0" />
                 </VBox>
 
                 <!-- Boutons -->
-                <Button layoutX="200.0" layoutY="671.0" onAction="#enregistrer" style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="✅ Enregistrer" />
-                <Button layoutX="400.0" layoutY="671.0" onAction="#annuler" style="-fx-background-color: #FF4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="❌ Annuler" />
+                <Button layoutX="339.0" layoutY="671.0" onAction="#enregistrer" style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="✅ Enregistrer" />
+                <Button layoutX="492.0" layoutY="671.0" onAction="#annuler" style="-fx-background-color: #FF4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="❌ Annuler" />
 
                 <!-- Labels d'erreur (conservés mais repositionnés selon la nouvelle disposition) -->
                 <Label fx:id="ErrorNom" layoutX="120.0" layoutY="125.0" prefHeight="17.0" prefWidth="150.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorNom" textFill="#FF0000" visible="false" />
@@ -100,7 +109,7 @@
                 <Label fx:id="ErrorDate" layoutX="120.0" layoutY="435.0" prefHeight="17.0" prefWidth="152.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorDate" textFill="#FF0000" visible="false" />
                 <Label fx:id="ErrorDescription" layoutX="440.0" layoutY="455.0" prefHeight="17.0" prefWidth="153.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorDescription" textFill="#FF0000" visible="false" />
                 <Label fx:id="ErrorLieu" layoutX="120.0" layoutY="495.0" prefHeight="17.0" prefWidth="96.0" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="ErrorLieu" textFill="#FF0000" visible="false" />
-                <Button layoutX="488.0" layoutY="470.0" onAction="#AjouterEquipe" style="-fx-background-color: #dd6d11; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="+ Ajouter Equipe" />
+                <Button layoutX="497.0" layoutY="470.0" onAction="#AjouterEquipe" style="-fx-background-color: #dd6d11; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 5;" text="+ Ajouter Equipe" />
             </children>
         </AnchorPane>
     </content>
