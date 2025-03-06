@@ -1,110 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
-   <children>
 
-      <!-- Container for Cards -->
-      <FlowPane fx:id="cardContainer" hgap="15.0" layoutX="8.0" layoutY="55.0" prefHeight="487.0" prefWidth="782.0" styleClass="card-container" vgap="15.0">
+<AnchorPane  prefHeight="291.0" prefWidth="406.0" styleClass="white-round-carts" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardController">
+   <children>
+      <HBox fx:id="cardContainer" layoutX="23.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="358.0">
          <children>
-            <HBox prefHeight="234.0" prefWidth="402.0" style="-fx-background-color: #ffffff;" styleClass="card">
+            <AnchorPane prefHeight="258.0" prefWidth="129.0" styleClass="white-round-carts">
+               <HBox.margin>
+                  <Insets right="24.0" />
+               </HBox.margin>
                <children>
-                  <AnchorPane prefHeight="196.0" prefWidth="118.0">
-                     <HBox.margin>
-                        <Insets right="24.0" />
-                     </HBox.margin>
-                     <children>
-                        <ImageView fx:id="salleImageView" fitHeight="193.0" fitWidth="117.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </AnchorPane>
-                  <VBox prefHeight="202.0" prefWidth="338.0" style="-fx-background-color: #aacedc;" styleClass="card">
-                     <children>
-                        <Label fx:id="nomLabel" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox>
-                           <children>
-                              <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/adresse (1).png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="adresseLabel" text="Adresse " />
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/fichier.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="detailsLabel" prefHeight="85.0" prefWidth="207.0" text="Détails " />
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/telephone.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="numTelLabel" text="Numéro de téléphone" textFill="#d11a1a" />
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/gmail.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="emailLabel" text="Email " />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="35.0" prefWidth="168.0">
-                           <children>
-                              <Button fx:id="modifierBtn" onAction="#modifierSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
-                                 <graphic>
-                                    <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/editer.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="supprimerBtn" onAction="#supprimerSalle" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #aacedc;">
-                                 <graphic>
-                                    <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/supprimer.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <ImageView fx:id="salleImageView" fitHeight="246.0" fitWidth="117.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts" />
                </children>
-            </HBox>
+            </AnchorPane>
+            <AnchorPane prefHeight="258.0" prefWidth="222.0" style="-fx-background-color: #aacedc;" styleClass="white-round-carts" stylesheets="@style.css">
+               <children>
+                  <Button fx:id="supprimerBtn" layoutX="113.0" layoutY="190.0" onAction="#supprimerSalle" prefHeight="38.0" prefWidth="46.0" style="-fx-background-color: #aacedc;">
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/supprimer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="modifierBtn" layoutX="56.0" layoutY="190.0" onAction="#modifierSalle" prefHeight="38.0" prefWidth="46.0" style="-fx-background-color: #aacedc;">
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/editer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="31.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/gmail.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="30.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/telephone.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="21.0" fitWidth="20.0" layoutX="30.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/fichier.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="21.0" layoutX="30.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/adresse (1).png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numTelLabel" layoutX="54.0" layoutY="171.0" text="Numéro de téléphone" textFill="#d11a1a" />
+                  <Label fx:id="emailLabel" layoutX="55.0" layoutY="130.0" text="Email " />
+                  <Label fx:id="adresseLabel" layoutX="48.0" layoutY="64.0" text="Adresse " />
+                  <Label fx:id="detailsLabel" layoutX="53.0" layoutY="96.0" prefHeight="18.0" prefWidth="118.0" text="Détails " />
+                  <Label fx:id="nomLabel" layoutX="34.0" layoutY="14.0" text="Nom de la salle " textAlignment="CENTER" textFill="#6f8964" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
-      </FlowPane>
+      </HBox>
    </children>
-   <stylesheets>
-      <URL value="@application.css" />
-   </stylesheets>
 </AnchorPane>

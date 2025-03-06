@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,38 +14,62 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="contentArea" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.coursController">
+<StackPane fx:id="contentArea" prefHeight="614.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.coursController">
     <children>
-        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="566.0" styleClass="formActivityDesign" stylesheets="@style.css">
+        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="657.0" styleClass="formActivityDesign" stylesheets="@style.css">
             <children>
                 <BorderPane prefHeight="24.0" prefWidth="468.0" />
-                <Label alignment="CENTER" prefHeight="38.0" prefWidth="154.0" text="Add Course" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font name="Yu Gothic Bold" size="24.0" />
-                    </font>
-                </Label>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="346.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="388.0">
                     <children>
-                        <Label fx:id="titleCoursError" layoutX="53.0" layoutY="76.0" prefHeight="15.0" prefWidth="239.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
-                        <TextField fx:id="titleCours" layoutX="56.0" layoutY="44.0" prefHeight="26.0" prefWidth="245.0" styleClass="textfield" stylesheets="@style.css" />
+                        <Label fx:id="titleCoursError" layoutX="53.0" layoutY="96.0" prefHeight="15.0" prefWidth="239.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                        <TextField fx:id="titleCours" layoutX="56.0" layoutY="68.0" prefHeight="22.0" prefWidth="239.0" styleClass="textfield" stylesheets="@style.css" />
 
                         <!-- Title -->
-                        <Label layoutX="80.0" layoutY="21.0" prefHeight="18.0" prefWidth="98.0" text="Title:" textFill="#f7f5f5">
+                        <Label layoutX="64.0" layoutY="41.0" prefHeight="18.0" prefWidth="98.0" text="Title:" textFill="#f7f5f5">
                             <font>
                                 <Font name="System Italic" size="10.0" />
                             </font>
                         </Label>
-                        <Label fx:id="dateError" layoutX="65.0" layoutY="202.0" prefHeight="15.0" prefWidth="264.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                        <Label fx:id="dateError" layoutX="41.0" layoutY="235.0" prefHeight="15.0" prefWidth="264.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
 
                         <!-- Description -->
-                        <Label layoutX="56.0" layoutY="278.0" prefHeight="18.0" prefWidth="98.0" text="Description:" textFill="#f4f2f2">
+                        <Label layoutX="57.0" layoutY="426.0" prefHeight="18.0" prefWidth="98.0" text="Description:" textFill="#f4f2f2">
                             <font>
                                 <Font name="System Italic" size="10.0" />
                             </font>
                         </Label>
-                        <TextArea fx:id="description" layoutX="54.0" layoutY="300.0" prefHeight="74.0" prefWidth="264.0" styleClass="textfield" />
-                        <Label fx:id="descriptionCoursError" layoutX="40.0" layoutY="368.0" prefHeight="15.0" prefWidth="239.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
-                        <Button layoutX="202.0" layoutY="389.0" mnemonicParsing="false" onAction="#addCourse" prefHeight="30.0" prefWidth="154.0" stylesheets="@style.css" text="Confirm">
+                        <TextArea fx:id="description" layoutX="65.0" layoutY="449.0" prefHeight="74.0" prefWidth="264.0" styleClass="textfield" />
+                        <Label fx:id="descriptionCoursError" layoutX="79.0" layoutY="527.0" prefHeight="15.0" prefWidth="239.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                        <DatePicker fx:id="dateDebut" layoutX="55.0" layoutY="124.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="239.0" />
+                        <Label layoutX="64.0" layoutY="105.0" prefHeight="18.0" prefWidth="98.0" text="Date:" textFill="WHITE">
+                            <font>
+                                <Font name="System Italic" size="10.0" />
+                            </font>
+                        </Label>
+                  <Label layoutX="-16.0" layoutY="248.0" prefHeight="18.0" prefWidth="98.0" text="Activity:" textFill="#fcf9f9">
+                     <font>
+                        <Font name="System Italic" size="10.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="activityComboBox" layoutX="-18.0" layoutY="278.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" />
+                  <Label fx:id="activityError" layoutX="-22.0" layoutY="314.0" prefHeight="15.0" prefWidth="183.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                  <ComboBox fx:id="hourDebut" layoutX="-45.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="61.0" />
+                  <Label layoutX="-43.0" layoutY="171.0" prefHeight="18.0" prefWidth="98.0" text="Start Time:" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="10.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="minuteDebut" layoutX="22.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <ComboBox fx:id="secondDebut" layoutX="94.0" layoutY="193.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <ComboBox fx:id="hourFin" layoutX="195.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <ComboBox fx:id="minuteFin" layoutX="268.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <ComboBox fx:id="secondFin" layoutX="338.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="62.0" />
+                  <Label layoutX="200.0" layoutY="173.0" prefHeight="18.0" prefWidth="98.0" text="End Time:" textFill="#fffefe">
+                     <font>
+                        <Font name="System Italic" size="10.0" />
+                     </font>
+                  </Label>
+                        <Button layoutX="260.0" layoutY="554.0" mnemonicParsing="false" onAction="#addCourse" prefHeight="30.0" prefWidth="154.0" stylesheets="@style.css" text="Confirm">
                             <font>
                                 <Font name="System Bold Italic" size="12.0" />
                             </font>
@@ -53,41 +78,44 @@
                         <String fx:value="white-bg" />
                      </styleClass>
                         </Button>
-                        <DatePicker fx:id="dateDebut" layoutX="-28.0" layoutY="103.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" />
-                        <DatePicker fx:id="dateFin" layoutX="208.0" layoutY="102.0" prefHeight="30.0" prefWidth="175.0" />
-                        <Label layoutX="208.0" layoutY="84.0" prefHeight="18.0" prefWidth="98.0" text="Date Fin:" textFill="#f7f6f6">
-                            <font>
-                                <Font name="System Italic" size="10.0" />
-                            </font>
-                        </Label>
-                        <Label layoutX="-28.0" layoutY="83.0" prefHeight="18.0" prefWidth="98.0" text="Date Debut:" textFill="WHITE">
-                            <font>
-                                <Font name="System Italic" size="10.0" />
-                            </font>
-                        </Label>
-                  <Label layoutX="110.0" layoutY="214.0" prefHeight="18.0" prefWidth="98.0" text="Activity:" textFill="#fcf9f9">
+                  <Label layoutX="208.0" layoutY="246.0" prefHeight="18.0" prefWidth="98.0" text="Gym:" textFill="#fcf9f9">
                      <font>
                         <Font name="System Italic" size="10.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="activityComboBox" layoutX="106.0" layoutY="235.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="175.0" />
-                  <Label fx:id="activityError" layoutX="115.0" layoutY="278.0" prefHeight="15.0" prefWidth="183.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
-                  <ComboBox fx:id="hourDebut" layoutX="-26.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <Label layoutX="-28.0" layoutY="152.0" prefHeight="18.0" prefWidth="98.0" text="Start Time:" textFill="WHITE">
+                  <ComboBox fx:id="GymcomoBox" layoutX="204.0" layoutY="277.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="175.0" />
+                  <Label alignment="CENTER" layoutX="106.0" layoutY="335.0" prefHeight="18.0" prefWidth="154.0" text="Objectif" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Italic" size="10.0" />
+                        <Font name="Yu Gothic Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="minuteDebut" layoutX="34.0" layoutY="174.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <ComboBox fx:id="secondDebut" layoutX="94.0" layoutY="174.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <ComboBox fx:id="hourFin" layoutX="207.0" layoutY="177.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <ComboBox fx:id="minuteFin" layoutX="268.0" layoutY="176.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <ComboBox fx:id="secondFin" layoutX="330.0" layoutY="176.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" />
-                  <Label layoutX="211.0" layoutY="154.0" prefHeight="18.0" prefWidth="98.0" text="End Time:" textFill="#fffefe">
+                  <RadioButton fx:id="Pertedepoidsradio" layoutX="-46.0" layoutY="381.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="112.0" text="Perte de poids" textFill="WHITE">
                      <font>
-                        <Font name="System Italic" size="10.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
-                  </Label>
+                  </RadioButton>
+                  <RadioButton fx:id="prisedemasseradio" layoutX="86.0" layoutY="381.0" mnemonicParsing="false" text="Prise de masse" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="enduranceradio" layoutX="224.0" layoutY="381.0" mnemonicParsing="false" text="Endurance" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="relaxationradio" layoutX="331.0" layoutY="381.0" mnemonicParsing="false" text="Relaxation" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </RadioButton>
+                      <Label alignment="CENTER" layoutX="99.0" layoutY="5.0" prefHeight="15.0" prefWidth="154.0" text="Add Course" textAlignment="CENTER" textFill="WHITE">
+                          <font>
+                              <Font name="Yu Gothic Bold" size="24.0" />
+                          </font>
+                      </Label>
+                  <Label fx:id="gymError" layoutX="200.0" layoutY="314.0" prefHeight="15.0" prefWidth="183.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
+                  <Label fx:id="objectifError" layoutX="62.0" layoutY="403.0" prefHeight="15.0" prefWidth="264.0" style="-fx-text-fill: red; -fx-font-size: 10px;" text="" />
                     </children>
                 </AnchorPane>
             </children>
