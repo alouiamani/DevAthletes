@@ -19,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import services.CartService;
+import services.SMSService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.net.URL;
@@ -33,6 +34,7 @@ public class CartController implements Initializable {
     private Button checkoutButton;
     
     private final CartService cartService = new CartService();
+    private final SMSService smsService = new SMSService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -162,15 +164,24 @@ public class CartController implements Initializable {
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initStyle(StageStyle.UNDECORATED);
             dialogStage.setScene(new Scene(root));
+            
+            // Wait for dialog to close before proceeding
             dialogStage.showAndWait();
 
             // Process result
             if (checkoutController.isPaymentSuccessful()) {
+                // Only finalize if payment was successful
                 cartService.finalizeOrder(commande.getId_c());
+                
+                // Send SMS confirmation here
+                smsService.sendOrderConfirmation(commande, total);
+                
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Order placed successfully!");
                 navigateToOrders();
             } else {
+                // Cancel the order if payment wasn't successful
                 cartService.cancelOrder(commande.getId_c());
+                return; // Exit without further processing
             }
         } catch (SQLException | IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to process checkout: " + e.getMessage());
