@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/DevAthletes.iml" filepath="$PROJECT_DIR$/.idea/DevAthletes.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/PIDEV 25 avant ajout jihen code.iml" filepath="$PROJECT_DIR$/.idea/PIDEV 25 avant ajout jihen code.iml" />
+>>>>>>> gestion_blogs
     </modules>
   </component>
 </project>
