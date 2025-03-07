@@ -18,7 +18,7 @@ public class AbonnementService implements Iservices<Abonnement> {
 
     @Override
     public void ajouter(Abonnement abonnement, int id_Salle) throws SQLException {
-        String req = "INSERT INTO abonnement (date_Début, date_Fin, type_Abonnement, id_Salle, tarif) VALUES (?, ?, ?, ?, ?)";
+        String req = "INSERT INTO abonnement (date_Début, date_Fin, type_Abonnement, id_Salle, tarif,id_activite, typeActivite) VALUES (?, ?, ?, ?, ?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setDate(1, new java.sql.Date(abonnement.getDate_Début().getTime()));
@@ -26,7 +26,8 @@ public class AbonnementService implements Iservices<Abonnement> {
             preparedStatement.setString(3, abonnement.getType_Abonnement().name());
             preparedStatement.setInt(4, id_Salle);
             preparedStatement.setDouble(5, abonnement.getTarif());
-
+            preparedStatement.setInt(6, abonnement.getActivite().getId()); // Associer l'abonnement à l'activité
+            preparedStatement.setString(7, abonnement.getActivite().getType().toString());
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("✅ Abonnement ajouté avec succès !");
@@ -67,32 +68,45 @@ public class AbonnementService implements Iservices<Abonnement> {
     @Override
     public List<Abonnement> afficher() throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();
-        String req = "SELECT a.*, s.id_Salle, s.nom, s.adresse, s.details, s.num_tel, s.email " +
+        String req = "SELECT a.*, s.id_Salle, s.nom AS salle_nom, s.adresse, s.details, s.num_tel, s.email, " +
+                "act.id AS activite_id, act.nom AS activite_nom, act.type AS activite_type " +
                 "FROM abonnement a " +
-                "JOIN salle s ON a.id_Salle = s.id_Salle"; // Jointure avec la table salle
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(req);
+                "JOIN salle s ON a.id_Salle = s.id_Salle " +
+                "LEFT JOIN activité act ON a.id_activite = act.id";
 
-        while (rs.next()) {
-            Abonnement abonnement = new Abonnement();
-            abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
-            abonnement.setDate_Début(rs.getDate("date_Début"));
-            abonnement.setDate_Fin(rs.getDate("date_Fin"));
-            abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
-            abonnement.setTarif(rs.getDouble("tarif"));
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(req)) {
 
-            // Création et initialisation de l'objet Salle
-            Salle salle = new Salle();
-            salle.setId_Salle(rs.getInt("id_Salle"));
-            salle.setNom(rs.getString("nom"));
-            salle.setAdresse(rs.getString("adresse"));
-            salle.setDetails(rs.getString("details"));
-            salle.setNum_tel(rs.getString("num_tel"));
-            salle.setEmail(rs.getString("email"));
+            while (rs.next()) {
+                Abonnement abonnement = new Abonnement();
+                abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
+                abonnement.setDate_Début(rs.getDate("date_Début"));
+                abonnement.setDate_Fin(rs.getDate("date_Fin"));
+                abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
+                abonnement.setTarif(rs.getDouble("tarif"));
 
-            abonnement.setSalle(salle);  // Associer la salle à l'abonnement
+                Salle salle = new Salle();
+                salle.setId_Salle(rs.getInt("id_Salle"));
+                salle.setNom(rs.getString("salle_nom"));
+                salle.setAdresse(rs.getString("adresse"));
+                salle.setDetails(rs.getString("details"));
+                salle.setNum_tel(rs.getString("num_tel"));
+                salle.setEmail(rs.getString("email"));
+                abonnement.setSalle(salle);
 
-            abonnements.add(abonnement);
+                if (rs.getInt("activite_id") != 0) {
+                    Activité activite = new Activité();
+                    activite.setId(rs.getInt("activite_id"));
+                    activite.setNom(rs.getString("activite_nom"));
+                    activite.setType(ActivityType.valueOf(rs.getString("activite_type")));
+                    abonnement.setActivite(activite);
+                }
+
+                abonnements.add(abonnement);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des abonnements : " + e.getMessage());
+            throw e;
         }
 
         return abonnements;
@@ -102,7 +116,7 @@ public class AbonnementService implements Iservices<Abonnement> {
         String req = "SELECT a.*, s.id_Salle, s.nom, s.adresse, s.details, s.num_tel, s.email " +
                 "FROM abonnement a " +
                 "JOIN salle s ON a.id_Salle = s.id_Salle " +
-                "WHERE a.id_Salle = ?"; // Jointure avec la table salle
+                "WHERE a.id_Salle = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setInt(1, id_Salle);
@@ -116,7 +130,6 @@ public class AbonnementService implements Iservices<Abonnement> {
                 abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
                 abonnement.setTarif(rs.getDouble("tarif"));
 
-                // Création et initialisation de l'objet Salle
                 Salle salle = new Salle();
                 salle.setId_Salle(rs.getInt("id_Salle"));
                 salle.setNom(rs.getString("nom"));
@@ -124,8 +137,7 @@ public class AbonnementService implements Iservices<Abonnement> {
                 salle.setDetails(rs.getString("details"));
                 salle.setNum_tel(rs.getString("num_tel"));
                 salle.setEmail(rs.getString("email"));
-
-                abonnement.setSalle(salle);  // Associer la salle à l'abonnement
+                abonnement.setSalle(salle);
 
                 abonnements.add(abonnement);
             }
@@ -136,10 +148,9 @@ public class AbonnementService implements Iservices<Abonnement> {
 
         return abonnements;
     }
-    // Récupérer la liste des types d'activités distincts
     public List<String> getActivityTypes() throws SQLException {
         List<String> activityTypes = new ArrayList<>();
-        String query = "SELECT DISTINCT typeActivite FROM Abonnement";
+        String query = "SELECT DISTINCT typeActivite FROM abonnement";
 
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -150,30 +161,9 @@ public class AbonnementService implements Iservices<Abonnement> {
         }
         return activityTypes;
     }
-
-    // Afficher les abonnements d'une salle spécifique
-    public List<Abonnement> afficherParSalle(int salleId) throws SQLException {
-        List<Abonnement> abonnements = new ArrayList<>();
-        String query = "SELECT * FROM Abonnement WHERE id_salle = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, salleId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                abonnements.add(mapResultSetToAbonnement(rs));
-            }
-        }
-        return abonnements;
-    }
-
-    // Récupérer une salle par ID
-
-
-    // Récupérer les abonnements par type d'activité
     public List<Abonnement> getAbonnementsByActivityType(String typeActivite) throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();
-        String query = "SELECT * FROM Abonnement WHERE typeActivite = ?";
+        String query = "SELECT * FROM abonnement WHERE typeActivite = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, typeActivite);
@@ -186,55 +176,37 @@ public class AbonnementService implements Iservices<Abonnement> {
         return abonnements;
     }
 
+// Vérifier si une salle existe
+
     private Abonnement mapResultSetToAbonnement(ResultSet rs) throws SQLException {
         Abonnement abonnement = new Abonnement();
 
         abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
-        abonnement.setDate_Début(rs.getDate("Date_Début"));
-        abonnement.setDate_Fin(rs.getDate("Date_Fin"));
+        abonnement.setDate_Début(rs.getDate("date_Début"));
+        abonnement.setDate_Fin(rs.getDate("date_Fin"));
         abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement").toUpperCase()));
         abonnement.setTarif(rs.getDouble("tarif"));
 
-        // Récupération de la salle associée
-        int salleId = rs.getInt("salle_id");
+        // Map salle
+        int salleId = rs.getInt("id_Salle");
         if (!rs.wasNull()) {
             abonnement.setSalle(getSalleById(salleId));
         }
 
-        // Récupération de l'activité associée
-        int activiteId = rs.getInt("activite_id");
+        // Map activité
+        int activiteId = rs.getInt("id_activite");
         if (!rs.wasNull()) {
             abonnement.setActivite(getActiviteById(activiteId));
         }
 
-        // Récupération du type d'activité
+        // Map typeActivite
         abonnement.setTypeActivite(rs.getString("typeActivite"));
 
         return abonnement;
     }
-// Vérifier si une salle existe
-
-    public List<Abonnement> getAbonnementsBySalleAndActivityType(int salleId, String selectedActivity) throws SQLException {
-        List<Abonnement> abonnements = new ArrayList<>();
-
-        String query = "SELECT * FROM Abonnement WHERE salle_id = ? AND typeActivite = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, salleId);
-            pstmt.setString(2, selectedActivity); // Convert enum to String
-
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                abonnements.add(mapResultSetToAbonnement(rs));
-            }
-        }
-
-        return abonnements;
-    }
     public Activité getActiviteById(int activiteId) throws SQLException {
         Activité activite = null;
-        String query = "SELECT * FROM Activité WHERE id_activite = ?";
+        String query = "SELECT * FROM Activité WHERE id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, activiteId);
@@ -242,7 +214,7 @@ public class AbonnementService implements Iservices<Abonnement> {
 
             if (rs.next()) {
                 activite = new Activité();
-                activite.setId(rs.getInt("id_activite"));
+                activite.setId(rs.getInt("id"));
                 activite.setNom(rs.getString("nom"));
                 activite.setType(ActivityType.valueOf(rs.getString("type")));
                 activite.setDescription(rs.getString("description"));
@@ -253,7 +225,7 @@ public class AbonnementService implements Iservices<Abonnement> {
     }
     public Salle getSalleById(int salleId) throws SQLException {
         Salle salle = null;
-        String query = "SELECT * FROM Salle WHERE id_salle = ?";
+        String query = "SELECT * FROM Salle WHERE id_Salle = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, salleId);
@@ -261,7 +233,7 @@ public class AbonnementService implements Iservices<Abonnement> {
 
             if (rs.next()) {
                 salle = new Salle();
-                salle.setId_Salle(rs.getInt("id_salle"));
+                salle.setId_Salle(rs.getInt("id_Salle"));
                 salle.setNom(rs.getString("nom"));
                 salle.setAdresse(rs.getString("adresse"));
                 salle.setDetails(rs.getString("détails"));
@@ -270,5 +242,65 @@ public class AbonnementService implements Iservices<Abonnement> {
             }
         }
         return salle;
+    }
+    public List<Abonnement> afficherParSalle(int salleId) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+        String query = "SELECT a.id_Abonnement, a.date_Début, a.date_Fin, a.type_Abonnement, a.tarif, " +
+                "s.id_Salle, s.nom AS salle_nom, s.adresse, s.details, s.num_tel, s.email, " +
+                "act.id AS activite_id, act.nom AS activite_nom, act.type AS activite_type " +
+                "FROM abonnement a " +
+                "JOIN salle s ON a.id_Salle = s.id_Salle " +
+                "LEFT JOIN activité act ON a.id_activite = act.id " +
+                "WHERE a.id_Salle = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, salleId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Abonnement abonnement = new Abonnement();
+                abonnement.setId_Abonnement(rs.getInt("id_Abonnement"));
+                abonnement.setDate_Début(rs.getDate("date_Début"));
+                abonnement.setDate_Fin(rs.getDate("date_Fin"));
+                abonnement.setType_Abonnement(type_Abonnement.valueOf(rs.getString("type_Abonnement")));
+                abonnement.setTarif(rs.getDouble("tarif"));
+
+                Salle salle = new Salle();
+                salle.setId_Salle(rs.getInt("id_Salle"));
+                salle.setNom(rs.getString("salle_nom"));
+                salle.setAdresse(rs.getString("adresse"));
+                salle.setDetails(rs.getString("details"));
+                salle.setNum_tel(rs.getString("num_tel"));
+                salle.setEmail(rs.getString("email"));
+                abonnement.setSalle(salle);
+
+                if (rs.getInt("activite_id") != 0) {
+                    Activité activite = new Activité();
+                    activite.setId(rs.getInt("activite_id"));
+                    activite.setNom(rs.getString("activite_nom"));
+                    activite.setType(ActivityType.valueOf(rs.getString("activite_type")));
+                    abonnement.setActivite(activite);
+                }
+
+                abonnements.add(abonnement);
+            }
+        }
+        return abonnements;
+    }
+    public List<Abonnement> getAbonnementsBySalleAndActivityType(int salleId, String typeActivite) throws SQLException {
+        List<Abonnement> abonnements = new ArrayList<>();
+        String query = "SELECT * FROM abonnement WHERE id_Salle = ? AND typeActivite = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, salleId);
+            pstmt.setString(2, typeActivite);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                abonnements.add(mapResultSetToAbonnement(rs));
+            }
+        }
+
+        return abonnements;
     }
 }

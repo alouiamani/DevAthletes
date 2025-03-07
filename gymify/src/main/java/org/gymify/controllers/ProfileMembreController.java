@@ -70,38 +70,28 @@ public class ProfileMembreController {
 
     private void chargerSalles() {
         SalleService salleService = new SalleService();
-        try {
-            List<Salle> salles = salleService.getAllSalles("");
-            sallesContainer.getChildren().clear(); // Clear existing salles
+        List<Salle> salles = salleService.getAllSalles("");
+        sallesContainer.getChildren().clear(); // Clear existing salles
 
-            for (Salle salle : salles) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCardUser.fxml"));
-                    if (loader.getLocation() == null) {
-                        LOGGER.severe("Cannot find SalleCardUser.fxml. Ensure the file exists in src/main/resources/");
-                        continue;
-                    }
-                    Parent salleCard = loader.load();
-                    SalleCardUserController controller = loader.getController();
-                    controller.setSalleData(salle, this); // Pass 'this' (ProfileMembreController instance)
-                    sallesContainer.getChildren().add(salleCard);
-                } catch (IOException e) {
-                    LOGGER.severe("Erreur lors du chargement de la carte pour la salle ID " + salle.getId_Salle() + ": " + e.getMessage());
-                    e.printStackTrace();
+        for (Salle salle : salles) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalleCardUser.fxml"));
+                if (loader.getLocation() == null) {
+                    LOGGER.severe("Cannot find SalleCardUser.fxml. Ensure the file exists in src/main/resources/");
+                    continue;
                 }
+                Parent salleCard = loader.load();
+                SalleCardUserController controller = loader.getController();
+                controller.setSalleData(salle, this); // Pass 'this' (ProfileMembreController instance)
+                sallesContainer.getChildren().add(salleCard);
+            } catch (IOException e) {
+                LOGGER.severe("Erreur lors du chargement de la carte pour la salle ID " + salle.getId_Salle() + ": " + e.getMessage());
+                e.printStackTrace();
             }
-            if (salles.isEmpty()) {
-                Label noSallesLabel = new Label("Aucune salle disponible.");
-                sallesContainer.getChildren().add(noSallesLabel);
-            }
-        } catch (SQLException e) {
-            LOGGER.severe("Erreur lors de la récupération des salles : " + e.getMessage());
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Erreur lors de la récupération des salles");
-            alert.setContentText("Une erreur s'est produite lors de la récupération des salles : " + e.getMessage());
-            alert.showAndWait();
+        }
+        if (salles.isEmpty()) {
+            Label noSallesLabel = new Label("Aucune salle disponible.");
+            sallesContainer.getChildren().add(noSallesLabel);
         }
     }
 

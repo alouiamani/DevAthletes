@@ -1,8 +1,8 @@
 package org.gymify.services;
 
 import org.gymify.entities.Reponse;
-import org.gymify.utils.gymifyDataBase;
 
+import org.gymify.utils.gymifyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +14,12 @@ public class ServiceReponse implements Iservices<Reponse> {
         con = gymifyDataBase.getInstance().getConnection();
     }
 
-<<<<<<< HEAD
     public int ajouter(Reponse reponse) {
         String sql = "INSERT INTO reponse (id_rec, message, dateReponse) VALUES (?, ?, ?)";
-=======
-    @Override
-    public void ajouter(Reponse reponse) {
-        String sql = "INSERT INTO reponse (id_rec, id_user_admin, message, dateReponse) VALUES (?, ?, ?, ?)";
->>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, reponse.getId_rec()); // ID de la réclamation
-            pstmt.setInt(2, reponse.getId_user_admin()); // ID de l'admin
-            pstmt.setString(3, reponse.getMessage()); // Message de la réponse
-            pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // Date actuelle
+            pstmt.setInt(1, reponse.getId_rec());
+            pstmt.setString(2, reponse.getMessage());
+            pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // Ajout automatique de la date
             pstmt.executeUpdate();
 
             mettreAJourStatutReclamation(reponse.getId_rec(), "Traitée");
@@ -36,12 +29,11 @@ public class ServiceReponse implements Iservices<Reponse> {
         return 0;
     }
 
-    @Override
+
     public void modifier(Reponse reponse) throws SQLException {
-        // Cette méthode peut être implémentée pour modifier une réponse (éventuellement)
+
     }
 
-    @Override
     public void supprimer(int id_Reponse) {
         String sql = "DELETE FROM reponse WHERE id_Reponse = ?";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -52,7 +44,6 @@ public class ServiceReponse implements Iservices<Reponse> {
         }
     }
 
-    @Override
     public List<Reponse> afficher() {
         List<Reponse> list = new ArrayList<>();
         String sql = "SELECT * FROM reponse";
@@ -62,7 +53,6 @@ public class ServiceReponse implements Iservices<Reponse> {
                 list.add(new Reponse(
                         rs.getInt("id_Reponse"),
                         rs.getInt("id_rec"),
-                        rs.getInt("id_user_admin"),  // Récupération de l'id_admin
                         rs.getString("message"),
                         rs.getTimestamp("dateReponse")
                 ));
@@ -82,7 +72,6 @@ public class ServiceReponse implements Iservices<Reponse> {
                 return new Reponse(
                         rs.getInt("id_Reponse"),
                         rs.getInt("id_rec"),
-                        rs.getInt("id_user_admin"), // Récupération de l'admin
                         rs.getString("message"),
                         rs.getTimestamp("dateReponse")
                 );
@@ -94,20 +83,13 @@ public class ServiceReponse implements Iservices<Reponse> {
     }
 
     private void mettreAJourStatutReclamation(int id_rec, String statut) {
-        // Vérifier que le statut est dans la taille autorisée
-        if (statut.length() > 50) { // 50 est un exemple, ajustez en fonction de la longueur de votre colonne
-            System.err.println("Le statut est trop long.");
-            return;
-        }
-
         String sql = "UPDATE reclamation SET statut = ? WHERE id_reclamation = ?";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, statut); // Insérer le statut dans la colonne
-            pstmt.setInt(2, id_rec);     // Spécifier l'ID de la réclamation
-            pstmt.executeUpdate();       // Exécuter la mise à jour
+            pstmt.setString(1, statut);
+            pstmt.setInt(2, id_rec);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Erreur lors de la mise à jour du statut de la réclamation : " + e.getMessage());
         }
     }
-
 }

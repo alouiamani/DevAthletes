@@ -83,12 +83,7 @@ public class LoginControllers {
             AuthToken.setCurrentUser(loggedInUser);
 
             // Afficher un message avec les informations de l'utilisateur
-            String userInfoMessage = "Utilisateur connecté : \n" +
-                    "Nom : " + loggedInUser.getNom() + "\n" +
-                    "Email : " + loggedInUser.getEmail() + "\n" +
-                    "Rôle : " + loggedInUser.getRole() + "\n" +
-                    "id_Salle : " +loggedInUser.getId_Salle()  ;
-            showAlert(Alert.AlertType.INFORMATION, "Connexion réussie", userInfoMessage);
+
 
             switch (loggedInUser.getRole().trim().toLowerCase()) {
                 case "admin" -> ouvrirInterface("AdminDash.fxml", "Interface Admin", event);

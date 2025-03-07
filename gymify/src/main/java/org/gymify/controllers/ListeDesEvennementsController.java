@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 /**
  * Controller class for managing the list of events (evennements) in the UI.
- */
+
 public class ListeDesEvennementsController {
 
     @FXML
@@ -170,4 +170,4 @@ public class ListeDesEvennementsController {
             e.printStackTrace();
         }
     }
-}
+}*/

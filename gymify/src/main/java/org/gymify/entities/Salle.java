@@ -1,6 +1,7 @@
 package org.gymify.entities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Salle {
@@ -12,22 +13,10 @@ public class Salle {
     private String email;
     private String url_photo;
     private List<Abonnement> abonnements;
-<<<<<<< HEAD
-   // Utiliser int au lieu de String pour l'ID du responsable
-public Salle(){}
+    // Utiliser int au lieu de String pour l'ID du responsable
+    public Salle(){}
     // Constructeur avec idResponsable
     public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo) {
-=======
-    private List<Event> events;
-    private int idResponsable;
-
-    public Salle() {
-        this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-    }
-
-    public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
->>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
         this.id_Salle = id_Salle;
         this.nom = nom;
         this.adresse = adresse;
@@ -36,19 +25,11 @@ public Salle(){}
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-<<<<<<< HEAD
-       // Initialisation de l'ID du responsable
+        // Initialisation de l'ID du responsable
     }
 
     // Constructeur sans idResponsable pour la création d'une nouvelle salle
     public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo) {
-=======
-        this.events = new ArrayList<>();
-        this.idResponsable = idResponsable;
-    }
-
-    public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo, int idResponsable) {
->>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
@@ -56,38 +37,15 @@ public Salle(){}
         this.email = email;
         this.url_photo = url_photo;
         this.abonnements = new ArrayList<>();
-<<<<<<< HEAD
-     // Initialisation de l'ID du responsable
+        // Initialisation de l'ID du responsable
     }
 
 
     public Salle(int idSalle, String nom) {
-    this.id_Salle = idSalle;
-    this.nom = nom;
-    }
-
-=======
-        this.events = new ArrayList<>();
-        this.idResponsable = idResponsable;
-    }
-
-    public Salle(int idSalle, String nom, String adresse, String details, String numTel, String email, String urlPhoto) {
         this.id_Salle = idSalle;
         this.nom = nom;
-        this.adresse = adresse;
-        this.details = details;
-        this.num_tel = numTel;
-        this.email = email;
-        this.url_photo = urlPhoto;
-        this.abonnements = new ArrayList<>();
-        this.events = new ArrayList<>();
-        this.idResponsable = 0; // Default value, should be set later if needed
     }
 
-    public int getIdResponsable() {
-        return this.idResponsable;
-    }
->>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
 
 
 
@@ -156,40 +114,19 @@ public Salle(){}
         abonnement.setSalle(this);
     }
 
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = (events != null) ? events : new ArrayList<>();
+    @Override
+    public String toString() {
+        return "l'id de salle est : " + id_Salle + " le nom de salle est : " + nom + " l'adresse de salle est : " + adresse
+                + " les détails de salle sont : " + details + " le numéro de tel de salle est : " + num_tel + " l'email de salle est : " + email;
     }
 
     public void addEvent(Event event) {
-        if (event != null) {
-            this.events.add(event);
-            event.setIdSalle(this.id_Salle);
-        }
     }
 
-    public void removeEvent(Event event) {
-        if (event != null) {
-            this.events.remove(event);
-            event.setIdSalle(0);
-        }
-    }
+    public Collection<Object> getEvents() {
+        Object Collection = null;
+        Collection events = null;
 
-    @Override
-    public String toString() {
-        return "Salle{" +
-                "id_Salle=" + id_Salle +
-                ", nom='" + nom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", details='" + details + '\'' +
-                ", num_tel='" + num_tel + '\'' +
-                ", email='" + email + '\'' +
-                ", url_photo='" + url_photo + '\'' +
-                ", idResponsable=" + idResponsable +
-                ", events=" + events.size() +
-                '}';
+        return List.of();
     }
 }

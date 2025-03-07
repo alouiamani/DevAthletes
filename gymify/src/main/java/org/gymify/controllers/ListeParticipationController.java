@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -232,4 +232,4 @@ public class ListeParticipationController {
             e.printStackTrace();
         }
     }
-}
+}*/

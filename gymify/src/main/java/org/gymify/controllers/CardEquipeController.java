@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -114,4 +114,4 @@ public class CardEquipeController {
         alert.setContentText(contenu);
         alert.showAndWait();
     }
-}
+}*/

@@ -34,7 +34,7 @@
 
 .card:hover {
     -fx-background-color: #FFFFFF;
-    -fx-transform: scale(1.2); /* Exemple correct d'utilisation de scale */
+     /* Exemple correct d'utilisation de scale */
 
 }
 

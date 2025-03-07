@@ -19,10 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
-<<<<<<< HEAD
-=======
-import org.gymify.entities.EmailSender;
->>>>>>> aea46390f69b2bb6a9b587a90aaa9dc13d0bcff7
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.services.ServiceUser;
@@ -36,6 +32,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static org.gymify.utils.AuthToken.currentUser;
 import static org.gymify.utils.AuthToken.logout;
 
 
@@ -83,35 +80,36 @@ public class DashboardResponsableSalleController {
     @FXML
     private void onListAbonnementButtonClick(ActionEvent event) {
         try {
+            // Charger le fichier FXML de la liste des abonnements
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
             Parent root = loader.load();
 
-            // Récupérer l'ID de la salle du responsable connecté à partir de AuthToken
-            int salleId = AuthToken.getCurrentUser().getId_Salle();
-            if (salleId == 0) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "L'ID de la salle n'est pas valide.");
-
-            }
-            else{
-                showAlert(Alert.AlertType.ERROR, "Erreur", "L'ID DE SALLE EST ."+ salleId);}
-
-            System.out.println("Salle ID du responsable connecté : " + salleId);
+            // Récupérer le contrôleur de la liste des abonnements
+            ListeAbonnementRSController controller = loader.getController();
 
             // Passer l'ID de la salle au contrôleur
-            ListeAbonnementRSController controller = loader.getController();
+            int salleId = AuthToken.getCurrentUser().getId_Salle(); // Récupérer l'ID de la salle de l'utilisateur connecté
+            if (salleId <= 0) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle n'est associée à cet utilisateur.");
+                return;
+            }
+            System.out.println("ID de la salle récupéré : " + salleId); // Log pour déboguer
             controller.setSalleId(salleId);
 
             // Afficher la nouvelle scène
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la liste des abonnements.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement de la liste des abonnements.");
         }
     }
-
+    private int getSalleIdFromCurrentUser() {
+        // Implémentez cette méthode pour récupérer l'ID de la salle de l'utilisateur actuel
+        // Par exemple, vous pouvez récupérer l'ID de la salle à partir de la session utilisateur ou de la base de données
+        return currentUser.getId_Salle(); // Supposons que `currentUser` est l'utilisateur actuellement connecté
+    }
 
 
     // Ouvre l'interface ou effectue une action
@@ -176,9 +174,6 @@ public class DashboardResponsableSalleController {
 
             serviceUser.ajouter(newUser);
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
-            // 📧 ENVOI DE L'EMAIL AUTOMATIQUE
-            EmailSender.envoyerEmailInscription(email, nom, password, role);
-
             listUsersInVBox();
             showPane(listUsersPane);
         } catch (SQLException e) {

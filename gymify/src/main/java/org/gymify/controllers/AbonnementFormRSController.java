@@ -5,8 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.gymify.entities.*;
 import org.gymify.services.AbonnementService;
@@ -114,6 +117,7 @@ public class AbonnementFormRSController {
                 return;
             }
 
+
             LocalDate dateDebutLocal = LocalDate.parse(dateDebutLabel.getText());
             LocalDate dateFinLocal = LocalDate.parse(dateFinLabel.getText());
             double tarif = Double.parseDouble(tarifTextField.getText());
@@ -148,9 +152,20 @@ public class AbonnementFormRSController {
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Abonnement modifié avec succès !");
             }
 
+            // Recharger la liste des abonnements
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
             Parent root = loader.load();
-            handleAbonnement.getScene().setRoot(root);
+            ListeAbonnementRSController listeController = loader.getController();
+            listeController.setSalleId(salleId); // Assurez-vous que cette méthode existe et qu'elle recharge les abonnements
+            listeController.loadFilteredAbonnements(); // Recharger les abonnements
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) handleAbonnement.getScene().getWindow();
+
+            // Définir la nouvelle scène
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Une erreur est survenue : " + e.getMessage());
@@ -175,7 +190,9 @@ public class AbonnementFormRSController {
                 .findFirst();
 
         activiteOptional.ifPresent(typeActiviteChoiceBox::setValue);
-        this.salle = abonnement.getSalle();
+        this.salleId = abonnement.getSalle().getId_Salle();
+
+
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -184,5 +201,18 @@ public class AbonnementFormRSController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void retournerEnArriere(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Impossible de retourner à l'interface précédente.","veuiller resseée");
+        }
     }
 }

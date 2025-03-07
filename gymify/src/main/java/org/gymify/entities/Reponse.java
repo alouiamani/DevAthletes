@@ -27,6 +27,9 @@ public class Reponse {
         this.dateReponse = new Timestamp(System.currentTimeMillis()); // Date actuelle
     }
 
+    public Reponse(int idReponse, int idRec, String message, Timestamp dateReponse) {
+    }
+
     public int getId_Reponse() {
         return id_Reponse;
     }

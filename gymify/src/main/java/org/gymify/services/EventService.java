@@ -1,4 +1,4 @@
-package org.gymify.services;
+/*package org.gymify.services;
 
 import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
@@ -85,7 +85,9 @@ public class EventService implements IServiceEvent<Event> {
                 Salle salle = salleService.getSalleById(event.getIdSalle());
                 if (salle != null) {
                     event.setSalle(salle);
-                    salle.getEvents().removeIf(e -> e.getId() == event.getId());
+                   // salle.getEvents().removeIf(e -> {
+                                //     return event.getId() == e.getId();
+                          //  });
                     salle.addEvent(event);
                     System.out.println("✅ Event modifié avec succès dans la salle ID: " + event.getIdSalle());
                 }
@@ -112,7 +114,7 @@ public class EventService implements IServiceEvent<Event> {
                 SalleService salleService = new SalleService();
                 Salle salle = salleService.getSalleById(event.getIdSalle());
                 if (salle != null) {
-                    salle.removeEvent(event);
+                   //// salle.removeEvent(event);
                     System.out.println("✅ Event supprimé avec succès. La salle ID " + event.getIdSalle() + " reste intacte.");
                 }
             } else {
@@ -296,4 +298,4 @@ public class EventService implements IServiceEvent<Event> {
         }
         return false;
     }
-}
+}    */

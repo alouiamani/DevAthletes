@@ -1,0 +1,268 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65011712 bytes. Error detail: G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3830), pid=17052, tid=10740
+#
+# JRE version:  (17.0.14+1) (build )
+# Java VM: OpenJDK 64-Bit Server VM (17.0.14+1-b1367.22, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dmaven.multiModuleProjectDirectory=C:\Users\39\Documents\GitHub\DevAthletes\DevAthletes\gymify -Djansi.passthrough=true -Dmaven.home=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3 -Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3\bin\m2.conf -Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven-event-listener.jar -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\lib\idea_rt.jar=63205:C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\bin -Dfile.encoding=UTF-8 org.codehaus.classworlds.Launcher -Didea.version=2024.2.2 org.openjfx:javafx-maven-plugin:0.0.8:run
+
+Host: Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 8 cores, 3G,  Windows 10 , 64 bit Build 19041 (10.0.19041.5438)
+Time: Fri Mar  7 02:07:50 2025 Paris, Madrid elapsed time: 0.041368 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000185184e0000):  JavaThread "Unknown thread" [_thread_in_vm, id=10740, stack(0x0000005449400000,0x0000005449500000)]
+
+Stack: [0x0000005449400000,0x0000005449500000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x68b969]  (os_windows_x86.cpp:235)
+V  [jvm.dll+0x84572a]  VMError::report+0xc6a  (vmError.cpp:868)
+V  [jvm.dll+0x8473ae]  VMError::report_and_die+0x78e  (vmError.cpp:1766)
+V  [jvm.dll+0x847a13]  VMError::report_and_die+0x43  (vmError.cpp:1552)
+V  [jvm.dll+0x24a83f]  report_vm_out_of_memory+0x8f  (debug.cpp:321)
+V  [jvm.dll+0x688629]  os::pd_commit_memory_or_exit+0xc9  (os_windows.cpp:3838)
+V  [jvm.dll+0x67cf3a]  os::commit_memory_or_exit+0x2a  (os.cpp:1768)
+V  [jvm.dll+0x30b83b]  G1PageBasedVirtualSpace::commit+0x19b  (g1PageBasedVirtualSpace.cpp:204)
+V  [jvm.dll+0x312d26]  G1RegionsLargerThanCommitSizeMapper::commit_regions+0x96  (g1RegionToSpaceMapper.cpp:100)
+V  [jvm.dll+0x3630fe]  HeapRegionManager::expand_any+0xee  (heapRegionManager.cpp:363)
+V  [jvm.dll+0x36333f]  HeapRegionManager::expand_by+0x7f  (heapRegionManager.cpp:380)
+V  [jvm.dll+0x2e18cc]  G1CollectedHeap::expand+0xbc  (g1CollectedHeap.cpp:1292)
+V  [jvm.dll+0x2e2824]  G1CollectedHeap::initialize+0x664  (g1CollectedHeap.cpp:1713)
+V  [jvm.dll+0x815ffb]  universe_init+0xbb  (universe.cpp:737)
+V  [jvm.dll+0x370e88]  init_globals+0x48  (init.cpp:131)
+V  [jvm.dll+0x7f4875]  Threads::create_vm+0x5e5  (thread.cpp:2909)
+V  [jvm.dll+0x3f54ef]  JNI_CreateJavaVM_inner+0x8f  (jni.cpp:3654)
+V  [jvm.dll+0x3f70c1]  JNI_CreateJavaVM+0x11  (jni.cpp:3746)
+C  [jli.dll+0x52ab]  (java.c:413)
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17374]
+C  [ntdll.dll+0x4cc91]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffbbb609018, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001851851ed10 GCTaskThread "GC Thread#0" [stack: 0x0000005449500000,0x0000005449600000] [id=10152]
+  0x0000018518527760 ConcurrentGCThread "G1 Main Marker" [stack: 0x0000005449600000,0x0000005449700000] [id=14552]
+  0x0000018518528180 ConcurrentGCThread "G1 Conc#0" [stack: 0x0000005449700000,0x0000005449800000] [id=2040]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffbbadb2197]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00000185184dc6a0] Heap_lock - owner thread: 0x00000185184e0000
+
+Heap address: 0x00000000c2800000, size: 984 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000c2800000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 0K, committed 0K, reserved 0K
+  class space    used 0K, committed 0K, reserved 0K
+
+Heap Regions: E=young(eden), S=young(survivor), O=old, HS=humongous(starts), HC=humongous(continues), CS=collection set, F=free, OA=open archive, CA=closed archive, TAMS=top-at-mark-start (previous, next)
+
+Card table byte_map: [0x000001852b1f0000,0x000001852b3e0000] _byte_map_base: 0x000001852abdc000
+
+Marking Bits (Prev, Next): (CMBitMap*) 0x000001851851f330, (CMBitMap*) 0x000001851851f370
+ Prev Bits: [0x000001852b5d0000, 0x000001852c530000)
+ Next Bits: [0x000001852c530000, 0x000001852d490000)
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.024 Loaded shared library C:\Users\39\.jdks\jbr-17.0.14\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff7bd230000 - 0x00007ff7bd23a000 	C:\Users\39\.jdks\jbr-17.0.14\bin\java.exe
+0x00007ffbec690000 - 0x00007ffbec888000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ffbec4d0000 - 0x00007ffbec592000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ffbe9dd0000 - 0x00007ffbea0cf000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ffbea330000 - 0x00007ffbea430000 	C:\Windows\System32\ucrtbase.dll
+0x00007ffbd5d30000 - 0x00007ffbd5d47000 	C:\Users\39\.jdks\jbr-17.0.14\bin\jli.dll
+0x00007ffbd5b50000 - 0x00007ffbd5b6b000 	C:\Users\39\.jdks\jbr-17.0.14\bin\VCRUNTIME140.dll
+0x00007ffbebf40000 - 0x00007ffbec0dd000 	C:\Windows\System32\USER32.dll
+0x00007ffbea680000 - 0x00007ffbea6a2000 	C:\Windows\System32\win32u.dll
+0x00007ffbea720000 - 0x00007ffbea74b000 	C:\Windows\System32\GDI32.dll
+0x00007ffbd6c00000 - 0x00007ffbd6e9a000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16\COMCTL32.dll
+0x00007ffbea430000 - 0x00007ffbea54a000 	C:\Windows\System32\gdi32full.dll
+0x00007ffbebaf0000 - 0x00007ffbebb8e000 	C:\Windows\System32\msvcrt.dll
+0x00007ffbe9d30000 - 0x00007ffbe9dcd000 	C:\Windows\System32\msvcp_win.dll
+0x00007ffbeaab0000 - 0x00007ffbeaadf000 	C:\Windows\System32\IMM32.DLL
+0x00007ffbd5ab0000 - 0x00007ffbd5abc000 	C:\Users\39\.jdks\jbr-17.0.14\bin\vcruntime140_1.dll
+0x00007ffbc9230000 - 0x00007ffbc92bd000 	C:\Users\39\.jdks\jbr-17.0.14\bin\msvcp140.dll
+0x00007ffbbaac0000 - 0x00007ffbbb74e000 	C:\Users\39\.jdks\jbr-17.0.14\bin\server\jvm.dll
+0x00007ffbec5a0000 - 0x00007ffbec64f000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ffbebd50000 - 0x00007ffbebdef000 	C:\Windows\System32\sechost.dll
+0x00007ffbebdf0000 - 0x00007ffbebf13000 	C:\Windows\System32\RPCRT4.dll
+0x00007ffbea550000 - 0x00007ffbea577000 	C:\Windows\System32\bcrypt.dll
+0x00007ffbebb90000 - 0x00007ffbebbfb000 	C:\Windows\System32\WS2_32.dll
+0x00007ffbe9a70000 - 0x00007ffbe9abb000 	C:\Windows\SYSTEM32\POWRPROF.dll
+0x00007ffbe4350000 - 0x00007ffbe435a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ffbd9750000 - 0x00007ffbd9777000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ffbe9a50000 - 0x00007ffbe9a62000 	C:\Windows\SYSTEM32\UMPDC.dll
+0x00007ffbe7bb0000 - 0x00007ffbe7bc2000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ffbd5aa0000 - 0x00007ffbd5aaa000 	C:\Users\39\.jdks\jbr-17.0.14\bin\jimage.dll
+0x00007ffbd8040000 - 0x00007ffbd8224000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ffbd5720000 - 0x00007ffbd5754000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ffbea2a0000 - 0x00007ffbea322000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ffbd5a00000 - 0x00007ffbd5a0e000 	C:\Users\39\.jdks\jbr-17.0.14\bin\instrument.dll
+0x00007ffbd0620000 - 0x00007ffbd0645000 	C:\Users\39\.jdks\jbr-17.0.14\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\39\.jdks\jbr-17.0.14\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16;C:\Users\39\.jdks\jbr-17.0.14\bin\server
+
+VM Arguments:
+jvm_args: -Dmaven.multiModuleProjectDirectory=C:\Users\39\Documents\GitHub\DevAthletes\DevAthletes\gymify -Djansi.passthrough=true -Dmaven.home=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3 -Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3\bin\m2.conf -Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven-event-listener.jar -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\lib\idea_rt.jar=63205:C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\bin -Dfile.encoding=UTF-8 
+java_command: org.codehaus.classworlds.Launcher -Didea.version=2024.2.2 org.openjfx:javafx-maven-plugin:0.0.8:run
+java_class_path (initial): C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven3\boot\plexus-classworlds.license
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 65011712                                  {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1031798784                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1031798784                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\Users\39\.jdks\jbr-17.0.12-1\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Users\39\.jdks\jbr-17.0.12\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\xampp\php;C:\composer;C:\Program Files\Git\cmd;C:\Program Files (x86)\CodeBlocks\MinGW\bin;C:\Program Files (x86)\GnuWin32\bin;C:\Program Files\Apache\Maven\apache-maven-3.8.8\bin;C:\Users\39\scoop\shims;C:\Users\39\AppData\Local\Microsoft\WindowsApps;C:\Users\39\AppData\Roaming\Composer\vendor\bin;C:\Users\39\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\39\AppData\Local\GitHubDesktop\bin
+USERNAME=39
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
+TMP=C:\Users\39\AppData\Local\Temp
+TEMP=C:\Users\39\AppData\Local\Temp
+
+
+
+Periodic native trim disabled
+
+JNI global refs:
+JNI global refs: 0, weak refs: 0
+
+JNI global refs memory usage: 0, weak refs: 0
+
+Process memory usage:
+Resident Set Size: 51692K (1% of 4024112K total physical memory with 165376K free physical memory)
+
+OOME stack traces (most recent first):
+Classloader memory used:
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.5438)
+OS uptime: 0 days 4:54 hours
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 12 microcode 0xde, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt
+Processor Information for processor 0
+  Max Mhz: 2112, Current Mhz: 1408, Mhz Limit: 1605
+Processor Information for processor 1
+  Max Mhz: 2112, Current Mhz: 1609, Mhz Limit: 1605
+Processor Information for processor 2
+  Max Mhz: 2112, Current Mhz: 1609, Mhz Limit: 1605
+Processor Information for processor 3
+  Max Mhz: 2112, Current Mhz: 1408, Mhz Limit: 1605
+Processor Information for processor 4
+  Max Mhz: 2112, Current Mhz: 1609, Mhz Limit: 1605
+Processor Information for processor 5
+  Max Mhz: 2112, Current Mhz: 1408, Mhz Limit: 1605
+Processor Information for processor 6
+  Max Mhz: 2112, Current Mhz: 1609, Mhz Limit: 1605
+Processor Information for processor 7
+  Max Mhz: 2112, Current Mhz: 1408, Mhz Limit: 1605
+
+Memory: 4k page, system-wide physical 3929M (161M free)
+TotalPageFile size 16217M (AvailPageFile size 3M)
+current process WorkingSet (physical memory assigned to process): 50M, peak: 50M
+current process commit charge ("private bytes"): 99M, peak: 121M
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.14+1-b1367.22) for windows-amd64 JRE (17.0.14+1-b1367.22), built on 2025-01-30 by "builduser" with MS VC++ 16.10 / 16.11 (VS2019)
+
+END.

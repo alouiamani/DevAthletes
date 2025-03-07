@@ -11,52 +11,65 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2615230460921843" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
+<SplitPane dividerPositions="0.2615230460921843" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
    <items>
-      <ImageView fitHeight="553.0" fitWidth="240.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@images/3d-gym-equipment.jpg" />
-         </image>
-      </ImageView>
-
-      <AnchorPane fx:id="abonnementCard" prefHeight="554.0" prefWidth="555.0">
+      <AnchorPane>
          <children>
-            <ChoiceBox fx:id="typeActiviteChoiceBox" layoutX="-43.0" layoutY="44.0" prefWidth="150.0" />
-            <AnchorPane layoutX="155.0" layoutY="146.0" prefHeight="236.0" prefWidth="325.0">
+            <ImageView fitHeight="553.0" fitWidth="240.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@images/3d-gym-equipment.jpg" />
+               </image>
+            </ImageView>
+            <Button layoutX="7.0" layoutY="6.0" onAction="#retournerEnArriere" prefHeight="35.0" prefWidth="41.0" style="-fx-background-color: #e1d8d8;" textFill="#666871">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane>
+         <children>
+      
+            <AnchorPane fx:id="abonnementCard" layoutX="22.0" layoutY="10.0" prefHeight="487.0" prefWidth="507.0" styleClass="card" stylesheets="@style.css">
                <children>
-                  <TextField fx:id="tarifTextField" layoutX="39.0" layoutY="153.0" />
+                  <ChoiceBox fx:id="typeActiviteChoiceBox" layoutX="70.0" layoutY="163.0" prefWidth="150.0" />
+      
+                  <!-- Nouveau ChoiceBox pour le type d'activité -->
+                  <Label layoutX="53.0" layoutY="135.0" text="Type d'activité :" textAlignment="CENTER" textFill="#6e6363">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Label>
+                  <ChoiceBox fx:id="typeAbonnementChoiceBox" layoutX="242.0" layoutY="248.0" prefWidth="150.0" />
+      
+                  <Label layoutX="196.0" layoutY="224.0" text="Choose subscription type :" textAlignment="CENTER" textFill="#6e6363">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Label>
+      
+                  <Label fx:id="dateDebutLabel" layoutX="227.0" layoutY="274.0" prefHeight="18.0" prefWidth="141.0" text="Date de début" textFill="#6e6363">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="dateFinLabel" layoutX="278.0" layoutY="299.0" text="Date de fin" textFill="#6e6363" />
+                  <Label fx:id="nomAbonnementLabel" layoutX="146.0" layoutY="44.0" text="Nom de l'abonnement" textFill="#296e79">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+      
+                  <Label layoutX="78.0" layoutY="372.0" text="Tarif :" textFill="#6e6363" />
+                  <TextField fx:id="tarifTextField" layoutX="61.0" layoutY="390.0" prefHeight="30.0" prefWidth="390.0" />
+                  <Button fx:id="handleAbonnement" layoutX="145.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleAbonnementSelection" prefHeight="43.0" prefWidth="82.0" styleClass="LoginBtn" stylesheets="@style.css" text="Done" />
+                  <Button layoutX="291.0" layoutY="450.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="103.0" styleClass="button-cancel" stylesheets="@style.css" text="Cancel" />
                </children>
             </AnchorPane>
-
-            <!-- Nouveau ChoiceBox pour le type d'activité -->
-            <Label layoutX="-13.0" layoutY="24.0" text="Type d'activité :" textAlignment="CENTER" textFill="#6e6363">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Label>
-            <ChoiceBox fx:id="typeAbonnementChoiceBox" layoutX="127.0" layoutY="35.0" prefWidth="150.0" />
-
-            <Label layoutX="105.0" layoutY="16.0" text="Choose subscription type :" textAlignment="CENTER" textFill="#6e6363">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Label>
-
-            <Label fx:id="dateDebutLabel" layoutX="291.0" layoutY="38.0" prefHeight="18.0" prefWidth="141.0" text="Date de début" textFill="#6e6363">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Label>
-            <Label fx:id="dateFinLabel" layoutX="356.0" layoutY="14.0" text="Date de fin" textFill="#6e6363" />
-            <Label fx:id="nomAbonnementLabel" layoutX="295.0" layoutY="20.0" text="Nom de l'abonnement" textFill="#296e79">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-
-            <Label layoutX="299.0" layoutY="43.0" text="Tarif :" textFill="#6e6363" />
-
-            <Button fx:id="handleAbonnement" layoutX="450.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAbonnementSelection" style="-fx-background-color: ec520a;" text="Confirm" textFill="#ec520a" />
          </children>
       </AnchorPane>
    </items>

@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 /**
  * Controller class for managing the addition or modification of teams (equipes) in the UI.
- */
+
 public class AjoutEquipeController {
 
     @FXML
@@ -182,7 +182,7 @@ public class AjoutEquipeController {
         }
     }
 
-    // Méthode appelée pour passer l'équipe à modifier
+ /*   // Méthode appelée pour passer l'équipe à modifier
     public void handleModifier(Equipe equipe) {
         this.equipeAModifier = equipe;
         nameField.setText(equipe.getNom());
@@ -197,5 +197,6 @@ public class AjoutEquipeController {
                 imagetf.setImage(null);
             }
         }
-    }
+   }
 }
+*/

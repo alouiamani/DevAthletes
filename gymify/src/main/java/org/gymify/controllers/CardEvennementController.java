@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 /**
  * Controller class for displaying an individual event card in the UI.
- */
+
 public class CardEvennementController {
 
     @FXML private ImageView eventImage;
@@ -212,4 +212,4 @@ public class CardEvennementController {
             }
         });
     }
-}
+}      */

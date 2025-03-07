@@ -1,4 +1,4 @@
-package org.gymify.controllers;
+/*package org.gymify.controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -78,13 +78,13 @@ public class AjoutEvennementController {
     private ObservableList<String> rewardItems = FXCollections.observableArrayList();
     private static final Logger LOGGER = Logger.getLogger(AjoutEvennementController.class.getName());
     private int responsableId;
-
+/*
     public void setResponsableId(int responsableId) {
         this.responsableId = responsableId;
         LOGGER.info("Responsable_Salle ID set: " + responsableId);
     }
 
-    @FXML
+   @FXML
     public void initialize() {
         connection = gymifyDataBase.getInstance().getConnection();
 
@@ -106,21 +106,10 @@ public class AjoutEvennementController {
 
         // Validate that the Responsable_Salle has an associated Salle
         SalleService salleService = new SalleService();
-        try {
-            Salle salle = salleService.getSalleByResponsableId(responsableId);
-            if (salle == null) {
-                LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte. Veuillez contacter un administrateur ou ajouter une salle.", ButtonType.OK);
-                alert.showAndWait();
-                Stage stage = (Stage) nomtf.getScene().getWindow();
-                if (stage != null) {
-                    stage.close();
-                }
-                return;
-            }
-        } catch (SQLException e) {
-            LOGGER.severe("Erreur lors de la vérification de la salle associée : " + e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la vérification de la salle associée : " + e.getMessage(), ButtonType.OK);
+        Salle salle = salleService.getSalleByResponsableId(responsableId);
+        if (salle == null) {
+            LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte. Veuillez contacter un administrateur ou ajouter une salle.", ButtonType.OK);
             alert.showAndWait();
             Stage stage = (Stage) nomtf.getScene().getWindow();
             if (stage != null) {
@@ -846,4 +835,4 @@ public class AjoutEvennementController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-}
+*/
