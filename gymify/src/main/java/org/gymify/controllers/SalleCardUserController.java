@@ -54,7 +54,7 @@ public class SalleCardUserController {
             Parent root = loader.load();
 
             AbonnementsSalleUserController controller = loader.getController();
-            controller.initData(salle.getId_Salle(), AuthToken.getCurrentUser()); // Pass the logged-in user
+            controller.initData(salle.getId(), AuthToken.getCurrentUser()); // Pass the logged-in user
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

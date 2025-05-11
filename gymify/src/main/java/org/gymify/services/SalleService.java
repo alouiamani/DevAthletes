@@ -73,11 +73,11 @@ public  class SalleService implements Iservices<Salle> {
         preparedStatement.setString(4, salle.getNum_tel());
         preparedStatement.setString(5, salle.getEmail());
         preparedStatement.setString(6, salle.getUrl_photo());
-        preparedStatement.setInt(7, salle.getId_Salle());
+        preparedStatement.setInt(7, salle.getId());
 
 
         // Vérifier l'ID
-        System.out.println("🔍 ID de la salle à modifier : " + salle.getId_Salle());
+        System.out.println("🔍 ID de la salle à modifier : " + salle.getId());
 
         int rowsUpdated = preparedStatement.executeUpdate(); // Appelé une seule fois
         if (rowsUpdated > 0) {

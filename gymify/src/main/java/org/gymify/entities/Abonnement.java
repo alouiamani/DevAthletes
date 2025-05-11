@@ -4,8 +4,7 @@ import java.sql.Date;
 
 public class Abonnement {
     private int id_Abonnement;
-    private Date Date_Début;
-    private Date Date_Fin;
+
     private type_Abonnement type_Abonnement;
     private Double tarif;
 
@@ -26,8 +25,7 @@ public class Abonnement {
 
 
     public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement, Salle salle, Double tarif, Activité activite,String typeActivite) {
-        this.Date_Début = Date_Début;
-        this.Date_Fin = Date_Fin;
+
         this.type_Abonnement = type_Abonnement;
         this.salle = salle;
         this.tarif = tarif;
@@ -43,21 +41,6 @@ public class Abonnement {
 
     public void setId_Abonnement(int idAbonnement) {
         this.id_Abonnement = idAbonnement;
-    }
-    public Date getDate_Début() {
-        return Date_Début;
-    }
-
-    public void setDate_Début(Date date_Début) {
-        Date_Début = date_Début;
-    }
-
-    public Date getDate_Fin() {
-        return Date_Fin;
-    }
-
-    public void setDate_Fin(Date date_Fin) {
-        Date_Fin = date_Fin;
     }
 
     public type_Abonnement getType_Abonnement() {
@@ -98,8 +81,7 @@ public class Abonnement {
     @Override
     public String toString() {
         return "Abonnement ID: " + id_Abonnement +
-                ", Début: " + Date_Début +
-                ", Fin: " + Date_Fin +
+
                 ", Type: " + type_Abonnement +
                 ", Tarif: " + tarif + "DT" +
                 ", Activité: " + (activite != null ? activite.getNom() : "Aucune");

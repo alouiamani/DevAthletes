@@ -178,8 +178,6 @@ public class ListeAbonnementRSController {
 
         Label activiteLabel = new Label("Activité: " + (abonnement.getActivite() != null ? abonnement.getActivite().getNom() : "Non spécifiée"));
         Label typeLabel = new Label("Type: " + (abonnement.getActivite() != null ? abonnement.getActivite().getType().toString() : "Non spécifié"));
-        Label dateDebut = new Label("Début: " + abonnement.getDate_Début());
-        Label dateFin = new Label("Fin: " + abonnement.getDate_Fin());
         Label tarif = new Label("Tarif: " + abonnement.getTarif() + " DT");
 
         // Bouton Modifier
@@ -205,7 +203,7 @@ public class ListeAbonnementRSController {
         HBox buttonContainer = new HBox(10, modifyButton, deleteButton);
         buttonContainer.setAlignment(Pos.CENTER);
 
-        card.getChildren().addAll(activiteLabel, typeLabel, dateDebut, dateFin, tarif, buttonContainer);
+        card.getChildren().addAll(activiteLabel, typeLabel,  tarif, buttonContainer);
         return card;
     }
 

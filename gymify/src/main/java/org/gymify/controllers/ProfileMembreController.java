@@ -85,7 +85,7 @@ public class ProfileMembreController {
                 controller.setSalleData(salle, this); // Pass 'this' (ProfileMembreController instance)
                 sallesContainer.getChildren().add(salleCard);
             } catch (IOException e) {
-                LOGGER.severe("Erreur lors du chargement de la carte pour la salle ID " + salle.getId_Salle() + ": " + e.getMessage());
+                LOGGER.severe("Erreur lors du chargement de la carte pour la salle ID " + salle.getId() + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }

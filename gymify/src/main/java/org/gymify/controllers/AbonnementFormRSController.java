@@ -178,9 +178,6 @@ public class AbonnementFormRSController {
     public void preFillForm(Abonnement abonnement) {
         this.isModification = abonnement;
 
-        dateDebut = abonnement.getDate_Début().toLocalDate();
-        dateDebutLabel.setText(dateDebut.toString());
-        dateFinLabel.setText(abonnement.getDate_Fin().toLocalDate().toString());
 
         typeAbonnementChoiceBox.setValue(abonnement.getType_Abonnement());
         tarifTextField.setText(String.valueOf(abonnement.getTarif()));
@@ -190,7 +187,7 @@ public class AbonnementFormRSController {
                 .findFirst();
 
         activiteOptional.ifPresent(typeActiviteChoiceBox::setValue);
-        this.salleId = abonnement.getSalle().getId_Salle();
+        this.salleId = abonnement.getSalle().getId();
 
 
     }

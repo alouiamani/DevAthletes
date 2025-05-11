@@ -164,7 +164,7 @@ public class SalleFormAdminController {
                 responsableChoiceBox.getItems().add(choix);
 
                 // Vérifier si c'est le responsable affecté à la salle
-                if (responsable.getId_Salle() == salle.getId_Salle()) {
+                if (responsable.getId_Salle() == salle.getId()) {
                     selectedResponsable = choix;
                 }
             }
@@ -200,8 +200,8 @@ public class SalleFormAdminController {
         int idResponsable = Integer.parseInt(parts[0]);  // Convertir l'ID du responsable en int
 
         // Vérifier si la salle est déjà associée à un utilisateur (responsable) via l'ID salle
-        if (salleAModifier != null && salleAModifier.getId_Salle() != salleAModifier.getId_Salle()) {
-            boolean salleDejaAssociee = userService.isSalleDejaAssociee(salleAModifier.getId_Salle());
+        if (salleAModifier != null && salleAModifier.getId() != salleAModifier.getId()) {
+            boolean salleDejaAssociee = userService.isSalleDejaAssociee(salleAModifier.getId());
             if (salleDejaAssociee) {
                 afficherAlerte("Erreur", "Cette salle est déjà associée à un responsable.");
                 return;
@@ -220,9 +220,9 @@ public class SalleFormAdminController {
                 afficherAlerte("Succès", "La salle a été ajoutée avec succès !");
             } else {
                 // Modifier la salle existante si elle est en modification
-                salle.setId_Salle(salleAModifier.getId_Salle());
+                salle.setId_Salle(salleAModifier.getId());
                 salleService.modifier(salle);
-                idSalle = salleAModifier.getId_Salle();
+                idSalle = salleAModifier.getId();
                 afficherAlerte("Succès", "La salle a été modifiée avec succès !");
             }
 

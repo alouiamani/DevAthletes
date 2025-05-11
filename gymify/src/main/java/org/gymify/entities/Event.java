@@ -103,7 +103,7 @@ public class Event {
     public void setSalle(Salle salle) {
         this.salle = salle;
         if (salle != null) {
-            this.id_salle = salle.getId_Salle();
+            this.id_salle = salle.getId();
             salle.addEvent(this);
         } else {
             this.id_salle = 0;

@@ -92,7 +92,7 @@ public class SalleCardController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                salleService.supprimer(salle.getId_Salle());
+                salleService.supprimer(salle.getId());
                 System.out.println("Salle supprimée avec succès !");
 
                 // Actualiser la liste des salles

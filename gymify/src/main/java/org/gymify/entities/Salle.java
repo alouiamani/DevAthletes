@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class Salle {
-    private int id_Salle;
+    private int id;
     private String nom;
     private String adresse;
     private String details;
@@ -16,8 +16,8 @@ public class Salle {
     // Utiliser int au lieu de String pour l'ID du responsable
     public Salle(){}
     // Constructeur avec idResponsable
-    public Salle(int id_Salle, String nom, String adresse, String details, String num_tel, String email, String url_photo) {
-        this.id_Salle = id_Salle;
+    public Salle(int id, String nom, String adresse, String details, String num_tel, String email, String url_photo) {
+      this.id=id;
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
@@ -41,20 +41,20 @@ public class Salle {
     }
 
 
-    public Salle(int idSalle, String nom) {
-        this.id_Salle = idSalle;
+    public Salle(int id, String nom) {
+        this.id = id;
         this.nom = nom;
     }
 
 
 
 
-    public int getId_Salle() {
-        return id_Salle;
+    public int getId() {
+        return id;
     }
 
-    public void setId_Salle(int id_Salle) {
-        this.id_Salle = id_Salle;
+    public void setId_Salle(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -116,7 +116,7 @@ public class Salle {
 
     @Override
     public String toString() {
-        return "l'id de salle est : " + id_Salle + " le nom de salle est : " + nom + " l'adresse de salle est : " + adresse
+        return "l'id de salle est : " + id + " le nom de salle est : " + nom + " l'adresse de salle est : " + adresse
                 + " les détails de salle sont : " + details + " le numéro de tel de salle est : " + num_tel + " l'email de salle est : " + email;
     }
 

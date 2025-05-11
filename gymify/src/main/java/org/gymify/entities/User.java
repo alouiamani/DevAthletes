@@ -116,7 +116,7 @@ public class User {
     }
 
     // 🔹 Getters et Setters
-    public int getId_User() {
+    public  int getId_User() {
         return id_User;
     }
 
