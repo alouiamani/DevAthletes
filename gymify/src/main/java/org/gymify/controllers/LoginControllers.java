@@ -148,7 +148,7 @@ public class LoginControllers {
         infoSpotifService infoSportifService = new infoSpotifService();
 
         // Vérifier si un infoSportif existe déjà pour cet utilisateur
-        boolean infoSportifExists = infoSportifService.existsByUserId(user.getId_User());
+        boolean infoSportifExists = infoSportifService.existsByUserId(user.getId());
 
         if (!infoSportifExists) {
             // Créer un nouvel infoSportif avec des valeurs par défaut

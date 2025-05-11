@@ -27,7 +27,7 @@ public class infoSpotifService implements IService<infoSportif>{
             req.setInt(3, infoSportif.getAge());
             req.setString(4, infoSportif.getSexe());
             req.setString(5,infoSportif.getObjectifs().name());
-            req.setInt(6,infoSportif.getUser().getId_User());
+            req.setInt(6,infoSportif.getUser().getId());
             req.executeUpdate();
             System.out.println("info sportif added");
 

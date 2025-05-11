@@ -279,7 +279,7 @@ public  class SalleService implements Iservices<Salle> {
         }
 
         // Récupérer l'ID du responsable connecté
-        int responsableId = currentUser.getId_User();
+        int responsableId = currentUser.getId();
 
         // Requête SQL pour récupérer l'ID de la salle associée au responsable
         String query = "SELECT id_Salle FROM user WHERE id_User = ?";

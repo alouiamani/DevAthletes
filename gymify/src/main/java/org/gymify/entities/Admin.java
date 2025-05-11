@@ -3,11 +3,11 @@ package org.gymify.entities;
 import java.util.Date;
 
 public class Admin extends User {
-    public Admin(int id_User, String nom, String prenom, String email, String password, Date dateNaissance, String image) {
-        super(id_User,nom, prenom, email, password, "Admin");
+    public Admin(int id, String nom, String prenom, String email, String password, Date date_naissance, String image_url) {
+        super(id,nom, prenom, email, password, "Admin");
     }
 
-    public Admin(String nom, String prenom, String email, String password, Date dateNaissance, String image) {
+    public Admin(String nom, String prenom, String email, String password, Date date_naissance, String image_url) {
         super(nom, prenom, email, password, "Admin");
     }
 

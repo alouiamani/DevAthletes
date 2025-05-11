@@ -93,17 +93,17 @@ public class DashboardAdminController  {
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
             welcomeLabel.setText(" " + currentUser.getNom());
-            if (currentUser.getImageURL() != null) {
+            if (currentUser.getImage_url() != null) {
                 try {
                     // Convert file path to URL
-                    File file = new File(currentUser.getImageURL());
+                    File file = new File(currentUser.getImage_url());
                     if (file.exists()) {
                         profileImage.setImage(new Image(file.toURI().toURL().toExternalForm()));
                     } else {
-                        System.out.println("Image file does not exist: " + currentUser.getImageURL());
+                        System.out.println("Image file does not exist: " + currentUser.getImage_url());
                     }
                 } catch (MalformedURLException e) {
-                    System.out.println("Invalid image path: " + currentUser.getImageURL());
+                    System.out.println("Invalid image path: " + currentUser.getImage_url());
                 }
             }
         } else {
@@ -207,22 +207,37 @@ public class DashboardAdminController  {
         }
     }
 
-
     private void listUsersInVBox() {
+        if (VBoxId == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "VBoxId n'est pas initialisé. Vérifiez le fichier FXML.");
+            return;
+        }
+
         VBoxId.getChildren().clear();
         try {
             List<User> users = serviceUser.afficher();
+            System.out.println("📋 Nombre d'utilisateurs récupérés : " + users.size());
+            if (users.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Aucun utilisateur", "Aucun utilisateur n'a été trouvé dans la base de données.");
+                VBoxId.getChildren().add(new Label("Aucun utilisateur disponible."));
+                return;
+            }
+
             for (User user : users) {
+                System.out.println("Ajout de l'utilisateur : " + user.getNom() + " (" + user.getEmail() + ")");
                 HBox userBox = creerHBoxUtilisateur(user);
                 VBoxId.getChildren().add(userBox);
             }
         } catch (SQLException e) {
-            System.out.println("Erreur chargement utilisateurs : " + e.getMessage());
+            System.err.println("❌ Erreur SQL : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible de charger les utilisateurs : " + e.getMessage());
         }
     }
 
     @FXML
+
     private void SaveAddUser(ActionEvent event) {
+        System.out.println("📥 Début de SaveAddUser...");
         String nom = AddFirstNameFx.getText().trim();
         String prenom = AddLastNameFx.getText().trim();
         String email = AddEmailFx.getText().trim();
@@ -231,34 +246,60 @@ public class DashboardAdminController  {
         String specialite = AddSpecialiteFx.getValue();
         Date dateNaissance = (AddBirthFx.getValue() != null) ? Date.valueOf(AddBirthFx.getValue()) : null;
 
+        System.out.println("📋 Données saisies : nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", role=" + role + ", specialite=" + specialite + ", dateNaissance=" + dateNaissance);
+
         if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
+            System.out.println("⚠️ Validation échouée : champs requis manquants.");
             showAlert(Alert.AlertType.WARNING, "Erreur", "Veuillez remplir tous les champs requis !");
             return;
         }
 
         if ("Entraîneur".equals(role) && (specialite == null || specialite.isEmpty())) {
+            System.out.println("⚠️ Validation échouée : spécialité requise pour Entraîneur.");
             showAlert(Alert.AlertType.WARNING, "Erreur", "Veuillez sélectionner une spécialité !");
             return;
         }
 
+        if (serviceUser.emailExiste(email)) {
+            System.out.println("⚠️ Validation échouée : email déjà utilisé.");
+            showAlert(Alert.AlertType.WARNING, "Erreur", "Cet email est déjà utilisé !");
+            return;
+        }
+
+        boolean success = false;
         try {
+            System.out.println("🚀 Création de l'utilisateur...");
             User newUser;
             if ("Entraîneur".equals(role)) {
-                newUser = new Entraineur(nom, prenom, email, password, dateNaissance, "", specialite);
+                newUser = new Entraineur(nom, prenom, email, password, dateNaissance, role, specialite);
             } else {
                 newUser = new User(nom, prenom, email, password, role, dateNaissance, "");
             }
 
+            System.out.println("📡 Appel de serviceUser.ajouter...");
             serviceUser.ajouter(newUser);
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
+            System.out.println("✅ Utilisateur ajouté avec succès !");
 
-            // 📧 ENVOI DE L'EMAIL AUTOMATIQUE
+            System.out.println("📧 Envoi de l'email...");
             EmailSender.envoyerEmailInscription(email, nom, password, role);
+            System.out.println("✅ Email envoyé.");
 
-            listUsersInVBox();
-            showPane(listUsersPane);
+            success = true;
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible d'ajouter l'utilisateur.");
+            System.err.println("❌ Erreur SQL dans SaveAddUser : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible d'ajouter l'utilisateur : " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("❌ Erreur inattendue dans SaveAddUser : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur inattendue s'est produite : " + e.getMessage());
+        }
+
+        System.out.println("🔄 Actualisation de la liste des utilisateurs...");
+        listUsersInVBox();
+        System.out.println("🔄 Retour au panneau listUsersPane...");
+        showPane(listUsersPane);
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
         }
     }
 
@@ -338,7 +379,7 @@ public class DashboardAdminController  {
         confirmation.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    serviceUser.supprimer(user.getId_User());
+                    serviceUser.supprimer(user.getId());
                     showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur supprimé avec succès !");
                     listUsersInVBox();
                 } catch (SQLException e) {
@@ -355,10 +396,8 @@ public class DashboardAdminController  {
         utilisateurSelectionne.setPrenom(EditPrenomId.getText().trim());
         utilisateurSelectionne.setEmail(EditEmailId.getText().trim());
         utilisateurSelectionne.setRole(EditRoleId.getValue());
-        utilisateurSelectionne.setDateNaissance((EditBirthId.getValue() != null) ? Date.valueOf(EditBirthId.getValue()) : null);
-        if (!EditPasswdId.getText().isEmpty()) {
-            utilisateurSelectionne.setPassword(EditPasswdId.getText().trim());
-        }
+        utilisateurSelectionne.setDate_naissance((EditBirthId.getValue() != null) ? Date.valueOf(EditBirthId.getValue()) : null);
+
         if (utilisateurSelectionne instanceof Entraineur) {
             ((Entraineur) utilisateurSelectionne).setSpecialite(EditSpecialId.getValue());
         }

@@ -11,117 +11,95 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
-    private int id_User;
+    private int id; // Changed from id_User
     private String nom;
     private String prenom;
     private String password;
     private String email;
     private String role;
-    private Date dateNaissance;
-    private String imageURL;
+    private Date date_naissance; // Changed from dateNaissance
+    private String image_url; // Changed from imageURL
     private List<Reclamation> reclamations;
     private int id_Salle;
-    public List<Abonnement> getAbonnements() {
-        return abonnements;
-    }
-
-    public void setAbonnements(List<Abonnement> abonnements) {
-        this.abonnements = abonnements;
-    }
-
-    public Salle getSalle() {
-        return salle;
-    }
-
-    public void setSalle(Salle salle) {
-        this.salle = salle;
-    }
-
+    private List<Abonnement> abonnements;
+    private Salle salle;
 
     // 🔹 Constructeurs
-
-
     public User() {
-        this.id_User = id_User;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.dateNaissance = dateNaissance;
-        this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
-        this.id_Salle=id_Salle;
     }
-    public User(int id_User, String nom, String prenom, String password, String email, String role, Date dateNaissance, String imageURL,int id_Salle) {
-        this.id_User = id_User;
+
+    public User(int id, String nom, String prenom, String password, String email, String role, Date date_naissance, String image_url, int id_Salle) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.dateNaissance = dateNaissance;
-        this.imageURL = imageURL;
+        this.date_naissance = date_naissance;
+        this.image_url = image_url;
         this.reclamations = new ArrayList<>();
         this.id_Salle = id_Salle;
     }
-    public User(int id_User, String nom, String prenom, String email, String password, String role) {
-        this.id_User = id_User;
+
+    public User(int id, String nom, String prenom, String email, String password, String role) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.email = email;
         this.role = role;
-
-    }
-
-    public User(String nom, String prenom, String email, String password,  String role,Date dateNaissance, String imageURL) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.dateNaissance = dateNaissance;
-        this.imageURL = imageURL;
         this.reclamations = new ArrayList<>();
     }
-    public User(int id_User, String nom, String prenom, String email, String password, String role,int id_Salle){
-        this.id_User = id_User;
+
+    public User(String nom, String prenom, String email, String password, String role, Date date_naissance, String image_url) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.date_naissance = date_naissance;
+        this.image_url = image_url;
+        this.reclamations = new ArrayList<>();
+    }
+
+    public User(int id, String nom, String prenom, String email, String password, String role, int id_Salle) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.email = email;
         this.role = role;
         this.id_Salle = id_Salle;
+        this.reclamations = new ArrayList<>();
     }
-
 
     public User(String nom, String prenom, String password, String email, String role) {
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.email = email;
-        this.role = "Sportif";
-
+        this.role = "sportif"; // Aligned with ENUM (assuming 'sportif' is a valid value)
+        this.reclamations = new ArrayList<>();
     }
-    public User(String nom, String prenom,  String email, String role,Date dateNaissance, String imageURL) {
 
+    public User(String nom, String prenom, String email, String role, Date date_naissance, String image_url) {
         this.nom = nom;
         this.prenom = prenom;
-
         this.email = email;
         this.role = role;
-        this.dateNaissance = dateNaissance;
-        this.imageURL = imageURL;
+        this.date_naissance = date_naissance;
+        this.image_url = image_url;
+        this.reclamations = new ArrayList<>();
     }
 
     // 🔹 Getters et Setters
-    public  int getId_User() {
-        return id_User;
+    public int getId() {
+        return id;
     }
 
-    public void setId_User(int id_User) {
-        this.id_User = id_User;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -164,80 +142,44 @@ public class User {
         this.role = role;
     }
 
-    public Date getDateNaissance() { // ✅ Correction ici
-        return dateNaissance;
+    public Date getDate_naissance() {
+        return date_naissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) { // ✅ Correction ici
-        this.dateNaissance = dateNaissance;
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public List<Reclamation> getReclamations() {
         return reclamations;
     }
-    private Salle salle;
+
     public void setReclamations(List<Reclamation> reclamations) {
         this.reclamations = reclamations;
     }
-    private List<Abonnement> abonnements;
 
-    public String getId_equipe() {
-        return "hdhd";
+    public List<Abonnement> getAbonnements() {
+        return abonnements;
     }
 
-    public void setId_equipe(int equipeId) {
-
+    public void setAbonnements(List<Abonnement> abonnements) {
+        this.abonnements = abonnements;
     }
 
-
-    public class AuthToken {
-        private static User currentUser;  // Utilisateur actuellement connecté
-
-        // Méthode pour définir l'utilisateur connecté
-        public static void setCurrentUser(User user) {
-            currentUser = user;
-        }
-
-        // Méthode pour obtenir l'utilisateur connecté
-        public static User getCurrentUser() {
-            return currentUser;
-        }
-    }
-    @Override
-    public String toString() {
-        return "User{" +
-                "id_User=" + id_User +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", dateNaissance=" + dateNaissance +
-                ", imageURL='" + imageURL + '\'' +
-                ", reclamations=" + reclamations +
-                '}';
+    public Salle getSalle() {
+        return salle;
     }
 
-
-
-    public int getSalleIdByUserId(int userId) throws SQLException {
-        String query = "SELECT id_salle FROM responsable_salle WHERE id_user = ?";
-        try (Connection conn = gymifyDataBase.getInstance().getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("id_salle");
-            }
-        }
-        return -1; // Retourne -1 si aucun ID de salle n'est trouvé
+    public void setSalle(Salle salle) {
+        this.salle = salle;
     }
 
     public int getId_Salle() {
@@ -247,5 +189,52 @@ public class User {
     public void setId_Salle(int id_Salle) {
         this.id_Salle = id_Salle;
     }
-}
 
+    public String getId_equipe() {
+        return "hdhd"; // Placeholder; should ideally retrieve equipe_id from DB
+    }
+
+    public void setId_equipe(int equipeId) {
+        // Placeholder; no field exists, so no action taken
+    }
+
+    public class AuthToken {
+        private static User currentUser;
+
+        public static void setCurrentUser(User user) {
+            currentUser = user;
+        }
+
+        public static User getCurrentUser() {
+            return currentUser;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", date_naissance=" + date_naissance +
+                ", image_url='" + image_url + '\'' +
+                ", reclamations=" + reclamations +
+                ", id_Salle=" + id_Salle +
+                '}';
+    }
+
+    public int getSalleIdByUserId(int userId) throws SQLException {
+        String query = "SELECT id_Salle FROM user WHERE id = ?";
+        try (Connection conn = gymifyDataBase.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_Salle");
+            }
+        }
+        return -1;
+    }
+}

@@ -95,7 +95,7 @@ public class InterfaceEntraineurController {
             usernameid.setText(loggedInUser.getNom());
             emailid.setText(loggedInUser.getEmail());
 
-            String imageUrl = loggedInUser.getImageURL();
+            String imageUrl = loggedInUser.getImage_url();
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 try {
                     profileImage.setImage(new Image(imageUrl, true));

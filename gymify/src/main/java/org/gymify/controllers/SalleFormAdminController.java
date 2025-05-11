@@ -51,7 +51,7 @@ public class SalleFormAdminController {
 
         // Vérifiez si la liste de responsables n'est pas vide
         for (User responsable : responsables) {
-            responsableChoiceBox.getItems().add(responsable.getId_User() + " - " + responsable.getNom());
+            responsableChoiceBox.getItems().add(responsable.getId() + " - " + responsable.getNom());
         }
 
         if (responsableChoiceBox.getItems().isEmpty()) {
@@ -160,7 +160,7 @@ public class SalleFormAdminController {
             String selectedResponsable = null;
 
             for (User responsable : responsables) {
-                String choix = responsable.getId_User() + " - " + responsable.getNom();
+                String choix = responsable.getId() + " - " + responsable.getNom();
                 responsableChoiceBox.getItems().add(choix);
 
                 // Vérifier si c'est le responsable affecté à la salle

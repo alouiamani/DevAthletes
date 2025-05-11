@@ -8,16 +8,16 @@ public class Entraineur extends User {
 
 
     // Constructeur avec ID (pour les mises à jour)
-    public Entraineur(int id_User, String nom, String prenom, String email, String password,
-                      Date dateNaissance, String imageURL, String specialite) {
-        super(String.valueOf(id_User), nom, prenom, email, password, dateNaissance, imageURL);
+    public Entraineur(int id, String nom, String prenom, String email, String password,
+                      Date date_naissance, String image_url, String specialite) {
+        super(String.valueOf(id), nom, prenom, email, password, date_naissance, image_url);
         this.specialite = specialite;
     }
 
     // Constructeur sans ID (pour la création d'un nouvel entraîneur)
     public Entraineur(String nom, String prenom, String email, String password,
-                      Date dateNaissance, String imageURL, String specialite) {
-        super(nom, prenom, email, password, "Entraineur", dateNaissance, imageURL);
+                      Date date_naissance, String image_url, String specialite) {
+        super(nom, prenom, email, password, "Entraineur", date_naissance, image_url);
         this.specialite = specialite;
     }
 

@@ -3,11 +3,11 @@ package org.gymify.entities;
 import java.util.Date;
 
 public class Sportif extends User {
-    public Sportif(int id_User, String nom, String prenom, String email, String password, Date dateNaissance, String imageURL) {
-        super(String.valueOf(id_User), nom, prenom, email, password, dateNaissance, imageURL);
+    public Sportif(int id, String nom, String prenom, String email, String password, Date date_naissance, String image_url) {
+        super(String.valueOf(id), nom, prenom, email, password, date_naissance, image_url);
     }
 
-    public Sportif(String nom, String prenom, String email, String password, Date dateNaissance, String imageURL) {
+    public Sportif(String nom, String prenom, String email, String password, Date date_naissance, String image_url) {
         super(nom, prenom, email, password, "Sportif");
     }
 

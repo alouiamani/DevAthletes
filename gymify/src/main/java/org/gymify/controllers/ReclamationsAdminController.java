@@ -40,7 +40,7 @@ public class ReclamationsAdminController {
             List<User> adminList = serviceUtilisateur.getUtilisateurByRole("Admin"); // Recherche l'utilisateur avec le rôle 'Admin'
 
             if (!adminList.isEmpty()) {
-                idAdmin = adminList.get(0).getId_User(); // Récupérer l'ID de l'administrateur
+                idAdmin = adminList.get(0).getId(); // Récupérer l'ID de l'administrateur
             } else {
                 throw new SQLException("Administrateur introuvable.");
             }
