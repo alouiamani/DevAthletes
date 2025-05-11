@@ -26,7 +26,7 @@ public class CoursService implements IService<Cours> {
             req.setTime(6, Time.valueOf(cours.getHeureFin()));
             req.setInt(7, cours.getActivité().getId());
             req.setInt(8, cours.getPlanning().getId());
-            req.setInt(9,cours.getUser().getId_User());
+            req.setInt(9,cours.getUser().getId());
             req.setInt(10,cours.getSalle().getId_Salle());
 
 
@@ -55,7 +55,7 @@ public class CoursService implements IService<Cours> {
             req.setInt(7,cours.getActivité().getId());
             req.setInt(8,cours.getPlanning().getId());
             }
-            req.setInt(9,cours.getUser().getId_User());
+            req.setInt(9,cours.getUser().getId());
             req.setInt(11,cours.getId());
             req.setInt(10,cours.getSalle().getId_Salle());
 
@@ -117,7 +117,7 @@ public class CoursService implements IService<Cours> {
                 int entaineurId = rs.getInt("entaineur_id");
                 if (entaineurId != 0) {
                     User entaineur = new User();
-                    entaineur.setId_User(entaineurId);
+                    entaineur.setId(entaineurId);
                     cour.setUser(entaineur);
                 }
                 int salleId = rs.getInt("salle_id");
@@ -183,7 +183,7 @@ public class CoursService implements IService<Cours> {
                 int entraineurId = rs.getInt("entaineur_id");
                 if (entraineurId != 0) {
                     User entraineur = new User();
-                    entraineur.setId_User(entraineurId);
+                    entraineur.setId(entraineurId);
                     cours.setUser(entraineur);
                 }
 
@@ -223,7 +223,7 @@ public class CoursService implements IService<Cours> {
 
                 // Charger l'entraîneur
                 User entraineur = new User();
-                entraineur.setId_User(rs.getInt("entaineur_id"));
+                entraineur.setId(rs.getInt("entaineur_id"));
                 entraineur.setNom(rs.getString("user_nom"));
                 cours.setUser(entraineur);
 

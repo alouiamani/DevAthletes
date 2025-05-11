@@ -23,7 +23,7 @@ public class PlanningService implements IService<Planning> {
             req.setString(2,planning.getDescription());
             req.setString(3,planning.getTitle());
             req.setDate(4,new Date(planning.getdateFin().getTime()));
-            req.setInt(5,planning.getUser().getId_User());
+            req.setInt(5,planning.getUser().getId());
             req.executeUpdate();
             System.out.println("Planning ajouté avec succès.");
 
@@ -84,7 +84,7 @@ public class PlanningService implements IService<Planning> {
                 int entraineurId = rs.getInt("entaineur_id");
                 if (entraineurId != 0) {
                    User user=new User(); // Créez une instance de l'activité
-                    user.setId_User(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
+                    user.setId(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
                     planning.setUser(user);
                 }
                 plannings.add(planning);
@@ -120,7 +120,7 @@ public class PlanningService implements IService<Planning> {
                     int entraineurId = resultSet.getInt("entaineur_id");
                     if (entraineurId != 0) {
                         User user = new User(); // Créez une instance de l'activité
-                        user.setId_User(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
+                        user.setId(entraineurId); // Vous pouvez récupérer d'autres informations si nécessaire
                         planning.setUser(user);
                     }
 

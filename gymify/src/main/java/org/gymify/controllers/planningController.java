@@ -161,7 +161,7 @@ public class planningController {
     }
     private void displayPlanning() {
         PlanningService planningService = new PlanningService();
-        List<Planning> plannings = planningService.DisplayById(userId.getId_User());
+        List<Planning> plannings = planningService.DisplayById(userId.getId());
         planningGrid.getChildren().clear();
 
         int row = 0;

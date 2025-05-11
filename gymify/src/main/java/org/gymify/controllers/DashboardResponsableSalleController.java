@@ -127,11 +127,9 @@ public class DashboardResponsableSalleController {
         utilisateurSelectionne.setPrenom(EditPrenomId.getText().trim());
         utilisateurSelectionne.setEmail(EditEmailId.getText().trim());
         utilisateurSelectionne.setRole(EditRoleId.getValue());
-        utilisateurSelectionne.setDateNaissance((EditBirthId.getValue() != null) ? Date.valueOf(EditBirthId.getValue()) : null);
+        utilisateurSelectionne.setDate_naissance((EditBirthId.getValue() != null) ? Date.valueOf(EditBirthId.getValue()) : null);
 
-        if (!EditPasswdId.getText().isEmpty()) {
-            utilisateurSelectionne.setPassword(EditPasswdId.getText().trim());
-        }
+
 
         if (utilisateurSelectionne instanceof Entraineur) {
             ((Entraineur) utilisateurSelectionne).setSpecialite(EditSpecialId.getValue());
@@ -194,18 +192,16 @@ public class DashboardResponsableSalleController {
         }
     }
 
+    @FXML
     private void listUsersInVBox() {
         VBoxId.getChildren().clear();
 
         try {
-            List<User> users = serviceUser.afficherPourResponsable();
+            List<User> users = serviceUser.afficher();
 
             if (users.isEmpty()) {
                 System.out.println("⚠️ Aucun utilisateur trouvé !");
             } else {
-                System.out.println("✅ Utilisateurs récupérés pour affichage :");
-                users.forEach(user -> System.out.println(user.getNom() + " - " + user.getRole())); // Ajoute ce log
-
                 users.forEach(user -> VBoxId.getChildren().add(creerHBoxUtilisateur(user)));
             }
         } catch (SQLException e) {
@@ -326,7 +322,7 @@ public class DashboardResponsableSalleController {
         confirmation.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    serviceUser.supprimer(user.getId_User());
+                    serviceUser.supprimer(user.getId());
                     showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur supprimé avec succès !");
                     listUsersInVBox();
                 } catch (SQLException e) {

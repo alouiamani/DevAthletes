@@ -59,7 +59,7 @@ public class ProfileMembreController {
             usernameid.setText(loggedInUser.getNom());
             emailid.setText(loggedInUser.getEmail());
 
-            String imageURL = loggedInUser.getImageURL();
+            String imageURL = loggedInUser.getImage_url();
             if (imageURL != null && !imageURL.isEmpty()) {
                 profileImage.setImage(new Image(imageURL));
             } else {

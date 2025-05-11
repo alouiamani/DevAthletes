@@ -34,7 +34,7 @@ public class PlanningpersoController implements Initializable {
             return;
         }
 
-        int userId = currentUser.getId_User(); // Récupérer l'ID de l'utilisateur
+        int userId = currentUser.getId(); // Récupérer l'ID de l'utilisateur
         WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
 

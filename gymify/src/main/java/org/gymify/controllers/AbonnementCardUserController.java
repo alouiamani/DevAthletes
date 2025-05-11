@@ -93,7 +93,7 @@ public class AbonnementCardUserController {
 
         // Récupère les données nécessaires
         Long Id_Abonnement = (long) abonnement.getId_Abonnement();
-        Long sportifId = (long) sportif.getId_User();
+        Long sportifId = (long) sportif.getId();
         Long salle_Id = (long) abonnement.getSalle().getId_Salle();
         Double montant = abonnement.getTarif();
 

@@ -73,7 +73,7 @@ public class EditPersonalInfo {
         // Chargement des données utilisateur
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
-            infoSportif info = infoSportifService.getInfoSportifByUserId(currentUser.getId_User());
+            infoSportif info = infoSportifService.getInfoSportifByUserId(currentUser.getId());
 
             if (info != null) {
                 poids.setText(String.valueOf(info.getPoids()));
@@ -138,7 +138,7 @@ public class EditPersonalInfo {
             }
 
             // Mise à jour des données
-            infoSportif existingInfo = infoSportifService.getInfoSportifByUserId(currentUser.getId_User());
+            infoSportif existingInfo = infoSportifService.getInfoSportifByUserId(currentUser.getId());
             if (existingInfo != null) {
                 existingInfo.setPoids(poidsValue);
                 existingInfo.setTaille(tailleValue);

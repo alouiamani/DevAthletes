@@ -73,7 +73,7 @@ public class ReclamationSportifController {
     /** Charge et affiche les réclamations du sportif connecté */
     private void chargerReclamations() {
         try {
-            reclamations = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId_User());
+            reclamations = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId());
             afficherReclamations(reclamations);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Erreur de chargement des réclamations", e);
@@ -84,7 +84,7 @@ public class ReclamationSportifController {
     private void filtrerParStatut() {
         String statutSelectionne = filtreStatut.getValue();
         try {
-            List<Reclamation> filteredList = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId_User());
+            List<Reclamation> filteredList = serviceReclamation.recupererParSportif(AuthToken.getCurrentUser().getId());
 
             if (!"Tous".equals(statutSelectionne)) {
                 filteredList.removeIf(r -> {
@@ -139,7 +139,7 @@ public class ReclamationSportifController {
             return;
         }
 
-        Reclamation nouvelleReclamation = new Reclamation(AuthToken.getCurrentUser().getId_User(), sujet, description);
+        Reclamation nouvelleReclamation = new Reclamation(AuthToken.getCurrentUser().getId(), sujet, description);
 
         try {
             serviceReclamation.ajouter(nouvelleReclamation);

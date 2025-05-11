@@ -69,14 +69,14 @@ public class EditUserControllers {
             FirstnameFx.setText(user.getNom());
             LastnameFx.setText(user.getPrenom());
 
-            if (user.getDateNaissance() != null) {
-                DateBirthFx.setValue(user.getDateNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if (user.getDate_naissance() != null) {
+                DateBirthFx.setValue(user.getDate_naissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
 
             // Charger l'image actuelle de l'utilisateur
-            if (user.getImageURL() != null && !user.getImageURL().isEmpty()) {
-                profilePreview.setImage(new Image(user.getImageURL()));
-                ImageURLFx.setText(user.getImageURL());
+            if (user.getImage_url() != null && !user.getImage_url().isEmpty()) {
+                profilePreview.setImage(new Image(user.getImage_url()));
+                ImageURLFx.setText(user.getImage_url());
             }
         }
     }
@@ -114,11 +114,11 @@ public class EditUserControllers {
             currentUser.setPrenom(LastnameFx.getText());
 
             if (DateBirthFx.getValue() != null) {
-                currentUser.setDateNaissance(Date.from(DateBirthFx.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                currentUser.setDate_naissance(Date.from(DateBirthFx.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             }
 
             if (ImageURLFx.getText() != null && !ImageURLFx.getText().isEmpty()) {
-                currentUser.setImageURL(ImageURLFx.getText()); // Mettre à jour l'URL de l'image
+                currentUser.setImage_url(ImageURLFx.getText()); // Mettre à jour l'URL de l'image
             }
 
             // Mise à jour dans la base de données
