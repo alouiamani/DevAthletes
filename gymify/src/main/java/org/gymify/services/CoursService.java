@@ -17,7 +17,7 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Add(Cours cours) {
         try {
-            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `objectif`, `dateDebut`, `heurDebut`, `heurFin`, `activité_id`, `planning_id`, `entaineur_id`, `salle_id`) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement req = con.prepareStatement("INSERT INTO `cours`(`title`, `description`, `objectif`, `date_debut`, `heur_debut`, `heur_fin`, `activité_id`, `planning_id`, `entaineur_id`, `salle_id`) VALUES (?,?,?,?,?,?,?,?,?,?)");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
             req.setString(3,cours.getObjectifs().name());
@@ -44,7 +44,7 @@ public class CoursService implements IService<Cours> {
     @Override
     public void Update(Cours cours) {
         try {
-            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`objectif`=?,`dateDebut`=?,`heurDebut`=?,`heurFin`=?,`activité_id`=?,`planning_id`=?,`entaineur_id`=?,`salle_id`=? WHERE id=?");
+            PreparedStatement req= con.prepareStatement("UPDATE `cours` SET `title`=?,`description`=?,`objectif`=?,`date_debut`=?,`heur_debut`=?,`heur_fin`=?,`activité_id`=?,`planning_id`=?,`entaineur_id`=?,`salle_id`=? WHERE id=?");
             req.setString(1, cours.getTitle());
             req.setString(2, cours.getDescription());
             req.setString(3, cours.getObjectifs().name());
@@ -95,11 +95,11 @@ public class CoursService implements IService<Cours> {
                 Cours cour= new Cours();
                 cour.setId(rs.getInt("id"));
                 cour.setTitle(rs.getString("title"));
-                cour.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
-                cour.setHeureFin(rs.getTime("heurFin").toLocalTime());
+                cour.setHeureDebut(rs.getTime("heur_debut").toLocalTime());
+                cour.setHeureFin(rs.getTime("heur_fin").toLocalTime());
                 cour.setDescription(rs.getString("description"));
                 cour.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
-                cour.setDateDebut(rs.getDate("dateDebut"));
+                cour.setDateDebut(rs.getDate("date_debut"));
                 int activitéId = rs.getInt("activité_id");
                 if (activitéId != 0) {
                     Activité activité = new Activité(); // Créez une instance de l'activité
@@ -155,10 +155,10 @@ public class CoursService implements IService<Cours> {
                 Cours cours = new Cours();
                 cours.setId(rs.getInt("id"));
                 cours.setTitle(rs.getString("title"));
-                cours.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
-                cours.setHeureFin(rs.getTime("heurFin").toLocalTime());
+                cours.setHeureDebut(rs.getTime("heur_debut").toLocalTime());
+                cours.setHeureFin(rs.getTime("heur_fin").toLocalTime());
                 cours.setDescription(rs.getString("description"));
-                cours.setDateDebut(rs.getDate("dateDebut"));
+                cours.setDateDebut(rs.getDate("date_debut"));
                 cours.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
 
 
@@ -209,22 +209,22 @@ public class CoursService implements IService<Cours> {
                 Cours cours = new Cours();
                 cours.setId(rs.getInt("id"));
                 cours.setTitle(rs.getString("title"));
-                cours.setHeureDebut(rs.getTime("heurDebut").toLocalTime());
-                cours.setHeureFin(rs.getTime("heurFin").toLocalTime());
+                cours.setHeureDebut(rs.getTime("heur_debut").toLocalTime());
+                cours.setHeureFin(rs.getTime("heur_fin").toLocalTime());
                 cours.setDescription(rs.getString("description"));
                 cours.setObjectifs(Objectifs.valueOf(rs.getString("objectif")));
-                cours.setDateDebut(rs.getDate("dateDebut"));
+                cours.setDateDebut(rs.getDate("date_debut"));
 
                 // Charger la salle
                 Salle salle = new Salle();
-                salle.setId(rs.getInt("salle_id"));
-                salle.setNom(rs.getString("salle_nom"));
+                salle.setId(rs.getInt("id"));
+                salle.setNom(rs.getString("nom"));
                 cours.setSalle(salle);
 
                 // Charger l'entraîneur
                 User entraineur = new User();
                 entraineur.setId(rs.getInt("entaineur_id"));
-                entraineur.setNom(rs.getString("user_nom"));
+                entraineur.setNom(rs.getString("nom"));
                 cours.setUser(entraineur);
 
 

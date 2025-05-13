@@ -18,7 +18,7 @@ public class PlanningService implements IService<Planning> {
     @Override
     public void Add(Planning planning) {
         try{
-            PreparedStatement req=con.prepareStatement ("INSERT INTO `planning`(`dateDebut`, `description`, `title`, `dateFin`,`entaineur_id`) VALUES (?,?,?,?,?)");
+            PreparedStatement req=con.prepareStatement ("INSERT INTO `planning`(`date_debut`, `description`, `title`, `date_fin`,`entaineur_id`) VALUES (?,?,?,?,?)");
             req.setDate(1,new Date(planning.getdateDebut().getTime()));
             req.setString(2,planning.getDescription());
             req.setString(3,planning.getTitle());
@@ -77,10 +77,10 @@ public class PlanningService implements IService<Planning> {
             while (rs.next()) {
                 Planning planning = new Planning();
                 planning.setId(rs.getInt("id"));
-                planning.setdateDebut(rs.getDate("dateDebut"));
+                planning.setdateDebut(rs.getDate("date_debut"));
                 planning.setDescription(rs.getString("description"));
                 planning.setTitle(rs.getString("title"));
-                planning.setDateFin(rs.getDate("dateFin"));
+                planning.setDateFin(rs.getDate("date_fin"));
                 int entraineurId = rs.getInt("entaineur_id");
                 if (entraineurId != 0) {
                    User user=new User(); // Créez une instance de l'activité
@@ -115,8 +115,8 @@ public class PlanningService implements IService<Planning> {
                     planning.setId(resultSet.getInt("id"));
                     planning.setTitle(resultSet.getString("title"));
                     planning.setDescription(resultSet.getString("description"));
-                    planning.setdateDebut(resultSet.getDate("dateDebut"));
-                    planning.setDateFin(resultSet.getDate("dateFin"));
+                    planning.setdateDebut(resultSet.getDate("date_debut"));
+                    planning.setDateFin(resultSet.getDate("date_fin"));
                     int entraineurId = resultSet.getInt("entaineur_id");
                     if (entraineurId != 0) {
                         User user = new User(); // Créez une instance de l'activité

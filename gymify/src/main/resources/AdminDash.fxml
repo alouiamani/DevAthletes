@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardAdminController"> <children>
+<AnchorPane fx:id="rootPane" prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardAdminController"> <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <AnchorPane prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -47,7 +47,7 @@
                                  <children>
                                     <ImageView fx:id="profileImage" fitHeight="50.0" fitWidth="60.0" layoutX="65.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="/images/Home.png" />
+                                          <Image url="@images/Home.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="58.0" layoutY="68.0" text="Welcome," textFill="WHITE">
@@ -143,7 +143,7 @@
                            <children>
                               <ImageView fitHeight="100.0" fitWidth="163.0" layoutX="23.0" pickOnBounds="true" preserveRatio="true" styleClass="white-round-carts">
                                  <image>
-                                    <Image url="images/user.png" />
+                                    <Image url="@images/user.png" />
                                  </image>
                               </ImageView>
                               <Button layoutX="67.0" layoutY="98.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" style="-fx-background-radius: 10px; -fx-background-color: transparent;" styleClass="round-btn" text="Upload" textFill="#2e332f">
@@ -318,14 +318,14 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="231.0" layoutY="143.0" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
+                        <AnchorPane layoutX="231.0" layoutY="143.0" onMouseClicked="#ActivityPage" prefHeight="110.0" prefWidth="180.0" styleClass="nav-form" stylesheets="@style.css">
                            <children>
                               <ImageView fitHeight="42.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/product.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="68.0" layoutY="56.0" text="Product" textFill="#e7e2e2">
+                              <Label layoutX="68.0" layoutY="56.0" text="Activity" textFill="#e7e2e2">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
