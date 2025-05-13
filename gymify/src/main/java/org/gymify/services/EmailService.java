@@ -206,4 +206,7 @@ public class EmailService {
             default: return "1 mois";
         }
     }
+
+    public static void envoyerEmail(String emailResponsable, String sujet, String message) {
+    }
 }

@@ -10,21 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public  class SalleService implements Iservices<Salle> {
-    Connection connection;
+public class SalleService implements Iservices<Salle> {
+    private Connection connection;
 
     public SalleService() {
         connection = gymifyDataBase.getInstance().getConnection();
-
     }
 
     @Override
     public int ajouter(Salle salle) throws SQLException {
-        if (salle == null || salle.getNom() == null || salle.getAdresse() == null ) {
+        if (salle == null || salle.getNom() == null || salle.getAdresse() == null || salle.getUrl_photo() == null) {
             throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
         }
 
-        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email,url_photo) VALUES (?, ?, ?, ?, ?, ?)";
+        if (!isValidImagePath(salle.getUrl_photo())) {
+            throw new IllegalArgumentException("URL photo invalide : " + salle.getUrl_photo());
+        }
+
+        String req = "INSERT INTO salle (nom, adresse, details, num_tel, email, url_photo, responsable_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, salle.getNom());
@@ -33,12 +36,11 @@ public  class SalleService implements Iservices<Salle> {
             pstmt.setString(4, salle.getNum_tel());
             pstmt.setString(5, salle.getEmail());
             pstmt.setString(6, salle.getUrl_photo());
-
-
+            pstmt.setInt(7, salle.getResponsable_id());
 
             pstmt.executeUpdate();
             System.out.println("✅ Salle ajoutée avec succès !");
-// L'ID du responsable de salle
+
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int idSalle = generatedKeys.getInt(1);
@@ -48,61 +50,48 @@ public  class SalleService implements Iservices<Salle> {
                     throw new SQLException("Échec de la récupération de l'ID de la salle.");
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("❌ Erreur lors de l'ajout de la salle : " + e.getMessage());
             throw e;
         }
     }
 
-
     @Override
     public void modifier(Salle salle) throws SQLException {
-        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=? WHERE id_Salle=?";
-
-        // Vérifier la connexion
-        if (connection == null) {
-            System.out.println("❌ Erreur : connexion fermée !");
-            return;
+        if (salle == null || salle.getNom() == null || salle.getAdresse() == null || salle.getUrl_photo() == null) {
+            throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
         }
 
-        PreparedStatement preparedStatement = connection.prepareStatement(req);
-        preparedStatement.setString(1, salle.getNom());
-        preparedStatement.setString(2, salle.getAdresse());
-        preparedStatement.setString(3, salle.getDetails());
-        preparedStatement.setString(4, salle.getNum_tel());
-        preparedStatement.setString(5, salle.getEmail());
-        preparedStatement.setString(6, salle.getUrl_photo());
-        preparedStatement.setInt(7, salle.getId());
+        if (!isValidImagePath(salle.getUrl_photo())) {
+            throw new IllegalArgumentException("URL photo invalide : " + salle.getUrl_photo());
+        }
 
+        String req = "UPDATE salle SET nom=?, adresse=?, details=?, num_tel=?, email=?, url_photo=?, responsable_id=? WHERE id=?";
 
-        // Vérifier l'ID
-        System.out.println("🔍 ID de la salle à modifier : " + salle.getId());
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setString(1, salle.getNom());
+            preparedStatement.setString(2, salle.getAdresse());
+            preparedStatement.setString(3, salle.getDetails());
+            preparedStatement.setString(4, salle.getNum_tel());
+            preparedStatement.setString(5, salle.getEmail());
+            preparedStatement.setString(6, salle.getUrl_photo());
+            preparedStatement.setInt(7, salle.getResponsable_id());
+            preparedStatement.setInt(8, salle.getId());
 
-        int rowsUpdated = preparedStatement.executeUpdate(); // Appelé une seule fois
-        if (rowsUpdated > 0) {
-            System.out.println("✅ Modification réussie !");
-        } else {
-            System.out.println("⚠️ Aucune ligne mise à jour. ID incorrect ?");
+            System.out.println("🔍 ID de la salle à modifier : " + salle.getId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("✅ Modification réussie !");
+            } else {
+                System.out.println("⚠️ Aucune ligne mise à jour. ID incorrect ?");
+            }
         }
     }
 
-
     @Override
     public void supprimer(int idSalle) throws SQLException {
-        // Supprimer d'abord les utilisateurs associés à la salle
-        String deleteUsersQuery = "DELETE FROM user WHERE id_Salle = ?";
-        try (PreparedStatement deleteUsersStatement = connection.prepareStatement(deleteUsersQuery)) {
-            deleteUsersStatement.setInt(1, idSalle);
-            deleteUsersStatement.executeUpdate();
-            System.out.println("Utilisateurs associés à la salle supprimés avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la suppression des utilisateurs associés : " + e.getMessage());
-            throw e;
-        }
-
-        // Ensuite, supprimer la salle
-        String deleteSalleQuery = "DELETE FROM salle WHERE id_Salle = ?";
+        String deleteSalleQuery = "DELETE FROM salle WHERE id = ?";
         try (PreparedStatement deleteSalleStatement = connection.prepareStatement(deleteSalleQuery)) {
             deleteSalleStatement.setInt(1, idSalle);
             deleteSalleStatement.executeUpdate();
@@ -113,29 +102,26 @@ public  class SalleService implements Iservices<Salle> {
         }
     }
 
-
     @Override
     public List<Salle> afficher() throws SQLException {
         List<Salle> salles = new ArrayList<>();
         String req = "SELECT * FROM salle";
-        Statement statement = connection.createStatement();
-
-        ResultSet rs = statement.executeQuery(req);
-        while (rs.next()) {
-            Salle salle = new Salle(rs.getInt("id_Salle"), rs.getString("nom"), rs.getString("adresse"), rs.getString("details"), rs.getString("num_tel"), rs.getString("email"), rs.getString("url_photo"));
-            salle.setId_Salle(rs.getInt("id_Salle"));
-            salle.setNom(rs.getString("nom"));
-            salle.setAdresse(rs.getString("adresse"));
-            salle.setDetails(rs.getString("details"));
-            salle.setNum_tel(rs.getString("num_tel"));
-            salle.setEmail(rs.getString("email"));
-            salle.setUrl_photo(rs.getString("url_photo"));
-
-
-            salles.add(salle);
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(req)) {
+            while (rs.next()) {
+                Salle salle = new Salle(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getString("details"),
+                        rs.getString("num_tel"),
+                        rs.getString("email"),
+                        rs.getString("url_photo"),
+                        rs.getInt("responsable_id")
+                );
+                salles.add(salle);
+            }
         }
-
-
         return salles;
     }
 
@@ -147,23 +133,20 @@ public  class SalleService implements Iservices<Salle> {
             stmt.setString(1, "%" + search + "%");
             stmt.setString(2, "%" + search + "%");
 
-            System.out.println("🔍 Exécution de la requête: " + stmt.toString()); // Debug
+            System.out.println("🔍 Exécution de la requête: " + stmt.toString());
 
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
-                int id = rs.getInt("id_Salle");
-                String nom = rs.getString("nom");
-                String adresse = rs.getString("adresse");
-                String details = rs.getString("details");
-                String numTel = rs.getString("num_tel");
-                String email = rs.getString("email");
-
-                String urlPhoto = rs.getString("url_photo");
-
-                System.out.println("✅ Salle récupérée - ID: " + id + ", Nom: " + nom + ", Adresse: " + adresse);
-
-                Salle salle = new Salle(id, nom, adresse, details, numTel, email, urlPhoto);
+                Salle salle = new Salle(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getString("details"),
+                        rs.getString("num_tel"),
+                        rs.getString("email"),
+                        rs.getString("url_photo"),
+                        rs.getInt("responsable_id")
+                );
                 salles.add(salle);
             }
         } catch (SQLException e) {
@@ -172,23 +155,16 @@ public  class SalleService implements Iservices<Salle> {
         return salles;
     }
 
-    // Recherche des salles selon le texte de recherche
     public List<Salle> searchSalles(String searchText) {
-        // Récupérer toutes les salles
         List<Salle> allSalles = getAllSalles(searchText);
-
-        // Filtrer les salles en fonction du texte de recherche (ignorant la casse)
         return allSalles.stream()
-                .filter(salle -> salle.getNom().toLowerCase().contains(searchText) ||
-                        salle.getAdresse().toLowerCase().contains(searchText))
+                .filter(salle -> salle.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
+                        salle.getAdresse().toLowerCase().contains(searchText.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-
-
     public boolean salleExiste(int salleId) throws SQLException {
-        String query = "SELECT COUNT(*) FROM Salle WHERE id_salle = ?";
-
+        String query = "SELECT COUNT(*) FROM salle WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, salleId);
             ResultSet rs = pstmt.executeQuery();
@@ -197,110 +173,68 @@ public  class SalleService implements Iservices<Salle> {
     }
 
     public Salle getSalleById(int salleId) throws SQLException {
-        String query = "SELECT * FROM Salle WHERE id_Salle = ?";
-
+        String query = "SELECT * FROM salle WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, salleId);
             ResultSet rs = pstmt.executeQuery();
-
             if (rs.next()) {
                 return new Salle(
-                        rs.getInt("id_Salle"),
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("adresse"),
                         rs.getString("details"),
                         rs.getString("num_tel"),
                         rs.getString("email"),
-                        rs.getString("url_photo")
-
+                        rs.getString("url_photo"),
+                        rs.getInt("responsable_id")
                 );
             }
         }
         return null;
     }
 
-    public boolean isResponsableDejaAffecte(int idResponsable) throws SQLException {
-        String query = "SELECT COUNT(*) FROM user WHERE id_User = ? AND id_Salle IS NOT NULL";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, idResponsable);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        }
-        return false;
-    }
-
-
-    // Retourne null si aucune salle n'est trouvée
-
-    public int getIdSalleForCurrentUser() {
-        User currentUser = AuthToken.getCurrentUser();  // Récupère l'utilisateur connecté
-        if (currentUser == null) {
-            System.out.println("Aucun utilisateur connecté !");
-            return -1;  // Utilisateur non connecté
-        }
-
-        int idSalle = currentUser.getId_Salle();  // Récupère l'ID de la salle
-        if (idSalle == 0) {
-            System.out.println("L'utilisateur n'a pas de salle associée !");
-        } else {
-            System.out.println("L'ID de la salle de l'utilisateur connecté est : " + idSalle);
-        }
-
-        return idSalle;
-    }
-
-
-    // Simulation de la méthode qui cherche la salle dans la base de données
     public Salle findSalleById(int idSalle) {
-        // Code pour interroger la base de données et récupérer la salle
-        // Retourne un objet Salle si trouvé, sinon retourne null
-        return new Salle(idSalle, "Salle Exemple");
+        try {
+            return getSalleById(idSalle);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new Salle(idSalle, "Salle Exemple");
+        }
     }
 
-    public int getIdSalleByResponsableId(int responsableId) throws SQLException {
-        String query = "SELECT id_Salle FROM user WHERE id_User = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, responsableId);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("id_Salle");
-            }
+    private boolean isValidImagePath(String urlPhoto) {
+        if (urlPhoto == null || urlPhoto.trim().isEmpty()) {
+            return false;
         }
-        return -1; // Retourne -1 si aucune salle n'est trouvée
+        if (urlPhoto.startsWith("/images/")) {
+            return getClass().getResource(urlPhoto) != null;
+        }
+        try {
+            new java.net.URL(urlPhoto).toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
     public Salle getSalleForCurrentResponsable() throws SQLException {
-        // Récupérer l'utilisateur connecté
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser == null) {
             System.out.println("Aucun utilisateur connecté !");
-            return null; // Retourne null si aucun utilisateur n'est connecté
+            return null;
         }
 
-        // Récupérer l'ID du responsable connecté
         int responsableId = currentUser.getId();
-
-        // Requête SQL pour récupérer l'ID de la salle associée au responsable
-        String query = "SELECT id_Salle FROM user WHERE id_User = ?";
+        String query = "SELECT id FROM user WHERE id_User = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, responsableId);
             ResultSet rs = pstmt.executeQuery();
-
-            // Si une salle est trouvée, récupérer ses informations
             if (rs.next()) {
-                int salleId = rs.getInt("id_Salle");
-                return getSalleById(salleId); // Récupérer les informations de la salle
+                int salleId = rs.getInt("id");
+                return getSalleById(salleId);
             } else {
                 System.out.println("Aucune salle associée à ce responsable !");
-                return null; // Retourne null si aucune salle n'est trouvée
+                return null;
             }
         }
     }
-
-    public boolean getSalleByResponsableId(int responsableId) throws SQLException {
-        return  salleExiste(responsableId);
-    }
 }
-
-

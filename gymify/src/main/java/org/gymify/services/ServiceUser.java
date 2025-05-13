@@ -55,7 +55,7 @@ public class ServiceUser implements IGestionUser<User> {
             }
         }
 
-        String req = "INSERT INTO user (nom, prenom, email, password, role, specialite, date_naissance, image_url, id_Salle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO user (nom, prenom, email, password, role, specialite, date_naissance, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(req)) {
             pstmt.setString(1, user.getNom());
@@ -77,14 +77,7 @@ public class ServiceUser implements IGestionUser<User> {
                 pstmt.setNull(7, Types.DATE);
             }
             pstmt.setString(8, user.getImage_url());
-            if ("responsable_salle".equalsIgnoreCase(user.getRole())) {
-                if (user.getId_Salle() == 0) {
-                    throw new SQLException("L'ID de la salle est requis pour le rôle responsable_salle.");
-                }
-                pstmt.setInt(9, user.getId_Salle());
-            } else {
-                pstmt.setNull(9, Types.INTEGER);
-            }
+
             int rowsAffected = pstmt.executeUpdate();
             System.out.println("✅ Utilisateur ajouté avec succès ! Lignes affectées : " + rowsAffected);
         } catch (SQLException e) {
@@ -95,7 +88,7 @@ public class ServiceUser implements IGestionUser<User> {
 
     @Override
     public void modifier(User user) throws SQLException {
-        String req = "UPDATE user SET nom = ?, prenom = ?, email = ?, role = ?, date_naissance = ?, image_url = ?, specialite = ?, id_Salle = ?" +
+        String req = "UPDATE user SET nom = ?, prenom = ?, email = ?, role = ?, date_naissance = ?, image_url = ?, specialite = ?" +
                 (user.getPassword() != null && !user.getPassword().isEmpty() ? ", password = ?" : "") +
                 " WHERE id = ?";
 
@@ -115,12 +108,8 @@ public class ServiceUser implements IGestionUser<User> {
             } else {
                 pstmt.setNull(7, Types.VARCHAR);
             }
-            if ("responsable_salle".equalsIgnoreCase(user.getRole()) && user.getId_Salle() != 0) {
-                pstmt.setInt(8, user.getId_Salle());
-            } else {
-                pstmt.setNull(8, Types.INTEGER);
-            }
-            int parameterIndex = 9;
+
+            int parameterIndex = 8;
             if (user.getPassword() != null && !user.getPassword().isEmpty()) {
                 String hashedPassword = bcryptEncoder.encode(user.getPassword());
                 hashedPassword = hashedPassword.replaceFirst("^\\$2a\\$", "\\$2y\\$");
@@ -203,9 +192,8 @@ public class ServiceUser implements IGestionUser<User> {
                     entraineur.setDate_naissance(user.getDate_naissance());
                     entraineur.setImage_url(user.getImage_url());
                     users.add(entraineur);
-                } else if ("responsable_salle".equalsIgnoreCase(rs.getString("role"))) {
-                    user.setId_Salle(rs.getInt("id_Salle"));
                     users.add(user);
+
                 } else {
                     users.add(user);
                 }
@@ -290,7 +278,7 @@ public class ServiceUser implements IGestionUser<User> {
                             rs.getString("email"),
                             rs.getString("password"),
                             rs.getString("role"),
-                            rs.getInt("id_Salle")
+                            rs.getInt("id")
                     );
                     user.setDate_naissance(rs.getDate("date_naissance"));
                     user.setImage_url(rs.getString("image_url"));
@@ -458,13 +446,13 @@ public class ServiceUser implements IGestionUser<User> {
     }
 
     public int getSalleIdByUserId(int id) throws SQLException {
-        String query = "SELECT id_Salle FROM user WHERE id = ? AND role = 'responsable_salle'";
+        String query = "SELECT id FROM user WHERE id = ? AND role = 'responsable_salle'";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt("id_Salle");
+                    return rs.getInt("id");
                 }
             }
         } catch (SQLException e) {
@@ -475,7 +463,7 @@ public class ServiceUser implements IGestionUser<User> {
     }
 
     public void dissocierSalle(int idSalle) throws SQLException {
-        String query = "UPDATE user SET id_Salle = NULL WHERE id_Salle = ?";
+        String query = "UPDATE user SET id = NULL WHERE id = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(query)) {
             stmt.setInt(1, idSalle);
             int rowsAffected = stmt.executeUpdate();
@@ -487,7 +475,7 @@ public class ServiceUser implements IGestionUser<User> {
     }
 
     public void mettreAJourIdSalle(int idUser, int idSalle) throws SQLException {
-        String query = "UPDATE user SET id_Salle = ? WHERE id = ?";
+        String query = "UPDATE user SET id = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setInt(1, idSalle);
             pstmt.setInt(2, idUser);
@@ -500,7 +488,7 @@ public class ServiceUser implements IGestionUser<User> {
     }
 
     public boolean isSalleDejaAssociee(int idSalle) throws SQLException {
-        String query = "SELECT COUNT(*) FROM user WHERE id_Salle = ?";
+        String query = "SELECT COUNT(*) FROM user WHERE id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(query)) {
             ps.setInt(1, idSalle);
             ResultSet rs = ps.executeQuery();

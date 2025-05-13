@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.gymify.entities.Salle;
 import org.gymify.services.SalleService;
+import org.gymify.utils.ImageUtils; // New utility class for image loading
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,11 +49,8 @@ public class SalleCardController {
         numTelLabel.setText(salle.getNum_tel());
         emailLabel.setText(salle.getEmail());
 
-        if (salle.getUrl_photo() != null && !salle.getUrl_photo().isEmpty()) {
-            salleImageView.setImage(new Image(salle.getUrl_photo(), true));
-        } else {
-            salleImageView.setImage(new Image("/images/default-image.png", true)); // Image par défaut
-        }
+        // Use ImageUtils to load image safely
+        salleImageView.setImage(ImageUtils.loadImage(salle.getUrl_photo(), "/images/default-image.png"));
 
         modifierBtn.setOnAction(e -> modifierSalle());
         supprimerBtn.setOnAction(e -> supprimerSalle(e));
@@ -69,7 +67,7 @@ public class SalleCardController {
             controller.chargerSalle(salle, parentController);
 
             // Ouvrir le formulaire de modification dans une nouvelle fenêtre
-            Stage stage = (Stage)modifierBtn .getScene().getWindow();
+            Stage stage = (Stage) modifierBtn.getScene().getWindow();
             stage.setTitle("Modifier une salle");
             stage.setScene(new Scene(root));
             stage.show();
@@ -77,6 +75,7 @@ public class SalleCardController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void supprimerSalle(ActionEvent actionEvent) {
         if (salle == null) {

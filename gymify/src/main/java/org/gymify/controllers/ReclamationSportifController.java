@@ -88,7 +88,7 @@ public class ReclamationSportifController {
 
             if (!"Tous".equals(statutSelectionne)) {
                 filteredList.removeIf(r -> {
-                    Reponse rep = serviceReponse.recupererParReclamation(r.getId_reclamation());
+                    Reponse rep = serviceReponse.recupererParReclamation(r.getId());
                     return ("✅ Traité".equals(statutSelectionne) && rep == null) ||
                             ("⏳ En attente".equals(statutSelectionne) && rep != null);
                 });
@@ -104,7 +104,7 @@ public class ReclamationSportifController {
     private void afficherReclamations(List<Reclamation> list) throws SQLException {
         reclamationList.clear();
         for (Reclamation r : list) {
-            Reponse rep = serviceReponse.recupererParReclamation(r.getId_reclamation());
+            Reponse rep = serviceReponse.recupererParReclamation(r.getId());
             String statut = (rep != null) ? "✅ Traité" : "⏳ En attente";
             reclamationList.add("📝 " + r.getSujet() + " | 📌 " + statut);
         }
@@ -116,7 +116,7 @@ public class ReclamationSportifController {
         int selectedIndex = listReclamations.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             selectedReclamation = reclamations.get(selectedIndex);
-            Reponse reponse = serviceReponse.recupererParReclamation(selectedReclamation.getId_reclamation());
+            Reponse reponse = serviceReponse.recupererParReclamation(selectedReclamation.getId());
             if (reponse != null) {
                 txtReponseAdmin.setText("🗨 Réponse : " + reponse.getMessage());
             } else {
@@ -172,7 +172,7 @@ public class ReclamationSportifController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                serviceReclamation.supprimer(selectedReclamation.getId_reclamation());
+                serviceReclamation.supprimer(selectedReclamation.getId());
                 showAlert(Alert.AlertType.INFORMATION, "Réclamation supprimée !");
                 chargerReclamations();
             } catch (SQLException e) {

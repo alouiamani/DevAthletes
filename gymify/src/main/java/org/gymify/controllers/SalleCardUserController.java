@@ -1,4 +1,5 @@
-package org.gymify.controllers;
+
+        package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import org.gymify.entities.Salle;
 import org.gymify.entities.User;
 import org.gymify.utils.AuthToken;
+import org.gymify.utils.ImageUtils;
 
 import java.io.IOException;
 
@@ -26,11 +28,11 @@ public class SalleCardUserController {
     @FXML private Button savoirPlusButton;
 
     private Salle salle;
-    private ProfileMembreController profileMembreController; // Change to ProfileMembreController
+    private ProfileMembreController profileMembreController;
 
     public void setSalleData(Salle salle, ProfileMembreController profileMembreController) {
         this.salle = salle;
-        this.profileMembreController = profileMembreController; // Set the ProfileMembreController instance
+        this.profileMembreController = profileMembreController;
 
         salleName.setText(salle.getNom());
         salleLocation.setText("Adresse: " + salle.getAdresse());
@@ -38,11 +40,8 @@ public class SalleCardUserController {
         salleTel.setText("Téléphone: " + salle.getNum_tel());
         salleEmail.setText("Email: " + salle.getEmail());
 
-        if (salle.getUrl_photo() != null && !salle.getUrl_photo().isEmpty()) {
-            salleImageView.setImage(new Image(salle.getUrl_photo(), true));
-        } else {
-            salleImageView.setImage(new Image("/images/default-image.png", true));
-        }
+        // Use ImageUtils to load image safely
+        salleImageView.setImage(ImageUtils.loadImage(salle.getUrl_photo(), "/images/default-image.png"));
 
         savoirPlusButton.setOnAction(event -> afficherAbonnement());
     }
@@ -54,7 +53,7 @@ public class SalleCardUserController {
             Parent root = loader.load();
 
             AbonnementsSalleUserController controller = loader.getController();
-            controller.initData(salle.getId(), AuthToken.getCurrentUser()); // Pass the logged-in user
+            controller.initData(salle.getId(), AuthToken.getCurrentUser());
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

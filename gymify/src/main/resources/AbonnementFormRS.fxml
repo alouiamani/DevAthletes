@@ -4,73 +4,104 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.2615230460921843" prefHeight="555.0" prefWidth="800.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
-   <items>
-      <AnchorPane>
-         <children>
-            <ImageView fitHeight="553.0" fitWidth="240.0" pickOnBounds="true" smooth="false">
-               <image>
-                  <Image url="@images/3d-gym-equipment.jpg" />
-               </image>
-            </ImageView>
-            <Button layoutX="7.0" layoutY="6.0" onAction="#retournerEnArriere" prefHeight="35.0" prefWidth="41.0" style="-fx-background-color: #e1d8d8;" textFill="#666871">
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/arrow.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane>
-         <children>
-      
-            <AnchorPane fx:id="abonnementCard" layoutX="22.0" layoutY="10.0" prefHeight="487.0" prefWidth="507.0" styleClass="card" stylesheets="@style.css">
-               <children>
-                  <ChoiceBox fx:id="typeActiviteChoiceBox" layoutX="70.0" layoutY="163.0" prefWidth="150.0" />
-      
-                  <!-- Nouveau ChoiceBox pour le type d'activité -->
-                  <Label layoutX="53.0" layoutY="135.0" text="Type d'activité :" textAlignment="CENTER" textFill="#6e6363">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
-                  <ChoiceBox fx:id="typeAbonnementChoiceBox" layoutX="242.0" layoutY="248.0" prefWidth="150.0" />
-      
-                  <Label layoutX="196.0" layoutY="224.0" text="Choose subscription type :" textAlignment="CENTER" textFill="#6e6363">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
-      
-                  <Label fx:id="dateDebutLabel" layoutX="227.0" layoutY="274.0" prefHeight="18.0" prefWidth="141.0" text="Date de début" textFill="#6e6363">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="dateFinLabel" layoutX="278.0" layoutY="299.0" text="Date de fin" textFill="#6e6363" />
-                  <Label fx:id="nomAbonnementLabel" layoutX="146.0" layoutY="44.0" text="Nom de l'abonnement" textFill="#296e79">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-      
-                  <Label layoutX="78.0" layoutY="372.0" text="Tarif :" textFill="#6e6363" />
-                  <TextField fx:id="tarifTextField" layoutX="61.0" layoutY="390.0" prefHeight="30.0" prefWidth="390.0" />
-                  <Button fx:id="handleAbonnement" layoutX="145.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleAbonnementSelection" prefHeight="43.0" prefWidth="82.0" styleClass="LoginBtn" stylesheets="@style.css" text="Done" />
-                  <Button layoutX="291.0" layoutY="450.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="103.0" styleClass="button-cancel" stylesheets="@style.css" text="Cancel" />
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-   </items>
-</SplitPane>
+<?import java.lang.String?>
+<VBox alignment="CENTER" spacing="20.0" styleClass="root" prefWidth="800.0" prefHeight="800.0" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AbonnementFormRSController">
+   <stylesheets>
+      <String fx:value="/styles.css"/>
+   </stylesheets>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+   </padding>
+   <Label styleClass="label-heading" text="Add/Edit Subscription"/>
+   <VBox styleClass="form-vbox">
+      <GridPane hgap="15.0" vgap="15.0">
+         <Label styleClass="label" text="Subscription Type:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+         <ChoiceBox fx:id="typeAbonnementChoiceBox" styleClass="choice-box" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="200.0">
+            <tooltip>
+               <Tooltip text="Select the subscription type"/>
+            </tooltip>
+         </ChoiceBox>
+         <Label fx:id="errorTypeAbonnement" styleClass="label-error" text="Required" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/error.png"/>
+               </ImageView>
+            </graphic>
+         </Label>
+         <Label styleClass="label" text="E.g., Monthly, Annual" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+
+         <Label styleClass="label" text="Activity:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+         <ChoiceBox fx:id="typeActiviteChoiceBox" styleClass="choice-box" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="200.0">
+            <tooltip>
+               <Tooltip text="Select the associated activity"/>
+            </tooltip>
+         </ChoiceBox>
+         <Label fx:id="errorTypeActivite" styleClass="label-error" text="Required" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/error.png"/>
+               </ImageView>
+            </graphic>
+         </Label>
+         <Label styleClass="label" text="E.g., Fitness, Yoga, Boxing" GridPane.columnIndex="1" GridPane.rowIndex="5" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+
+         <Label styleClass="label" text="Price:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+         <TextField fx:id="tarifTextField" promptText="Enter price (e.g., 50.00)" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6" prefWidth="200.0">
+            <tooltip>
+               <Tooltip text="Enter price in DT"/>
+            </tooltip>
+         </TextField>
+         <Label fx:id="errorTarif" styleClass="label-error" text="Required" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/error.png"/>
+               </ImageView>
+            </graphic>
+         </Label>
+         <Label styleClass="label" text="Price in DT (e.g., 50.00)" GridPane.columnIndex="1" GridPane.rowIndex="8" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+      </GridPane>
+      <Separator style="-fx-background-color: #E5E7EB;"/>
+      <HBox alignment="CENTER" spacing="20.0">
+         <Button fx:id="handleAbonnement" onAction="#handleAbonnementSelection" styleClass="button" text="Save">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/save.png"/>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Save changes"/>
+            </tooltip>
+         </Button>
+         <Button fx:id="btnAnnuler" onAction="#btnAnnuler" styleClass="button button-cancel" text="Cancel">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/close.png"/>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Reset the form"/>
+            </tooltip>
+         </Button>
+         <Button onAction="#retournerEnArriere" styleClass="button button-secondary" text="Back">
+            <graphic>
+               <ImageView fitHeight="16.0" fitWidth="16.0">
+                  <Image url="/images/arrow.png"/>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Back to list"/>
+            </tooltip>
+         </Button>
+      </HBox>
+   </VBox>
+</VBox>

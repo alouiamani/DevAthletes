@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardUserController">
-    <stylesheets>
-        <URL value="@application.css" />
-    </stylesheets>
+<VBox prefHeight="400.0" prefWidth="700.0" styleClass="main-container" stylesheets="@application.css" alignment="CENTER" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.SalleCardUserController">
    <children>
-      <HBox layoutX="31.0" layoutY="40.0" prefHeight="190.0" prefWidth="543.0" styleClass="card">
+      <HBox styleClass="card-container" prefHeight="350.0" prefWidth="650.0" alignment="CENTER_LEFT">
          <children>
-            <ImageView fx:id="salleImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="image-round">
+            <ImageView fx:id="salleImageView" fitHeight="250.0" fitWidth="250.0" styleClass="card-image">
                <HBox.margin>
-                  <Insets right="15.0" />
+                  <Insets left="25.0" right="25.0" />
                </HBox.margin>
             </ImageView>
-            <VBox prefHeight="258.0" prefWidth="310.0">
+            <VBox prefHeight="250.0" prefWidth="350.0" spacing="15.0">
                <children>
-                  <Label fx:id="salleName" text="Label" textFill="#114013">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
+                  <Label fx:id="salleName" styleClass="card-title" text="Gym Name" accessibleText="Gym Name" />
+                  <HBox spacing="10.0">
+                     <ImageView fitHeight="24.0" fitWidth="24.0" styleClass="icon-image" accessibleText="Location Icon">
+                        <image>
+                           <Image url="@images/adresse.png" />
+                        </image>
+                     </ImageView>
+                     <Label fx:id="salleLocation" styleClass="card-text" text="Location" accessibleText="Gym Location" />
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <ImageView fitHeight="24.0" fitWidth="24.0" styleClass="icon-image" accessibleText="Details Icon">
+                        <image>
+                           <Image url="@images/fichier.png" />
+                        </image>
+                     </ImageView>
+                     <Label fx:id="salleDetails" styleClass="card-text card-details" wrapText="true" text="Details" accessibleText="Gym Details" />
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <ImageView fitHeight="24.0" fitWidth="24.0" styleClass="icon-image" accessibleText="Phone Icon">
+                        <image>
+                           <Image url="@images/telephone.png" />
+                        </image>
+                     </ImageView>
+                     <Label fx:id="salleTel" styleClass="card-text" text="Phone" accessibleText="Gym Phone Number" />
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <ImageView fitHeight="24.0" fitWidth="24.0" styleClass="icon-image" accessibleText="Email Icon">
+                        <image>
+                           <Image url="@images/email.png" />
+                        </image>
+                     </ImageView>
+                     <Label fx:id="salleEmail" styleClass="card-text" text="Email" accessibleText="Gym Email" />
+                  </HBox>
+                  <Button fx:id="savoirPlusButton" onAction="#afficherAbonnement" styleClass="primary-button" text="Learn More" prefWidth="200.0" accessibleText="Learn More Button">
+                     <tooltip>
+                        <Tooltip text="View Subscription Details" />
+                     </tooltip>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="salleLocation" text="Label">
-                     <padding>
-                        <Insets bottom="2.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="salleDetails" text="Label">
-                     <padding>
-                        <Insets bottom="2.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="salleTel" text="Label" textFill="#d10c0c">
-                     <VBox.margin>
-                        <Insets bottom="2.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="salleEmail" text="Label" />
-                  <Button fx:id="savoirPlusButton" mnemonicParsing="false" onAction="#afficherAbonnement" text=" Savoir Plus">
-                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="15.0" />
                      </VBox.margin>
                   </Button>
                </children>
             </VBox>
          </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
       </HBox>
    </children>
-</AnchorPane>
+</VBox>

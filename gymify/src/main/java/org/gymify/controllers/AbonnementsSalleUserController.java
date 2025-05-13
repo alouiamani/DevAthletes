@@ -22,6 +22,7 @@ public class AbonnementsSalleUserController {
 
     @FXML private VBox abonnementContainer;
     @FXML private Label salleLabel;
+    @FXML private Label emptyLabel;
 
     private AbonnementService abonnementService = new AbonnementService();
     private SalleService salleService = new SalleService();
@@ -34,27 +35,31 @@ public class AbonnementsSalleUserController {
 
         try {
             Salle salle = salleService.getSalleById(idSalle);
-            salleLabel.setText("Abonnements disponibles - " + salle.getNom());
+            salleLabel.setText("Available Subscriptions - " + salle.getNom());
         } catch (SQLException e) {
-            salleLabel.setText("Abonnements disponibles");
+            salleLabel.setText("Available Subscriptions");
         }
 
-        chargerAbonnements();
+        loadSubscriptions();
     }
-    private void chargerAbonnements() {
+
+    private void loadSubscriptions() {
         try {
             List<Abonnement> abonnements = abonnementService.getAbonnementsParSalle(idSalle);
             abonnementContainer.getChildren().clear();
 
             if (abonnements.isEmpty()) {
-                Label emptyLabel = new Label("Aucun abonnement disponible pour cette salle");
-                abonnementContainer.getChildren().add(emptyLabel);
+                emptyLabel.setVisible(true);
+                emptyLabel.setManaged(true);
                 return;
             }
 
+            emptyLabel.setVisible(false);
+            emptyLabel.setManaged(false);
+
             for (Abonnement abonnement : abonnements) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementCardUser.fxml"));
-                Parent card = loader.load(); // Changé de VBox à Parent
+                Parent card = loader.load();
 
                 AbonnementCardUserController controller = loader.getController();
                 controller.setAbonnementData(abonnement);
@@ -62,14 +67,14 @@ public class AbonnementsSalleUserController {
                 if (loggedInUser != null) {
                     controller.setSportif(loggedInUser);
                 } else {
-                    System.err.println("Aucun utilisateur connecté !");
+                    System.err.println("No user logged in!");
                 }
 
                 abonnementContainer.getChildren().add(card);
             }
         } catch (IOException | SQLException e) {
             e.printStackTrace();
-            Label errorLabel = new Label("Erreur lors du chargement des abonnements");
+            Label errorLabel = new Label("Error loading subscriptions");
             abonnementContainer.getChildren().add(errorLabel);
         }
     }

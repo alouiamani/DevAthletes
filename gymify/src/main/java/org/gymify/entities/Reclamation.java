@@ -1,53 +1,57 @@
 package org.gymify.entities;
 
+import java.sql.Timestamp;
 
 public class Reclamation {
-    private int id_reclamation;
-    private int id_user;
+    private int id;
+    private int user_id;
     private String sujet;
     private String description;
     private String statut;
+    private Timestamp dateCreation;
     private User user;
+
     public Reclamation() {}
-    public Reclamation(int id_reclamation, int id_user, String sujet, String description, String statut) {
-        this.id_reclamation = id_reclamation;
-        this.id_user = id_user;
+
+    public Reclamation(int id, int user_id, String sujet, String description, String statut, Timestamp dateCreation) {
+        this.id = id;
+        this.user_id = user_id;
         this.sujet = sujet;
         this.description = description;
         this.statut = statut;
-
+        this.dateCreation = dateCreation;
     }
-    public Reclamation(int id_user, String sujet, String description, String statut, User user) {
-        this.id_user = id_user;
+
+    public Reclamation(int user_id, String sujet, String description, String statut, User user) {
+        this.user_id = user_id;
         this.sujet = sujet;
         this.description = description;
         this.statut = statut;
         this.user = user;
+        this.dateCreation = new Timestamp(System.currentTimeMillis());
     }
 
-    public Reclamation(int id_user, String sujet, String description) {
-        this.id_user = id_user;
+    public Reclamation(int user_id, String sujet, String description) {
+        this.user_id = user_id;
         this.sujet = sujet;
         this.description = description;
-
+        this.dateCreation = new Timestamp(System.currentTimeMillis());
     }
 
-
-
-    public int getId_reclamation() {
-        return id_reclamation;
+    public int getId() {
+        return id;
     }
 
-    public void setId_reclamation(int id_reclamation) {
-        this.id_reclamation = id_reclamation;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getId_user() {
-        return id_user;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getSujet() {
@@ -74,6 +78,14 @@ public class Reclamation {
         this.statut = statut;
     }
 
+    public Timestamp getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Timestamp dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
     public User getUser() {
         return user;
     }
@@ -85,14 +97,13 @@ public class Reclamation {
     @Override
     public String toString() {
         return "Reclamation{" +
-                "id_reclamation=" + id_reclamation +
-                ", id_user=" + id_user +
+                "id=" + id +
+                ", user_id=" + user_id +
                 ", sujet='" + sujet + '\'' +
                 ", description='" + description + '\'' +
                 ", statut='" + (statut != null ? statut : "Non défini") + '\'' +
+                ", dateCreation=" + dateCreation +
                 ", user=" + (user != null ? user.getNom() : "Aucun") +
                 '}';
     }
-
-
 }

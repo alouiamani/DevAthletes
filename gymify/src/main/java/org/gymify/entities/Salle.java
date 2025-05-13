@@ -1,4 +1,5 @@
-package org.gymify.entities;
+
+        package org.gymify.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,48 +13,51 @@ public class Salle {
     private String num_tel;
     private String email;
     private String url_photo;
+    private int responsable_id; // New field
     private List<Abonnement> abonnements;
-    // Utiliser int au lieu de String pour l'ID du responsable
-    public Salle(){}
-    // Constructeur avec idResponsable
-    public Salle(int id, String nom, String adresse, String details, String num_tel, String email, String url_photo) {
-      this.id=id;
+
+    public Salle() {
+        this.abonnements = new ArrayList<>();
+    }
+
+    // Constructor with responsable_id
+    public Salle(int id, String nom, String adresse, String details, String num_tel, String email, String url_photo, int responsable_id) {
+        this.id = id;
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
         this.num_tel = num_tel;
         this.email = email;
         this.url_photo = url_photo;
+        this.responsable_id = responsable_id;
         this.abonnements = new ArrayList<>();
-        // Initialisation de l'ID du responsable
     }
 
-    // Constructeur sans idResponsable pour la création d'une nouvelle salle
-    public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo) {
+    // Constructor without id for new salle
+    public Salle(String nom, String adresse, String details, String num_tel, String email, String url_photo, int responsable_id) {
         this.nom = nom;
         this.adresse = adresse;
         this.details = details;
         this.num_tel = num_tel;
         this.email = email;
         this.url_photo = url_photo;
+        this.responsable_id = responsable_id;
         this.abonnements = new ArrayList<>();
-        // Initialisation de l'ID du responsable
     }
 
-
+    // Minimal constructor
     public Salle(int id, String nom) {
         this.id = id;
         this.nom = nom;
+        this.abonnements = new ArrayList<>();
     }
 
-
-
-
+    // Getters and Setters
     public int getId() {
         return id;
     }
 
-    public void setId_Salle(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -105,6 +109,14 @@ public class Salle {
         this.url_photo = url_photo;
     }
 
+    public int getResponsable_id() {
+        return responsable_id;
+    }
+
+    public void setResponsable_id(int responsable_id) {
+        this.responsable_id = responsable_id;
+    }
+
     public List<Abonnement> getAbonnements() {
         return abonnements;
     }
@@ -116,17 +128,23 @@ public class Salle {
 
     @Override
     public String toString() {
-        return "l'id de salle est : " + id + " le nom de salle est : " + nom + " l'adresse de salle est : " + adresse
-                + " les détails de salle sont : " + details + " le numéro de tel de salle est : " + num_tel + " l'email de salle est : " + email;
+        return "Salle{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", details='" + details + '\'' +
+                ", num_tel='" + num_tel + '\'' +
+                ", email='" + email + '\'' +
+                ", url_photo='" + url_photo + '\'' +
+                ", responsable_id=" + responsable_id +
+                '}';
     }
 
     public void addEvent(Event event) {
+        // Implement if needed
     }
 
     public Collection<Object> getEvents() {
-        Object Collection = null;
-        Collection events = null;
-
         return List.of();
     }
 }

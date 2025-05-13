@@ -1,6 +1,5 @@
 package org.gymify.controllers;
 
-
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,9 @@ import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import org.gymify.entities.Entraineur;
+import org.gymify.entities.Salle;
 import org.gymify.entities.User;
+import org.gymify.services.AbonnementService;
 import org.gymify.services.ServiceUser;
 import org.gymify.services.StatistiquesService;
 import org.gymify.utils.AuthToken;
@@ -35,13 +36,11 @@ import java.util.Map;
 import static org.gymify.utils.AuthToken.currentUser;
 import static org.gymify.utils.AuthToken.logout;
 
-
 public class DashboardResponsableSalleController {
     @FXML private LineChart<String, Number> lineChart;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
-    @FXML
-    private Label totalUsersLabel;
+    @FXML private Label totalUsersLabel;
     @FXML private TextField AddEmailFx, AddFirstNameFx, AddLastNameFx, searchUserField, EditNomId, EditPrenomId, EditEmailId;
     @FXML private PasswordField AddPsswdFx, EditPasswdId;
     @FXML private ChoiceBox<String> AddRoleFx, AddSpecialiteFx, EditRoleId, EditSpecialId;
@@ -53,13 +52,13 @@ public class DashboardResponsableSalleController {
     @FXML private TextField searchRoleField;
     private User utilisateurSelectionne;
     private final ServiceUser serviceUser = new ServiceUser();
-    private StatistiquesService statistiquesService=new StatistiquesService() {};
+    private final AbonnementService abonnementService = new AbonnementService();
+    private final StatistiquesService statistiquesService = new StatistiquesService();
 
     public void initialize() {
         User currentUser = AuthToken.getCurrentUser();
         if (currentUser != null) {
             welcomeLabel.setText(" " + currentUser.getNom());
-
         } else {
             showAlert(Alert.AlertType.ERROR, "❌ Erreur", "Utilisateur non connecté.");
             logout();
@@ -72,14 +71,30 @@ public class DashboardResponsableSalleController {
 
         AddRoleFx.setOnAction(event -> AddSpecialiteFx.setDisable(!"Entraîneur".equals(AddRoleFx.getValue())));
         int totalUsers = serviceUser.getTotalUsers(); // Récupérer le nombre total
-
         totalUsersLabel.setText("" + totalUsers);
         afficherCourbeStatistiques();
         listUsersInVBox();
     }
+
     @FXML
     private void onListAbonnementButtonClick(ActionEvent event) {
         try {
+            // Récupérer l'ID du responsable connecté
+            User currentUser = AuthToken.getCurrentUser();
+            if (currentUser == null) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Utilisateur non connecté.");
+                return;
+            }
+            int responsableId = currentUser.getId(); // Assumer que User a un champ id
+
+            // Récupérer la salle associée au responsable
+            Salle salle = abonnementService.getSalleByResponsableId(responsableId);
+            if (salle == null) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle associée à ce responsable.");
+                return;
+            }
+            System.out.println("ID de la salle récupéré : " + salle.getId()); // Log pour déboguer
+
             // Charger le fichier FXML de la liste des abonnements
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
             Parent root = loader.load();
@@ -87,38 +102,28 @@ public class DashboardResponsableSalleController {
             // Récupérer le contrôleur de la liste des abonnements
             ListeAbonnementRSController controller = loader.getController();
 
-            // Passer l'ID de la salle au contrôleur
-            int salleId = AuthToken.getCurrentUser().getId_Salle(); // Récupérer l'ID de la salle de l'utilisateur connecté
-            if (salleId <= 0) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle n'est associée à cet utilisateur.");
-                return;
-            }
-            System.out.println("ID de la salle récupéré : " + salleId); // Log pour déboguer
-            controller.setSalleId(salleId);
+            // Passer l'ID du responsable au contrôleur
+            controller.setResponsableId(responsableId);
 
             // Afficher la nouvelle scène
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la récupération de la salle : " + e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement de la liste des abonnements.");
         }
     }
-    private int getSalleIdFromCurrentUser() {
-        // Implémentez cette méthode pour récupérer l'ID de la salle de l'utilisateur actuel
-        // Par exemple, vous pouvez récupérer l'ID de la salle à partir de la session utilisateur ou de la base de données
-        return currentUser.getId_Salle(); // Supposons que `currentUser` est l'utilisateur actuellement connecté
-    }
 
-
-    // Ouvre l'interface ou effectue une action
-
-    @FXML private void handleCancelEdit(ActionEvent event)  {showPane(listUsersPane);}
-    @FXML private void handleCancelAdd(ActionEvent event)  {showPane(listUsersPane);}
+    @FXML private void handleCancelEdit(ActionEvent event) { showPane(listUsersPane); }
+    @FXML private void handleCancelAdd(ActionEvent event) { showPane(listUsersPane); }
     @FXML private void onHomeButtonClick(ActionEvent event) { showPane(homePane); }
     @FXML private void onListUsersButtonClick(ActionEvent event) { showPane(listUsersPane); }
     @FXML private void onAddUserButtonClick(ActionEvent event) { showPane(addUserPane); }
+
     @FXML
     private void saveEditUser(ActionEvent event) {
         if (utilisateurSelectionne == null) return;
@@ -128,8 +133,6 @@ public class DashboardResponsableSalleController {
         utilisateurSelectionne.setEmail(EditEmailId.getText().trim());
         utilisateurSelectionne.setRole(EditRoleId.getValue());
         utilisateurSelectionne.setDate_naissance((EditBirthId.getValue() != null) ? Date.valueOf(EditBirthId.getValue()) : null);
-
-
 
         if (utilisateurSelectionne instanceof Entraineur) {
             ((Entraineur) utilisateurSelectionne).setSpecialite(EditSpecialId.getValue());
@@ -145,6 +148,7 @@ public class DashboardResponsableSalleController {
             showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible de modifier l'utilisateur.");
         }
     }
+
     @FXML
     private void SaveAddUser(ActionEvent event) {
         String nom = AddFirstNameFx.getText().trim();
@@ -209,8 +213,8 @@ public class DashboardResponsableSalleController {
         }
     }
 
-
-    @FXML void onSearchByRole(ActionEvent event) {
+    @FXML
+    void onSearchByRole(ActionEvent event) {
         String roleRecherche = searchRoleField.getText().trim();
 
         if (VBoxId == null) {
@@ -237,8 +241,6 @@ public class DashboardResponsableSalleController {
             System.out.println("❌ Erreur SQL lors de la recherche : " + e.getMessage());
         }
     }
-
-
 
     private HBox creerHBoxUtilisateur(User user) {
         // Création de la HBox principale
@@ -290,8 +292,6 @@ public class DashboardResponsableSalleController {
         return hbox;
     }
 
-
-
     private Button createImageButton(String imagePath, javafx.event.EventHandler<ActionEvent> eventHandler) {
         Button button = new Button();
         ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
@@ -332,8 +332,6 @@ public class DashboardResponsableSalleController {
         });
     }
 
-
-
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -350,7 +348,6 @@ public class DashboardResponsableSalleController {
         paneToShow.setVisible(true);
     }
 
-
     @FXML
     private void OuvrirListeEvent(ActionEvent event) {
         try {
@@ -365,6 +362,7 @@ public class DashboardResponsableSalleController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void ajouterSpecialite() {
         TextInputDialog dialog = new TextInputDialog();
@@ -382,6 +380,7 @@ public class DashboardResponsableSalleController {
             }
         });
     }
+
     private void afficherCourbeStatistiques() {
         System.out.println("📊 Début affichage courbe");
         Map<String, Integer> stats = statistiquesService.getNombreUtilisateursParRole();
@@ -391,7 +390,7 @@ public class DashboardResponsableSalleController {
             return;
         }
 
-        System.out.println("📊 Données reçues : " + stats);  // Vérification console
+        System.out.println("📊 Données reçues : " + stats); // Vérification console
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Utilisateurs par rôle");

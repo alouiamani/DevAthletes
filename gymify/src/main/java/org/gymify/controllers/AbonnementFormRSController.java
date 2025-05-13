@@ -14,47 +14,46 @@ import javafx.util.StringConverter;
 import org.gymify.entities.*;
 import org.gymify.services.AbonnementService;
 import org.gymify.services.ActivityService;
-import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 public class AbonnementFormRSController {
 
-    @FXML
-    private ChoiceBox<type_Abonnement> typeAbonnementChoiceBox;
-    @FXML
-    private ChoiceBox<Activité> typeActiviteChoiceBox;
-    @FXML
-    private Label dateDebutLabel;
-    @FXML
-    private Label dateFinLabel;
-    @FXML
-    private TextField tarifTextField;
-    @FXML
-    private Button handleAbonnement;
+    @FXML private ChoiceBox<type_Abonnement> typeAbonnementChoiceBox;
+    @FXML private ChoiceBox<Activité> typeActiviteChoiceBox;
+    @FXML private TextField tarifTextField;
+    @FXML private Label errorTypeAbonnement, errorTypeActivite, errorTarif;
+    @FXML private Button handleAbonnement, btnAnnuler;
 
-    private LocalDate dateDebut;
     private Abonnement isModification;
     private Salle salle;
     private final AbonnementService abonnementService = new AbonnementService();
     private final ActivityService activityService = new ActivityService();
     private ObservableList<Activité> activities = FXCollections.observableArrayList();
-    private int salleId;
+    private int responsableId;
+    private boolean isFormModified;
 
-    public void setSalleId(int salleId) {
-        this.salleId = salleId;
-        this.salle = new Salle();
-        this.salle.setId_Salle(salleId);
+    public void setResponsableId(int responsableId) {
+        this.responsableId = responsableId;
+        try {
+            this.salle = abonnementService.getSalleByResponsableId(responsableId);
+            if (this.salle == null) {
+                showAlert(Alert.AlertType.ERROR, "Error", "No gym assigned to this manager.");
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to retrieve assigned gym: " + e.getMessage());
+        }
     }
 
     @FXML
     public void initialize() {
+        hideErrors();
+        addRealTimeValidation();
+        isFormModified = false;
+
         typeAbonnementChoiceBox.setItems(FXCollections.observableArrayList(type_Abonnement.values()));
         typeAbonnementChoiceBox.setConverter(new StringConverter<>() {
             @Override
@@ -67,11 +66,6 @@ public class AbonnementFormRSController {
                 return type_Abonnement.valueOf(string);
             }
         });
-
-        dateDebut = LocalDate.now();
-        dateDebutLabel.setText(dateDebut.toString());
-
-        typeAbonnementChoiceBox.setOnAction(event -> updateDetails());
 
         List<Activité> allActivities = activityService.getActivities();
         activities.setAll(allActivities);
@@ -93,103 +87,161 @@ public class AbonnementFormRSController {
         }
     }
 
-    private void updateDetails() {
-        type_Abonnement selectedType = typeAbonnementChoiceBox.getValue();
-        if (selectedType == null || dateDebut == null) return;
+    private void addRealTimeValidation() {
+        typeAbonnementChoiceBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            isFormModified = true;
+            if (newValue == null) {
+                errorTypeAbonnement.setText("Subscription type is required");
+                errorTypeAbonnement.setVisible(true);
+            } else {
+                errorTypeAbonnement.setVisible(false);
+            }
+        });
 
-        LocalDate dateFin;
-        switch (selectedType) {
-            case mois -> dateFin = dateDebut.plusMonths(1);
-            case trimestre -> dateFin = dateDebut.plusMonths(3);
-            case année -> dateFin = dateDebut.plusYears(1);
-            default -> dateFin = dateDebut;
-        }
+        typeActiviteChoiceBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            isFormModified = true;
+            if (newValue == null) {
+                errorTypeActivite.setText("Activity is required");
+                errorTypeActivite.setVisible(true);
+            } else {
+                errorTypeActivite.setVisible(false);
+            }
+        });
 
-        dateFinLabel.setText(dateFin.toString());
+        tarifTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            isFormModified = true;
+            if (newValue.trim().isEmpty()) {
+                errorTarif.setText("Price is required");
+                errorTarif.setVisible(true);
+            } else {
+                try {
+                    double tarif = Double.parseDouble(newValue);
+                    if (tarif <= 0) {
+                        errorTarif.setText("Price must be positive");
+                        errorTarif.setVisible(true);
+                    } else {
+                        errorTarif.setVisible(false);
+                    }
+                } catch (NumberFormatException e) {
+                    errorTarif.setText("Invalid price format");
+                    errorTarif.setVisible(true);
+                }
+            }
+        });
+    }
+
+    private void hideErrors() {
+        errorTypeAbonnement.setVisible(false);
+        errorTypeActivite.setVisible(false);
+        errorTarif.setVisible(false);
     }
 
     @FXML
     private void handleAbonnementSelection(ActionEvent actionEvent) {
         try {
-            type_Abonnement selectedType = typeAbonnementChoiceBox.getValue();
-            if (selectedType == null) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner un type d'abonnement.");
+            if (!validateFields()) return;
+
+            // Show confirmation dialog
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle("Confirm Save");
+            confirmation.setHeaderText("Save Subscription");
+            confirmation.setContentText("Are you sure you want to save this subscription?");
+            if (!confirmation.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
                 return;
             }
 
-
-            LocalDate dateDebutLocal = LocalDate.parse(dateDebutLabel.getText());
-            LocalDate dateFinLocal = LocalDate.parse(dateFinLabel.getText());
+            type_Abonnement selectedType = typeAbonnementChoiceBox.getValue();
+            Activité selectedActivite = typeActiviteChoiceBox.getValue();
             double tarif = Double.parseDouble(tarifTextField.getText());
 
             if (salle == null) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle associée à cet abonnement.");
-                return;
-            }
-
-            Activité selectedActivite = typeActiviteChoiceBox.getValue();
-            if (selectedActivite == null) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner une activité.");
+                showAlert(Alert.AlertType.ERROR, "Error", "No gym associated with this subscription.");
                 return;
             }
 
             Abonnement abonnement = new Abonnement(
-                    Date.valueOf(dateDebutLocal),
-                    Date.valueOf(dateFinLocal),
                     selectedType,
                     salle,
                     tarif,
-                    selectedActivite,                          // Pass Activité object
-                    selectedActivite.getType().toString()      // Pass the activity type as String
+                    selectedActivite,
+                    selectedActivite.getType().toString()
             );
 
             if (isModification == null) {
-                abonnementService.ajouter(abonnement, salleId);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Abonnement ajouté avec succès !");
+                abonnementService.ajouter(abonnement, salle.getId());
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Subscription added successfully!");
             } else {
                 abonnement.setId_Abonnement(isModification.getId_Abonnement());
                 abonnementService.modifier(abonnement);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Abonnement modifié avec succès !");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Subscription updated successfully!");
             }
 
-            // Recharger la liste des abonnements
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
-            Parent root = loader.load();
-            ListeAbonnementRSController listeController = loader.getController();
-            listeController.setSalleId(salleId); // Assurez-vous que cette méthode existe et qu'elle recharge les abonnements
-            listeController.loadFilteredAbonnements(); // Recharger les abonnements
-
-            // Récupérer la scène actuelle
-            Stage stage = (Stage) handleAbonnement.getScene().getWindow();
-
-            // Définir la nouvelle scène
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            isFormModified = false;
+            loadSubscriptionList(actionEvent);
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Une erreur est survenue : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "SQL Error", "An error occurred: " + e.getMessage());
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the subscriptions page.");
         }
     }
 
+    private boolean validateFields() {
+        boolean hasErrors = false;
+
+        if (typeAbonnementChoiceBox.getValue() == null) {
+            errorTypeAbonnement.setText("Subscription type is required");
+            errorTypeAbonnement.setVisible(true);
+            hasErrors = true;
+        } else {
+            errorTypeAbonnement.setVisible(false);
+        }
+
+        if (typeActiviteChoiceBox.getValue() == null) {
+            errorTypeActivite.setText("Activity is required");
+            errorTypeActivite.setVisible(true);
+            hasErrors = true;
+        } else {
+            errorTypeActivite.setVisible(false);
+        }
+
+        String tarifText = tarifTextField.getText().trim();
+        if (tarifText.isEmpty()) {
+            errorTarif.setText("Price is required");
+            errorTarif.setVisible(true);
+            hasErrors = true;
+        } else {
+            try {
+                double tarif = Double.parseDouble(tarifText);
+                if (tarif <= 0) {
+                    errorTarif.setText("Price must be positive");
+                    errorTarif.setVisible(true);
+                    hasErrors = true;
+                } else {
+                    errorTarif.setVisible(false);
+                }
+            } catch (NumberFormatException e) {
+                errorTarif.setText("Invalid price format");
+                errorTarif.setVisible(true);
+                hasErrors = true;
+            }
+        }
+
+        return !hasErrors;
+    }
 
     public void preFillForm(Abonnement abonnement) {
         this.isModification = abonnement;
-
-
         typeAbonnementChoiceBox.setValue(abonnement.getType_Abonnement());
         tarifTextField.setText(String.valueOf(abonnement.getTarif()));
 
         Optional<Activité> activiteOptional = activities.stream()
-                .filter(a -> a.getId() == abonnement.getActivite().getId())
+                .filter(a -> a.getId() == (abonnement.getActivite() != null ? abonnement.getActivite().getId() : -1))
                 .findFirst();
 
         activiteOptional.ifPresent(typeActiviteChoiceBox::setValue);
-        this.salleId = abonnement.getSalle().getId();
-
-
+        this.salle = abonnement.getSalle();
+        isFormModified = false;
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -199,17 +251,82 @@ public class AbonnementFormRSController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
-    private void retournerEnArriere(ActionEvent actionEvent) {
+    private void btnAnnuler(ActionEvent actionEvent) {
+        clearFields();
+        isFormModified = false;
+    }
+
+    private void clearFields() {
+        typeAbonnementChoiceBox.setValue(null);
+        typeActiviteChoiceBox.setValue(null);
+        tarifTextField.clear();
+    }
+
+    @FXML
+    private void goBack(ActionEvent actionEvent) {
+        if (isFormModified) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Unsaved Changes");
+            alert.setHeaderText("You have unsaved changes.");
+            alert.setContentText("Do you want to discard changes and go back?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty() || result.get() != ButtonType.OK) {
+                return;
+            }
+        }
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
             Parent root = loader.load();
+            ListeAbonnementRSController listeController = loader.getController();
+            listeController.setResponsableId(responsableId);
+            listeController.loadFilteredAbonnements();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Impossible de retourner à l'interface précédente.","veuiller resseée");
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to return to the previous screen.");
+        }
+    }
+
+    private void loadSubscriptionList(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
+        Parent root = loader.load();
+        ListeAbonnementRSController listeController = loader.getController();
+        listeController.setResponsableId(responsableId);
+        listeController.loadFilteredAbonnements();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void retournerEnArriere(ActionEvent actionEvent) {
+        if (isFormModified) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Unsaved Changes");
+            alert.setHeaderText("You have unsaved changes.");
+            alert.setContentText("Do you want to discard changes and go back?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty() || result.get() != ButtonType.OK) {
+                return;
+            }
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeAbonnementRS.fxml"));
+            Parent root = loader.load();
+            ListeAbonnementRSController listeController = loader.getController();
+            listeController.setResponsableId(responsableId);
+            listeController.loadFilteredAbonnements();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to return to the previous screen.");
         }
     }
 }

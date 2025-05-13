@@ -1,4 +1,5 @@
-package org.gymify.controllers;
+
+        package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
@@ -34,22 +37,24 @@ public class SalleFormAdminController {
     @FXML private Label errorNom, errorAdresse, errorNumTel, errorEmail, errorDetails, errorUrlPhoto;
     @FXML private ChoiceBox<String> responsableChoiceBox;
     @FXML private WebView mapView;
+    @FXML private ImageView photoPreview; // Added for photo preview
     private WebEngine webEngine;
     private Salle salleAModifier;
     private final SalleService salleService = new SalleService();
     private final ServiceUser userService = new ServiceUser();
 
+    @FXML
     public void initialize() throws SQLException {
         cacherErreurs();
         ajouterValidationEnTempsReel();
         chargerCarte();
+        configurerPhotoPreview();
+
         // Vider le ChoiceBox avant d'ajouter de nouveaux éléments
         responsableChoiceBox.getItems().clear();
 
-        // Récupérer tous les responsables de salle avec le rôle "Responsable_salle"
+        // Récupérer tous les responsables de salle avec le rôle "responsable_salle"
         List<User> responsables = userService.afficherPourResponsableAvecStream();
-
-        // Vérifiez si la liste de responsables n'est pas vide
         for (User responsable : responsables) {
             responsableChoiceBox.getItems().add(responsable.getId() + " - " + responsable.getNom());
         }
@@ -57,10 +62,10 @@ public class SalleFormAdminController {
         if (responsableChoiceBox.getItems().isEmpty()) {
             System.out.println("Aucun responsable de salle trouvé.");
         }
-        WebEngine webEngine = mapView.getEngine();
-        webEngine.load(getClass().getResource("/map.html").toExternalForm());
 
-        // Attendre que la page Web soit chargée
+        // Configurer WebView pour la carte
+        webEngine = mapView.getEngine();
+        webEngine.load(getClass().getResource("/map.html").toExternalForm());
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
                 JSObject window = (JSObject) webEngine.executeScript("window");
@@ -68,6 +73,17 @@ public class SalleFormAdminController {
             }
         });
     }
+
+    private void configurerPhotoPreview() {
+        url_photoFX.textProperty().addListener((obs, oldValue, newValue) -> {
+            try {
+                photoPreview.setImage(new Image(newValue, true));
+            } catch (Exception e) {
+                photoPreview.setImage(new Image("/images/placeholder.png"));
+            }
+        });
+    }
+
     private void ajouterValidationEnTempsReel() {
         nomFX.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.trim().isEmpty()) {
@@ -129,18 +145,17 @@ public class SalleFormAdminController {
             }
         });
     }
+
     @FXML
     private void choisirImage(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
-        Stage stage = (Stage) nomFX.getScene().getWindow(); // Correctement récupéré
+        Stage stage = (Stage) nomFX.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-
         if (file != null) {
             url_photoFX.setText(file.toURI().toString());
         }
     }
-
 
     public void chargerSalle(Salle salle, ListeDesSalleController parentController) {
         salleAModifier = salle;
@@ -151,40 +166,36 @@ public class SalleFormAdminController {
         emailFX.setText(salle.getEmail());
         url_photoFX.setText(salle.getUrl_photo());
 
-        // Vider et remplir la liste des responsables
+        // Charger le responsable associé
         responsableChoiceBox.getItems().clear();
         try {
             List<User> responsables = userService.afficherPourResponsableAvecStream();
             System.out.println("Responsables récupérés : " + responsables);
 
             String selectedResponsable = null;
-
             for (User responsable : responsables) {
                 String choix = responsable.getId() + " - " + responsable.getNom();
                 responsableChoiceBox.getItems().add(choix);
-
-                // Vérifier si c'est le responsable affecté à la salle
-                if (responsable.getId_Salle() == salle.getId()) {
+                if (salle.getResponsable_id() == responsable.getId()) {
                     selectedResponsable = choix;
                 }
             }
 
-            // Sélectionner le responsable associé à la salle
             if (selectedResponsable != null) {
                 responsableChoiceBox.setValue(selectedResponsable);
             } else {
                 System.out.println("Aucun responsable associé à cette salle.");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
-    private void btnEnregistrer(ActionEvent actionEvent) throws SQLException {
+    private void btnEnregistrer(ActionEvent actionEvent) throws SQLException, IOException {
         if (!validerChamps()) return;
 
-        // Récupérer l'ID du responsable sélectionné dans le ChoiceBox
+        // Récupérer l'ID du responsable sélectionné
         String responsableSelectionne = responsableChoiceBox.getValue();
         if (responsableSelectionne == null || responsableSelectionne.trim().isEmpty()) {
             afficherAlerte("Erreur", "Veuillez sélectionner un responsable.");
@@ -197,68 +208,51 @@ public class SalleFormAdminController {
             return;
         }
 
-        int idResponsable = Integer.parseInt(parts[0]);  // Convertir l'ID du responsable en int
+        int idResponsable = Integer.parseInt(parts[0]);
 
-        // Vérifier si la salle est déjà associée à un utilisateur (responsable) via l'ID salle
-        if (salleAModifier != null && salleAModifier.getId() != salleAModifier.getId()) {
-            boolean salleDejaAssociee = userService.isSalleDejaAssociee(salleAModifier.getId());
-            if (salleDejaAssociee) {
-                afficherAlerte("Erreur", "Cette salle est déjà associée à un responsable.");
-                return;
-            }
-        }
-
-        // Créer une nouvelle salle avec les données du formulaire
-        Salle salle = new Salle(nomFX.getText(), adresseFX.getText(), detailsFX.getText(),
-                numtelFX.getText(), emailFX.getText(), url_photoFX.getText() );
+        // Créer ou modifier la salle avec responsable_id
+        Salle salle = new Salle(
+                nomFX.getText(),
+                adresseFX.getText(),
+                detailsFX.getText(),
+                numtelFX.getText(),
+                emailFX.getText(),
+                url_photoFX.getText(),
+                idResponsable
+        );
 
         try {
-            int idSalle;
             if (salleAModifier == null) {
-                // Ajouter la salle si elle n'est pas en modification
-                idSalle = salleService.ajouter(salle);
+                // Ajouter une nouvelle salle
+                salleService.ajouter(salle);
                 afficherAlerte("Succès", "La salle a été ajoutée avec succès !");
             } else {
-                // Modifier la salle existante si elle est en modification
-                salle.setId_Salle(salleAModifier.getId());
+                // Modifier une salle existante
+                salle.setId(salleAModifier.getId());
                 salleService.modifier(salle);
-                idSalle = salleAModifier.getId();
                 afficherAlerte("Succès", "La salle a été modifiée avec succès !");
             }
-
-            // Mettre à jour l'ID de la salle pour le responsable
-            userService.mettreAJourIdSalle(idResponsable, idSalle);
 
             // Envoyer un email au responsable
             Optional<User> responsableOpt = userService.getUtilisateurById(idResponsable);
             if (responsableOpt.isPresent()) {
                 User responsable = responsableOpt.get();
                 String emailResponsable = responsable.getEmail();
-
-                String sujet = "Affectation ou modification d'une salle";
-                String message = "Nom de la salle : " + salle.getNom() + "\n"
-                        + "Adresse : " + salle.getAdresse() + "\n"
-                        + "Détails : " + salle.getDetails() + "\n"
-                        + "Téléphone : " + salle.getNum_tel() + "\n"
-                        + "Email : " + salle.getEmail() + "\n"
-                        + "Photo : " + salle.getUrl_photo();
-
-                if (salleAModifier == null) {
-                    EmailService.envoyerEmail(emailResponsable, sujet, salle, true); // Email pour l'ajout
-                } else {
-                    EmailService.envoyerEmail(emailResponsable, sujet, salle, false); // Email pour la modification
-                }
+                String sujet = salleAModifier == null ? "Nouvelle salle affectée" : "Modification d'une salle";
+                String message = String.format(
+                        "Nom de la salle : %s\nAdresse : %s\nDétails : %s\nTéléphone : %s\nEmail : %s\nPhoto : %s",
+                        salle.getNom(), salle.getAdresse(), salle.getDetails(), salle.getNum_tel(), salle.getEmail(), salle.getUrl_photo()
+                );
+                EmailService.envoyerEmail(emailResponsable, sujet, message);
             } else {
                 afficherAlerte("Erreur", "Responsable non trouvé.");
             }
 
-            // Recharger la liste des salles pour afficher les mises à jour
+            // Recharger la liste des salles
             chargerListeSalles();
         } catch (SQLException e) {
             e.printStackTrace();
             afficherAlerte("Erreur", "Une erreur est survenue lors de l'enregistrement.");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -272,7 +266,6 @@ public class SalleFormAdminController {
         hasErrors |= verifierChampTextArea(detailsFX, errorDetails, "Détails obligatoires");
         hasErrors |= verifierChamp(url_photoFX, errorUrlPhoto, "URL photo obligatoire");
 
-        // Validation spécifique pour le téléphone et l'email
         hasErrors |= !validerTelephone(numtelFX.getText());
         hasErrors |= !validerEmail(emailFX.getText());
 
@@ -299,7 +292,6 @@ public class SalleFormAdminController {
         return false;
     }
 
-    // Validation du numéro de téléphone (format: +216 22 555 555)
     private boolean validerTelephone(String telephone) {
         Pattern pattern = Pattern.compile("^\\+216\\s\\d{2}\\s\\d{3}\\s\\d{3}$");
         Matcher matcher = pattern.matcher(telephone);
@@ -312,7 +304,6 @@ public class SalleFormAdminController {
         return true;
     }
 
-    // Validation de l'email (format: exemple@domaine.com)
     private boolean validerEmail(String email) {
         Pattern pattern = Pattern.compile("^[\\w-]+(?:\\.[\\w-]+)*@[\\w-]+(?:\\.[\\w-]+)+$");
         Matcher matcher = pattern.matcher(email);
@@ -342,13 +333,11 @@ public class SalleFormAdminController {
         errorUrlPhoto.setVisible(false);
     }
 
-    // Charger la carte à partir de l'URL définie
     private void chargerCarte() {
         webEngine = mapView.getEngine();
         webEngine.load(getClass().getResource("/map.html").toExternalForm());
     }
 
-    // Classe JavaConnector pour permettre l'interaction entre Java et JavaScript
     public class JavaConnector {
         public void setAddress(String address) {
             adresseFX.setText(address);
@@ -358,11 +347,7 @@ public class SalleFormAdminController {
     private void chargerListeSalles() throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesSalleAdmin.fxml"));
         Parent root = loader.load();
-
-        // Récupérer la scène actuelle
         Stage stage = (Stage) nomFX.getScene().getWindow();
-
-        // Définir la nouvelle scène
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -380,7 +365,9 @@ public class SalleFormAdminController {
         detailsFX.clear();
         numtelFX.clear();
         url_photoFX.clear();
+        responsableChoiceBox.setValue(null);
     }
+
     @FXML
     private void retournerEnArriere(ActionEvent actionEvent) {
         try {

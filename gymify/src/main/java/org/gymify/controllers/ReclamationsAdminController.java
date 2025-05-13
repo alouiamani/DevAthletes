@@ -62,7 +62,7 @@ public class ReclamationsAdminController {
             ServiceUser serviceUtilisateur = new ServiceUser();
 
             for (Reclamation rec : reclamationList) {
-                Optional<User> utilisateur = serviceUtilisateur.getUtilisateurById(rec.getId_user());
+                Optional<User> utilisateur = serviceUtilisateur.getUtilisateurById(rec.getId());
                 String utilisateurNom = utilisateur.map(u -> u.getNom() + " " + u.getPrenom()).orElse("Utilisateur inconnu");
 
                 HBox card = new HBox(10);
@@ -175,7 +175,7 @@ public class ReclamationsAdminController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 for (Reponse rep : selectedReponses) {
-                    serviceReponse.supprimer(rep.getId_Reponse());
+                    serviceReponse.supprimer(rep.getId());
                 }
 
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Réponses supprimées avec succès !");
@@ -206,7 +206,7 @@ public class ReclamationsAdminController {
         try {
             for (Reclamation rec : selectedReclamations) {
                 // Utiliser l'ID de l'administrateur récupéré dynamiquement
-                Reponse reponse = new Reponse(rec.getId_reclamation(), idAdmin, message); // ID de l'administrateur dynamique
+                Reponse reponse = new Reponse(rec.getId(), idAdmin, message); // ID de l'administrateur dynamique
                 serviceReponse.ajouter(reponse);
             }
 

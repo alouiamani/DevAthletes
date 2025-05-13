@@ -27,7 +27,7 @@ public class CoursService implements IService<Cours> {
             req.setInt(7, cours.getActivité().getId());
             req.setInt(8, cours.getPlanning().getId());
             req.setInt(9,cours.getUser().getId());
-            req.setInt(10,cours.getSalle().getId_Salle());
+            req.setInt(10,cours.getSalle().getId());
 
 
 
@@ -57,7 +57,7 @@ public class CoursService implements IService<Cours> {
             }
             req.setInt(9,cours.getUser().getId());
             req.setInt(11,cours.getId());
-            req.setInt(10,cours.getSalle().getId_Salle());
+            req.setInt(10,cours.getSalle().getId());
 
 
             req.executeUpdate();
@@ -123,7 +123,7 @@ public class CoursService implements IService<Cours> {
                 int salleId = rs.getInt("salle_id");
                 if (salleId != 0) {
                     Salle salle= new Salle();
-                    salle.setId_Salle(salleId);
+                    salle.setId(salleId);
                     cour.setSalle(salle);
                 }
 
@@ -217,7 +217,7 @@ public class CoursService implements IService<Cours> {
 
                 // Charger la salle
                 Salle salle = new Salle();
-                salle.setId_Salle(rs.getInt("salle_id"));
+                salle.setId(rs.getInt("salle_id"));
                 salle.setNom(rs.getString("salle_nom"));
                 cours.setSalle(salle);
 

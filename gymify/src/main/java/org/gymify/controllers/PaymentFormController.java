@@ -125,7 +125,7 @@ public class PaymentFormController {
                                 .setCurrency("eur")
                                 .setPaymentMethod(paymentMethodId)
                                 .setConfirm(true)
-                                .putMetadata("user_id", String.valueOf(user.getId_User()))
+                                .putMetadata("user_id", String.valueOf(user.getId()))
                                 .putMetadata("abonnement_id", String.valueOf(abonnement.getId_Abonnement()))
                                 .build()
                 );

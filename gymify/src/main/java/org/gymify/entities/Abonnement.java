@@ -1,38 +1,21 @@
 package org.gymify.entities;
 
-import java.sql.Date;
-
 public class Abonnement {
     private int id_Abonnement;
-
     private type_Abonnement type_Abonnement;
     private Double tarif;
-
     private Salle salle;
     private Activité activite;
-
-    public String getTypeActivite() {
-        return typeActivite;
-    }
-
-    public void setTypeActivite(String typeActivite) {
-        this.typeActivite = typeActivite;
-    }
-
     private String typeActivite;
+
     public Abonnement() {}
 
-
-
-    public Abonnement(Date Date_Début, Date Date_Fin, type_Abonnement type_Abonnement, Salle salle, Double tarif, Activité activite,String typeActivite) {
-
+    public Abonnement(type_Abonnement type_Abonnement, Salle salle, Double tarif, Activité activite, String typeActivite) {
         this.type_Abonnement = type_Abonnement;
         this.salle = salle;
         this.tarif = tarif;
         this.activite = activite;
         this.typeActivite = typeActivite;
-
-
     }
 
     public int getId_Abonnement() {
@@ -75,17 +58,19 @@ public class Abonnement {
         this.activite = activite;
     }
 
+    public String getTypeActivite() {
+        return typeActivite;
+    }
 
-
+    public void setTypeActivite(String typeActivite) {
+        this.typeActivite = typeActivite;
+    }
 
     @Override
     public String toString() {
         return "Abonnement ID: " + id_Abonnement +
-
                 ", Type: " + type_Abonnement +
                 ", Tarif: " + tarif + "DT" +
                 ", Activité: " + (activite != null ? activite.getNom() : "Aucune");
     }
-
-
 }

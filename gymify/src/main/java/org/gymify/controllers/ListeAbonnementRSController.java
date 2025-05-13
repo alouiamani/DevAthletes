@@ -17,107 +17,113 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.gymify.entities.Abonnement;
-import org.gymify.entities.ActivityType;
 import org.gymify.entities.Salle;
-import org.gymify.entities.User;
 import org.gymify.services.AbonnementService;
-import org.gymify.services.ActivityService;
 import org.gymify.services.SalleService;
-import org.gymify.utils.AuthToken;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListeAbonnementRSController {
 
-    @FXML
-    private FlowPane abonnementContainer;
-    @FXML
-    private Label salleLabel;
-    @FXML
-    private TextField searchField;
-    @FXML
-    private ChoiceBox<String> activiteChoiceBox;
+    @FXML private FlowPane abonnementContainer;
+    @FXML private Label salleLabel;
+    @FXML private TextField searchField;
+    @FXML private ChoiceBox<String> activiteChoiceBox;
+    @FXML private Label loadingLabel;
 
-    private int salleId;
+    private int responsableId;
     private final AbonnementService abonnementService = new AbonnementService();
     private final SalleService salleService = new SalleService();
-    private final ActivityService activiteService = new ActivityService();
 
-    // Méthode pour définir l'ID de la salle
-    public void setSalleId(int salleId) {
-        this.salleId = salleId;
-        loadSalleData(); // Charger les données de la salle
+    public void setResponsableId(int responsableId) {
+        this.responsableId = responsableId;
+        loadGymData();
     }
 
-    // Initialisation du contrôleur
     @FXML
     public void initialize() {
-        setupChoiceBox(); // Configurer la ChoiceBox pour les activités
+        setupChoiceBox();
 
-        // Ajouter des écouteurs pour les filtres
         activiteChoiceBox.setOnAction(event -> loadFilteredAbonnements());
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadFilteredAbonnements());
     }
 
     private void setupChoiceBox() {
         try {
-            List<String> activites = abonnementService.getActivityTypes();
-            System.out.println("Activity Types from Database: " + activites); // Debug log
-            activites.add(0, "Tous"); // Add "Tous" at the beginning
-            activiteChoiceBox.setItems(FXCollections.observableArrayList(activites));
-            activiteChoiceBox.setValue("Tous"); // Set default value
+            List<String> activities = abonnementService.getActivityTypes();
+            System.out.println("Activity Types from Database: " + activities);
+            activities.add(0, "All");
+            activiteChoiceBox.setItems(FXCollections.observableArrayList(activities));
+            activiteChoiceBox.setValue("All");
         } catch (SQLException e) {
-            System.err.println("Erreur lors du chargement des types d'activités : " + e.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des types d'activités.");
+            System.err.println("Error loading activity types: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load activity types.");
         }
     }
+
     @FXML
     private void handleAddAbonnement(ActionEvent event) {
         try {
-            if (salleService.salleExiste(salleId)) {
+            Salle salle = abonnementService.getSalleByResponsableId(responsableId);
+            if (salle != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementFormRS.fxml"));
                 Parent root = loader.load();
 
-                // Pass salleId to the form controller
                 AbonnementFormRSController controller = loader.getController();
-                controller.setSalleId(salleId);
+                controller.setResponsableId(responsableId);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-                stage.setTitle("Modifier un abonnement");
+                stage.setTitle("Add Subscription");
                 stage.show();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "La salle avec l'ID " + salleId + " n'existe pas.");
+                showAlert(Alert.AlertType.ERROR, "Error", "No gym associated with this manager.");
             }
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la vérification de l'existence de la salle : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to verify gym existence: " + e.getMessage());
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire d'abonnement.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open subscription form.");
         }
     }
-    // Charger les abonnements filtrés
+
+
+
+    private void loadGymData() {
+        try {
+            Salle salle = abonnementService.getSalleByResponsableId(responsableId);
+            if (salle != null) {
+                System.out.println("Gym found: " + salle.getNom());
+                salleLabel.setText("Subscriptions for Gym: " + salle.getNom());
+                loadFilteredAbonnements();
+            } else {
+                System.out.println("No gym found for the logged-in manager.");
+                showAlert(Alert.AlertType.ERROR, "Error", "No gym found for the logged-in manager.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to retrieve gym data.");
+        }
+    }
+
     public void loadFilteredAbonnements() {
         try {
-            abonnementContainer.getChildren().clear(); // Effacer les abonnements existants
+            loadingLabel.setVisible(true);
+            abonnementContainer.getChildren().clear();
 
-            // Récupérer l'activité sélectionnée et la requête de recherche
             String selectedActivity = activiteChoiceBox.getValue();
-            String searchQuery = searchField.getText().toLowerCase(); // Recherche insensible à la casse
+            String searchQuery = searchField.getText().toLowerCase();
 
-            // Debug logs
             System.out.println("Selected Activity: " + selectedActivity);
             System.out.println("Search Query: " + searchQuery);
 
-            // Récupérer les abonnements de la salle
-            List<Abonnement> abonnements = abonnementService.afficherParSalle(salleId);
+            List<Abonnement> abonnements = abonnementService.afficherParResponsable(responsableId);
 
-            // Appliquer le filtre par activité
-            if (!"Tous".equals(selectedActivity)) {
+            if (!"All".equals(selectedActivity)) {
                 abonnements = abonnements.stream()
                         .filter(abonnement -> {
                             String typeActivite = abonnement.getTypeActivite();
@@ -126,125 +132,121 @@ public class ListeAbonnementRSController {
                         .collect(Collectors.toList());
             }
 
-            // Appliquer le filtre par texte de recherche
             if (searchQuery != null && !searchQuery.isEmpty()) {
                 abonnements = abonnements.stream()
                         .filter(abonnement -> abonnement.getActivite() != null &&
-                                abonnement.getActivite().getNom().contains(searchQuery))
+                                abonnement.getActivite().getNom().toLowerCase().contains(searchQuery))
                         .collect(Collectors.toList());
             }
 
-            // Debug log pour les abonnements filtrés
-            System.out.println("Filtered Abonnements Count: " + abonnements.size());
+            System.out.println("Filtered Subscriptions Count: " + abonnements.size());
 
-            // Afficher les abonnements filtrés
+            if (abonnements.isEmpty()) {
+                Label emptyLabel = new Label("No subscriptions found");
+                emptyLabel.getStyleClass().add("label");
+                abonnementContainer.getChildren().add(emptyLabel);
+                return;
+            }
+
             for (Abonnement abonnement : abonnements) {
-                VBox card = createAbonnementCard(abonnement);
+                VBox card = createSubscriptionCard(abonnement);
                 abonnementContainer.getChildren().add(card);
             }
         } catch (SQLException e) {
-            System.err.println("Erreur lors du chargement des abonnements : " + e.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des abonnements.");
+            System.err.println("Error loading subscriptions: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load subscriptions: " + e.getMessage());
+        } finally {
+            loadingLabel.setVisible(false);
         }
     }
 
-    private void loadSalleData() {
-        try {
-            Salle salle = salleService.getSalleForCurrentResponsable();
-            if (salle != null) {
-                System.out.println("Salle trouvée : " + salle.getNom());
-                salleLabel.setText("Abonnements de la salle: " + salle.getNom());
-                loadFilteredAbonnements(); // Recharger les abonnements
-            } else {
-                System.out.println("Aucune salle trouvée pour le responsable connecté.");
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune salle trouvée pour le responsable connecté.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la récupération de la salle.");
-        }
-    }
-
-
-
-    // Créer une carte pour un abonnement
-    private VBox createAbonnementCard(Abonnement abonnement) {
+    private VBox createSubscriptionCard(Abonnement abonnement) {
         VBox card = new VBox(10);
-        abonnementContainer.setHgap(10); // Espace horizontal entre les cartes
-        abonnementContainer.setVgap(10); // Espace vertical entre les cartes
-        abonnementContainer.setPadding(new Insets(10)); // Marge intérieure
-        card.setStyle("-fx-background-color: #ffffff; -fx-padding: 15px; -fx-border-radius: 10px; " +
-                "-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 0);");
+        card.getStyleClass().add("subscription-card");
+        card.setAlignment(Pos.CENTER);
 
-        Label activiteLabel = new Label("Activité: " + (abonnement.getActivite() != null ? abonnement.getActivite().getNom() : "Non spécifiée"));
-        Label typeLabel = new Label("Type: " + (abonnement.getActivite() != null ? abonnement.getActivite().getType().toString() : "Non spécifié"));
-        Label tarif = new Label("Tarif: " + abonnement.getTarif() + " DT");
+        Label activiteLabel = new Label("Activity: " + (abonnement.getActivite() != null ? abonnement.getActivite().getNom() : "Not specified"));
+        activiteLabel.getStyleClass().add("label");
 
-        // Bouton Modifier
-        Button modifyButton = new Button("Modifier");
-        modifyButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: white; -fx-font-size: 12px; " +
-                "-fx-padding: 3px 8px; -fx-border-radius: 5px; -fx-pref-width: 100px; -fx-pref-height: 30px;");
-        ImageView editIcon = new ImageView(new Image("images/editer.png"));
-        editIcon.setFitWidth(16);
-        editIcon.setFitHeight(16);
-        modifyButton.setGraphic(editIcon);
+        Label typeLabel = new Label("Type: " + (abonnement.getActivite() != null ? abonnement.getActivite().getType().toString() : "Not specified"));
+        typeLabel.getStyleClass().add("label");
+
+        Label tarif = new Label("Price: " + abonnement.getTarif() + " DT");
+        tarif.getStyleClass().add("label");
+
+        Button modifyButton = new Button("Edit");
+        modifyButton.getStyleClass().add("button");
+        // Load edit icon with fallback
+        Image editImage = loadImage("/images/edit.png");
+        if (editImage != null) {
+            ImageView editIcon = new ImageView(editImage);
+            editIcon.setFitWidth(16);
+            editIcon.setFitHeight(16);
+            modifyButton.setGraphic(editIcon);
+        } else {
+            System.err.println("Warning: Edit icon not found at /images/edit.png");
+        }
         modifyButton.setOnAction(event -> handleModify(abonnement));
 
-        // Bouton Supprimer
-        Button deleteButton = new Button("Supprimer");
-        deleteButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 12px; " +
-                "-fx-padding: 3px 8px; -fx-border-radius: 5px; -fx-pref-width: 100px; -fx-pref-height: 30px;");
-        ImageView deleteIcon = new ImageView(new Image("images/delete.png"));
-        deleteIcon.setFitWidth(16);
-        deleteIcon.setFitHeight(16);
-        deleteButton.setGraphic(deleteIcon);
+        Button deleteButton = new Button("Delete");
+        deleteButton.getStyleClass().addAll("button", "button-cancel");
+        // Load delete icon with fallback
+        Image deleteImage = loadImage("/images/delete.png");
+        if (deleteImage != null) {
+            ImageView deleteIcon = new ImageView(deleteImage);
+            deleteIcon.setFitWidth(16);
+            deleteIcon.setFitHeight(16);
+            deleteButton.setGraphic(deleteIcon);
+        } else {
+            System.err.println("Warning: Delete icon not found at /images/delete.png");
+        }
         deleteButton.setOnAction(event -> handleDeleteConfirmation(abonnement));
 
         HBox buttonContainer = new HBox(10, modifyButton, deleteButton);
         buttonContainer.setAlignment(Pos.CENTER);
 
-        card.getChildren().addAll(activiteLabel, typeLabel,  tarif, buttonContainer);
+        card.getChildren().addAll(activiteLabel, typeLabel, tarif, buttonContainer);
         return card;
     }
 
-    // Gérer la modification d'un abonnement
+    // Helper method to load images with error handling
+    private Image loadImage(String path) {
+        try {
+            InputStream stream = getClass().getResourceAsStream(path);
+            if (stream == null) {
+                System.err.println("Resource not found: " + path);
+                return null;
+            }
+            return new Image(stream);
+        } catch (Exception e) {
+            System.err.println("Error loading image " + path + ": " + e.getMessage());
+            return null;
+        }
+    }
     private void handleModify(Abonnement abonnement) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AbonnementFormRS.fxml"));
             Parent root = loader.load();
             AbonnementFormRSController controller = loader.getController();
-            controller.preFillForm(abonnement); // Pré-remplir le formulaire
-            int salleId = getSalleIdForConnectedUser(); // Récupérer l'ID de la salle du responsable connecté
-            controller.setSalleId(salleId); // Passer l'ID de la salle au contrôleur
-            controller.preFillForm(abonnement); // Pré-remplir le formulaire
+            controller.setResponsableId(responsableId);
+            controller.preFillForm(abonnement);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Modifier un abonnement");
-            stage.showAndWait(); // Attendre que la fenêtre de modification soit fermée
+            stage.setTitle("Edit Subscription");
+            stage.showAndWait();
 
-            // Recharger les abonnements après la modification
             loadFilteredAbonnements();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire de modification.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open edit form.");
         }
     }
 
-    private int getSalleIdForConnectedUser() {
-        User connectedUser = AuthToken.getCurrentUser(); // Récupérer l'utilisateur connecté
-        if (connectedUser != null && "responsable_salle".equals(connectedUser.getRole())) {
-            return connectedUser.getId_Salle(); // Assure-toi que l'entité User a bien un champ salleId
-        } else {
-            throw new IllegalStateException("Utilisateur non connecté ou non autorisé.");
-        }
-    }
-
-    // Gérer la suppression d'un abonnement
     private void handleDeleteConfirmation(Abonnement abonnement) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cet abonnement ?");
-        alert.setContentText("Cette action est irréversible.");
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Are you sure you want to delete this subscription?");
+        alert.setContentText("This action is irreversible.");
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
@@ -253,18 +255,16 @@ public class ListeAbonnementRSController {
         });
     }
 
-    // Supprimer un abonnement
     private void handleDelete(Abonnement abonnement) {
         try {
             abonnementService.supprimer(abonnement.getId_Abonnement());
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Abonnement supprimé avec succès !");
-            loadFilteredAbonnements(); // Recharger les abonnements après suppression
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Subscription deleted successfully!");
+            loadFilteredAbonnements();
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la suppression : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete subscription: " + e.getMessage());
         }
     }
 
-    // Afficher une alerte
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -273,23 +273,36 @@ public class ListeAbonnementRSController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void clearSearch(ActionEvent event) {
+        searchField.clear();
+        activiteChoiceBox.setValue("All");
+        loadFilteredAbonnements();
+    }
+
+    @FXML
     public void retourDashboard(ActionEvent actionEvent) {
         try {
-            // Charger le fichier FXML de la liste des salles
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardReasponsable.fxml"));
+            URL resource = getClass().getResource("/DashboardReasponsable.fxml");
+            if (resource == null) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Dashboard FXML file not found.");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(resource);
             Parent root = loader.load();
 
-            // Créer une nouvelle scène avec la liste des salles
+            DashboardResponsableSalleController controller = loader.getController();
+            // Set responsableId if needed
+            // controller.setResponsableId(responsableId);
+
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 800, 800);
             stage.setScene(scene);
-            stage.setTitle("Dashboard Responsable");
-
-            // Afficher la nouvelle scène
+            stage.setTitle("Manager Dashboard");
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load the dashboard: " + e.getMessage());
         }
     }
 }

@@ -7,26 +7,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class ServiceReclamation implements Iservices<Reclamation> {
     Connection connection = gymifyDataBase.getInstance().getConnection();
 
     public ServiceReclamation() {}
 
-
     public int ajouter(Reclamation reclamation) throws SQLException {
-        if (!utilisateurExiste(reclamation.getId_user())) {
-            System.err.println("Erreur : L'utilisateur avec l'ID " + reclamation.getId_user() + " n'existe pas !");
-            return 0;
+        if (!utilisateurExiste(reclamation.getUser_id())) {
+            throw new SQLException("L'utilisateur avec l'ID " + reclamation.getUser_id() + " n'existe pas.");
         }
 
-        String req = "INSERT INTO reclamation (id_user, sujet, description, statut) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO reclamation (user_id, sujet, description, statut, dateCreation) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
-            pstmt.setInt(1, reclamation.getId_user());
+            pstmt.setInt(1, reclamation.getUser_id());
             pstmt.setString(2, reclamation.getSujet());
             pstmt.setString(3, reclamation.getDescription());
-            pstmt.setString(4, "En attente"); // Statut par défaut
+            pstmt.setString(4, "En attente");
+            pstmt.setTimestamp(5, reclamation.getDateCreation() != null ? reclamation.getDateCreation() : new Timestamp(System.currentTimeMillis()));
 
             pstmt.executeUpdate();
             System.out.println("Réclamation ajoutée avec succès !");
@@ -34,24 +31,24 @@ public class ServiceReclamation implements Iservices<Reclamation> {
         return 0;
     }
 
-    private boolean utilisateurExiste(int idUser) throws SQLException {
-        String req = "SELECT COUNT(*) FROM user WHERE id_User = ?";
+    private boolean utilisateurExiste(int userId) throws SQLException {
+        String req = "SELECT COUNT(*) FROM user WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
-            pstmt.setInt(1, idUser);
+            pstmt.setInt(1, userId);
             try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0; // Vérifie si l'utilisateur existe
+                return rs.next() && rs.getInt(1) > 0;
             }
         }
     }
 
-
     public void modifier(Reclamation reclamation) throws SQLException {
-        String req = "UPDATE reclamation SET sujet=?, description=?, statut=? WHERE id_reclamation=?";
+        String req = "UPDATE reclamation SET sujet=?, description=?, statut=?, dateCreation=? WHERE id=?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setString(1, reclamation.getSujet());
             preparedStatement.setString(2, reclamation.getDescription());
             preparedStatement.setString(3, reclamation.getStatut());
-            preparedStatement.setInt(4, reclamation.getId_reclamation());
+            preparedStatement.setTimestamp(4, reclamation.getDateCreation());
+            preparedStatement.setInt(5, reclamation.getId());
 
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -61,22 +58,24 @@ public class ServiceReclamation implements Iservices<Reclamation> {
             }
         }
     }
-    public List<Reclamation> rechercherReclamationsParStatutEtUtilisateur(String statut, int id_user) throws SQLException {
+
+    public List<Reclamation> rechercherReclamationsParStatutEtUtilisateur(String statut, int user_id) throws SQLException {
         List<Reclamation> listeReclamations = new ArrayList<>();
-        String query = "SELECT * FROM reclamation WHERE statut = ? AND id_user = ?";
+        String query = "SELECT * FROM reclamation WHERE statut = ? AND user_id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, statut);
-            pstmt.setInt(2, id_user);
+            pstmt.setInt(2, user_id);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     listeReclamations.add(new Reclamation(
-                            rs.getInt("id_reclamation"),
-                            rs.getInt("id_user"),
+                            rs.getInt("id"),
+                            rs.getInt("user_id"),
                             rs.getString("sujet"),
                             rs.getString("description"),
-                            rs.getString("statut")
+                            rs.getString("statut"),
+                            rs.getTimestamp("dateCreation")
                     ));
                 }
             }
@@ -84,11 +83,10 @@ public class ServiceReclamation implements Iservices<Reclamation> {
         return listeReclamations;
     }
 
-
-    public void supprimer(int id_reclamation) throws SQLException {
-        String req = "DELETE FROM reclamation WHERE id_reclamation=?";
+    public void supprimer(int id) throws SQLException {
+        String req = "DELETE FROM reclamation WHERE id=?";
         try (PreparedStatement pstmt = connection.prepareStatement(req)) {
-            pstmt.setInt(1, id_reclamation);
+            pstmt.setInt(1, id);
             int rowsDeleted = pstmt.executeUpdate();
 
             if (rowsDeleted > 0) {
@@ -99,21 +97,21 @@ public class ServiceReclamation implements Iservices<Reclamation> {
         }
     }
 
-
     public List<Reclamation> afficher() throws SQLException {
         List<Reclamation> reclamations = new ArrayList<>();
-        String req = "SELECT id_reclamation, id_user, sujet, description, statut FROM reclamation";
+        String req = "SELECT id, user_id, sujet, description, statut, dateCreation FROM reclamation";
 
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(req)) {
 
             while (rs.next()) {
                 reclamations.add(new Reclamation(
-                        rs.getInt("id_reclamation"),
-                        rs.getInt("id_user"),
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
                         rs.getString("sujet"),
                         rs.getString("description"),
-                        rs.getString("statut")
+                        rs.getString("statut"),
+                        rs.getTimestamp("dateCreation")
                 ));
             }
         }
@@ -121,7 +119,7 @@ public class ServiceReclamation implements Iservices<Reclamation> {
     }
 
     public void updateStatut(int idReclamation, String nouveauStatut) throws SQLException {
-        String checkQuery = "SELECT COUNT(*) FROM reclamation WHERE id_reclamation = ?";
+        String checkQuery = "SELECT COUNT(*) FROM reclamation WHERE id = ?";
         try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
             checkStmt.setInt(1, idReclamation);
             ResultSet rs = checkStmt.executeQuery();
@@ -131,7 +129,7 @@ public class ServiceReclamation implements Iservices<Reclamation> {
             }
         }
 
-        String req = "UPDATE reclamation SET statut = ? WHERE id_reclamation = ?";
+        String req = "UPDATE reclamation SET statut = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setString(1, nouveauStatut);
             ps.setInt(2, idReclamation);
@@ -140,21 +138,21 @@ public class ServiceReclamation implements Iservices<Reclamation> {
         }
     }
 
-
     public List<Reclamation> recupererParSportif(int idSportif) throws SQLException {
         List<Reclamation> reclamations = new ArrayList<>();
-        String req = "SELECT id_reclamation, id_user, sujet, description, statut FROM reclamation WHERE id_user = ?";
+        String req = "SELECT id, user_id, sujet, description, statut, dateCreation FROM reclamation WHERE user_id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setInt(1, idSportif);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     reclamations.add(new Reclamation(
-                            rs.getInt("id_reclamation"),
-                            rs.getInt("id_user"),
+                            rs.getInt("id"),
+                            rs.getInt("user_id"),
                             rs.getString("sujet"),
                             rs.getString("description"),
-                            rs.getString("statut")
+                            rs.getString("statut"),
+                            rs.getTimestamp("dateCreation")
                     ));
                 }
             }
