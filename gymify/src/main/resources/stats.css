@@ -1,0 +1,72 @@
+.root {
+    -fx-background-color: #1e1e1e; /* Fond sombre */
+    -fx-text-fill: white;
+}
+
+.chart {
+    -fx-background-color: transparent;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-title {
+    -fx-text-fill: white;
+}
+
+.axis {
+    -fx-tick-label-fill: white;
+    -fx-label-padding: 10px;
+}
+
+.axis-label {
+    -fx-text-fill: white;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #ff8c00; } /* Orange pour les posts */
+.default-color1.chart-series-line { -fx-stroke: #00bfff; } /* Bleu pour les commentaires */
+.default-color2.chart-series-line { -fx-stroke: #32cd32; } /* Vert pour les réactions */
+
+.default-color0.chart-line-symbol { -fx-background-color: #ff8c00, white; }
+.default-color1.chart-line-symbol { -fx-background-color: #00bfff, white; }
+.default-color2.chart-line-symbol { -fx-background-color: #32cd32, white; }
+
+/*couleur de texte avec animation */
+.gradientextanimation {
+    background: linear-gradient(
+            to right,
+            #7953cd 20%,
+            #00affa 30%,
+            #0190cd 70%,
+            #764ada 80%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+
+}
+@keyframes textShine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+/*type de text */
+.MyClubLifeFONT{
+    font-family: Comic Sans MS;
+    font-size: 100px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+
+    font-weight: bold;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}

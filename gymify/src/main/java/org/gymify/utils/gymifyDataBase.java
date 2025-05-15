@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class gymifyDataBase {
     static gymifyDataBase instance;
 
-    final String URL = "jdbc:mysql://localhost:3306/projweb";
+    final String URL = "jdbc:mysql://localhost:3306/projweb8";
 
 
 

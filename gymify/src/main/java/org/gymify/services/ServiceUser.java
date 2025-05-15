@@ -507,4 +507,58 @@ public class ServiceUser implements IGestionUser<User> {
     public List<User> getUtilisateurByRole(String role) throws SQLException {
         return rechercherParRole(role); // Remplacement de la méthode non implémentée
     }
+    // ajout code ranym
+
+    public User getUserById(int id) {
+        User user = null;
+        String query = "SELECT * FROM user WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role")
+                );
+                user.setImage_url(rs.getString("image_url"));
+            } else {
+                System.err.println("⚠️ Aucun utilisateur trouvé pour l'ID : " + id);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la récupération de l'utilisateur : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+
+    public String getUsernameById(int id_User) {
+        String query = "SELECT username FROM user WHERE id_User = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id_User);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("username");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Utilisateur inconnu"; // Valeur par défaut si l'utilisateur n'est pas trouvé
+    }
+
+
+
+
+
+
+
+
 }

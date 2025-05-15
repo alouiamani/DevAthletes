@@ -32,11 +32,10 @@
             <version>6.3.1</version> <!-- Use the latest version -->
         </dependency>
         <!-- Database connection -->
-        <!-- Database -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.2.0</version>
+            <version>8.0.33</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
@@ -44,24 +43,14 @@
             <version>1.6.2</version>
         </dependency>
         <dependency>
-            <groupId>com.stripe</groupId>
-            <artifactId>stripe-java</artifactId>
-            <version>24.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.activation</groupId>
-            <artifactId>javax.activation</artifactId>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
             <version>1.2.0</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.angus</groupId>
-            <artifactId>angus-mail</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.activation</groupId>
-            <artifactId>jakarta.activation-api</artifactId>
-            <version>2.1.0</version>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
         <!-- JavaFX dependencies -->
         <dependency>
@@ -106,7 +95,12 @@
             <version>0.47.3</version>
         </dependency>
 
-
+        <!-- Email handling -->
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
         <!-- BCrypt for password hashing -->
         <dependency>
@@ -114,6 +108,19 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
+        <!-- Jakarta activation and mail API -->
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
         <!-- FontAwesome for JavaFX -->
         <dependency>
             <groupId>de.jensd</groupId>
@@ -171,32 +178,87 @@
             <version>v3-rev20220715-2.0.0</version>
         </dependency>
         <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.2</version>
-       </dependency>
-</dependencies>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+
+
+
+
+        <!-- JFoenix (compatible avec JavaFX 17+) -->
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+        <!-- OkHttp -->
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version>
+        </dependency>
+        <!-- Okio -->
+        <!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+        <!-- Gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.assemblyai</groupId>
+            <artifactId>assemblyai-java</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.ibm.watson</groupId>
+            <artifactId>ibm-watson</artifactId>
+            <version>11.0.0</version>
+        </dependency>
+
+
+
+
+
+
+
+
+
+
+    </dependencies>
 
     <build>
         <plugins>
-            <!-- Main compiler plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-
-            <!-- JavaFX plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.gymify.tests.MainApp</mainClass>
+                    <mainClass>org.gymify.tests.MainApp</mainClass> <!-- Ensure this is correct -->
                 </configuration>
             </plugin>
         </plugins>
