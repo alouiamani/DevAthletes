@@ -291,8 +291,7 @@ public class ServiceUser implements IGestionUser<User> {
                             rs.getString("prenom"),
                             rs.getString("email"),
                             rs.getString("password"),
-                            rs.getString("role"),
-                            rs.getInt("id")
+                            rs.getString("role")
                     );
                     user.setDate_naissance(rs.getDate("date_naissance"));
                     user.setImage_url(rs.getString("image_url"));
@@ -310,7 +309,7 @@ public class ServiceUser implements IGestionUser<User> {
         }
         User user = getUserByEmail(email);
         if (user == null) {
-            // If email doesn’t exist, create a new sportif
+            // If email doesn't exist, create a new sportif
             user = new User("Nouveau", "Sportif", email, password, "sportif");
             ajouter(user);
             return Optional.of(user);

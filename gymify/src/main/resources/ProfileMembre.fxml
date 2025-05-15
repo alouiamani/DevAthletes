@@ -39,9 +39,9 @@
                         <MenuItem text="Reclamation" />
                      </items>
                   </Menu>
-                  <Menu onAction="#ouvrirEvent" style="-fx-text-fill: white;" text="Events">
+                  <Menu style="-fx-text-fill: white;" text="Events">
                      <items>
-                        <MenuItem text="About" />
+                        <MenuItem onAction="#ouvrirEvent" text="Liste des événements" />
                      </items>
                   </Menu>
                   <Menu style="-fx-text-fill: white;" text="Product">
