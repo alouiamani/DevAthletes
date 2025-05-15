@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProductCatalogSportifController" spacing="20" alignment="TOP_CENTER" style="-fx-background-color: #f8fafd; -fx-padding: 30;">
+    <Label text="Boutique des Produits" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2d4043;" />
+    <ScrollPane fitToWidth="true" prefHeight="300">
+        <content>
+            <TilePane fx:id="productGrid" hgap="20" vgap="20" prefColumns="3" style="-fx-padding: 10;" />
+        </content>
+    </ScrollPane>
+    <Label text="Mon Panier" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2d4043;" />
+    <TableView fx:id="cartTable" prefHeight="150" style="-fx-background-radius: 10;">
+        <columns>
+            <TableColumn fx:id="cartColImage" text="Image" prefWidth="60" />
+            <TableColumn fx:id="cartColName" text="Nom" prefWidth="120" />
+            <TableColumn fx:id="cartColPrice" text="Prix" prefWidth="60" />
+            <TableColumn fx:id="cartColQuantity" text="Quantité" prefWidth="80" />
+            <TableColumn fx:id="cartColTotal" text="Total" prefWidth="80" />
+            <TableColumn fx:id="cartColRemove" text="" prefWidth="40" />
+        </columns>
+    </TableView>
+    <HBox spacing="30" alignment="CENTER_RIGHT">
+        <Label text="Total :" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <Label fx:id="cartTotalLabel" text="0.00" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4db178;" />
+        <Button fx:id="validateCartBtn" text="Valider la commande" style="-fx-background-color: #4db178; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+    </HBox>
+    <Separator />
+    <Label text="Mes Commandes" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2d4043;" />
+    <TableView fx:id="myCommandesTable" prefHeight="180" style="-fx-background-radius: 10;">
+        <columns>
+            <TableColumn fx:id="cmdColId" text="ID" prefWidth="40" />
+            <TableColumn fx:id="cmdColDate" text="Date" prefWidth="120" />
+            <TableColumn fx:id="cmdColTotal" text="Total" prefWidth="80" />
+            <TableColumn fx:id="cmdColStatus" text="Statut" prefWidth="100" />
+            <TableColumn fx:id="cmdColCancel" text="" prefWidth="80" />
+        </columns>
+    </TableView>
+</VBox> 

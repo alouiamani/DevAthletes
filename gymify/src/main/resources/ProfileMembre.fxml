@@ -31,7 +31,7 @@
                   </Menu>
                   <Menu fx:id="BlogsMenuBar" mnemonicParsing="false" text="Blogs">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#ouvrirBlogs" text="Blxxxxxxogs" />
+                        <MenuItem mnemonicParsing="false" onAction="#ouvrirBlogs" text=" Blogs" />
                      </items>
                   </Menu>
                   <Menu fx:id="ReclamationMenuBar" onAction="#ouvrirReclamation" style="-fx-text-fill: white;" text="Reclamation">
@@ -44,11 +44,7 @@
                         <MenuItem onAction="#ouvrirEvent" text="Liste des événements" />
                      </items>
                   </Menu>
-                  <Menu style="-fx-text-fill: white;" text="Product">
-                     <items>
-                        <MenuItem text="Close" />
-                     </items>
-                  </Menu>
+                  <Menu mnemonicParsing="false" text="Product"> <items> <MenuItem mnemonicParsing="false" text="Voir Produits" onAction="#ouvrirProduit" /> </items> </Menu>
                   <Menu fx:id="Sallemenubare" onAction="#ouvrirSalle" style="-fx-text-fill: white;" text="Salle">
                      <items>
                         <MenuItem text="Explore" />
