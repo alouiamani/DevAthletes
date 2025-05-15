@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -9,121 +10,144 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
+<ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
    <content>
-      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
+      <AnchorPane prefWidth="800.0" style="-fx-background-color: #121212;">
          <children>
-            <MenuBar layoutX="-105.0" prefHeight="42.0" prefWidth="910.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
+
+            <!-- MenuBar -->
+            <MenuBar prefHeight="42.0" style="-fx-background-color: #FF6D00;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <menus>
-                  <Menu mnemonicParsing="false" text="                                                                                                                                   Activity">
+                  <Menu style="-fx-text-fill: white;" text="Activity">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem text="Close" />
                      </items>
                   </Menu>
-
-
-
-                  <Menu fx:id="BlogsMenuBar" mnemonicParsing="false" text="Blogs">
+                  <Menu style="-fx-text-fill: white;" text="Blog">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#ouvrirBlogs" text="Blogs" />
+                        <MenuItem text="Delete" />
                      </items>
                   </Menu>
-
-
-
-
-
-                  <Menu fx:id="ReclamationMenuBar" mnemonicParsing="false" onAction="#ouvrirReclamation" text="Reclamation">
+                  <Menu fx:id="ReclamationMenuBar" onAction="#ouvrirReclamation" style="-fx-text-fill: white;" text="Reclamation">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Reclamation" />
+                        <MenuItem text="Reclamation" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" onAction="#ouvrirEvent" text="Events">
+                  <Menu onAction="#ouvrirEvent" style="-fx-text-fill: white;" text="Events">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem text="About" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Product">
+                  <Menu style="-fx-text-fill: white;" text="Product">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem text="Close" />
                      </items>
                   </Menu>
-                  <Menu fx:id="Sallemenubare" mnemonicParsing="false" onAction="#ouvrirSalle" text="salle">
+                  <Menu fx:id="Sallemenubare" onAction="#ouvrirSalle" style="-fx-text-fill: white;" text="Salle">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="explore" />
+                        <MenuItem text="Explore" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" onAction="#ShowPlanning" text="planning">
+                  <Menu onAction="#ShowPlanning" style="-fx-text-fill: white;" text="Planning">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="explore" />
+                        <MenuItem text="Explore" />
                      </items>
                   </Menu>
                </menus>
             </MenuBar>
-            <ImageView fitHeight="309.0" fitWidth="810.0" layoutX="-4.0" layoutY="40.0" opacity="0.47" pickOnBounds="true" smooth="false">
+
+            <!-- Image header -->
+            <ImageView fitHeight="309.0" fitWidth="800.0" layoutY="42.0" opacity="0.8" pickOnBounds="true">
                <image>
                   <Image url="@images/vecteezy_ai-generated-a-gym-with-dark-exercise-equipment_37170421.jpg" />
                </image>
             </ImageView>
-            <Text fill="#2c4f6b" fontSmoothingType="LCD" layoutX="157.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Gymify" textAlignment="CENTER" wrappingWidth="418.5367126464844">
-               <font>
-                  <Font name="Tw Cen MT Condensed Bold" size="78.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="82.0" fitWidth="143.0" layoutX="-32.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+
+            <!-- Logo -->
+            <ImageView fitHeight="82.0" fitWidth="143.0" layoutX="10.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
-            <VBox layoutY="350.0" prefHeight="500.0" prefWidth="787.0">
+
+            <!-- Titre -->
+            <Text fill="#FF6D00" fontSmoothingType="LCD" layoutX="100.0" layoutY="181.0" strokeType="OUTSIDE" text="Welcome To Gymify" wrappingWidth="600.0">
+               <font>
+                  <Font name="Tw Cen MT Condensed Bold" size="78.0" />
+               </font>
+            </Text>
+
+            <!-- Sign out -->
+            <Button layoutX="694.0" layoutY="53.0" onAction="#onLogoutButtonClick" style="-fx-background-color: transparent; -fx-text-fill: #FF6D00; -fx-border-color: #FF6D00; -fx-border-radius: 10px;" text="Sign Out" />
+
+            <!-- Contenu principal -->
+            <VBox layoutX="10.0" layoutY="350.0" spacing="20" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <AnchorPane fx:id="infouserid" prefHeight="134.0" prefWidth="758.0" style="-fx-background-color: #BAD7E6FF; -fx-background-radius: 19px;" stylesheets="/style.css">
+
+                  <!-- Carte utilisateur -->
+                  <AnchorPane fx:id="infouserid" prefHeight="182.0" style="-fx-background-color: #1E1E1E; -fx-background-radius: 15px; -fx-border-color: #FF6D00; -fx-border-radius: 15px; -fx-border-width: 2px;">
                      <children>
-                        <Circle fill="#eaeef2" layoutX="96.0" layoutY="67.0" radius="58.0" stroke="#0c629e" strokeType="INSIDE" />
-                        <ImageView fx:id="profileImage" fitHeight="93.0" fitWidth="95.0" layoutX="49.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label layoutX="185.0" layoutY="42.0" text="Username: ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="usernameid" layoutX="294.0" layoutY="43.0" prefHeight="7.0" prefWidth="59.0" text="Username" />
-                        <Label layoutX="192.0" layoutY="78.0" text="Email :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="emailid" layoutX="294.0" layoutY="79.0" text="Email " />
-                        <Button fx:id="EditId" layoutX="536.0" layoutY="20.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Edit" textFill="#335581">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button layoutX="698.0" layoutY="98.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sign Out" />
-                        <Button layoutX="536.0" layoutY="59.0" mnemonicParsing="false" onAction="#editPersonalInfo" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text=" edit Personnal Info" textFill="#335581">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button layoutX="536.0" layoutY="98.0" mnemonicParsing="false" onAction="#PlanningForYou" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #dde0e4; -fx-background-radius: 15px;" styleClass="LoginBtn" text="Planning For You" textFill="#335581">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Button>
+                        <Circle fill="transparent" layoutX="90.0" layoutY="90.0" radius="70.0" stroke="#FF6D00" strokeType="INSIDE" strokeWidth="3" />
+                        <ImageView fx:id="profileImage" fitHeight="120.0" fitWidth="120.0" layoutX="30.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+
+                        <VBox layoutX="180.0" layoutY="30.0" spacing="10">
+                           <children>
+                              <HBox spacing="10">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold;" text="Username:" textFill="#FF6D00">
+                                       <font><Font size="14.0" /></font>
+                                    </Label>
+                                    <Label fx:id="usernameid" text="Username" textFill="white" />
+                                 </children>
+                              </HBox>
+                              <HBox spacing="10">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold;" text="Email:" textFill="#FF6D00">
+                                       <font><Font size="14.0" /></font>
+                                    </Label>
+                                    <Label fx:id="emailid" text="Email" textFill="white" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+
+                        <VBox layoutX="520.0" layoutY="30.0" spacing="10">
+                           <children>
+                              <Button onAction="#editPersonalInfo" prefWidth="200.0" style="-fx-background-color: #FF6D00; -fx-background-radius: 15px;" text="Edit Personal Info" textFill="white">
+                                 <font><Font name="System Bold" size="14.0" /></font>
+                              </Button>
+                              <Button onAction="#PlanningForYou" prefWidth="200.0" style="-fx-background-color: #FF6D00; -fx-background-radius: 15px;" text="Planning For You" textFill="white">
+                                 <font><Font name="System Bold" size="14.0" /></font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
-                  <!-- Ajout du ScrollPane pour la liste des salles sous les informations de l'utilisateur -->
-                  <ScrollPane layoutY="134.0" prefHeight="300.0" prefWidth="787.0">
-                     <content>
-                        <VBox fx:id="sallesContainer" prefHeight="330.0" prefWidth="770.0" spacing="10" />
-                     </content>
-                  </ScrollPane>
+
+                  <!-- Liste des salles -->
+                  <VBox spacing="10" style="-fx-background-color: #1E1E1E; -fx-border-color: #FF6D00; -fx-border-radius: 15px; -fx-border-width: 2px;">
+                     <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Your Gym Spaces" textFill="#FF6D00">
+                           <font><Font size="18.0" /></font>
+                        </Label>
+                        <ScrollPane prefHeight="250.0" style="-fx-background: transparent; -fx-border-color: transparent;">
+                           <content>
+                              <VBox fx:id="sallesContainer" spacing="15" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+
                </children>
             </VBox>
+
          </children>
       </AnchorPane>
    </content>
