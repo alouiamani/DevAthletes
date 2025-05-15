@@ -29,9 +29,9 @@
                         <MenuItem text="Close" />
                      </items>
                   </Menu>
-                  <Menu style="-fx-text-fill: white;" text="Blog">
+                  <Menu fx:id="BlogsMenuBar" mnemonicParsing="false" text="Blogs">
                      <items>
-                        <MenuItem text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#ouvrirBlogs" text="Blxxxxxxogs" />
                      </items>
                   </Menu>
                   <Menu fx:id="ReclamationMenuBar" onAction="#ouvrirReclamation" style="-fx-text-fill: white;" text="Reclamation">
