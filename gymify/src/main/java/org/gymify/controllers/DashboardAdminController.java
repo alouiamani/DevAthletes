@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Dialog;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -53,13 +54,14 @@ public class DashboardAdminController  {
     @FXML private NumberAxis yAxis;
     @FXML private TextField searchRoleField;
     @FXML
+
     private Label totalUsersLabel;
     @FXML private TextField AddEmailFx, AddFirstNameFx, AddLastNameFx, searchUserField;
     @FXML private PasswordField AddPsswdFx;
     @FXML private ChoiceBox<String> AddRoleFx, AddSpecialiteFx;
     @FXML private DatePicker AddBirthFx;
     @FXML private VBox VBoxId;
-    @FXML private AnchorPane addUserPane, homePane, listUsersPane, manageClaimsPane, EditUserPane;
+    @FXML private AnchorPane addUserPane, homePane, listUsersPane, manageClaimsPane, EditUserPane, produitPane, commandePane;
     @FXML private Label welcomeLabel;
     @FXML private ImageView profileImage;
     @FXML private TextField EditEmailId, EditNomId, EditPrenomId;
@@ -74,6 +76,30 @@ public class DashboardAdminController  {
     private final ServiceUser serviceUser = new ServiceUser() {
 
     };
+    @FXML private TableView<org.gymify.entities.Produit> produitTable;
+    @FXML private TableColumn<org.gymify.entities.Produit, Integer> colIdP;
+    @FXML private TableColumn<org.gymify.entities.Produit, String> colNomP;
+    @FXML private TableColumn<org.gymify.entities.Produit, Double> colPrixP;
+    @FXML private TableColumn<org.gymify.entities.Produit, Integer> colStockP;
+    @FXML private TableColumn<org.gymify.entities.Produit, String> colCategorieP;
+    @FXML private TableColumn<org.gymify.entities.Produit, String> colImagePath;
+    @FXML private TableColumn<org.gymify.entities.Produit, java.util.Date> colUpdatedAt;
+    @FXML private Button addProduitBtn, editProduitBtn, deleteProduitBtn;
+    private final org.gymify.services.ProduitService produitService = new org.gymify.services.ProduitService();
+    @FXML private TableView<org.gymify.entities.Commande> commandeTable;
+    @FXML private TableColumn<org.gymify.entities.Commande, Integer> colIdC;
+    @FXML private TableColumn<org.gymify.entities.Commande, Double> colTotalC;
+    @FXML private TableColumn<org.gymify.entities.Commande, java.util.Date> colDateC;
+    @FXML private TableColumn<org.gymify.entities.Commande, String> colStatutC;
+    @FXML private TableColumn<org.gymify.entities.Commande, Integer> colUserId;
+    @FXML private TableColumn<org.gymify.entities.Commande, String> colPhoneNumber;
+    @FXML private Button deleteCommandeBtn;
+    @FXML private Button editCommandeStatusBtn;
+    private final org.gymify.services.CommandeService commandeService = new org.gymify.services.CommandeService();
+    @FXML private TextField searchProduitField, searchCommandeField;
+    private javafx.collections.ObservableList<org.gymify.entities.Produit> allProduits = javafx.collections.FXCollections.observableArrayList();
+    private javafx.collections.ObservableList<org.gymify.entities.Commande> allCommandes = javafx.collections.FXCollections.observableArrayList();
+
     public void initialize() {
         // Load the profile image
         try {
@@ -145,6 +171,38 @@ public class DashboardAdminController  {
 
         afficherCourbeStatistiques();
         listUsersInVBox();
+        setupProduitTable();
+        addProduitBtn.setOnAction(this::handleAddProduit);
+        editProduitBtn.setOnAction(this::handleEditProduit);
+        deleteProduitBtn.setOnAction(this::handleDeleteProduit);
+        setupCommandeTable();
+        deleteCommandeBtn.setOnAction(this::handleDeleteCommande);
+        editCommandeStatusBtn.setOnAction(this::handleEditCommandeStatus);
+
+        // Live search for products
+        if (searchProduitField != null) {
+            searchProduitField.textProperty().addListener((obs, oldVal, newVal) -> {
+                String filter = newVal.toLowerCase();
+                produitTable.setItems(allProduits.filtered(p ->
+                    p.getNom_p().toLowerCase().contains(filter) ||
+                    p.getCategorie_p().toLowerCase().contains(filter) ||
+                    String.valueOf(p.getPrix_p()).contains(filter) ||
+                    String.valueOf(p.getStock_p()).contains(filter)
+                ));
+            });
+        }
+        // Live search for commandes
+        if (searchCommandeField != null) {
+            searchCommandeField.textProperty().addListener((obs, oldVal, newVal) -> {
+                String filter = newVal.toLowerCase();
+                commandeTable.setItems(allCommandes.filtered(c ->
+                    String.valueOf(c.getId_c()).contains(filter) ||
+                    String.valueOf(c.getTotal_c()).contains(filter) ||
+                    (c.getStatut_c() != null && c.getStatut_c().toLowerCase().contains(filter)) ||
+                    (c.getPhone_number() != null && c.getPhone_number().toLowerCase().contains(filter))
+                ));
+            });
+        }
     }
     @FXML
     private void onListGymButtonClick(ActionEvent event) {
@@ -428,6 +486,14 @@ public class DashboardAdminController  {
         listUsersPane.setVisible(false);
         addUserPane.setVisible(false);
         EditUserPane.setVisible(false);
+        produitPane.setVisible(false);
+        commandePane.setVisible(false);
+        if (paneToShow == produitPane) {
+            loadProduitsInTable();
+        }
+        if (paneToShow == commandePane) {
+            loadCommandesInTable();
+        }
         paneToShow.setVisible(true);
     }
 
@@ -517,5 +583,309 @@ public class DashboardAdminController  {
         // Mise à jour des labels
         xAxis.setLabel("Rôle");
         yAxis.setLabel("Nombre d'utilisateurs");
+    }
+
+    @FXML
+    private void onProduitButtonClick(ActionEvent event) {
+        showPane(produitPane);
+    }
+
+    @FXML
+    private void onCommandeButtonClick(ActionEvent event) {
+        showPane(commandePane);
+    }
+
+    private void setupProduitTable() {
+        colIdP.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId_p()).asObject());
+        colNomP.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNom_p()));
+        colPrixP.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPrix_p()).asObject());
+        colStockP.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getStock_p()).asObject());
+        colCategorieP.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCategorie_p()));
+        colImagePath.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getImage_path()));
+        colImagePath.setCellFactory(col -> new javafx.scene.control.TableCell<>() {
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(40);
+                imageView.setFitWidth(60);
+                imageView.setPreserveRatio(true);
+            }
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+                if (empty || imagePath == null || imagePath.isEmpty()) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        Image img = new Image(new java.io.File(imagePath).toURI().toString(), 60, 40, true, true);
+                        imageView.setImage(img);
+                        setGraphic(imageView);
+                    } catch (Exception e) {
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
+        colUpdatedAt.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getUpdated_at()));
+    }
+
+    private void loadProduitsInTable() {
+        try {
+            java.util.List<org.gymify.entities.Produit> produits = produitService.getAllProduits();
+            allProduits.setAll(produits);
+            produitTable.setItems(allProduits);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les produits: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleAddProduit(ActionEvent event) {
+        Dialog<org.gymify.entities.Produit> dialog = new Dialog<>();
+        dialog.setTitle("Ajouter un produit");
+        dialog.setHeaderText("Entrez les informations du produit");
+
+        Label nomLabel = new Label("Nom:");
+        TextField nomField = new TextField();
+        Label prixLabel = new Label("Prix:");
+        TextField prixField = new TextField();
+        Label stockLabel = new Label("Stock:");
+        TextField stockField = new TextField();
+        Label categorieLabel = new Label("Catégorie:");
+        TextField categorieField = new TextField();
+        Label imageLabel = new Label("Image:");
+        TextField imageField = new TextField();
+        imageField.setEditable(false);
+        Button browseBtn = new Button("Choisir...");
+        browseBtn.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisir une image");
+            fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            java.io.File file = fileChooser.showOpenDialog(dialog.getDialogPane().getScene().getWindow());
+            if (file != null) {
+                imageField.setText(file.getAbsolutePath());
+            }
+        });
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(nomLabel, 0, 0); grid.add(nomField, 1, 0);
+        grid.add(prixLabel, 0, 1); grid.add(prixField, 1, 1);
+        grid.add(stockLabel, 0, 2); grid.add(stockField, 1, 2);
+        grid.add(categorieLabel, 0, 3); grid.add(categorieField, 1, 3);
+        grid.add(imageLabel, 0, 4); grid.add(imageField, 1, 4); grid.add(browseBtn, 2, 4);
+        dialog.getDialogPane().setContent(grid);
+        ButtonType saveButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                try {
+                    String nom = nomField.getText().trim();
+                    double prix = Double.parseDouble(prixField.getText().trim());
+                    int stock = Integer.parseInt(stockField.getText().trim());
+                    String categorie = categorieField.getText().trim();
+                    String image = imageField.getText().trim();
+                    java.util.Date now = new java.util.Date();
+                    return new org.gymify.entities.Produit(0, nom, prix, stock, categorie, image, now);
+                } catch (Exception e) {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Champs invalides: " + e.getMessage());
+                }
+            }
+            return null;
+        });
+        dialog.showAndWait().ifPresent(produit -> {
+            try {
+                produitService.addProduit(produit);
+                loadProduitsInTable();
+                showAlert(Alert.AlertType.INFORMATION, "Succès", "Produit ajouté avec succès.");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ajouter le produit: " + e.getMessage());
+            }
+        });
+    }
+    @FXML
+    private void handleEditProduit(ActionEvent event) {
+        org.gymify.entities.Produit selected = produitTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucun produit sélectionné", "Veuillez sélectionner un produit à modifier.");
+            return;
+        }
+        Dialog<org.gymify.entities.Produit> dialog = new Dialog<>();
+        dialog.setTitle("Modifier le produit");
+        dialog.setHeaderText("Modifiez les informations du produit");
+
+        Label nomLabel = new Label("Nom:");
+        TextField nomField = new TextField(selected.getNom_p());
+        Label prixLabel = new Label("Prix:");
+        TextField prixField = new TextField(String.valueOf(selected.getPrix_p()));
+        Label stockLabel = new Label("Stock:");
+        TextField stockField = new TextField(String.valueOf(selected.getStock_p()));
+        Label categorieLabel = new Label("Catégorie:");
+        TextField categorieField = new TextField(selected.getCategorie_p());
+        Label imageLabel = new Label("Image:");
+        TextField imageField = new TextField(selected.getImage_path());
+        imageField.setEditable(false);
+        Button browseBtn = new Button("Choisir...");
+        browseBtn.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisir une image");
+            fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            java.io.File file = fileChooser.showOpenDialog(dialog.getDialogPane().getScene().getWindow());
+            if (file != null) {
+                imageField.setText(file.getAbsolutePath());
+            }
+        });
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(nomLabel, 0, 0); grid.add(nomField, 1, 0);
+        grid.add(prixLabel, 0, 1); grid.add(prixField, 1, 1);
+        grid.add(stockLabel, 0, 2); grid.add(stockField, 1, 2);
+        grid.add(categorieLabel, 0, 3); grid.add(categorieField, 1, 3);
+        grid.add(imageLabel, 0, 4); grid.add(imageField, 1, 4); grid.add(browseBtn, 2, 4);
+        dialog.getDialogPane().setContent(grid);
+        ButtonType saveButtonType = new ButtonType("Enregistrer", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                try {
+                    String nom = nomField.getText().trim();
+                    double prix = Double.parseDouble(prixField.getText().trim());
+                    int stock = Integer.parseInt(stockField.getText().trim());
+                    String categorie = categorieField.getText().trim();
+                    String image = imageField.getText().trim();
+                    java.util.Date now = new java.util.Date();
+                    return new org.gymify.entities.Produit(selected.getId_p(), nom, prix, stock, categorie, image, now);
+                } catch (Exception e) {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Champs invalides: " + e.getMessage());
+                }
+            }
+            return null;
+        });
+        dialog.showAndWait().ifPresent(produit -> {
+            try {
+                produitService.updateProduit(produit);
+                loadProduitsInTable();
+                showAlert(Alert.AlertType.INFORMATION, "Succès", "Produit modifié avec succès.");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de modifier le produit: " + e.getMessage());
+            }
+        });
+    }
+    @FXML
+    private void handleDeleteProduit(ActionEvent event) {
+        org.gymify.entities.Produit selected = produitTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucun produit sélectionné", "Veuillez sélectionner un produit à supprimer.");
+            return;
+        }
+        try {
+            // Delete all related order lines first
+            try (java.sql.Connection con = org.gymify.utils.gymifyDataBase.getInstance().getConnection();
+                 java.sql.PreparedStatement ps = con.prepareStatement("DELETE FROM ligne_commande WHERE produit_id = ?")) {
+                ps.setInt(1, selected.getId_p());
+                ps.executeUpdate();
+            }
+            // Now delete the product
+            produitService.deleteProduit(selected.getId_p());
+            loadProduitsInTable();
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Produit supprimé avec succès.");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de supprimer le produit: " + e.getMessage());
+        }
+    }
+
+    private boolean isProductReferencedInLigneCommande(int produitId) {
+        try (java.sql.Connection con = org.gymify.utils.gymifyDataBase.getInstance().getConnection();
+             java.sql.PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM ligne_commande WHERE produit_id = ?")) {
+            ps.setInt(1, produitId);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            // Optionally log error
+        }
+        return false;
+    }
+
+    private void setupCommandeTable() {
+        colIdC.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId_c()).asObject());
+        colTotalC.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getTotal_c()).asObject());
+        colDateC.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getDate_c()));
+        colStatutC.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatut_c()));
+        colUserId.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getUser_id()));
+        colPhoneNumber.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPhone_number()));
+    }
+
+    private void loadCommandesInTable() {
+        try {
+            java.util.List<org.gymify.entities.Commande> commandes = commandeService.getAllCommandes();
+            allCommandes.setAll(commandes);
+            commandeTable.setItems(allCommandes);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les commandes: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleDeleteCommande(ActionEvent event) {
+        org.gymify.entities.Commande selected = commandeTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucune commande sélectionnée", "Veuillez sélectionner une commande à supprimer.");
+            return;
+        }
+        try {
+            commandeService.deleteCommande(selected.getId_c());
+            loadCommandesInTable();
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Commande supprimée avec succès.");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de supprimer la commande: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleEditCommandeStatus(ActionEvent event) {
+        org.gymify.entities.Commande selected = commandeTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucune commande sélectionnée", "Veuillez sélectionner une commande à modifier.");
+            return;
+        }
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Modifier le statut de la commande");
+        dialog.setHeaderText("Choisissez le nouveau statut");
+        ChoiceBox<String> statusChoice = new ChoiceBox<>();
+        statusChoice.getItems().addAll("En cours", "Validée", "Annulée");
+        statusChoice.setValue(selected.getStatut_c() != null ? selected.getStatut_c() : "En cours");
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(new Label("Statut:"), 0, 0);
+        grid.add(statusChoice, 1, 0);
+        dialog.getDialogPane().setContent(grid);
+        ButtonType saveButtonType = new ButtonType("Enregistrer", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                return statusChoice.getValue();
+            }
+            return null;
+        });
+        dialog.showAndWait().ifPresent(newStatus -> {
+            try {
+                selected.setStatut_c(newStatus);
+                commandeService.updateCommande(selected);
+                loadCommandesInTable();
+                showAlert(Alert.AlertType.INFORMATION, "Succès", "Statut de la commande mis à jour.");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de mettre à jour le statut: " + e.getMessage());
+            }
+        });
     }
 }

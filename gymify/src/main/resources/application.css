@@ -2,7 +2,7 @@
 .root {
     -fx-primary-color: #2E7D32;
     -fx-secondary-color: #F5F5F5;
-    -fx-text-color: #212121;
+    -fx-text-fill: #212121;
     -fx-error-color: #D32F2F;
     -fx-hover-color: #4CAF50;
     -fx-font-family: 'Arial', sans-serif;
@@ -30,13 +30,13 @@
 .header-label {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-color;
+    -fx-text-fill: -fx-text-fill;
 }
 
 /* Form labels */
 .form-label {
     -fx-font-size: 16px;
-    -fx-text-fill: -fx-text-color;
+    -fx-text-fill: -fx-text-fill;
 }
 
 /* Input fields */
@@ -103,7 +103,7 @@
 .card-title {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-color;
+    -fx-text-fill: -fx-text-fill;
 }
 
 /* Card text */

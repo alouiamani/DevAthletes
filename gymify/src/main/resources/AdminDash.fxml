@@ -16,8 +16,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
 <AnchorPane fx:id="rootPane" prefHeight="555.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.DashboardAdminController"> <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -115,6 +118,30 @@
                                     <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@images/logout.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Arial" size="8.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="ProduitId" mnemonicParsing="false" onAction="#onProduitButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Produits">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Arial" size="8.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="CommandeId" mnemonicParsing="false" onAction="#onCommandeButtonClick" prefHeight="26.0" prefWidth="117.0" styleClass="nav-btn" stylesheets="@style.css" text="Commandes">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -379,6 +406,52 @@
                               </AnchorPane>
                            </content>
                         </ScrollPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="produitPane" layoutX="15.0" layoutY="15.0" prefHeight="494.0" prefWidth="603.0" style="-fx-border-radius: 9px;" visible="false">
+                     <children>
+                        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: #f8fafd; -fx-padding: 20; -fx-background-radius: 10;">
+                            <Label text="Gestion des Produits" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2d4043;" />
+                            <TextField fx:id="searchProduitField" promptText="Rechercher un produit..." style="-fx-background-radius: 8; -fx-padding: 6;" />
+                            <TableView fx:id="produitTable" prefHeight="300.0" prefWidth="580.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #b0b0b0, 10, 0, 0, 2);">
+                                <columns>
+                                    <TableColumn fx:id="colIdP" text="ID" prefWidth="40" />
+                                    <TableColumn fx:id="colNomP" text="Nom" prefWidth="100" />
+                                    <TableColumn fx:id="colPrixP" text="Prix" prefWidth="60" />
+                                    <TableColumn fx:id="colStockP" text="Stock" prefWidth="60" />
+                                    <TableColumn fx:id="colCategorieP" text="Catégorie" prefWidth="100" />
+                                    <TableColumn fx:id="colImagePath" text="Image" prefWidth="120" />
+                                    <TableColumn fx:id="colUpdatedAt" text="Mis à jour" prefWidth="100" />
+                                </columns>
+                            </TableView>
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button fx:id="addProduitBtn" text="Ajouter" style="-fx-background-color: #4db178; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+                                <Button fx:id="editProduitBtn" text="Modifier" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+                                <Button fx:id="deleteProduitBtn" text="Supprimer" style="-fx-background-color: #e44f25; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+                            </HBox>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="commandePane" layoutX="15.0" layoutY="15.0" prefHeight="494.0" prefWidth="603.0" style="-fx-border-radius: 9px;" visible="false">
+                     <children>
+                        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: #f8fafd; -fx-padding: 20; -fx-background-radius: 10;">
+                            <Label text="Gestion des Commandes" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2d4043;" />
+                            <TextField fx:id="searchCommandeField" promptText="Rechercher une commande..." style="-fx-background-radius: 8; -fx-padding: 6;" />
+                            <TableView fx:id="commandeTable" prefHeight="300.0" prefWidth="580.0" style="-fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #b0b0b0, 10, 0, 0, 2);">
+                                <columns>
+                                    <TableColumn fx:id="colIdC" text="ID" prefWidth="40" />
+                                    <TableColumn fx:id="colTotalC" text="Total" prefWidth="80" />
+                                    <TableColumn fx:id="colDateC" text="Date" prefWidth="120" />
+                                    <TableColumn fx:id="colStatutC" text="Statut" prefWidth="80" />
+                                    <TableColumn fx:id="colUserId" text="User ID" prefWidth="60" />
+                                    <TableColumn fx:id="colPhoneNumber" text="Téléphone" prefWidth="100" />
+                                </columns>
+                            </TableView>
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button fx:id="deleteCommandeBtn" text="Supprimer" style="-fx-background-color: #e44f25; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+                                <Button fx:id="editCommandeStatusBtn" text="Edit Status" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
+                            </HBox>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </children>

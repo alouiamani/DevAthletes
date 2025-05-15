@@ -16,7 +16,7 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
    <content>
-      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
+      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: url('images/ggym.jpeg'); -fx-background-repeat: no-repeat; -fx-background-position: center center; -fx-background-size: cover;" stylesheets="/style.css">
          <children>
             <MenuBar layoutX="-105.0" prefHeight="42.0" prefWidth="910.0" style="-fx-background-color: #5999D6FF;" styleClass="nav-form" stylesheets="/style.css">
                <menus>
@@ -50,7 +50,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Product">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Voir Produits" onAction="#ouvrirProduit" />
                      </items>
                   </Menu>
                   <Menu fx:id="Sallemenubare" mnemonicParsing="false" onAction="#ouvrirSalle" text="salle">

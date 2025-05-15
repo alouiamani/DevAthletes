@@ -256,4 +256,20 @@ public class ProfileMembreController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void ouvrirProduit() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProductCatalogSportif.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Boutique des Produits");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Impossible d'ouvrir la boutique des produits: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
 }
