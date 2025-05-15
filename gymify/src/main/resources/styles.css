@@ -1,7 +1,14 @@
-/* Root styles */
+/* Root and global styles */
 .root {
     -fx-font-family: "Roboto", "Arial", sans-serif;
     -fx-background-color: linear-gradient(to bottom, #E8ECEF, #F5F5F5);
+}
+
+/* Header bar */
+.header-bar {
+    -fx-background-color: linear-gradient(to bottom, #1E3A8A, #1E40AF);
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
 }
 
 /* Headings */
@@ -36,7 +43,6 @@
     -fx-background-radius: 8px;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
-    -fx-transition: -fx-scale-x 0.2s, -fx-scale-y 0.2s, -fx-background-color 0.2s;
 }
 
 .button:hover {
@@ -61,6 +67,16 @@
     -fx-background-color: linear-gradient(to right, #4B5563, #374151);
 }
 
+/* Back button */
+.back-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.back-button .image-view {
+    -fx-opacity: 0.7;
+}
+
 /* Text fields and choice boxes */
 .text-field, .choice-box {
     -fx-background-color: #FFFFFF;
@@ -83,6 +99,7 @@
     -fx-padding: 10px 30px 10px 10px;
     -fx-graphic-text-gap: 10px;
 }
+
 /* Subscription card */
 .subscription-card {
     -fx-background-color: #FFFFFF;
@@ -92,31 +109,7 @@
     -fx-border-width: 1px;
     -fx-padding: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 0, 3);
-    -fx-transition: -fx-scale-x 0.2s, -fx-scale-y 0.2s;
     -fx-pref-width: 300px;
-}
-
-/* Regular labels */
-.label {
-    -fx-font-size: 14px;
-    -fx-text-fill: #1F2937;
-}
-
-/* Buttons */
-.button {
-    -fx-background-color: linear-gradient(to right, #3B82F6, #2563EB);
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 8px;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
-    -fx-transition: -fx-scale-x 0.2s, -fx-scale-y 0.2s, -fx-background-color 0.2s;
-}
-
-.button-cancel {
-    -fx-background-color: linear-gradient(to right, #EF4444, #DC2626);
 }
 
 .subscription-card:hover {
@@ -139,14 +132,7 @@
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 12px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 0, 3);
-    -fx-pref-width: 600px; /* Fixed width for form */
-}
-
-/* Header bar */
-.header-bar {
-    -fx-background-color: linear-gradient(to bottom, #1E3A8A, #1E40AF);
-    -fx-padding: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-pref-width: 600px;
 }
 
 /* Tooltip */

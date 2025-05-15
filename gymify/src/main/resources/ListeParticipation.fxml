@@ -7,9 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeParticipationController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ListeParticipationController">
     <VBox layoutY="0.0" prefHeight="600.0" prefWidth="600.0" spacing="8" style="-fx-background-color: #f8f9fa; -fx-padding: 8px; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
         <!-- AppBar -->
         <HBox prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #2e86de; -fx-padding: 10px; -fx-alignment: center; -fx-background-radius: 5px;">
@@ -25,12 +24,6 @@
         <!-- Liste des participations -->
         <ScrollPane fx:id="scrollPaneParticipations" fitToWidth="true" prefHeight="250.0" prefWidth="600.0" style="-fx-background: transparent; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <VBox fx:id="vboxParticipations" spacing="10" style="-fx-padding: 10px;" />
-        </ScrollPane>
-
-        <!-- Label et ScrollPane pour la météo hebdomadaire -->
-        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Météo de la semaine" />
-        <ScrollPane prefHeight="200.0" prefWidth="600.0" style="-fx-background: transparent; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5;" VBox.vgrow="NEVER">
-            <WebView fx:id="weatherWebView" prefWidth="600.0" style="-fx-border-color: #dcdcdc; -fx-border-radius: 5px;" />
         </ScrollPane>
     </VBox>
 </AnchorPane>

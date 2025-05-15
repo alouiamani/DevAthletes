@@ -3,6 +3,7 @@ package org.gymify.services;
 import org.gymify.entities.Entraineur;
 import org.gymify.entities.User;
 import org.gymify.utils.gymifyDataBase;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
@@ -90,7 +91,7 @@ public class ServiceUser implements IGestionUser<User> {
     public void modifier(User user) throws SQLException {
         String req = "UPDATE user SET nom = ?, prenom = ?, email = ?, role = ?, date_naissance = ?, image_url = ?, specialite = ?" +
                 (user.getPassword() != null && !user.getPassword().isEmpty() ? ", password = ?" : "") +
-                " WHERE id = ?";
+                ", equipe_id = ?   WHERE id = ?";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(req)) {
             pstmt.setString(1, user.getNom());
@@ -116,6 +117,12 @@ public class ServiceUser implements IGestionUser<User> {
                 pstmt.setString(parameterIndex, hashedPassword);
                 parameterIndex++;
             }
+            if (user.getId_equipe() != null) {
+                pstmt.setInt(parameterIndex, user.getId_equipe());
+            } else {
+                pstmt.setNull(parameterIndex, Types.INTEGER);
+            }
+            parameterIndex++;
             pstmt.setInt(parameterIndex, user.getId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -126,6 +133,7 @@ public class ServiceUser implements IGestionUser<User> {
             System.err.println("❌ Erreur lors de la modification de l'utilisateur : " + e.getMessage());
             throw e;
         }
+
     }
     @Override
     public void supprimer(int id) throws SQLException {
@@ -191,6 +199,9 @@ public class ServiceUser implements IGestionUser<User> {
                     entraineur.setId(user.getId());
                     entraineur.setDate_naissance(user.getDate_naissance());
                     entraineur.setImage_url(user.getImage_url());
+                    if (rs.getObject("equipe_id") != null) {
+                        entraineur.setId_equipe(rs.getInt("equipe_id"));
+                    }
                     users.add(entraineur);
                     users.add(user);
 
@@ -244,6 +255,9 @@ public class ServiceUser implements IGestionUser<User> {
                     user.setDate_naissance(rs.getDate("date_naissance"));
                 }
                 user.setImage_url(rs.getString("image_url"));
+                if (rs.getObject("equipe_id") != null) {
+                    user.setId_equipe(rs.getInt("equipe_id"));
+                }
                 users.add(user);
             }
             System.out.println("✅ Utilisateurs pour responsable récupérés : " + users.size());
@@ -260,7 +274,7 @@ public class ServiceUser implements IGestionUser<User> {
     }
 
 
-    public Optional<User> authentifier(String email, String password) {
+    public Optional<User> authentifier(String email, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE email = ?";
 
         try (PreparedStatement stmt = getConnection().prepareStatement(query)) {
@@ -282,6 +296,9 @@ public class ServiceUser implements IGestionUser<User> {
                     );
                     user.setDate_naissance(rs.getDate("date_naissance"));
                     user.setImage_url(rs.getString("image_url"));
+                    if (rs.getObject("equipe_id") != null) {
+                        user.setId_equipe(rs.getInt("equipe_id"));
+                    }
                     System.out.println("✅ Utilisateur authentifié : " + user.getEmail());
                     return Optional.of(user);
                 }
@@ -291,8 +308,25 @@ public class ServiceUser implements IGestionUser<User> {
             System.err.println("❌ Erreur SQL lors de l'authentification : " + e.getMessage());
             throw new RuntimeException("Erreur d'authentification utilisateur", e);
         }
-
+        User user = getUserByEmail(email);
+        if (user == null) {
+            // If email doesn’t exist, create a new sportif
+            user = new User("Nouveau", "Sportif", email, password, "sportif");
+            ajouter(user);
+            return Optional.of(user);
+        } else {
+            // For existing sportif, bypass password check; for others, enforce it
+            if ("sportif".equalsIgnoreCase(user.getRole())) {
+                return Optional.of(user); // No password validation for sportif
+            } else {
+                String hashedPassword = user.getPassword();
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return Optional.of(user);
+                }
+            }
+        }
         return Optional.empty();
+
     }
 
     public boolean loginValidate(String email, String password) {
@@ -379,6 +413,9 @@ public class ServiceUser implements IGestionUser<User> {
                     user.setDate_naissance(rs.getDate("date_naissance"));
                 }
                 user.setImage_url(rs.getString("image_url"));
+                if (rs.getObject("equipe_id") != null) {
+                    user.setId_equipe(rs.getInt("equipe_id"));
+                }
                 users.add(user);
             }
             System.out.println("✅ Utilisateurs trouvés pour le rôle " + role + " : " + users.size());
@@ -408,6 +445,9 @@ public class ServiceUser implements IGestionUser<User> {
                 );
                 user.setDate_naissance(resultSet.getDate("date_naissance"));
                         user.setImage_url(resultSet.getString("image_url"));
+                if (resultSet.getObject("equipe_id") != null) {
+                    user.setId_equipe(resultSet.getInt("equipe_id"));
+                }
                 if ("entraineur".equalsIgnoreCase(user.getRole())) {
                     Entraineur entraineur = new Entraineur(
                             user.getNom(), user.getPrenom(), user.getEmail(),
@@ -416,6 +456,7 @@ public class ServiceUser implements IGestionUser<User> {
                     );
                     entraineur.setId(user.getId());
                     entraineur.setImage_url(user.getImage_url());
+                    entraineur.setId_equipe(user.getId_equipe());
                     return Optional.of(entraineur);
                 }
                 return Optional.of(user);
@@ -527,6 +568,9 @@ public class ServiceUser implements IGestionUser<User> {
                         rs.getString("role")
                 );
                 user.setImage_url(rs.getString("image_url"));
+                if (rs.getObject("equipe_id") != null) {
+                    user.setId_equipe(rs.getInt("equipe_id"));
+                }
             } else {
                 System.err.println("⚠️ Aucun utilisateur trouvé pour l'ID : " + id);
             }
@@ -537,6 +581,50 @@ public class ServiceUser implements IGestionUser<User> {
 
         return user;
     }
+
+    public User getUserByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user;
+                    if ("entraineur".equalsIgnoreCase(rs.getString("role"))) {
+                        user = new Entraineur(
+                                rs.getInt("id"),
+                                rs.getString("nom"),
+                                rs.getString("prenom"),
+                                rs.getString("email"),
+                                rs.getString("password"),
+                                rs.getDate("date_naissance"),
+                                rs.getString("role"),
+                                rs.getString("specialite")
+                        );
+                    } else {
+                        user = new User(
+                                rs.getInt("id"),
+                                rs.getString("nom"),
+                                rs.getString("prenom"),
+                                rs.getString("email"),
+                                rs.getString("password"),
+                                rs.getString("role")
+                        );
+                        user.setDate_naissance(rs.getDate("date_naissance"));
+                    }
+                    user.setImage_url(rs.getString("image_url"));
+                    if (rs.getObject("equipe_id") != null) {
+                        user.setId_equipe(rs.getInt("equipe_id"));
+                    }
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la récupération de l'utilisateur par email : " + e.getMessage());
+            throw e;
+        }
+        return null;
+    }
+
 
 
     public String getUsernameById(int id_User) {
@@ -553,6 +641,7 @@ public class ServiceUser implements IGestionUser<User> {
         }
         return "Utilisateur inconnu"; // Valeur par défaut si l'utilisateur n'est pas trouvé
     }
+
 
 
 

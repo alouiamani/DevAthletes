@@ -237,4 +237,26 @@ public class SalleService implements Iservices<Salle> {
             }
         }
     }
+
+    public Salle getSalleByResponsableId(int responsableId) throws SQLException {
+        String query = "SELECT * FROM salle WHERE responsable_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, responsableId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Salle(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getString("details"),
+                        rs.getString("num_tel"),
+                        rs.getString("email"),
+                        rs.getString("url_photo"),
+                        rs.getInt("responsable_id")
+                );
+            }
+        }
+        return null;
+    }
+
 }

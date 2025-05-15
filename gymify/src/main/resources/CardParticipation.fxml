@@ -45,7 +45,7 @@
                         <Label fx:id="eventDescription" prefWidth="150.0" style="-fx-font-size: 14px; -fx-text-fill: #666666;" text="Description de l'événement ici..." wrapText="true" />
                     </HBox>
                     <HBox spacing="10">
-                        <Label style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333333;" text="Équipe :" />
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333333;" text="Équipe :" textFill="#0b0b0b" />
                         <Label fx:id="equipeName" style="-fx-font-size: 14px; -fx-text-fill: #333333;" text="Nom de l'équipe" />
                     </HBox>
                 </VBox>
@@ -54,7 +54,7 @@
 
         <!-- Bouton Participer à droite, aligné verticalement -->
         <VBox alignment="CENTER" spacing="10">
-            <Button fx:id="btnParticiper" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-cursor: hand;" text="Participer">
+            <Button fx:id="btnParticiper" onAction="#btnparticiper" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-cursor: hand;" text="Participer">
                 <styleClass>
                     <String fx:value="button-hover" />
                 </styleClass>

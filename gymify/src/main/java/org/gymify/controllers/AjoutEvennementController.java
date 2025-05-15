@@ -1,9 +1,5 @@
-/*package org.gymify.controllers;
+package org.gymify.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,21 +14,24 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.gymify.entities.Equipe;
-import org.gymify.entities.Event;
-import org.gymify.entities.EventType;
-import org.gymify.entities.Salle;
+import org.gymify.entities.*;
 import org.gymify.services.EquipeEventService;
 import org.gymify.services.EventService;
 import org.gymify.services.SalleService;
+import org.gymify.utils.AuthToken;
 import org.gymify.utils.gymifyDataBase;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -42,6 +41,8 @@ import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AjoutEvennementController {
 
@@ -78,81 +79,62 @@ public class AjoutEvennementController {
     private ObservableList<String> rewardItems = FXCollections.observableArrayList();
     private static final Logger LOGGER = Logger.getLogger(AjoutEvennementController.class.getName());
     private int responsableId;
-/*
-    public void setResponsableId(int responsableId) {
-        this.responsableId = responsableId;
-        LOGGER.info("Responsable_Salle ID set: " + responsableId);
+    private static final String IMAGE_DIR = "src/main/resources/Uploads/events/";
+    private static final String DEFAULT_IMAGE = "/Uploads/events/default.jpg";
+
+    public AjoutEvennementController() {
+        User currentUser = AuthToken.getCurrentUser();
+        if (currentUser == null) {
+            LOGGER.severe("Aucun utilisateur connecté !");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Aucun utilisateur connecté. Veuillez vous connecter.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+        this.responsableId = currentUser.getId();
     }
 
-   @FXML
+    @FXML
     public void initialize() {
         connection = gymifyDataBase.getInstance().getConnection();
 
-        // Validate that critical FXML elements are initialized
         if (nomtf == null || lieutf == null || datetf == null || descriptiontf == null || typetf == null ||
                 rewardtf == null || imagetf == null || imagetf1 == null || webviewtf == null || equipesListView == null ||
                 addTypeBtn == null || editTypeBtn == null || deleteTypeBtn == null ||
                 addRewardBtn == null || editRewardBtn == null || deleteRewardBtn == null) {
-            LOGGER.severe("One or more FXML elements are not properly initialized: " +
-                    "nomtf=" + nomtf + ", lieutf=" + lieutf + ", datetf=" + datetf + ", descriptiontf=" + descriptiontf +
-                    ", typetf=" + typetf + ", rewardtf=" + rewardtf + ", imagetf=" + imagetf + ", imagetf1=" + imagetf1 +
-                    ", webviewtf=" + webviewtf + ", equipesListView=" + equipesListView +
-                    ", addTypeBtn=" + addTypeBtn + ", editTypeBtn=" + editTypeBtn + ", deleteTypeBtn=" + deleteTypeBtn +
-                    ", addRewardBtn=" + addRewardBtn + ", editRewardBtn=" + editRewardBtn + ", deleteRewardBtn=" + deleteRewardBtn);
+            LOGGER.severe("One or more FXML elements are not properly initialized.");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur d'initialisation de l'interface. Vérifiez le fichier FXML.", ButtonType.OK);
             alert.showAndWait();
             return;
         }
 
-        // Validate that the Responsable_Salle has an associated Salle
         SalleService salleService = new SalleService();
-        Salle salle = salleService.getSalleByResponsableId(responsableId);
-        if (salle == null) {
-            LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte. Veuillez contacter un administrateur ou ajouter une salle.", ButtonType.OK);
-            alert.showAndWait();
-            Stage stage = (Stage) nomtf.getScene().getWindow();
-            if (stage != null) {
-                stage.close();
+        try {
+            Salle salle = salleService.getSalleByResponsableId(responsableId);
+            if (salle == null) {
+                LOGGER.severe("Aucune salle associée au Responsable_Salle ID: " + responsableId);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Aucune salle n'est associée à votre compte.", ButtonType.OK);
+                alert.showAndWait();
+                Stage stage = (Stage) nomtf.getScene().getWindow();
+                if (stage != null) {
+                    stage.close();
+                }
+                return;
             }
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors de la vérification de la salle associée : " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la vérification de la salle associée : " + e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
             return;
         }
 
         if (webviewtf != null) {
-            try {
-                webEngine = webviewtf.getEngine();
-                if (webEngine == null) {
-                    LOGGER.severe("WebEngine est null après initialisation !");
-                    return;
-                }
-                String userDataDir = System.getProperty("java.io.tmpdir") + "/webview-" + System.currentTimeMillis();
-                System.setProperty("webview.user.data.dir", userDataDir);
-
-                webEngine.setOnError(event -> {
-                    LOGGER.severe("Erreur WebView : " + event.getMessage());
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors du chargement de la carte OpenStreetMap : " + event.getMessage(), ButtonType.OK);
-                    alert.showAndWait();
-                });
-            } catch (Exception e) {
-                LOGGER.severe("Erreur lors de l'initialisation du WebView : " + e.getMessage());
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'initialisation de la carte OpenStreetMap : " + e.getMessage(), ButtonType.OK);
-                alert.showAndWait();
-            }
-        } else {
-            LOGGER.severe("WebView non initialisé dans le FXML !");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Le composant de la carte n'est pas initialisé dans l'interface.", ButtonType.OK);
-            alert.showAndWait();
+            webEngine = webviewtf.getEngine();
+            loadMap(36.8065, 10.1815); // Coordonnées par défaut (Tunis)
         }
 
-        // Initialiser les ComboBox avec les valeurs de l'ENUM
-        for (EventType et : EventType.values()) {
-            typeItems.add(et.name());
-        }
-        for (EventType.Reward r : EventType.Reward.values()) {
-            rewardItems.add(r.name());
-        }
-        typetf.setItems(typeItems);
-        rewardtf.setItems(rewardItems);
+        // Charger les types et récompenses depuis la base de données
+        loadTypesFromDatabase();
+        loadRewardsFromDatabase();
 
         for (int i = 0; i < 24; i++) {
             cbHeureDebut.getItems().add(String.format("%02d", i));
@@ -173,27 +155,8 @@ public class AjoutEvennementController {
         cbSecondeFin.setValue("00");
 
         equipesListView.setItems(equipeNames);
-
         equipesListView.setOnMouseClicked(this::handleEquipeListClick);
 
-        nomtf.sceneProperty().addListener(new ChangeListener<Scene>() {
-            @Override
-            public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
-                if (newValue != null) {
-                    loadMap(36.8065, 10.1815); // Coordonnées par défaut (Tunis)
-                    Stage stage = (Stage) nomtf.getScene().getWindow();
-                    stage.setOnHidden(e -> {
-                        if (webEngine != null) {
-                            webEngine.loadContent("");
-                            webEngine = null;
-                        }
-                    });
-                    nomtf.sceneProperty().removeListener(this);
-                }
-            }
-        });
-
-        // Activer/désactiver les boutons de modification et suppression en fonction de la sélection
         typetf.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             editTypeBtn.setDisable(newVal == null);
             deleteTypeBtn.setDisable(newVal == null);
@@ -203,6 +166,42 @@ public class AjoutEvennementController {
             editRewardBtn.setDisable(newVal == null);
             deleteRewardBtn.setDisable(newVal == null);
         });
+    }
+
+    private void loadTypesFromDatabase() {
+        typeItems.clear();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SHOW COLUMNS FROM events LIKE 'type'")) {
+            if (rs.next()) {
+                String enumDefinition = rs.getString("Type");
+                String[] values = enumDefinition.substring(5, enumDefinition.length() - 1).split(",");
+                for (String value : values) {
+                    typeItems.add(value.trim().replace("'", ""));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors du chargement des types depuis la base de données : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les types : " + e.getMessage());
+        }
+        typetf.setItems(typeItems);
+    }
+
+    private void loadRewardsFromDatabase() {
+        rewardItems.clear();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SHOW COLUMNS FROM events LIKE 'reward'")) {
+            if (rs.next()) {
+                String enumDefinition = rs.getString("Type");
+                String[] values = enumDefinition.substring(5, enumDefinition.length() - 1).split(",");
+                for (String value : values) {
+                    rewardItems.add(value.trim().replace("'", ""));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.severe("Erreur lors du chargement des récompenses depuis la base de données : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les récompenses : " + e.getMessage());
+        }
+        rewardtf.setItems(rewardItems);
     }
 
     @FXML
@@ -215,9 +214,17 @@ public class AjoutEvennementController {
         dialog.showAndWait().ifPresent(newType -> {
             newType = newType.trim().toUpperCase();
             if (!newType.isEmpty() && !typeItems.contains(newType)) {
-                typeItems.add(newType);
-                typetf.setValue(newType);
-                showWarning("Attention", "Le nouveau type '" + newType + "' a été ajouté dans l'interface, mais il ne sera pas sauvegardé dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("type");
+                    String newEnum = currentEnum + ",'" + newType + "'";
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN type ENUM(" + newEnum + ")");
+                    typeItems.add(newType);
+                    typetf.setValue(newType);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "Le type '" + newType + "' a été ajouté avec succès à la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de l'ajout du type dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ajouter le type : " + e.getMessage());
+                }
             } else {
                 showAlert(Alert.AlertType.WARNING, "Erreur", "Le type existe déjà ou est vide !");
             }
@@ -240,10 +247,18 @@ public class AjoutEvennementController {
         dialog.showAndWait().ifPresent(newType -> {
             newType = newType.trim().toUpperCase();
             if (!newType.isEmpty() && !newType.equals(selectedType) && !typeItems.contains(newType)) {
-                int index = typeItems.indexOf(selectedType);
-                typeItems.set(index, newType);
-                typetf.setValue(newType);
-                showWarning("Attention", "Le type a été modifié dans l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("type");
+                    String newEnum = currentEnum.replace("'" + selectedType + "'", "'" + newType + "'");
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN type ENUM(" + newEnum + ")");
+                    int index = typeItems.indexOf(selectedType);
+                    typeItems.set(index, newType);
+                    typetf.setValue(newType);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "Le type '" + selectedType + "' a été modifié en '" + newType + "' dans la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de la modification du type dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de modifier le type : " + e.getMessage());
+                }
             } else if (newType.equals(selectedType)) {
                 // Pas de changement
             } else {
@@ -263,9 +278,18 @@ public class AjoutEvennementController {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Êtes-vous sûr de vouloir supprimer le type '" + selectedType + "' ?", ButtonType.YES, ButtonType.NO);
         confirmation.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                typeItems.remove(selectedType);
-                typetf.setValue(null);
-                showWarning("Attention", "Le type a été supprimé de l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'type' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("type");
+                    String newEnum = currentEnum.replace("'" + selectedType + "',", "").replace(",'" + selectedType + "'", "").replace("'" + selectedType + "'", "");
+                    if (newEnum.endsWith(",")) newEnum = newEnum.substring(0, newEnum.length() - 1);
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN type ENUM(" + newEnum + ")");
+                    typeItems.remove(selectedType);
+                    typetf.setValue(null);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "Le type '" + selectedType + "' a été supprimé de la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de la suppression du type dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de supprimer le type : " + e.getMessage());
+                }
             }
         });
     }
@@ -280,9 +304,17 @@ public class AjoutEvennementController {
         dialog.showAndWait().ifPresent(newReward -> {
             newReward = newReward.trim().toUpperCase();
             if (!newReward.isEmpty() && !rewardItems.contains(newReward)) {
-                rewardItems.add(newReward);
-                rewardtf.setValue(newReward);
-                showWarning("Attention", "La nouvelle récompense '" + newReward + "' a été ajoutée dans l'interface, mais elle ne sera pas sauvegardée dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("reward");
+                    String newEnum = currentEnum + ",'" + newReward + "'";
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN reward ENUM(" + newEnum + ")");
+                    rewardItems.add(newReward);
+                    rewardtf.setValue(newReward);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "La récompense '" + newReward + "' a été ajoutée avec succès à la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de l'ajout de la récompense dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ajouter la récompense : " + e.getMessage());
+                }
             } else {
                 showAlert(Alert.AlertType.WARNING, "Erreur", "La récompense existe déjà ou est vide !");
             }
@@ -305,10 +337,18 @@ public class AjoutEvennementController {
         dialog.showAndWait().ifPresent(newReward -> {
             newReward = newReward.trim().toUpperCase();
             if (!newReward.isEmpty() && !newReward.equals(selectedReward) && !rewardItems.contains(newReward)) {
-                int index = rewardItems.indexOf(selectedReward);
-                rewardItems.set(index, newReward);
-                rewardtf.setValue(newReward);
-                showWarning("Attention", "La récompense a été modifiée dans l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("reward");
+                    String newEnum = currentEnum.replace("'" + selectedReward + "'", "'" + newReward + "'");
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN reward ENUM(" + newEnum + ")");
+                    int index = rewardItems.indexOf(selectedReward);
+                    rewardItems.set(index, newReward);
+                    rewardtf.setValue(newReward);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "La récompense '" + selectedReward + "' a été modifiée en '" + newReward + "' dans la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de la modification de la récompense dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de modifier la récompense : " + e.getMessage());
+                }
             } else if (newReward.equals(selectedReward)) {
                 // Pas de changement
             } else {
@@ -328,11 +368,31 @@ public class AjoutEvennementController {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Êtes-vous sûr de vouloir supprimer la récompense '" + selectedReward + "' ?", ButtonType.YES, ButtonType.NO);
         confirmation.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                rewardItems.remove(selectedReward);
-                rewardtf.setValue(null);
-                showWarning("Attention", "La récompense a été supprimée de l'interface, mais les changements ne seront pas sauvegardés dans la base de données tant que l'ENUM de la colonne 'reward' dans la table 'events' n'est pas mis à jour par un administrateur.");
+                try (Statement stmt = connection.createStatement()) {
+                    String currentEnum = getCurrentEnumDefinition("reward");
+                    String newEnum = currentEnum.replace("'" + selectedReward + "',", "").replace(",'" + selectedReward + "'", "").replace("'" + selectedReward + "'", "");
+                    if (newEnum.endsWith(",")) newEnum = newEnum.substring(0, newEnum.length() - 1);
+                    stmt.executeUpdate("ALTER TABLE events MODIFY COLUMN reward ENUM(" + newEnum + ")");
+                    rewardItems.remove(selectedReward);
+                    rewardtf.setValue(null);
+                    showAlert(Alert.AlertType.INFORMATION, "Succès", "La récompense '" + selectedReward + "' a été supprimée de la base de données.");
+                } catch (SQLException e) {
+                    LOGGER.severe("Erreur lors de la suppression de la récompense dans la base de données : " + e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de supprimer la récompense : " + e.getMessage());
+                }
             }
         });
+    }
+
+    private String getCurrentEnumDefinition(String columnName) throws SQLException {
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SHOW COLUMNS FROM events LIKE '" + columnName + "'")) {
+            if (rs.next()) {
+                String enumDefinition = rs.getString("Type");
+                return enumDefinition.substring(5, enumDefinition.length() - 1);
+            }
+        }
+        throw new SQLException("Impossible de récupérer la définition de l'ENUM pour la colonne " + columnName);
     }
 
     public void setParentController(ListeDesEvennementsController parentController) {
@@ -347,20 +407,23 @@ public class AjoutEvennementController {
         lieutf.setText(event.getLieu());
         datetf.setValue(event.getDate());
         descriptiontf.setText(event.getDescription());
-        if (typetf != null) {
-            typetf.setValue(event.getType() != null ? event.getType().name() : null);
-        }
-        if (rewardtf != null) {
-            rewardtf.setValue(event.getReward() != null ? event.getReward().name() : null);
-        }
+        typetf.setValue(event.getType() != null ? event.getType().name() : null);
+        rewardtf.setValue(event.getReward() != null ? event.getReward().name() : null);
         imagetf.setText(event.getImageUrl());
+
         if (event.getImageUrl() != null && !event.getImageUrl().isEmpty()) {
+            String imagePath = resolveImagePath(event.getImageUrl());
             try {
-                imagetf1.setImage(new Image(event.getImageUrl()));
+                imagetf1.setImage(new Image(imagePath));
+                LOGGER.info("Image loaded for editing: " + imagePath);
             } catch (Exception e) {
-                imagetf1.setImage(new Image("/default_image.jpg"));
+                LOGGER.warning("Erreur lors du chargement de l'image pour modification: " + e.getMessage());
+                imagetf1.setImage(new Image(resolveImagePath(DEFAULT_IMAGE)));
             }
+        } else {
+            imagetf1.setImage(new Image(resolveImagePath(DEFAULT_IMAGE)));
         }
+
         coords = new double[]{event.getLatitude(), event.getLongitude()};
         loadMap(event.getLatitude(), event.getLongitude());
 
@@ -369,10 +432,6 @@ public class AjoutEvennementController {
             cbHeureDebut.setValue(String.format("%02d", heureDebut.getHour()));
             cbMinuteDebut.setValue(String.format("%02d", heureDebut.getMinute()));
             cbSecondeDebut.setValue(String.format("%02d", heureDebut.getSecond()));
-        } else {
-            cbHeureDebut.setValue("00");
-            cbMinuteDebut.setValue("00");
-            cbSecondeDebut.setValue("00");
         }
 
         if (event.getHeureFin() != null) {
@@ -380,10 +439,6 @@ public class AjoutEvennementController {
             cbHeureFin.setValue(String.format("%02d", heureFin.getHour()));
             cbMinuteFin.setValue(String.format("%02d", heureFin.getMinute()));
             cbSecondeFin.setValue(String.format("%02d", heureFin.getSecond()));
-        } else {
-            cbHeureFin.setValue("00");
-            cbMinuteFin.setValue("00");
-            cbSecondeFin.setValue("00");
         }
 
         if (event.getEquipes() != null) {
@@ -393,6 +448,31 @@ public class AjoutEvennementController {
                 addedEquipes.add(equipe);
                 equipeNames.add(equipe.getNom());
             }
+        }
+    }
+
+    private String resolveImagePath(String imageUrl) {
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            LOGGER.warning("Image URL is null or empty, using default image");
+            Path defaultPath = Paths.get(IMAGE_DIR + "default.jpg");
+            return Files.exists(defaultPath) ? defaultPath.toUri().toString() : "file:" + IMAGE_DIR + "default.jpg";
+        }
+
+        // Ensure the imageUrl starts with "/Uploads/events/"
+        String normalizedImageUrl = imageUrl.startsWith("/Uploads/events/") ? imageUrl : "/Uploads/events/" + imageUrl;
+
+        try {
+            Path filePath = Paths.get(IMAGE_DIR + normalizedImageUrl.replace("/Uploads/events/", ""));
+            if (Files.exists(filePath)) {
+                return filePath.toUri().toString();
+            }
+            LOGGER.warning("Image not found on filesystem: " + filePath);
+            Path defaultPath = Paths.get(IMAGE_DIR + "default.jpg");
+            return Files.exists(defaultPath) ? defaultPath.toUri().toString() : "file:" + IMAGE_DIR + "default.jpg";
+        } catch (Exception e) {
+            LOGGER.warning("Erreur lors de la résolution du chemin de l'image " + normalizedImageUrl + ": " + e.getMessage());
+            Path defaultPath = Paths.get(IMAGE_DIR + "default.jpg");
+            return Files.exists(defaultPath) ? defaultPath.toUri().toString() : "file:" + IMAGE_DIR + "default.jpg";
         }
     }
 
@@ -416,7 +496,7 @@ public class AjoutEvennementController {
         }
 
         if (typetf.getValue() == null || !typeItems.contains(typetf.getValue())) {
-            ErrorType.setText("Le type d'événement doit être une valeur valide de l'ENUM.");
+            ErrorType.setText("Le type d'événement doit être une valeur valide.");
             ErrorType.setVisible(true);
             isValid = false;
         } else {
@@ -424,7 +504,7 @@ public class AjoutEvennementController {
         }
 
         if (rewardtf.getValue() == null || !rewardItems.contains(rewardtf.getValue())) {
-            ErrorReward.setText("La récompense doit être une valeur valide de l'ENUM.");
+            ErrorReward.setText("La récompense doit être une valeur valide.");
             ErrorReward.setVisible(true);
             isValid = false;
         } else {
@@ -503,7 +583,7 @@ public class AjoutEvennementController {
         }
 
         if (addedEquipes.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Vous devez ajouter au moins une équipe avant d'enregistrer l'événement.", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Vous devez ajouter au moins une équipe.", ButtonType.OK);
             alert.showAndWait();
             isValid = false;
         }
@@ -520,11 +600,11 @@ public class AjoutEvennementController {
                 this.coords = coords;
                 loadMap(coords[0], coords[1]);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Lieu introuvable. Veuillez vérifier le nom du lieu ou votre connexion Internet.", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Lieu introuvable.", ButtonType.OK);
                 alert.showAndWait();
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Veuillez entrer un lieu avant de rechercher.", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Veuillez entrer un lieu.", ButtonType.OK);
             alert.showAndWait();
         }
     }
@@ -551,12 +631,9 @@ public class AjoutEvennementController {
                 double lat = Double.parseDouble(jsonObject.getString("lat"));
                 double lon = Double.parseDouble(jsonObject.getString("lon"));
                 return new double[]{lat, lon};
-            } else {
-                LOGGER.warning("Aucune coordonnée trouvée pour le lieu : " + location);
             }
         } catch (Exception e) {
-            LOGGER.severe("Erreur lors de la récupération des coordonnées pour le lieu : " + location + " - " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.severe("Erreur lors de la récupération des coordonnées : " + e.getMessage());
         }
         return null;
     }
@@ -583,68 +660,61 @@ public class AjoutEvennementController {
 
         if (webEngine != null) {
             webEngine.loadContent(html);
-        } else {
-            LOGGER.severe("WebEngine is null. Cannot load map.");
         }
     }
 
     @FXML
-    void enregistrer(ActionEvent event) {
+    void enregistrer(ActionEvent event) throws SQLException {
         if (!validateFields()) {
             return;
         }
 
         String nom = nomtf.getText().trim();
         if (eventNameExists(nom) && (currentEvent == null || !currentEvent.getNom().equals(nom))) {
-            ErrorNom.setText("Cet événement existe déjà. Veuillez choisir un autre nom.");
+            ErrorNom.setText("Cet événement existe déjà.");
             ErrorNom.setVisible(true);
             return;
         }
 
-        String imageUrl = imagetf.getText().trim();
-        String type = typetf.getValue();
-        String reward = rewardtf.getValue();
-        String lieu = lieutf.getText().trim();
-        String description = descriptiontf.getText().trim();
-        Date date = Date.valueOf(datetf.getValue());
-        String heureDebut = cbHeureDebut.getValue() + ":" + cbMinuteDebut.getValue() + ":" + cbSecondeDebut.getValue();
-        String heureFin = cbHeureFin.getValue() + ":" + cbMinuteFin.getValue() + ":" + cbSecondeFin.getValue();
-
-        // Vérifier si type et reward sont dans les valeurs initiales de l'ENUM
-        if (!EventType.valueOf(type).name().equals(type) || !EventType.Reward.valueOf(reward).name().equals(reward)) {
-            showWarning("Attention", "Les valeurs 'type' ou 'reward' modifiées ne sont pas valides dans la base de données actuelle. L'enregistrement peut échouer si elles ne correspondent pas à l'ENUM défini.");
-        }
-
         Event eventToSave = currentEvent != null ? currentEvent : new Event();
         eventToSave.setNom(nom);
-        eventToSave.setImageUrl(imageUrl);
-        eventToSave.setType(EventType.valueOf(type));
-        eventToSave.setReward(EventType.Reward.valueOf(reward));
-        eventToSave.setLieu(lieu);
-        eventToSave.setDescription(description);
+        eventToSave.setImageUrl(imagetf.getText().trim());
+        eventToSave.setType(EventType.valueOf(typetf.getValue()));
+        eventToSave.setReward(EventType.Reward.valueOf(rewardtf.getValue()));
+        eventToSave.setLieu(lieutf.getText().trim());
+        eventToSave.setDescription(descriptiontf.getText().trim());
         eventToSave.setDate(datetf.getValue());
-        eventToSave.setHeureDebut(LocalTime.parse(heureDebut));
-        eventToSave.setHeureFin(LocalTime.parse(heureFin));
+        eventToSave.setHeureDebut(LocalTime.parse(cbHeureDebut.getValue() + ":" + cbMinuteDebut.getValue() + ":" + cbSecondeDebut.getValue()));
+        eventToSave.setHeureFin(LocalTime.parse(cbHeureFin.getValue() + ":" + cbMinuteFin.getValue() + ":" + cbSecondeFin.getValue()));
         eventToSave.setLatitude(coords[0]);
         eventToSave.setLongitude(coords[1]);
         eventToSave.setEquipes(new HashSet<>(addedEquipes));
+        SalleService salleService = new SalleService();
+        Salle salle = salleService.getSalleByResponsableId(responsableId);
+        eventToSave.setIdSalle(salle.getId());
 
         try {
             if (currentEvent == null) {
-                eventService.ajouter(eventToSave, responsableId);
+                eventService.ajouter(eventToSave);
                 for (Equipe equipe : addedEquipes) {
-                    System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
                     equipeEventService.ajouter(equipe, eventToSave);
                 }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Événement ajouté avec succès !", ButtonType.OK);
                 alert.showAndWait();
             } else {
+                // Delete old image if a new one is uploaded
+                if (!imagetf.getText().equals(currentEvent.getImageUrl()) && currentEvent.getImageUrl() != null) {
+                    Path oldImagePath = Paths.get(IMAGE_DIR + currentEvent.getImageUrl().replace("/Uploads/events/", ""));
+                    if (Files.exists(oldImagePath)) {
+                        Files.delete(oldImagePath);
+                        LOGGER.info("Deleted old image: " + oldImagePath);
+                    }
+                }
                 eventService.modifier(eventToSave);
                 for (Equipe equipe : eventService.getEquipesForEvent(eventToSave.getId())) {
                     equipeEventService.supprimer(equipe, eventToSave);
                 }
                 for (Equipe equipe : addedEquipes) {
-                    System.out.println("Associating team with ID: " + equipe.getId() + " to event with ID: " + eventToSave.getId());
                     equipeEventService.ajouter(equipe, eventToSave);
                 }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Événement modifié avec succès !", ButtonType.OK);
@@ -658,14 +728,10 @@ public class AjoutEvennementController {
             if (stage != null) {
                 stage.close();
             }
-        } catch (IllegalArgumentException e) {
-            LOGGER.severe("Erreur : La valeur de 'type' ou 'reward' ne correspond pas à l'ENUM défini dans la base de données : " + e.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Erreur", "La valeur de 'type' ou 'reward' sélectionnée n'est pas valide dans la base de données actuelle. Veuillez utiliser uniquement les valeurs prédéfinies ou demander une mise à jour de l'ENUM.");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             LOGGER.severe("Erreur lors de l'enregistrement de l'événement : " + e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'enregistrement de l'événement : " + e.getMessage(), ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'enregistrement : " + e.getMessage(), ButtonType.OK);
             alert.showAndWait();
-            e.printStackTrace();
         }
     }
 
@@ -679,8 +745,7 @@ public class AjoutEvennementController {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.severe("Erreur lors de la vérification de l'existence du nom de l'événement : " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.severe("Erreur lors de la vérification du nom de l'événement : " + e.getMessage());
         }
         return false;
     }
@@ -726,27 +791,36 @@ public class AjoutEvennementController {
 
     @FXML
     void uploadBtn(ActionEvent event) {
-        LOGGER.info("Upload button clicked.");
-
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.bmp", "*.jpeg");
-        fileChooser.getExtensionFilters().add(extFilter);
-
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.bmp", "*.jpeg"));
         Stage stage = (Stage) nomtf.getScene().getWindow();
-        if (stage == null) {
-            LOGGER.severe("Erreur : Impossible de récupérer la scène pour le FileChooser.");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur : Impossible d'ouvrir le sélecteur de fichiers.", ButtonType.OK);
-            alert.showAndWait();
-            return;
-        }
-
-        java.io.File selectedFile = fileChooser.showOpenDialog(stage);
+        File selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
-            String imagePath = selectedFile.toURI().toString();
-            imagetf.setText(imagePath);
-            Image image = new Image(imagePath);
-            imagetf1.setImage(image);
+            try {
+                File dir = new File(IMAGE_DIR);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                    LOGGER.info("Created directory: " + IMAGE_DIR);
+                }
+
+                String extension = selectedFile.getName().substring(selectedFile.getName().lastIndexOf(".") + 1);
+                String fileName = System.currentTimeMillis() + "." + extension;
+                File targetFile = new File(IMAGE_DIR + fileName);
+
+                Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                LOGGER.info("Image copied to: " + targetFile.getAbsolutePath());
+
+                String formattedImageUrl = "/Uploads/events/" + fileName;
+                imagetf.setText(formattedImageUrl);
+
+                String imagePath = resolveImagePath(formattedImageUrl);
+                imagetf1.setImage(new Image(imagePath));
+                LOGGER.info("Image preview set: " + imagePath);
+            } catch (IOException e) {
+                LOGGER.severe("Erreur lors de l'enregistrement de l'image : " + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'enregistrer l'image : " + e.getMessage());
+            }
         }
     }
 
@@ -754,12 +828,7 @@ public class AjoutEvennementController {
     private void AjouterEquipe(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutEquipe.fxml"));
-            if (loader.getLocation() == null) {
-                LOGGER.severe("Cannot find AjoutEquipe.fxml. Ensure the file exists in src/main/resources/");
-                return;
-            }
             Parent root = loader.load();
-
             AjoutEquipeController ajoutEquipeController = loader.getController();
             ajoutEquipeController.setAjoutEvennementController(this);
 
@@ -769,7 +838,6 @@ public class AjoutEvennementController {
             stage.show();
         } catch (IOException e) {
             LOGGER.severe("Erreur lors de l'ouverture de la fenêtre d'ajout d'équipe : " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -777,9 +845,7 @@ public class AjoutEvennementController {
     private void handleEquipeListClick(MouseEvent event) {
         try {
             String selectedTeamName = equipesListView.getSelectionModel().getSelectedItem();
-            if (selectedTeamName == null) {
-                return;
-            }
+            if (selectedTeamName == null) return;
 
             Equipe selectedEquipe = addedEquipes.stream()
                     .filter(e -> e.getNom().equals(selectedTeamName))
@@ -787,10 +853,6 @@ public class AjoutEvennementController {
                     .orElse(null);
             if (selectedEquipe != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutEquipe.fxml"));
-                if (loader.getLocation() == null) {
-                    LOGGER.severe("Cannot find AjoutEquipe.fxml. Ensure the file exists in src/main/resources/");
-                    return;
-                }
                 Parent root = loader.load();
                 AjoutEquipeController ajoutEquipeController = loader.getController();
                 ajoutEquipeController.setAjoutEvennementController(this);
@@ -803,7 +865,6 @@ public class AjoutEvennementController {
             }
         } catch (IOException e) {
             LOGGER.severe("Erreur lors de l'ouverture de la fenêtre de modification d'équipe : " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -827,12 +888,4 @@ public class AjoutEvennementController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    private void showWarning(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-*/
+}

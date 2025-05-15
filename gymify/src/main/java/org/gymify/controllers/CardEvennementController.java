@@ -1,12 +1,12 @@
-/*package org.gymify.controllers;
+package org.gymify.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
@@ -15,13 +15,13 @@ import org.gymify.services.EquipeService;
 import org.gymify.services.EventService;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
-/**
- * Controller class for displaying an individual event card in the UI.
 
 public class CardEvennementController {
 
@@ -52,7 +52,6 @@ public class CardEvennementController {
 
     @FXML
     public void initialize() {
-        // Ensure all FXML elements are initialized
         if (eventImage == null || eventName == null || eventDate == null || eventLocation == null ||
                 eventType == null || eventReward == null || eventDescription == null ||
                 eventTimeDebut == null || eventTimeFin == null || eventTeamsListView == null ||
@@ -80,7 +79,6 @@ public class CardEvennementController {
 
         LOGGER.info("Chargement de l'événement : " + evenement);
 
-        // Populate fields with actual event data
         eventName.setText("Nom : " + (evenement.getNom() != null ? evenement.getNom() : "Non défini"));
         eventDate.setText("Date : " + (evenement.getDate() != null ? evenement.getDate().toString() : "Non défini"));
         eventLocation.setText(evenement.getLieu() != null ? evenement.getLieu() : "Non défini");
@@ -90,8 +88,8 @@ public class CardEvennementController {
         eventTimeDebut.setText(evenement.getHeureDebut() != null ? evenement.getHeureDebut().toString() : "Non défini");
         eventTimeFin.setText(evenement.getHeureFin() != null ? evenement.getHeureFin().toString() : "Non défini");
 
-        // Populate teams list
         Set<Equipe> equipes = evenement.getEquipes();
+        eventTeamsListView.getItems().clear();
         if (equipes != null && !equipes.isEmpty()) {
             for (Equipe equipe : equipes) {
                 eventTeamsListView.getItems().add(equipe.getNom());
@@ -100,22 +98,60 @@ public class CardEvennementController {
             eventTeamsListView.getItems().add("Aucune équipe associée");
         }
 
-        // Gestion de l'image
-        if (evenement.getImageUrl() != null && !evenement.getImageUrl().isEmpty()) {
-            try {
-                eventImage.setImage(new Image(evenement.getImageUrl(), true));
-            } catch (Exception e) {
-                eventImage.setImage(new Image("/default_image.jpg"));
-                LOGGER.severe("Erreur de chargement de l'image : " + e.getMessage());
-            }
-        } else {
-            eventImage.setImage(new Image("/default_image.jpg"));
+        String imagePath = resolveImagePath(evenement.getImageUrl());
+        try {
+            eventImage.setImage(new Image(imagePath, true));
+            LOGGER.info("Image loaded for event: " + imagePath);
+        } catch (Exception e) {
+            LOGGER.warning("Erreur de chargement de l'image à partir de " + imagePath + ": " + e.getMessage());
+            eventImage.setImage(new Image(resolveImagePath("/Uploads/events/default.jpg"), true));
         }
 
-        // Actions des boutons
         btnDetails.setOnAction(event -> showEventDetails());
         btnEdit.setOnAction(event -> openEditEvenement());
         btnDelete.setOnAction(event -> deleteEvenement());
+    }
+
+    private String resolveImagePath(String imageUrl) {
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            LOGGER.warning("Image URL is null or empty, using default image");
+            return getClass().getResource("/Uploads/events/default.jpg") != null ?
+                    getClass().getResource("/Uploads/events/default.jpg").toExternalForm() :
+                    "file:src/main/resources/Uploads/events/default.jpg";
+        }
+
+        String normalizedImageUrl = imageUrl.replace("\\", "/");
+        if (!normalizedImageUrl.startsWith("/")) {
+            normalizedImageUrl = "/" + normalizedImageUrl;
+        }
+
+        try {
+            if (getClass().getResource(normalizedImageUrl) != null) {
+                return getClass().getResource(normalizedImageUrl).toExternalForm();
+            } else {
+                LOGGER.warning("Image resource not found: " + normalizedImageUrl);
+                String lowercasePath = normalizedImageUrl.replace("/Uploads/", "/uploads/");
+                if (getClass().getResource(lowercasePath) != null) {
+                    return getClass().getResource(lowercasePath).toExternalForm();
+                }
+                LOGGER.warning("Image resource not found with lowercase path: " + lowercasePath);
+
+                Path filePath = Paths.get("src/main/resources" + normalizedImageUrl);
+                if (Files.exists(filePath)) {
+                    return filePath.toUri().toString();
+                }
+                LOGGER.warning("Image not found on filesystem: " + filePath);
+
+                return getClass().getResource("/Uploads/events/default.jpg") != null ?
+                        getClass().getResource("/Uploads/events/default.jpg").toExternalForm() :
+                        "file:src/main/resources/Uploads/events/default.jpg";
+            }
+        } catch (Exception e) {
+            LOGGER.warning("Erreur lors de la résolution du chemin de l'image " + normalizedImageUrl + ": " + e.getMessage());
+            return getClass().getResource("/Uploads/events/default.jpg") != null ?
+                    getClass().getResource("/Uploads/events/default.jpg").toExternalForm() :
+                    "file:src/main/resources/Uploads/events/default.jpg";
+        }
     }
 
     private void showEventDetails() {
@@ -179,25 +215,15 @@ public class CardEvennementController {
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
-                    // Step 1: Retrieve the teams associated with the event
                     List<Equipe> associatedTeams = equipeEventService.getEquipesForEvent(evenement.getId());
-
-                    // Step 2: Delete the associations from equipe_event table
                     for (Equipe equipe : associatedTeams) {
                         equipeEventService.supprimer(equipe, evenement);
                     }
-
-                    // Step 3: Delete the teams from equipe table
                     for (Equipe equipe : associatedTeams) {
                         equipeService.supprimer(equipe.getId());
                     }
-
-                    // Step 4: Delete the event from events table
                     eventService.supprimer(evenement.getId());
-
-                    // Step 5: Refresh the event list in the UI
                     parentController.loadEvents(parentController.getSearchFieldText());
-
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Succès");
                     alert.setHeaderText("Suppression réussie");
@@ -212,4 +238,4 @@ public class CardEvennementController {
             }
         });
     }
-}      */
+}

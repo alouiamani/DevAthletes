@@ -1,4 +1,4 @@
-/*package org.gymify.controllers;
+package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,9 +18,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Controller class for managing the list of events (evennements) in the UI.
-
 public class ListeDesEvennementsController {
 
     @FXML
@@ -32,7 +27,7 @@ public class ListeDesEvennementsController {
     @FXML
     private TextField searchField;
     @FXML
-    private Button btnAjouter; // Added to ensure the button is recognized
+    private Button btnAjouter;
 
     private final EventService eventService = new EventService();
     private static final Logger LOGGER = Logger.getLogger(ListeDesEvennementsController.class.getName());
@@ -63,14 +58,17 @@ public class ListeDesEvennementsController {
         vboxEvennements.getChildren().clear();
         try {
             List<Event> events = eventService.recupererTous(searchQuery);
+            LOGGER.info("Chargement de " + events.size() + " événements pour la requête : " + searchQuery);
             for (Event event : events) {
-                System.out.println("Chargement de l'événement : " + event);
+                LOGGER.info("Chargement de l'événement : " + event);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardEvennement.fxml"));
                 if (loader.getLocation() == null) {
                     LOGGER.severe("Cannot find CardEvennement.fxml. Ensure the file exists in src/main/resources/");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur: Cannot find CardEvennement.fxml.", ButtonType.OK);
+                    alert.showAndWait();
                     return;
                 }
-                AnchorPane card = loader.load(); // Changed from HBox to AnchorPane to match CardEvennement.fxml
+                AnchorPane card = loader.load();
                 CardEvennementController controller = loader.getController();
                 controller.setEvenement(event, this);
                 vboxEvennements.getChildren().add(card);
@@ -103,7 +101,7 @@ public class ListeDesEvennementsController {
             Stage stage = new Stage();
             stage.setTitle("Ajouter Événement");
             stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> loadEvents("")); // Refresh the list when the window is closed
+            stage.setOnHidden(e -> loadEvents(""));
             stage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Erreur lors de l'ouverture de la fenêtre d'ajout d'événement", e);
@@ -128,7 +126,7 @@ public class ListeDesEvennementsController {
             Stage stage = new Stage();
             stage.setTitle("Modifier Événement");
             stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> loadEvents("")); // Refresh the list when the window is closed
+            stage.setOnHidden(e -> loadEvents(""));
             stage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Erreur lors de l'ouverture de la fenêtre de modification", e);
@@ -140,7 +138,7 @@ public class ListeDesEvennementsController {
     private void supprimerEvent(int eventId) {
         try {
             eventService.supprimer(eventId);
-            loadEvents(""); // Refresh the list
+            loadEvents("");
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Événement supprimé avec succès !", ButtonType.OK);
             alert.showAndWait();
         } catch (SQLException e) {
@@ -150,16 +148,20 @@ public class ListeDesEvennementsController {
         }
     }
 
-    // Getter for the search field text
     public String getSearchFieldText() {
         return searchField != null ? searchField.getText() : "";
     }
-
 
     @FXML
     private void ListeEquipes(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDesEquipes.fxml"));
+            if (loader.getLocation() == null) {
+                LOGGER.severe("Cannot find ListeDesEquipes.fxml. Ensure the file exists in src/main/resources/");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur: Cannot find ListeDesEquipes.fxml.", ButtonType.OK);
+                alert.showAndWait();
+                return;
+            }
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -167,7 +169,9 @@ public class ListeDesEvennementsController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Erreur lors de l'ouverture de la fenêtre des équipes", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ouverture de la fenêtre des équipes: " + e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
         }
     }
-}*/
+}

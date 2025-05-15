@@ -1,17 +1,24 @@
-/*package org.gymify.services;
+package org.gymify.services;
 
+import org.gymify.services.IServiceEvent;
 import org.gymify.entities.Equipe;
 import org.gymify.entities.Event;
 import org.gymify.entities.EventType;
-import org.gymify.entities.Salle;
 import org.gymify.utils.gymifyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
+/**
+ * Service class for managing Event entities in the database.
+ */
 public class EventService implements IServiceEvent<Event> {
+    private static final Logger LOGGER = Logger.getLogger(EventService.class.getName());
+
     private final Connection connection;
 
     public EventService() {
@@ -20,37 +27,7 @@ public class EventService implements IServiceEvent<Event> {
 
     @Override
     public void ajouter(Event event) throws SQLException {
-        throw new UnsupportedOperationException("Use ajouter(Event event, int responsableId) instead.");
-    }
-
-    public void ajouter(Event event, int responsableId) throws SQLException {
-        // Fetch the Salle associated with the Responsable_Salle
-        SalleService salleService = new SalleService();
-        Salle salle = salleService.getSalleByResponsableId(responsableId);
-        if (salle == null) {
-            // Enhanced error message for better debugging
-            String query = "SELECT id_Salle, role FROM user WHERE id_User = ? AND role = 'responsable_salle'";
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
-                ps.setInt(1, responsableId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        int idSalle = rs.getInt("id_Salle");
-                        throw new SQLException("No Salle associated with Responsable_Salle ID: " + responsableId + ". User's id_Salle is: " + idSalle);
-                    } else {
-                        throw new SQLException("No Responsable_Salle found with ID: " + responsableId + " or role is not 'responsable_salle'.");
-                    }
-                }
-            }
-        }
-        int idSalle = salle.getId_Salle();
-        event.setIdSalle(idSalle);
-
-        // Validate that the Salle exists (redundant but kept for safety)
-        if (!salleExists(event.getIdSalle())) {
-            throw new SQLException("Impossible d'ajouter un événement : la salle avec l'ID " + event.getIdSalle() + " n'existe pas.");
-        }
-
-        String req = "INSERT INTO events (nom, date, heure_debut, heure_fin, type, description, image_url, reward, latitude, longitude, lieu, id_salle) " +
+        String req = "INSERT INTO events (nom, date, heure_debut, heure_fin, type, description, image_url, reward, latitude, longitude, lieu, salle_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
             setEventStatement(ps, event);
@@ -60,40 +37,60 @@ public class EventService implements IServiceEvent<Event> {
                     event.setId(rs.getInt(1));
                 }
             }
-            // Update the Salle's events list
-            event.setSalle(salle);
-            salle.addEvent(event);
-            System.out.println("✅ Event ajouté avec succès dans la salle ID: " + event.getIdSalle());
         } catch (SQLException e) {
             throw new SQLException("Erreur lors de l'ajout de l'événement : " + e.getMessage(), e);
+        }
+    }
+    public void ajouterEvent(Event event, int responsableId) throws SQLException {
+        if (event == null || event.getNom() == null || event.getLieu() == null) {
+            throw new IllegalArgumentException("Tous les champs requis doivent être remplis !");
+        }
+
+        // Vérifier que la salle existe
+        String checkSalleQuery = "SELECT COUNT(*) FROM salle WHERE id_Salle = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkSalleQuery)) {
+            checkStmt.setInt(1, event.getIdSalle());
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                throw new SQLException("La salle avec l'ID " + event.getIdSalle() + " n'existe pas.");
+            }
+        }
+
+        String req = "INSERT INTO events (nom, lieu, date, description, type, reward, imageUrl, latitude, longitude, id_Responsable, salle_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, event.getNom());
+            pstmt.setString(2, event.getLieu());
+            pstmt.setDate(3, Date.valueOf(event.getDate()));
+            pstmt.setString(4, event.getDescription());
+            pstmt.setString(5, event.getType().name());
+            pstmt.setString(6, event.getReward().name());
+            pstmt.setString(7, event.getImageUrl());
+            pstmt.setDouble(8, event.getLatitude());
+            pstmt.setDouble(9, event.getLongitude());
+            pstmt.setInt(10, responsableId);
+            pstmt.setInt(11, event.getId());
+
+            pstmt.executeUpdate();
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    event.setId(generatedKeys.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.severe("❌ Erreur lors de l'ajout de l'événement : " + e.getMessage());
+            throw e;
         }
     }
 
     @Override
     public void modifier(Event event) throws SQLException {
-        if (!salleExists(event.getIdSalle())) {
-            throw new SQLException("Impossible de modifier l'événement : la salle avec l'ID " + event.getIdSalle() + " n'existe pas.");
-        }
-
-        String req = "UPDATE events SET nom=?, date=?, heure_debut=?, heure_fin=?, type=?, description=?, image_url=?, reward=?, latitude=?, longitude=?, lieu=?, id_salle=? WHERE id=?";
+        String req = "UPDATE events SET nom=?, date=?, heure_debut=?, heure_fin=?, type=?, description=?, image_url=?, reward=?, latitude=?, longitude=?, lieu=?, salle_id=? WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             setEventStatement(ps, event);
             ps.setInt(13, event.getId());
-            int rowsUpdated = ps.executeUpdate();
-            if (rowsUpdated > 0) {
-                SalleService salleService = new SalleService();
-                Salle salle = salleService.getSalleById(event.getIdSalle());
-                if (salle != null) {
-                    event.setSalle(salle);
-                   // salle.getEvents().removeIf(e -> {
-                                //     return event.getId() == e.getId();
-                          //  });
-                    salle.addEvent(event);
-                    System.out.println("✅ Event modifié avec succès dans la salle ID: " + event.getIdSalle());
-                }
-            } else {
-                System.out.println("⚠️ Aucune modification effectuée. Vérifiez l'ID de l'événement.");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erreur lors de la modification de l'événement : " + e.getMessage(), e);
         }
@@ -101,25 +98,10 @@ public class EventService implements IServiceEvent<Event> {
 
     @Override
     public void supprimer(int id) throws SQLException {
-        Event event = recupererParId(id);
-        if (event == null) {
-            throw new SQLException("L'événement avec l'ID " + id + " n'existe pas.");
-        }
-
         String req = "DELETE FROM events WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setInt(1, id);
-            int rowsDeleted = ps.executeUpdate();
-            if (rowsDeleted > 0) {
-                SalleService salleService = new SalleService();
-                Salle salle = salleService.getSalleById(event.getIdSalle());
-                if (salle != null) {
-                   //// salle.removeEvent(event);
-                    System.out.println("✅ Event supprimé avec succès. La salle ID " + event.getIdSalle() + " reste intacte.");
-                }
-            } else {
-                System.out.println("⚠️ Aucun événement trouvé avec l'ID : " + id);
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erreur lors de la suppression de l'événement : " + e.getMessage(), e);
         }
@@ -132,9 +114,16 @@ public class EventService implements IServiceEvent<Event> {
 
     @Override
     public List<Event> recuperer() throws SQLException {
-        return recupererTous("");
+        return recupererTous(""); // Delegate to recupererTous with an empty search query
     }
 
+    /**
+     * Retrieves all events matching the search query, including their associated teams.
+     *
+     * @param searchQuery the search query to filter events by name, location, or type
+     * @return a list of events with their associated teams
+     * @throws SQLException if a database error occurs
+     */
     public List<Event> recupererTous(String searchQuery) throws SQLException {
         List<Event> events = new ArrayList<>();
         String req = "SELECT * FROM events WHERE nom LIKE ? OR lieu LIKE ? OR type LIKE ?";
@@ -146,9 +135,7 @@ public class EventService implements IServiceEvent<Event> {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Event event = mapResultSetToEvent(rs);
-                    SalleService salleService = new SalleService();
-                    Salle salle = salleService.getSalleById(event.getIdSalle());
-                    event.setSalle(salle);
+                    // Convert List<Equipe> to Set<Equipe> to match the Event class's setEquipes method
                     event.setEquipes(new HashSet<>(getEquipesForEvent(event.getId())));
                     events.add(event);
                 }
@@ -159,6 +146,13 @@ public class EventService implements IServiceEvent<Event> {
         return events;
     }
 
+    /**
+     * Checks if an event with the given name already exists in the database.
+     *
+     * @param nom the name of the event to check
+     * @return true if an event with the given name exists, false otherwise
+     * @throws SQLException if a database error occurs
+     */
     public boolean eventNameExists(String nom) throws SQLException {
         String req = "SELECT COUNT(*) FROM events WHERE nom = ?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
@@ -174,6 +168,13 @@ public class EventService implements IServiceEvent<Event> {
         return false;
     }
 
+    /**
+     * Sets the PreparedStatement parameters for an Event object.
+     *
+     * @param ps the PreparedStatement to set parameters on
+     * @param event the Event object to get data from
+     * @throws SQLException if a database error occurs
+     */
     private void setEventStatement(PreparedStatement ps, Event event) throws SQLException {
         ps.setString(1, event.getNom());
         ps.setDate(2, event.getDate() != null ? Date.valueOf(event.getDate()) : null);
@@ -189,6 +190,13 @@ public class EventService implements IServiceEvent<Event> {
         ps.setInt(12, event.getIdSalle());
     }
 
+    /**
+     * Maps a ResultSet row to an Event object.
+     *
+     * @param rs the ResultSet containing event data
+     * @return an Event object populated with data from the ResultSet
+     * @throws SQLException if a database error occurs
+     */
     private Event mapResultSetToEvent(ResultSet rs) throws SQLException {
         Event event = new Event();
         event.setId(rs.getInt("id"));
@@ -223,13 +231,20 @@ public class EventService implements IServiceEvent<Event> {
         event.setLatitude(rs.getDouble("latitude"));
         event.setLongitude(rs.getDouble("longitude"));
         event.setLieu(rs.getString("lieu"));
-        event.setIdSalle(rs.getInt("id_salle"));
+        event.setIdSalle(rs.getInt("salle_id"));
         return event;
     }
 
+    /**
+     * Retrieves the list of teams associated with a given event.
+     *
+     * @param eventId the ID of the event
+     * @return a list of Equipe objects associated with the event
+     * @throws SQLException if a database error occurs
+     */
     public List<Equipe> getEquipesForEvent(int eventId) throws SQLException {
         List<Equipe> equipes = new ArrayList<>();
-        String req = "SELECT e.* FROM equipe e JOIN equipe_event ee ON e.id = ee.id_equipe WHERE ee.id_event = ?";
+        String req = "SELECT e.* FROM equipe e JOIN equipe_event ee ON e.id = ee.equipe_id WHERE ee.event_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setInt(1, eventId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -255,47 +270,26 @@ public class EventService implements IServiceEvent<Event> {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
-                    Event event = mapResultSetToEvent(rs);
-                    SalleService salleService = new SalleService();
-                    Salle salle = salleService.getSalleById(event.getIdSalle());
-                    event.setSalle(salle);
-                    event.setEquipes(new HashSet<>(getEquipesForEvent(event.getId())));
+                    Event event = new Event();
+                    event.setId(rs.getInt("id"));
+                    event.setNom(rs.getString("nom"));
+                    event.setLieu(rs.getString("lieu"));
+                    event.setDate(rs.getDate("date").toLocalDate());
+                    event.setHeureDebut(rs.getTime("heure_debut").toLocalTime());
+                    event.setHeureFin(rs.getTime("heure_fin").toLocalTime());
+                    event.setType(EventType.valueOf(rs.getString("type")));
+                    event.setDescription(rs.getString("description"));
+                    event.setImageUrl(rs.getString("image_url"));
+                    String rewardStr = rs.getString("reward");
+                    if (rewardStr != null && !rewardStr.trim().isEmpty()) {
+                        event.setReward(EventType.Reward.valueOf(rewardStr));
+                    } else {
+                        event.setReward(null);
+                    }
                     return event;
                 }
             }
         }
         return null;
     }
-
-    public List<Event> getEventsBySalleId(int salleId) throws SQLException {
-        List<Event> events = new ArrayList<>();
-        String query = "SELECT * FROM events WHERE id_salle = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, salleId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Event event = mapResultSetToEvent(rs);
-                    event.setEquipes(new HashSet<>(getEquipesForEvent(event.getId())));
-                    events.add(event);
-                }
-            }
-        }
-        return events;
-    }
-
-    private boolean salleExists(int salleId) throws SQLException {
-        if (salleId <= 0) {
-            return false;
-        }
-        String query = "SELECT COUNT(*) FROM salle WHERE id_Salle = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, salleId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        }
-        return false;
-    }
-}    */
+}

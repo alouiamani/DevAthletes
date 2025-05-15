@@ -1,4 +1,4 @@
-/*package org.gymify.controllers;
+package org.gymify.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,21 +14,13 @@ import org.gymify.services.EquipeService;
 import java.io.File;
 import java.sql.SQLException;
 
-/**
- * Controller class for managing the addition or modification of teams (equipes) in the UI.
-
 public class AjoutEquipeController {
 
-    @FXML
-    private TextField nameField, imageurl;
-    @FXML
-    private Spinner<Integer> membreSpinner;
-    @FXML
-    private ComboBox<EventType.Niveau> niveauequipe;
-    @FXML
-    private ImageView imagetf;
-    @FXML
-    private Label ErrorNom, ErrorNiveau, ErrorNombre, ErrorImage;
+    @FXML private TextField nameField, imageurl;
+    @FXML private Spinner<Integer> membreSpinner;
+    @FXML private ComboBox<EventType.Niveau> niveauequipe;
+    @FXML private ImageView imagetf;
+    @FXML private Label ErrorNom, ErrorNiveau, ErrorNombre, ErrorImage;
 
     private String imagePath = "";
     private final EquipeService equipeService;
@@ -43,7 +35,7 @@ public class AjoutEquipeController {
     @FXML
     public void initialize() {
         niveauequipe.getItems().setAll(EventType.Niveau.values());
-        membreSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 6));
+        membreSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 8, 0));
         resetErrors();
     }
 
@@ -83,11 +75,15 @@ public class AjoutEquipeController {
             ErrorImage.setVisible(true);
             hasError = true;
         }
+        if (nombreMembres > 8) {
+            ErrorNombre.setText("Le nombre de membres ne peut pas dépasser 8 !");
+            ErrorNombre.setVisible(true);
+            hasError = true;
+        }
 
         if (hasError) return;
 
         try {
-            // Si on est en mode ajout et que le nom existe déjà
             if (equipeAModifier == null && equipeService.isNomEquipeExist(nom)) {
                 ErrorNom.setText("Le nom de l'équipe existe déjà !");
                 ErrorNom.setVisible(true);
@@ -96,39 +92,33 @@ public class AjoutEquipeController {
 
             Equipe equipe = new Equipe(nom, imagePath, niveau, nombreMembres);
             if (equipeAModifier == null) {
-                equipeService.ajouter(equipe); // Ajouter l'équipe à la base de données
+                equipeService.ajouter(equipe);
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Équipe ajoutée avec succès !");
 
-                // Notify AjoutEvennementController if it exists
                 if (ajoutEvennementController != null) {
                     ajoutEvennementController.addEquipeToEvent(equipe);
                 }
 
-                // Close the window
                 Stage stage = (Stage) nameField.getScene().getWindow();
                 stage.close();
             } else {
-                // Mode modification: conserver l'identifiant
                 equipe.setId(equipeAModifier.getId());
-                equipeService.modifier(equipe); // Modifier l'équipe dans la base de données
+                equipeService.modifier(equipe);
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Équipe modifiée avec succès !");
 
-                // Update AjoutEvennementController if necessary
                 if (ajoutEvennementController != null) {
                     ajoutEvennementController.updateEquipeInList(equipeAModifier, equipe);
                 }
 
-                // Close the window
                 Stage stage = (Stage) nameField.getScene().getWindow();
                 stage.close();
             }
 
-            updateListeDesEquipes(); // Rafraîchir la liste si possible
+            updateListeDesEquipes();
             clearFields();
 
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Problème lors de l'ajout/modification : " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -138,12 +128,10 @@ public class AjoutEquipeController {
         }
     }
 
-    // Méthode pour permettre d'injecter le contrôleur ListeDesEquipesController
     public void setListeDesEquipesController(ListeDesEquipesController controller) {
         this.listeDesEquipesController = controller;
     }
 
-    // Méthode pour permettre d'injecter le contrôleur AjoutEvennementController
     public void setAjoutEvennementController(AjoutEvennementController controller) {
         this.ajoutEvennementController = controller;
     }
@@ -151,13 +139,14 @@ public class AjoutEquipeController {
     private void resetErrors() {
         ErrorNom.setVisible(false);
         ErrorNiveau.setVisible(false);
+        ErrorNombre.setVisible(false);
         ErrorImage.setVisible(false);
     }
 
     private void clearFields() {
         nameField.clear();
         niveauequipe.setValue(null);
-        membreSpinner.getValueFactory().setValue(6);
+        membreSpinner.getValueFactory().setValue(0);
         imageurl.clear();
         imagetf.setImage(null);
         equipeAModifier = null;
@@ -177,12 +166,8 @@ public class AjoutEquipeController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-        if (type == Alert.AlertType.ERROR) {
-            System.err.println(content);
-        }
     }
 
- /*   // Méthode appelée pour passer l'équipe à modifier
     public void handleModifier(Equipe equipe) {
         this.equipeAModifier = equipe;
         nameField.setText(equipe.getNom());
@@ -191,12 +176,7 @@ public class AjoutEquipeController {
         imagePath = equipe.getImageUrl();
         imageurl.setText(imagePath);
         if (imagePath != null && !imagePath.isEmpty()) {
-            try {
-                imagetf.setImage(new Image(new File(imagePath).toURI().toString()));
-            } catch (Exception e) {
-                imagetf.setImage(null);
-            }
+            imagetf.setImage(new Image(new File(imagePath).toURI().toString()));
         }
-   }
+    }
 }
-*/

@@ -23,10 +23,12 @@ public class User {
     private int id_Salle;
     private List<Abonnement> abonnements;
     private Salle salle;
+    private Integer equipe_id;
 
     // 🔹 Constructeurs
     public User() {
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     public User(int id, String nom, String prenom, String password, String email, String role, Date date_naissance, String image_url, int id_Salle) {
@@ -40,6 +42,7 @@ public class User {
         this.image_url = image_url;
         this.reclamations = new ArrayList<>();
         this.id_Salle = id_Salle;
+        this.equipe_id = null;
     }
 
     public User(int id, String nom, String prenom, String email, String password, String role) {
@@ -50,6 +53,7 @@ public class User {
         this.email = email;
         this.role = role;
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     public User(String nom, String prenom, String email, String password, String role, Date date_naissance, String image_url) {
@@ -61,6 +65,7 @@ public class User {
         this.date_naissance = date_naissance;
         this.image_url = image_url;
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     public User(int id, String nom, String prenom, String email, String password, String role, int id_Salle) {
@@ -72,6 +77,7 @@ public class User {
         this.role = role;
         this.id_Salle = id_Salle;
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     public User(String nom, String prenom, String password, String email, String role) {
@@ -81,6 +87,7 @@ public class User {
         this.email = email;
         this.role = "sportif"; // Aligned with ENUM (assuming 'sportif' is a valid value)
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     public User(String nom, String prenom, String email, String role, Date date_naissance, String image_url) {
@@ -91,6 +98,7 @@ public class User {
         this.date_naissance = date_naissance;
         this.image_url = image_url;
         this.reclamations = new ArrayList<>();
+        this.equipe_id = null;
     }
 
     // 🔹 Getters et Setters
@@ -190,12 +198,12 @@ public class User {
         this.id_Salle = id_Salle;
     }
 
-    public String getId_equipe() {
-        return "hdhd"; // Placeholder; should ideally retrieve equipe_id from DB
+    public Integer getId_equipe() {
+        return equipe_id;
     }
 
     public void setId_equipe(int equipeId) {
-        // Placeholder; no field exists, so no action taken
+        this.equipe_id = equipeId;
     }
 
     public class AuthToken {
@@ -222,6 +230,7 @@ public class User {
                 ", image_url='" + image_url + '\'' +
                 ", reclamations=" + reclamations +
                 ", id_Salle=" + id_Salle +
+                ", equipe_id=" + equipe_id +
                 '}';
     }
 
