@@ -237,4 +237,8 @@ public class User {
         }
         return -1;
     }
+    //methode ajoutée ranym
+    public String getUsername() {
+        return nom + " " + prenom; // 🔥 Retourne le nom complet de l'utilisateur
+    }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.web.WebView?>
+
+<StackPane prefHeight="697.0" prefWidth="1004.0" style="-fx-background-color: #3c3c3c;" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.StatsController">
+    <WebView fx:id="webView" layoutX="50" layoutY="50" prefHeight="2000.0" prefWidth="1004.0" />
+
+</StackPane>

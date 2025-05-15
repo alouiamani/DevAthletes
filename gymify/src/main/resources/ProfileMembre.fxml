@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
+<ScrollPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ProfileMembreController">
    <content>
       <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-image: image/ggym.jpeg;" stylesheets="/style.css">
          <children>
@@ -25,11 +25,19 @@
                         <MenuItem mnemonicParsing="false" text="Close" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Blog">
+
+
+
+                  <Menu fx:id="BlogsMenuBar" mnemonicParsing="false" text="Blogs">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#ouvrirBlogs" text="Blogs" />
                      </items>
                   </Menu>
+
+
+
+
+
                   <Menu fx:id="ReclamationMenuBar" mnemonicParsing="false" onAction="#ouvrirReclamation" text="Reclamation">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Reclamation" />

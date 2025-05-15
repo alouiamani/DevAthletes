@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainContent" prefHeight="728.0" prefWidth="362.0" style="-fx-background-color: #222324;" styleClass="body-background" stylesheets="@StyleRanym.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.ShowCommentsController">
+<center>
+    <Label fx:id="commentCountLabel" style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="💬 0 Commentaires" textFill="#363636" />
+
+    <VBox fx:id="commentContainer" prefHeight="592.0" prefWidth="362.0" spacing="10" style="-fx-background-color: #242526; -fx-padding: 10;">
+        <!-- Les commentaires seront ajoutés ici dynamiquement -->
+    </VBox>
+    <!--<Button fx:id="btnClose" onAction="#handleClose" text="Fermer" />-->
+
+</center>
+   <top>
+    <HBox spacing="4.0" style="-fx-padding: 10; -fx-background-color: #3A3B3C;" BorderPane.alignment="CENTER">
+        <ImageView fx:id="userProfileImage" fitHeight="40.0" fitWidth="40" style="-fx-background-radius: 50%;" />
+        <TextField fx:id="commentField" prefHeight="39.0" prefWidth="198.0" promptText="Write a comment..." style="-fx-background-color: #4E4F50; -fx-text-fill: white; -fx-background-radius: 20; -fx-prompt-text-fill: #B0B3B8;" />
+        <JFXButton onAction="#handleSendComment" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 20;">
+            <graphic>
+                <ImageView fx:id="sendIcon" fitHeight="27.0" fitWidth="27.0">
+                  <image>
+                     <Image url="@assets/sned_icon1.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+        </JFXButton>
+         <JFXButton onAction="#handleClose" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: transparent; -fx-border-radius: 50;">
+            <graphic>
+               <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@assets/icon_close.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </JFXButton>
+    </HBox>
+   </top>
+
+
+    <bottom>
+        <Label fx:id="successMessage" alignment="center" prefHeight="50.0" prefWidth="340.0" style="-fx-text-fill: #00FF00; -fx-background-color: #4bc193; -fx-padding: 5px; -fx-background-radius: 10; -fx-opacity: 0; -fx-border-color: #597d62;" text="Commentaire supprimé avec succès !" textFill="#222324" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>

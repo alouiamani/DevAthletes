@@ -136,6 +136,22 @@ public class ProfileMembreController {
         }
     }
 
+    @FXML
+    private void ouvrirBlogs(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Dashboard");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            LOGGER.severe("Erreur lors de l'ouverture du dashboard : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void onLogoutButtonClick(ActionEvent event) {
         try {
             AuthToken.logout(); // Clear the current user

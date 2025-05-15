@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane prefHeight="802.0" prefWidth="1120.0" styleClass="body-background" stylesheets="@StyleRanym.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gymify.controllers.AfficherMyPostsController">
+
+    <!-- 📌 Zone centrale : Liste des posts -->
+    <center>
+        <AnchorPane fx:id="postListContainer" prefHeight="802.0" prefWidth="793.0">
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" layoutX="269.0" prefHeight="770.0" prefWidth="700.0">
+                <StackPane alignment="CENTER">
+                    <VBox fx:id="postsBox" spacing="15.0" style="-fx-padding: 10; -fx-alignment: center;">
+                        <WebView fx:id="postWebView" prefHeight="200" prefWidth="500" />
+                    </VBox>
+                </StackPane>
+            </ScrollPane>
+        </AnchorPane>
+    </center>
+
+    <!-- 📌 Zone à droite : Affichage des commentaires (cachée par défaut) -->
+    <right>
+        <AnchorPane fx:id="commentSection" prefHeight="802.0" prefWidth="354.0" style="-fx-background-color: #1c1c1d;" visible="false">
+            <!-- Les commentaires seront affichés ici -->
+        </AnchorPane>
+    </right>
+
+</BorderPane>

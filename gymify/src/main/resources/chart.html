@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 80vh !important;  /* Ajuste la hauteur pour qu'elle soit plus grande */
+            margin: 20px auto;
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
+
+
+
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!--
+      - custom css link
+    -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!--
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+            rel="stylesheet">
+
+    <!--
+      - preload images
+    -->
+    <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
+    <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<body>
+
+
+
+
+
+<!--
+  - #HEADER
+-->
+
+
+<main>
+    <article>
+
+        <!--
+          - #HERO
+        -->
+
+        <section class="section hero has-bg-image" id="home" aria-label="home"
+                 style="background-image: url('./assets/images/hero-bg.svg')">
+            <div class="container">
+
+                <div class="hero-content">
+                    <h1 class="clubname MyClubLifeFONT gradientextanimation">
+                        GYMIFY
+                    </h1>
+                    <h3 class="clubname gradientextanimation MyClubLifeFONT " style="font-size: 50px;">
+                        BLOGS
+                    </h3>
+                    <h1 class="h1 section-title">
+                        Here To share Your <span class="span">Passion</span> for Fitness!
+                    </h1>
+
+                    <p class="hero-text">
+                        Create and share your articles
+                        <br>
+                        Engage with the community
+                        <br>
+                        Like and support your favorite posts
+                    </p>
+
+
+
+                </div>
+
+                <figure class="hero-banner">
+
+                    <div class="img-holder one" style="--width: 270; --height: 300;">
+                        <img src="./assets/images/hero-banner-1.jpg" width="270" height="300" alt="hero banner" class="img-cover">
+                    </div>
+
+                    <div class="img-holder two" style="--width: 240; --height: 370;">
+                        <img src="./assets/images/hero-banner-2.jpg" width="240" height="370" alt="hero banner" class="img-cover">
+                    </div>
+
+
+                </figure>
+
+            </div>
+        </section>
+
+
+
+        <section class="section stats" aria-label="stats">
+            <div class="container">
+
+                <ul class="grid-list">
+
+                    <li>
+                        <div class="stats-card" style="--color: 170, 75%, 41%">
+                            <h3 class="card-title">25+</h3>
+
+                            <p class="card-text">Bloggers</p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="stats-card" style="--color: 351, 83%, 61%">
+                            <h3 class="card-title">10+</h3>
+
+                            <p class="card-text">Posts</p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="stats-card" style="--color: 260, 100%, 67%">
+                            <h3 class="card-title">+20</h3>
+
+                            <p class="card-text">Reactions</p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="stats-card" style="--color: 42, 94%, 55%">
+                            <h3 class="card-title">30+</h3>
+
+                            <p class="card-text">Comments</p>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+        </section>
+
+
+
+
+
+        <!--
+          - #BLOG
+        -->
+
+        <section class="section blog has-bg-image" id="blog" aria-label="blog"
+                 style="background-image: url('./assets/images/blog-bg.svg')">
+            <div class="container">
+
+
+
+                <h2 class="h2 section-title">Latest Blogs</h2>
+
+                <ul class="grid-list">
+
+                    <li>
+                        <div class="blog-card">
+
+                            <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
+                                <img src="./assets/images/blog-1.jpg" width="370" height="370" loading="lazy"
+                                     alt="Become A Better Blogger: Content Planning" class="img-cover">
+                            </figure>
+
+                            <div class="card-content">
+
+                                <a href="#" class="card-btn" aria-label="read more">
+                                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                                </a>
+
+                                <a href="#" class="card-subtitle">Ranym Mejri</a>
+
+                                <h3 class="h3">
+                                    <a href="#" class="card-title">My growth</a>
+                                </h3>
+
+                                <ul class="card-meta-list">
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Feb 05, 2025</span>
+                                    </li>
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Com 05</span>
+                                    </li>
+
+                                </ul>
+
+                                <p class="card-text">
+                                    It's not about perfection, but progress – and I'm here to share my growth.
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="blog-card">
+
+                            <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
+                                <img src="./assets/images/blog-2.jpg" width="370" height="370" loading="lazy"
+                                     alt="Become A Better Blogger: Content Planning" class="img-cover">
+                            </figure>
+
+                            <div class="card-content">
+
+                                <a href="#" class="card-btn" aria-label="read more">
+                                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                                </a>
+
+                                <a href="#" class="card-subtitle">Tasnym Mejri</a>
+
+                                <h3 class="h3">
+                                    <a href="#" class="card-title">New Habits</a>
+                                </h3>
+
+                                <ul class="card-meta-list">
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Oct 10, 2021</span>
+                                    </li>
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Com 07</span>
+                                    </li>
+
+                                </ul>
+
+                                <p class="card-text">
+                                    I started training to get fit, but I found it's also great for my mental health.
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="blog-card">
+
+                            <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
+                                <img src="./assets/images/blog-3.jpg" width="370" height="370" loading="lazy"
+                                     alt="Become A Better Blogger: Content Planning" class="img-cover">
+                            </figure>
+
+                            <div class="card-content">
+
+                                <a href="#" class="card-btn" aria-label="read more">
+                                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                                </a>
+
+                                <a href="#" class="card-subtitle">Rayen Rayen</a>
+
+                                <h3 class="h3">
+                                    <a href="#" class="card-title">Home</a>
+                                </h3>
+
+                                <ul class="card-meta-list">
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Feb 03, 2025</span>
+                                    </li>
+
+                                    <li class="card-meta-item">
+                                        <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
+
+                                        <span class="span">Com 03</span>
+                                    </li>
+
+                                </ul>
+
+                                <p class="card-text">
+                                    I remember my first gym day, nervous and unsure. Now, it feels like home.
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                </ul>
+
+                <img src="./assets/images/blog-shape.png" width="186" height="186" loading="lazy" alt=""
+                     class="shape blog-shape">
+
+            </div>
+        </section>
+
+    </article>
+</main>
+
+
+
+<section style="background-color: #3c3f40">
+
+
+<canvas id="statsChart" ></canvas></section>
+
+
+
+<!--
+  - #BACK TO TOP
+-->
+
+<a href="#top" class="back-top-btn" aria-label="back top top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+</a>
+
+
+
+
+
+<!--
+  - custom js link
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [], // Rempli par Java
+            datasets: [
+                { label: 'Posts', data: [], borderColor: 'orange', fill: false },
+                { label: 'Commentaires', data: [], borderColor: 'blue', fill: false },
+                { label: 'Réactions', data: [], borderColor: 'green', fill: false }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    grid: { color: '#444' },
+                    ticks: {
+                        font: { size: 14 }  // Ajuste la taille de la police sur l'axe X
+                    }
+                },
+                y: {
+                    grid: { color: '#444' },
+                    ticks: {
+                        font: { size: 14 }  // Ajuste la taille de la police sur l'axe Y
+                    }
+                }
+            },
+            animation: { duration: 1000 },
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { size: 16 }  // Ajuste la taille de la police de la légende
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Statistiques of Posts, Comments and Reactions',
+                    font: { size: 20 }  // Taille du titre
+                }
+            }
+        }
+    });
+
+    function updateChart(labels, posts, comments, reactions) {
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = posts;
+        chart.data.datasets[1].data = comments;
+        chart.data.datasets[2].data = reactions;
+        chart.update();
+    }
+
+</script>
+<script src="./assets/js/script.js" defer></script>
+
+<!--
+  - ionicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
